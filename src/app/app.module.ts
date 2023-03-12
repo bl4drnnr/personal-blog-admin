@@ -8,8 +8,9 @@ import { HomeComponent } from '@pages/home/home.component';
 import { LoginComponent } from '@pages/login/login.component';
 import { PostsComponent } from '@pages/posts/posts.component';
 import { ProjectsComponent } from '@pages/projects/projects.component';
-import { ProjectComponent } from './pages/project/project.component';
-import { PostComponent } from './pages/post/post.component';
+import { ProjectComponent } from '@pages/project/project.component';
+import { PostComponent } from '@pages/post/post.component';
+import { LinkComponent } from '@components/link/link.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PostComponent } from './pages/post/post.component';
     PostsComponent,
     ProjectsComponent,
     ProjectComponent,
-    PostComponent
+    PostComponent,
+    LinkComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
