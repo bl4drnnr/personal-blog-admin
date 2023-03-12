@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -19,15 +18,22 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "strictPropertyInitialization": false,
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@components/*": ["src/app/components/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@services/*": ["src/app/services/*"],
+      "@models/*": ["src/app/models/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
 }
