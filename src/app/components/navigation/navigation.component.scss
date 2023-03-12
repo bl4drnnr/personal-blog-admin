@@ -15,10 +15,6 @@ button:hover {
     transform: translateX(-100%);
   }
 
-  .ml-64 {
-    transform: translateX(0);
-  }
-
   .fixed {
     position: absolute;
     top: 0;
@@ -29,9 +25,5 @@ button:hover {
 
   .fixed.show {
     transform: translateX(0);
-  }
-
-  .ml-64.show {
-    transform: translateX(64px);
   }
 }

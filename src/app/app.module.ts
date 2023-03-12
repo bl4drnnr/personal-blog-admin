@@ -11,6 +11,7 @@ import { ProjectsComponent } from '@pages/projects/projects.component';
 import { ProjectComponent } from '@pages/project/project.component';
 import { PostComponent } from '@pages/post/post.component';
 import { LinkComponent } from '@components/link/link.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { LinkComponent } from '@components/link/link.component';
     PostComponent,
     LinkComponent
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })
