@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ProxyModule } from '@proxy/proxy.module';
+import { SharedModule } from '@shared/shared.module';
 
 @Module({
   imports: [
@@ -9,6 +10,7 @@ import { ProxyModule } from '@proxy/proxy.module';
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
     ProxyModule,
+    SharedModule
   ]
 })
 export class AppModule {}
