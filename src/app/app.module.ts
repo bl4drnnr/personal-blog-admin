@@ -12,6 +12,8 @@ import { ProjectComponent } from '@pages/project/project.component';
 import { PostComponent } from '@pages/post/post.component';
 import { LinkComponent } from '@components/link/link.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { GlobalErrorComponent } from '@components/global-error/global-error.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProjectsComponent,
     ProjectComponent,
     PostComponent,
-    LinkComponent
+    LinkComponent,
+    GlobalErrorComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
