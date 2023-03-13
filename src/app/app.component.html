@@ -1,4 +1,5 @@
 <div>
+  <app-global-error />
   <app-navigation *ngIf="authService.isLoggedIn$ | async" />
   <router-outlet />
 </div>
