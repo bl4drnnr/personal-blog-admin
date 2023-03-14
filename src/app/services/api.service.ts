@@ -45,12 +45,16 @@ export class ApiService {
     email: string;
   }) {
     const registrationUrl = `${this.envService.getFrontProxyUrl}/users/sign-up`;
+    const basicAuth = 'Basic ' + btoa(authUsername + ':' + authPassword);
+    const headers = new HttpHeaders({
+      'registration-authorization': basicAuth
+    });
 
     return this.http
       .post(registrationUrl, {
         method: 'POST',
-        payload: {}
-      })
+        payload: { email }
+      }, { headers })
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
