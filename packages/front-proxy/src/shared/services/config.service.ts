@@ -22,10 +22,32 @@ export class ApiConfigService {
     return value.replace(/\\n/g, '\n');
   }
 
+  private getArray(key: string): Array<string> {
+    const value = this.get(key);
+
+    return value.replace(/\\n/g, '\n').split(',');
+  }
+
   get basicAuthConfig() {
     return {
       username: this.getString('BASIC_AUTH_USERNAME'),
       password: this.getString('BASIC_AUTH_PASSWORD')
     };
+  }
+
+  get allowedRequestMethods() {
+    return this.getArray('ALLOWED_METHODS');
+  }
+
+  get allowedControllers() {
+    return this.getArray('ALLOWED_CONTROLLERS');
+  }
+
+  get allowedEndpoints() {
+    return this.getArray('ALLOWED_ENDPOINTS');
+  }
+
+  get originApiUrl() {
+    return this.getString('ORIGIN_API_URL');
   }
 }
