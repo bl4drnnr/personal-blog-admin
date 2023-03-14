@@ -29,7 +29,7 @@
       "@services/*": ["src/app/services/*"],
       "@models/*": ["src/app/models/*"],
       "@env/*": ["src/environments/*"],
-      "@guards/*": ["src/guards/*"]
+      "@guards/*": ["src/app/guards/*"]
     }
   },
   "angularCompilerOptions": {

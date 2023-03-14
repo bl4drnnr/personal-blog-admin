@@ -4,8 +4,11 @@
   "scripts": {
     "ng": "ng",
     "dev": "concurrently \"ng serve --configuration development\" \"NODE_ENV=development npm run start --workspace=front-proxy\"",
+    "front:dev": "ng serve --configuration development",
+    "proxy:dev": "NODE_ENV=development npm run start --workspace=front-proxy",
+    "build:prod": "concurrently \"ng build --configuration production\" NODE_ENV=production npm run build --workspace=front-proxy",
+    "build:dev": "concurrently \"ng build --configuration development\" NODE_ENV=development npm run build --workspace=front-proxy",
     "start": "ng serve --configuration production",
-    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
