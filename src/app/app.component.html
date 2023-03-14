@@ -1,5 +1,5 @@
 <div>
   <app-global-message />
-  <app-navigation *ngIf="authService.isLoggedIn$ | async" />
+  <app-navigation *ngIf="loginService.isLoggedIn$ | async" />
   <router-outlet />
 </div>

@@ -43,7 +43,7 @@ export class ApiService {
     authUsername: string;
     authPassword: string;
     email: string;
-  }) {
+  }): Observable<{ message: string }> {
     const registrationUrl = `${this.envService.getFrontProxyUrl}/users/sign-up`;
     const basicAuth = 'Basic ' + btoa(authUsername + ':' + authPassword);
     const headers = new HttpHeaders({
@@ -51,7 +51,7 @@ export class ApiService {
     });
 
     return this.http
-      .post(
+      .post<{ message: string }>(
         registrationUrl,
         {
           method: 'POST',
@@ -63,7 +63,7 @@ export class ApiService {
   }
 
   refreshTokens({ _at }: { _at: string }): Observable<{ _at: string }> {
-    const refreshTokensUrl = `${this.envService.getFrontProxyUrl}/refresh`;
+    const refreshTokensUrl = `${this.envService.getFrontProxyUrl}/auth/refresh`;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${_at}`
     });

@@ -5,7 +5,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class LoginService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
