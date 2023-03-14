@@ -56,8 +56,7 @@ export class ApiService {
         {
           method: 'POST',
           payload: { email }
-        },
-        { headers }
+        }, { headers }
       )
       .pipe(catchError(this.errorHandler.bind(this)));
   }

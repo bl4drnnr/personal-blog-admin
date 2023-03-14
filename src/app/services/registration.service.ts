@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@services/api.service';
+import { tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class RegistrationService {
       authUsername,
       authPassword,
       email
-    });
+    }).pipe(
+      tap(({ message }) => {
+        return message;
+      })
+    );
   }
 }
