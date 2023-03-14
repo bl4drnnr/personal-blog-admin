@@ -10,14 +10,14 @@ export class ProxyController {
     @Param('controller') controller: string,
     @Param('action') action: string,
     @Body() { method, payload }: { method: string; payload?: object },
-    @Headers() headers?: object
+    @Headers('registration-authorization') signUpApiAuthToken?: string
   ) {
     return await this.proxyService.proxyAction({
       controller,
       action,
       payload,
       method,
-      headers
+      signUpApiAuthToken
     });
   }
 }

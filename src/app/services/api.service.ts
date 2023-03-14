@@ -47,7 +47,7 @@ export class ApiService {
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.errorService.handle(error.message);
-    return throwError(() => error.message);
+    this.errorService.handle(error.error.message);
+    return throwError(() => error.error.message);
   }
 }
