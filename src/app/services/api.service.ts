@@ -35,6 +35,25 @@ export class ApiService {
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
+  registration({
+    authUsername,
+    authPassword,
+    email
+  }: {
+    authUsername: string;
+    authPassword: string;
+    email: string;
+  }) {
+    const registrationUrl = `${this.envService.getFrontProxyUrl}/users/sign-up`;
+
+    return this.http
+      .post(registrationUrl, {
+        method: 'POST',
+        payload: {}
+      })
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
   refreshTokens({ _at }: { _at: string }): Observable<{ _at: string }> {
     const refreshTokensUrl = `${this.envService.getFrontProxyUrl}/refresh`;
     const headers = new HttpHeaders({

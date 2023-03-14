@@ -7,6 +7,7 @@ import { ProjectsComponent } from '@pages/projects/projects.component';
 import { ProjectComponent } from '@pages/project/project.component';
 import { PostComponent } from '@pages/post/post.component';
 import { IsAuthenticatedGuard } from '@guards/is-authenticated.guard';
+import { RegistrationComponent } from '@pages/registration/registration.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     canActivate: [IsAuthenticatedGuard]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'registration', component: RegistrationComponent },
   {
     path: 'posts',
     component: PostsComponent,

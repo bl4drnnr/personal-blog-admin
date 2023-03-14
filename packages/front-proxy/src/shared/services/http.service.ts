@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiConfigService } from '@shared/config.service';
 import { AxiosRequestConfig } from 'axios';
-import {firstValueFrom} from "rxjs";
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ProxyHttpService {
@@ -47,7 +47,7 @@ export class ProxyHttpService {
       url: requestUrl,
       headers: {
         'Content-Type': 'application/json',
-        'authorization': basicAuth,
+        authorization: basicAuth,
         'registration-authorization': signUpApiAuthToken || ''
       }
     };
@@ -57,7 +57,10 @@ export class ProxyHttpService {
     return firstValueFrom(this.httpService.request(requestConfig))
       .then((res) => res.data)
       .catch((error: any) => {
-        throw new HttpException(error.response.data.error, error.response.data.statusCode);
+        throw new HttpException(
+          error.response.data.error,
+          error.response.data.statusCode
+        );
       });
   }
 }

@@ -22,8 +22,4 @@ export class AuthService {
       })
     );
   }
-
-  refreshTokens({ _at }: { _at: string }) {
-    return this.apiService.refreshTokens({ _at });
-  }
 }
