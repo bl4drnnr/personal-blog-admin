@@ -14,6 +14,7 @@ import { LinkComponent } from '@components/link/link.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalErrorComponent } from '@components/global-error/global-error.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { GlobalErrorComponent } from '@components/global-error/global-error.comp
     ProjectComponent,
     PostComponent,
     LinkComponent,
-    GlobalErrorComponent
+    GlobalErrorComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

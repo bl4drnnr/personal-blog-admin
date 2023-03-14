@@ -1,6 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiConfigService } from '@shared/config.service';
+import { AxiosRequestConfig } from 'axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ProxyHttpService {
@@ -14,13 +16,13 @@ export class ProxyHttpService {
     action,
     payload,
     method,
-    headers
+    signUpApiAuthToken
   }: {
     controller: string;
     action: string;
     payload?: object;
     method: string;
-    headers?: object;
+    signUpApiAuthToken?: string;
   }) {
     const allowedMethods = this.configService.allowedRequestMethods;
     const allowedControllers = this.configService.allowedControllers;
@@ -40,12 +42,25 @@ export class ProxyHttpService {
     const requestUrl = `${originApiUrl}/${controller}/${action}`;
     const basicAuth = 'Basic ' + btoa(username + ':' + password);
 
-    headers = { ...headers, 'authorization': basicAuth }
+    const requestConfig: AxiosRequestConfig = {
+      method,
+      url: requestUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: basicAuth,
+        'registration-authorization': signUpApiAuthToken || ''
+      }
+    };
 
-    if (method === 'POST') {
-      return this.httpService.post(requestUrl, { ...payload }, { headers });
-    } else if (method === 'GET') {
-      return this.httpService.get(requestUrl, { headers });
-    }
+    requestConfig.data = method === 'POST' ? payload : {};
+
+    return firstValueFrom(this.httpService.request(requestConfig))
+      .then((res) => res.data)
+      .catch((error: any) => {
+        throw new HttpException(
+          error.response.data.error,
+          error.response.data.statusCode
+        );
+      });
   }
 }
