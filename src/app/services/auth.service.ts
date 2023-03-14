@@ -16,10 +16,14 @@ export class AuthService {
 
   login({ email, password }: { email: string; password: string }) {
     return this.apiService.login({ email, password }).pipe(
-      tap((response) => {
-        localStorage.setItem('_at', response.token);
+      tap(({ _at }) => {
+        localStorage.setItem('_at', _at);
         this._isLoggedIn$.next(true);
       })
     );
+  }
+
+  refreshTokens({ _at }: { _at: string }) {
+    return this.apiService.refreshTokens({ _at });
   }
 }

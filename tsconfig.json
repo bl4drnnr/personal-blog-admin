@@ -28,7 +28,8 @@
       "@pages/*": ["src/app/pages/*"],
       "@services/*": ["src/app/services/*"],
       "@models/*": ["src/app/models/*"],
-      "@env/*": ["src/environments/*"]
+      "@env/*": ["src/environments/*"],
+      "@guards/*": ["src/app/guards/*"]
     }
   },
   "angularCompilerOptions": {

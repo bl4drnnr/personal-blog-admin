@@ -3,13 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve --configuration development",
+    "dev": "concurrently \"ng serve --configuration development\" \"NODE_ENV=development npm run start --workspace=front-proxy\"",
+    "front:dev": "ng serve --configuration development",
+    "proxy:dev": "NODE_ENV=development npm run start --workspace=front-proxy",
+    "build:prod": "concurrently \"ng build --configuration production\" NODE_ENV=production npm run build --workspace=front-proxy",
+    "build:dev": "concurrently \"ng build --configuration development\" NODE_ENV=development npm run build --workspace=front-proxy",
     "start": "ng serve --configuration production",
-    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "format": "prettier --write \"src/**/*.ts\" && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+    "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
   },
+  "workspaces": [
+    "./packages/*"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.0",
@@ -32,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "autoprefixer": "^10.4.14",
+    "concurrently": "^7.6.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
