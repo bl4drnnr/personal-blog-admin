@@ -13,8 +13,8 @@ import { PostComponent } from '@pages/post/post.component';
 import { LinkComponent } from '@components/link/link.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { GlobalErrorComponent } from '@components/global-error/global-error.component';
-import { RegistrationComponent } from './pages/registration/registration.component';
+import { GlobalMessageComponent } from '@components/global-message/global-message.component';
+import { RegistrationComponent } from '@pages/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { RegistrationComponent } from './pages/registration/registration.compone
     ProjectComponent,
     PostComponent,
     LinkComponent,
-    GlobalErrorComponent,
+    GlobalMessageComponent,
     RegistrationComponent
   ],
   imports: [

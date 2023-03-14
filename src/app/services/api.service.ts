@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ErrorService } from '@services/error.service';
+import { GlobalMessageService } from '@services/global-message.service';
 import { EnvService } from '@services/env.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ import { EnvService } from '@services/env.service';
 export class ApiService {
   constructor(
     private http: HttpClient,
-    private errorService: ErrorService,
+    private globalMessageService: GlobalMessageService,
     private envService: EnvService
   ) {}
 
@@ -51,10 +51,14 @@ export class ApiService {
     });
 
     return this.http
-      .post(registrationUrl, {
-        method: 'POST',
-        payload: { email }
-      }, { headers })
+      .post(
+        registrationUrl,
+        {
+          method: 'POST',
+          payload: { email }
+        },
+        { headers }
+      )
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
@@ -70,7 +74,10 @@ export class ApiService {
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.errorService.handle(error.error.message);
+    this.globalMessageService.handle({
+      message: error.error.message,
+      isError: true
+    });
     return throwError(() => error.error.message);
   }
 }
