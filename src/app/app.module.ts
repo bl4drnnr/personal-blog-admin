@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalMessageComponent } from '@components/global-message/global-message.component';
 import { RegistrationComponent } from '@pages/registration/registration.component';
+import { AccountConfirmation } from '@pages/account-confirmation/account-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegistrationComponent } from '@pages/registration/registration.componen
     PostComponent,
     LinkComponent,
     GlobalMessageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AccountConfirmation
   ],
   imports: [
     BrowserModule,

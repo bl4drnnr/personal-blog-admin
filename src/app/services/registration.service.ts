@@ -17,11 +17,10 @@ export class RegistrationService {
     authPassword: string;
     email: string;
   }) {
-    return this.apiService
-      .registration({
-        authUsername,
-        authPassword,
-        email
-      });
+    return this.apiService.registration({
+      authUsername,
+      authPassword,
+      email
+    });
   }
 }

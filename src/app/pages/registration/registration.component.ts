@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '@services/registration.service';
 import { Router } from '@angular/router';
-import {GlobalMessageService} from "@services/global-message.service";
+import { GlobalMessageService } from '@services/global-message.service';
 
 @Component({
   selector: 'app-registration',
@@ -34,7 +34,7 @@ export class RegistrationComponent {
         this.globalMessageService.handle({
           message: 'Confirmation email has been sent'
         });
-        await this.router.navigate(['login'])
+        await this.router.navigate(['login']);
       });
   }
 }

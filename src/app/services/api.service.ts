@@ -18,6 +18,8 @@ export class ApiService {
     private envService: EnvService
   ) {}
 
+  frontProxyUrl: string = this.envService.getFrontProxyUrl;
+
   login({
     email,
     password
@@ -25,7 +27,7 @@ export class ApiService {
     email: string;
     password: string;
   }): Observable<{ _at: string }> {
-    const loginUrl = `${this.envService.getFrontProxyUrl}/users/sign-in`;
+    const loginUrl = `${this.frontProxyUrl}/users/sign-in`;
 
     return this.http
       .post<{ _at: string }>(loginUrl, {
@@ -44,7 +46,7 @@ export class ApiService {
     authPassword: string;
     email: string;
   }): Observable<{ message: string }> {
-    const registrationUrl = `${this.envService.getFrontProxyUrl}/users/sign-up`;
+    const registrationUrl = `${this.frontProxyUrl}/users/sign-up`;
     const basicAuth = 'Basic ' + btoa(authUsername + ':' + authPassword);
     const headers = new HttpHeaders({
       'registration-authorization': basicAuth
@@ -59,6 +61,21 @@ export class ApiService {
         },
         { headers }
       )
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  confirmAccount({
+    confirmationHash
+  }: {
+    confirmationHash: string;
+  }): Observable<{ message: string }> {
+    const confirmAccountUrl = `${this.frontProxyUrl}/users/account-confirmation`;
+
+    return this.http
+      .post<{ message: string }>(confirmAccountUrl, {
+        method: 'GET',
+        params: { confirmationHash }
+      })
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
