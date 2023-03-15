@@ -65,16 +65,19 @@ export class ApiService {
   }
 
   confirmAccount({
-    confirmationHash
+    confirmationHash,
+    password
   }: {
     confirmationHash: string;
+    password: string;
   }): Observable<{ message: string }> {
     const confirmAccountUrl = `${this.frontProxyUrl}/users/account-confirmation`;
 
     return this.http
       .post<{ message: string }>(confirmAccountUrl, {
-        method: 'GET',
-        params: { confirmationHash }
+        method: 'POST',
+        params: { confirmationHash },
+        payload: { password }
       })
       .pipe(catchError(this.errorHandler.bind(this)));
   }
