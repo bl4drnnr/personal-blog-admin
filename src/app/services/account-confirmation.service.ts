@@ -7,7 +7,16 @@ import { ApiService } from '@services/api.service';
 export class AccountConfirmationService {
   constructor(private apiService: ApiService) {}
 
-  confirmAccount({ confirmationHash }: { confirmationHash: string }) {
-    return this.apiService.confirmAccount({ confirmationHash });
+  confirmAccount({
+    confirmationHash,
+    password
+  }: {
+    confirmationHash: string;
+    password: string
+  }) {
+    return this.apiService.confirmAccount({
+      confirmationHash,
+      password
+    });
   }
 }
