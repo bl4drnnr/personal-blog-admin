@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountConfirmationService } from '@services/account-confirmation.service';
+import { GlobalMessageService } from '@services/global-message.service';
 
 @Component({
   selector: 'app-account-confirmation',
   templateUrl: './account-confirmation.component.html'
 })
 export class AccountConfirmation implements OnInit {
-  public confirmationHash: string;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private accountConfirmationService: AccountConfirmationService
+    private accountConfirmationService: AccountConfirmationService,
+    private globalMessageService: GlobalMessageService
   ) {}
+
+  public confirmationHash: string;
 
   async ngOnInit() {
     this.confirmationHash =
@@ -21,10 +23,17 @@ export class AccountConfirmation implements OnInit {
 
     if (!this.confirmationHash) await this.router.navigate(['login']);
 
-    this.accountConfirmationService.confirmAccount({
-      confirmationHash: this.confirmationHash
-    }).subscribe((response) => {
-      console.log('response', response);
-    });
+    this.accountConfirmationService
+      .confirmAccount({
+        confirmationHash: this.confirmationHash
+      })
+      .subscribe(async ({ message }) => {
+        if (message === 'success') {
+          this.globalMessageService.handle({
+            message: 'Account has been successfully confirmed'
+          });
+          await this.router.navigate(['login']);
+        }
+      });
   }
 }

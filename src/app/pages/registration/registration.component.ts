@@ -30,11 +30,13 @@ export class RegistrationComponent {
         authPassword: this.form.value.authPassword as string,
         email: this.form.value.email as string
       })
-      .subscribe(async () => {
-        this.globalMessageService.handle({
-          message: 'Confirmation email has been sent'
-        });
-        await this.router.navigate(['login']);
+      .subscribe(async ({ message }) => {
+        if (message === 'success') {
+          this.globalMessageService.handle({
+            message: 'Confirmation email has been sent'
+          });
+          await this.router.navigate(['login']);
+        }
       });
   }
 }
