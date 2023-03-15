@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@services/auth.service';
+import { LoginService } from '@services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +13,18 @@ export class LoginComponent {
     password: new FormControl<string>('', Validators.required)
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   submit() {
     if (this.form.invalid) return;
 
-    this.authService
+    this.loginService
       .login({
         email: this.form.value.email as string,
         password: this.form.value.password as string
       })
       .subscribe(async () => {
-        await this.router.navigate(['/posts']);
+        await this.router.navigate(['posts']);
       });
   }
 }

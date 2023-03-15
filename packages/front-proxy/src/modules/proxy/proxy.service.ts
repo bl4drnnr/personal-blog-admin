@@ -10,12 +10,14 @@ export class ProxyService {
     action,
     payload,
     method,
+    params,
     signUpApiAuthToken
   }: {
     controller: string;
     action: string;
     payload?: object;
     method: string;
+    params?: object;
     signUpApiAuthToken?: string;
   }) {
     return await this.proxyHttpService.proxyRequest({
@@ -23,6 +25,7 @@ export class ProxyService {
       action,
       payload,
       method,
+      params,
       signUpApiAuthToken
     });
   }

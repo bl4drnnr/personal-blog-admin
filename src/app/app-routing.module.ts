@@ -8,8 +8,16 @@ import { ProjectComponent } from '@pages/project/project.component';
 import { PostComponent } from '@pages/post/post.component';
 import { IsAuthenticatedGuard } from '@guards/is-authenticated.guard';
 import { RegistrationComponent } from '@pages/registration/registration.component';
+import { AccountConfirmation } from '@pages/account-confirmation/account-confirmation.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'registration', component: RegistrationComponent },
+  { path: 'account-confirmation', component: AccountConfirmation },
+  {
+    path: 'account-confirmation/:confirmationHash',
+    component: AccountConfirmation
+  },
   {
     path: '',
     component: HomeComponent,
@@ -20,8 +28,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [IsAuthenticatedGuard]
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
   {
     path: 'posts',
     component: PostsComponent,

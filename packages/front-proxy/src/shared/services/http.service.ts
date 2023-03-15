@@ -16,12 +16,14 @@ export class ProxyHttpService {
     action,
     payload,
     method,
+    params,
     signUpApiAuthToken
   }: {
     controller: string;
     action: string;
     payload?: object;
     method: string;
+    params?: object;
     signUpApiAuthToken?: string;
   }) {
     const allowedMethods = this.configService.allowedRequestMethods;
@@ -47,19 +49,23 @@ export class ProxyHttpService {
       url: requestUrl,
       headers: {
         'Content-Type': 'application/json',
-        authorization: basicAuth,
-        'registration-authorization': signUpApiAuthToken || ''
+        authorization: basicAuth
       }
     };
 
+    if (action === 'sign-up') {
+      requestConfig.headers['registration-authorization'] = signUpApiAuthToken;
+    }
+
     requestConfig.data = method === 'POST' ? payload : {};
+    requestConfig.params = params ? params : {};
 
     return firstValueFrom(this.httpService.request(requestConfig))
       .then((res) => res.data)
       .catch((error: any) => {
         throw new HttpException(
-          error.response.data.error,
-          error.response.data.statusCode
+          error.response?.data?.error || 'Internal server error',
+          error.response?.data?.statusCode || 500
         );
       });
   }

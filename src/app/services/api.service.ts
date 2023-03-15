@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ErrorService } from '@services/error.service';
+import { GlobalMessageService } from '@services/global-message.service';
 import { EnvService } from '@services/env.service';
 
 @Injectable({
@@ -14,9 +14,11 @@ import { EnvService } from '@services/env.service';
 export class ApiService {
   constructor(
     private http: HttpClient,
-    private errorService: ErrorService,
+    private globalMessageService: GlobalMessageService,
     private envService: EnvService
   ) {}
+
+  frontProxyUrl: string = this.envService.getFrontProxyUrl;
 
   login({
     email,
@@ -25,7 +27,7 @@ export class ApiService {
     email: string;
     password: string;
   }): Observable<{ _at: string }> {
-    const loginUrl = `${this.envService.getFrontProxyUrl}/users/sign-in`;
+    const loginUrl = `${this.frontProxyUrl}/users/sign-in`;
 
     return this.http
       .post<{ _at: string }>(loginUrl, {
@@ -43,23 +45,42 @@ export class ApiService {
     authUsername: string;
     authPassword: string;
     email: string;
-  }) {
-    const registrationUrl = `${this.envService.getFrontProxyUrl}/users/sign-up`;
+  }): Observable<{ message: string }> {
+    const registrationUrl = `${this.frontProxyUrl}/users/sign-up`;
     const basicAuth = 'Basic ' + btoa(authUsername + ':' + authPassword);
     const headers = new HttpHeaders({
       'registration-authorization': basicAuth
     });
 
     return this.http
-      .post(registrationUrl, {
-        method: 'POST',
-        payload: { email }
-      }, { headers })
+      .post<{ message: string }>(
+        registrationUrl,
+        {
+          method: 'POST',
+          payload: { email }
+        },
+        { headers }
+      )
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  confirmAccount({
+    confirmationHash
+  }: {
+    confirmationHash: string;
+  }): Observable<{ message: string }> {
+    const confirmAccountUrl = `${this.frontProxyUrl}/users/account-confirmation`;
+
+    return this.http
+      .post<{ message: string }>(confirmAccountUrl, {
+        method: 'GET',
+        params: { confirmationHash }
+      })
       .pipe(catchError(this.errorHandler.bind(this)));
   }
 
   refreshTokens({ _at }: { _at: string }): Observable<{ _at: string }> {
-    const refreshTokensUrl = `${this.envService.getFrontProxyUrl}/refresh`;
+    const refreshTokensUrl = `${this.envService.getFrontProxyUrl}/auth/refresh`;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${_at}`
     });
@@ -70,7 +91,10 @@ export class ApiService {
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    this.errorService.handle(error.error.message);
+    this.globalMessageService.handle({
+      message: error.error.message,
+      isError: true
+    });
     return throwError(() => error.error.message);
   }
 }

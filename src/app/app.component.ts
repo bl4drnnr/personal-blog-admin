@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@services/auth.service';
+import { LoginService } from '@services/login.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  constructor(public authService: AuthService) {}
+  constructor(public loginService: LoginService) {}
 }
