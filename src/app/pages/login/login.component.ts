@@ -24,7 +24,7 @@ export class LoginComponent {
         password: this.form.value.password as string
       })
       .subscribe(async () => {
-        await this.router.navigate(['/posts']);
+        await this.router.navigate(['posts']);
       });
   }
 }

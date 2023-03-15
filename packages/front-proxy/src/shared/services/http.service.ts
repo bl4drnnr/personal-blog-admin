@@ -58,8 +58,8 @@ export class ProxyHttpService {
       .then((res) => res.data)
       .catch((error: any) => {
         throw new HttpException(
-          error.response.data.error,
-          error.response.data.statusCode
+          error.response?.data?.error || 'Internal server error',
+          error.response?.data?.statusCode || 500
         );
       });
   }

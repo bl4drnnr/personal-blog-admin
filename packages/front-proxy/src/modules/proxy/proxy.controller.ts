@@ -12,13 +12,6 @@ export class ProxyController {
     @Body() { method, payload }: { method: string; payload?: object },
     @Headers('registration-authorization') signUpApiAuthToken?: string
   ) {
-    console.log({
-      controller,
-      action,
-      payload,
-      method,
-      signUpApiAuthToken
-    });
     return await this.proxyService.proxyAction({
       controller,
       action,

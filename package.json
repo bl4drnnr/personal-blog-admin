@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "concurrently \"ng serve --configuration development\" \"NODE_ENV=development npm run start --workspace=front-proxy\"",
+    "dev": "concurrently \"ng serve --configuration development\" \"NODE_ENV=development npm run start:dev --workspace=front-proxy\"",
     "front:dev": "ng serve --configuration development",
     "proxy:dev": "NODE_ENV=development npm run start --workspace=front-proxy",
     "build:prod": "concurrently \"ng build --configuration production\" \"NODE_ENV=production npm run build --workspace=front-proxy\"",
