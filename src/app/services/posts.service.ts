@@ -8,7 +8,38 @@ import { IPost } from '@models/post.model';
 export class PostsService {
   constructor(private apiService: ApiService) {}
 
-  typeOfContent: string = 'posts';
+  typeOfContent = 'posts';
+
+  listPosts({
+    language,
+    page,
+    pageSize,
+    order,
+    orderBy,
+    searchQuery,
+    postTypes
+  }: {
+    language: string;
+    page: number;
+    pageSize: number;
+    order: string;
+    orderBy: string;
+    searchQuery: string;
+    postTypes: string;
+  }) {
+    return this.apiService.basicContentEdition({
+      method: 'GET',
+      action: 'all',
+      typeOfContent: this.typeOfContent,
+      language,
+      page,
+      pageSize,
+      order,
+      orderBy,
+      searchQuery,
+      postTypes
+    });
+  }
 
   createPost({ payload }: { payload: IPost }) {
     return this.apiService.basicContentEdition({

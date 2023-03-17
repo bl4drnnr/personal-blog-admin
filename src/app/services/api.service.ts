@@ -89,13 +89,27 @@ export class ApiService {
     method,
     action,
     typeOfContent,
-    payload
+    payload,
+    language,
+    page,
+    pageSize,
+    order,
+    orderBy,
+    searchQuery,
+    postTypes
   }: {
     id?: string;
     method: string;
     action: string;
     typeOfContent: string;
     payload?: IProject | IPost;
+    language?: string;
+    page?: number;
+    pageSize?: number;
+    order?: string;
+    orderBy?: string;
+    searchQuery?: string;
+    postTypes?: string;
   }) {
     const requestUrl = `${this.frontProxyUrl}/${typeOfContent}/${action}`;
 
