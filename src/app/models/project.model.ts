@@ -39,6 +39,7 @@ export enum LanguageType {
 }
 
 export interface IProject {
+  id?: string;
   language?: LanguageType;
   title?: string;
   slug?: string;

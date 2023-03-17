@@ -1,1 +1,4 @@
-<p *ngFor="let post of posts">{{ post.title }}</p>
+<p
+  *ngFor="let post of posts"
+  (click)="redirectToPost({ id: post.id })"
+>{{ post.title }}</p>

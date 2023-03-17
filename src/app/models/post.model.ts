@@ -38,6 +38,7 @@ export enum PostType {
 }
 
 export interface IPost {
+  id?: string;
   language?: LanguageType;
   title?: string;
   slug?: string;

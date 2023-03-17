@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from '@services/content.service';
 import { IPost } from '@models/post.model';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html'
 })
 export class PostsComponent implements OnInit {
-  constructor(private contentService: ContentService) {
+  constructor(
+    private contentService: ContentService,
+    private router: Router
+  ) {
     this.contentService.setTypeOfContent('posts');
   }
 
@@ -34,5 +38,9 @@ export class PostsComponent implements OnInit {
         };
         this.posts = rows;
       });
+  }
+
+  redirectToPost({ id }: { id: string | undefined }) {
+    return this.router.navigate([`post/${id}`]);
   }
 }
