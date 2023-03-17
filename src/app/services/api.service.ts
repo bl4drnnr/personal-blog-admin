@@ -7,6 +7,8 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { GlobalMessageService } from '@services/global-message.service';
 import { EnvService } from '@services/env.service';
+import { IProject } from '@models/project.model';
+import { IPost } from '@models/post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +80,59 @@ export class ApiService {
         method: 'POST',
         params: { confirmationHash },
         payload: { password }
+      })
+      .pipe(catchError(this.errorHandler.bind(this)));
+  }
+
+  basicContentEdition({
+    id,
+    method,
+    action,
+    typeOfContent,
+    payload,
+    language,
+    page,
+    pageSize,
+    order,
+    orderBy,
+    searchQuery,
+    postTypes
+  }: {
+    id?: string;
+    method: string;
+    action: string;
+    typeOfContent: string;
+    payload?: IProject | IPost;
+    language?: string;
+    page?: number;
+    pageSize?: number;
+    order?: string;
+    orderBy?: string;
+    searchQuery?: string;
+    postTypes?: string;
+  }): Observable<
+    | { rows: Array<IPost>; count: number }
+    | { rows: Array<IProject>; count: number }
+    | IPost
+    | IProject
+    | { message: string }
+  > {
+    const requestUrl = `${this.frontProxyUrl}/${typeOfContent}/${action}`;
+
+    return this.http
+      .post(requestUrl, {
+        method,
+        payload,
+        params: {
+          id,
+          language,
+          page,
+          pageSize,
+          order,
+          orderBy,
+          searchQuery,
+          postTypes
+        }
       })
       .pipe(catchError(this.errorHandler.bind(this)));
   }

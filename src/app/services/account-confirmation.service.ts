@@ -12,7 +12,7 @@ export class AccountConfirmationService {
     password
   }: {
     confirmationHash: string;
-    password: string
+    password: string;
   }) {
     return this.apiService.confirmAccount({
       confirmationHash,

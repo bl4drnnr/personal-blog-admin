@@ -20,12 +20,17 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
-    canActivate: [IsAuthenticatedGuard]
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'posts',
+    component: PostsComponent,
     canActivate: [IsAuthenticatedGuard]
   },
   {
