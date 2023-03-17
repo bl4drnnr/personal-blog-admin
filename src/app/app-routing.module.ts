@@ -34,8 +34,13 @@ const routes: Routes = [
     canActivate: [IsAuthenticatedGuard]
   },
   {
-    path: 'posts',
-    component: PostsComponent,
+    path: 'projects',
+    component: ProjectsComponent,
+    canActivate: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'post',
+    component: PostComponent,
     children: [
       {
         path: ':id',
@@ -46,8 +51,8 @@ const routes: Routes = [
     canActivate: [IsAuthenticatedGuard]
   },
   {
-    path: 'projects',
-    component: ProjectsComponent,
+    path: 'project',
+    component: ProjectComponent,
     children: [
       {
         path: ':id',
