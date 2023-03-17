@@ -110,7 +110,13 @@ export class ApiService {
     orderBy?: string;
     searchQuery?: string;
     postTypes?: string;
-  }) {
+  }): Observable<
+    | { rows: Array<IPost>; count: number }
+    | { rows: Array<IProject>; count: number }
+    | IPost
+    | IProject
+    | { message: string }
+  > {
     const requestUrl = `${this.frontProxyUrl}/${typeOfContent}/${action}`;
 
     return this.http

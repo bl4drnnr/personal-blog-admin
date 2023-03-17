@@ -28,8 +28,8 @@ export class ContentService {
     pageSize: number;
     order: string;
     orderBy: string;
-    searchQuery: string;
-    postTypes: string;
+    searchQuery?: string;
+    postTypes?: string;
   }) {
     return this.apiService.basicContentEdition({
       method: 'GET',

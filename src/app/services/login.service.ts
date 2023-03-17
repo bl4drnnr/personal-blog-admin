@@ -10,14 +10,14 @@ export class LoginService {
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   constructor(private apiService: ApiService) {
-    const token = localStorage.getItem('_at');
+    const token = sessionStorage.getItem('_at');
     this._isLoggedIn$.next(!!token);
   }
 
   login({ email, password }: { email: string; password: string }) {
     return this.apiService.login({ email, password }).pipe(
       tap(({ _at }) => {
-        localStorage.setItem('_at', _at);
+        sessionStorage.setItem('_at', _at);
         this._isLoggedIn$.next(true);
       })
     );
