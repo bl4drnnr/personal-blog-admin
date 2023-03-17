@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ApiService } from '@services/api.service';
 import { IPost } from '@models/post.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostsService {
-  constructor(private apiService: ApiService) {}
+export class ContentService {
+  constructor(@Inject(ApiService) private apiService: ApiService) {}
 
-  typeOfContent = 'posts';
+  setTypeOfContent(typeOfContent: 'posts' | 'projects') {
+    this.typeOfContent = typeOfContent;
+  }
 
-  listPosts({
+  private typeOfContent: string;
+
+  listItems({
     language,
     page,
     pageSize,
@@ -41,7 +45,7 @@ export class PostsService {
     });
   }
 
-  createPost({ payload }: { payload: IPost }) {
+  createItem({ payload }: { payload: IPost }) {
     return this.apiService.basicContentEdition({
       method: 'POST',
       action: 'create',
@@ -50,7 +54,7 @@ export class PostsService {
     });
   }
 
-  getPost({ id }: { id: string }) {
+  getItem({ id }: { id: string }) {
     return this.apiService.basicContentEdition({
       id,
       method: 'GET',
@@ -59,7 +63,7 @@ export class PostsService {
     });
   }
 
-  deletePost({ id }: { id: string }) {
+  deleteItem({ id }: { id: string }) {
     return this.apiService.basicContentEdition({
       id,
       method: 'DELETE',
@@ -68,7 +72,7 @@ export class PostsService {
     });
   }
 
-  editPost({ id, payload }: { id: string; payload: IPost }) {
+  editItem({ id, payload }: { id: string; payload: IPost }) {
     return this.apiService.basicContentEdition({
       id,
       payload,

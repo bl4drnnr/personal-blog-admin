@@ -117,7 +117,16 @@ export class ApiService {
       .post(requestUrl, {
         method,
         payload,
-        params: { id }
+        params: {
+          id,
+          language,
+          page,
+          pageSize,
+          order,
+          orderBy,
+          searchQuery,
+          postTypes
+        }
       })
       .pipe(catchError(this.errorHandler.bind(this)));
   }
