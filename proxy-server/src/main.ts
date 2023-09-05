@@ -17,8 +17,8 @@ import * as bodyParser from 'body-parser';
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Mnemosyne')
-    .setDescription('Documentation of Mnemosyne Proxy API.')
+    .setTitle('Mikhail Bahdashych blog')
+    .setDescription('Documentation of Mikhail Bahdashych blog Proxy API.')
     .setVersion('0.0.1')
     .build();
 

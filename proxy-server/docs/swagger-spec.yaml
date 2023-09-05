@@ -62,8 +62,8 @@ paths:
       tags:
         - Proxy
 info:
-  title: Mnemosyne
-  description: Documentation of Mnemosyne Proxy API.
+  title: Mikhail Bahdashych blog
+  description: Documentation of Mikhail Bahdashych blog Proxy API.
   version: 0.0.1
   contact: {}
 tags: []

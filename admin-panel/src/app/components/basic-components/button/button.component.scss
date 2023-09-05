@@ -1,0 +1,116 @@
+@import 'variables';
+
+.btn-container {
+  width: 100%;
+}
+
+.btn {
+  min-height: 36px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--main-color-border);
+  transition: .3s;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  &.high-height {
+    height: 48px;
+  }
+
+  &.on-white {
+    background-color: $color-white;
+
+    &:hover {
+      background-color: var(--main-color-hover);
+    }
+
+    &.disabled {
+      border-color: $color-lightgray-third;
+      background-color: rgba($block-color, .2) !important;
+
+      &:hover {
+        cursor: default;
+        box-shadow: none !important;
+        background-color: rgba($block-color, .2) !important;
+      }
+    }
+  }
+
+  &.disabled {
+    background-color: var(--disabled-color);
+    border: 1px solid var(--border-color);
+
+    &:hover {
+      cursor: default;
+      box-shadow: none !important;
+      background-color: var(--disabled-color) !important;
+    }
+  }
+
+  &.danger {
+    border: 1px solid var(--warn-color);
+
+    &.disabled {
+      background-color: var(--disabled-color);
+      border: 1px solid var(--border-color);
+    }
+
+    &:hover {
+      border: 1px solid var(--warn-color);
+      background-color: var(--warn-color);
+    }
+  }
+
+  &.fill-danger {
+    border: 1px solid var(--error-color);
+    background-color: var(--warn-color);
+
+    &:hover {
+      border: 1px solid var(--error-color);
+      background-color: var(--error-color);
+    }
+  }
+
+  &.fill-button {
+    border: 1px solid var(--main-color);
+    background-color: var(--main-color);
+
+    &:hover {
+      background-color: var(--main-color-hover) !important;
+    }
+
+    &.disabled {
+      background-color: var(--disabled-color);
+      border: 1px solid var(--border-color);
+    }
+  }
+
+  &:hover {
+    background-color: var(--color-hover);
+  }
+}
+
+.button-label {
+  margin: 5px;
+  font-size: 14px;
+  font-weight: 400;
+
+  &.on-white {
+    color: $color-black;
+  }
+
+  &.fill-button {
+    color: $color-black !important;
+  }
+}
+
+.button-description {
+  font-size: small;
+  opacity: .5;
+  margin-top: 5px;
+
+  &.on-white {
+    color: $color-black;
+  }
+}
