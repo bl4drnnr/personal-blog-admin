@@ -9,6 +9,7 @@ import { ComponentsModule } from '@components/components.module';
 import { PagesModule } from '@pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from '@interceptors/auth.interceptor';
+import {LayoutsModule} from "@layouts/layouts.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { AuthInterceptor } from '@interceptors/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     ComponentsModule,
-    PagesModule
+    PagesModule,
+    LayoutsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

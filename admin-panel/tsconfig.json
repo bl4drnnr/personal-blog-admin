@@ -69,7 +69,8 @@
         "src/libs/enums/api/*"
       ],
       "@directives/*": ["src/app/directives/*"],
-      "@translations/*": ["src/libs/enums/translations/*"]
+      "@translations/*": ["src/libs/enums/translations/*"],
+      "@layouts/*": ["src/app/layouts/*"]
     }
   },
   "angularCompilerOptions": {
