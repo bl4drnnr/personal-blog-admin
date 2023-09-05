@@ -11,6 +11,8 @@ import { RefreshTokensInterface } from '@payloads/refresh-tokens.interface';
 import { ConfirmAccountInterface } from '@payloads/confirm-account.interface';
 import { ConfirmAccountResponse } from '@responses/confirm-account.enum';
 import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
+import { RegistrationPayload } from '@payloads/registration.interface';
+import { RegistrationResponse } from '@responses/registration.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,17 @@ export class AuthenticationService {
       method: Method.POST,
       controller: Controller.AUTH,
       action: AuthEndpoint.LOGIN,
+      payload
+    });
+  }
+
+  registration(
+    payload: RegistrationPayload
+  ): Observable<{ message: RegistrationResponse }> {
+    return this.apiService.apiProxyRequest({
+      method: Method.POST,
+      controller: Controller.AUTH,
+      action: AuthEndpoint.REGISTRATION,
       payload
     });
   }

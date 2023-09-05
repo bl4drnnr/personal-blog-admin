@@ -25,7 +25,8 @@
       "@shared/*": ["src/shared/services/*", "src/shared/*"],
       "@proxy/*": ["src/modules/proxy/*"],
       "@exceptions/*": ["src/exceptions/*"],
-      "@docs/*": ["src/libs/docs/*"]
+      "@docs/*": ["src/libs/docs/*"],
+      "@enums/*": ["src/libs/interfaces/*"]
     }
   }
 }

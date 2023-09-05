@@ -27,10 +27,8 @@ export class LoginComponent implements OnInit {
   incorrectEmail: boolean;
   incorrectPassword: boolean;
 
-  isPhoneRequired: boolean;
   isMfaRequired: boolean;
 
-  phoneCode: string;
   mfaCode: string;
 
   isMfaNotSet = true;
@@ -57,7 +55,6 @@ export class LoginComponent implements OnInit {
       .login({
         email: this.email,
         password: this.password,
-        phoneCode: this.phoneCode,
         mfaCode: this.mfaCode
       })
       .subscribe({
@@ -72,15 +69,6 @@ export class LoginComponent implements OnInit {
               this.step = 1;
               this.isMfaNotSet = false;
               this.isRecoveryKeysNotSet = true;
-              break;
-            case LoginResponse.FULL_MFA_REQUIRED:
-              this.step = 3;
-              this.isPhoneRequired = true;
-              this.isMfaRequired = true;
-              break;
-            case LoginResponse.PHONE_REQUIRED:
-              this.step = 3;
-              this.isPhoneRequired = true;
               break;
             case LoginResponse.TOKEN_TWO_FA_REQUIRED:
               this.step = 3;

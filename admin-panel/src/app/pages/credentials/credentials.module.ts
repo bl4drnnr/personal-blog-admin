@@ -8,7 +8,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AccountModule } from '@pages/account/account.module';
 import { AccountConfirmationComponent } from '@pages/account-confirmation/account-confirmation.component';
 import { PagesComponentsModule } from '@components/pages-components/pages-components.module';
-import {LayoutsModule} from "@layouts/layouts.module";
+import { LayoutsModule } from '@layouts/layouts.module';
 
 const components = [
   LoginComponent,
