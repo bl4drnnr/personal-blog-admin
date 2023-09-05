@@ -26,7 +26,7 @@ export interface ITitle {
   content: string;
 }
 
-export enum LanguageType {
+export enum Language {
   pl = 'pl',
   ru = 'ru',
   en = 'en'
@@ -39,7 +39,7 @@ export enum PostType {
 
 export interface IPost {
   id?: string;
-  language?: LanguageType;
+  language?: Language;
   title?: string;
   slug?: string;
   tags?: string;

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProxyHttpService } from '@shared/http.service';
+import { ProxyActionPayloadInterface } from '@interfaces/proxy-action-payload.interface';
 
 @Injectable()
 export class ProxyService {
@@ -11,22 +12,17 @@ export class ProxyService {
     payload,
     method,
     params,
-    signUpApiAuthToken
-  }: {
-    controller: string;
-    action: string;
-    payload?: object;
-    method: string;
-    params?: object;
-    signUpApiAuthToken?: string;
-  }) {
+    accessToken,
+    cookies
+  }: ProxyActionPayloadInterface) {
     return await this.proxyHttpService.proxyRequest({
       controller,
       action,
       payload,
       method,
       params,
-      signUpApiAuthToken
+      accessToken,
+      cookies
     });
   }
 }

@@ -32,7 +32,7 @@ export interface ITitle {
   content: string;
 }
 
-export enum LanguageType {
+export enum Language {
   pl = 'pl',
   ru = 'ru',
   en = 'en'
@@ -40,7 +40,7 @@ export enum LanguageType {
 
 export interface IProject {
   id?: string;
-  language?: LanguageType;
+  language?: Language;
   title?: string;
   slug?: string;
   brief?: string;

@@ -18,8 +18,14 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@interfaces/*": [
+        "src/libs/enums/*",
+        "src/libs/interfaces/*"
+      ],
       "@shared/*": ["src/shared/services/*", "src/shared/*"],
-      "@proxy/*": ["src/modules/proxy/*"]
+      "@proxy/*": ["src/modules/proxy/*"],
+      "@exceptions/*": ["src/exceptions/*"],
+      "@docs/*": ["src/libs/docs/*"]
     }
   }
 }

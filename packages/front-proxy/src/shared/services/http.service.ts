@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable, HttpException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiConfigService } from '@shared/config.service';
 import { AxiosRequestConfig } from 'axios';
-import { firstValueFrom } from 'rxjs';
+import { UnhandledEndpointException } from '@exceptions/unhandled-endpoint.exception';
+import { ProxyActionPayloadInterface } from '@interfaces/proxy-action-payload.interface';
 
 @Injectable()
 export class ProxyHttpService {
@@ -17,15 +18,9 @@ export class ProxyHttpService {
     payload,
     method,
     params,
-    signUpApiAuthToken
-  }: {
-    controller: string;
-    action: string;
-    payload?: object;
-    method: string;
-    params?: object;
-    signUpApiAuthToken?: string;
-  }) {
+    accessToken,
+    cookies
+  }: ProxyActionPayloadInterface): Promise<object> {
     const allowedMethods = this.configService.allowedRequestMethods;
     const allowedControllers = this.configService.allowedControllers;
     const allowedEndpoints = this.configService.allowedEndpoints;
@@ -36,8 +31,9 @@ export class ProxyHttpService {
       !allowedMethods.includes(method) ||
       !allowedEndpoints.includes(action) ||
       !allowedControllers.includes(controller)
-    )
-      throw new BadRequestException('no-method-controller-or-action');
+    ) {
+      throw new UnhandledEndpointException();
+    }
 
     const { username, password } = this.configService.basicAuthConfig;
 
@@ -53,20 +49,36 @@ export class ProxyHttpService {
       }
     };
 
-    if (action === 'sign-up') {
-      requestConfig.headers['registration-authorization'] = signUpApiAuthToken;
-    }
+    const bodySupportMethod = ['POST', 'PATCH', 'DELETE'];
 
-    requestConfig.data = method === 'POST' ? payload : {};
+    requestConfig.data = bodySupportMethod.includes(method) ? payload : {};
     requestConfig.params = params ? params : {};
 
-    return firstValueFrom(this.httpService.request(requestConfig))
-      .then((res) => res.data)
-      .catch((error: any) => {
-        throw new HttpException(
-          error.response?.data?.error || 'Internal server error',
-          error.response?.data?.statusCode || 500
-        );
+    if (accessToken) requestConfig.headers['X-Access-Token'] = accessToken;
+    if (cookies) requestConfig.headers.cookie = cookies;
+
+    return new Promise((resolve, reject) => {
+      this.httpService.request(requestConfig).subscribe({
+        next: (res) => {
+          resolve(res.data);
+        },
+        error: async (error: any) => {
+          let errorMessage = error.response?.data;
+
+          try {
+            errorMessage = { messages: JSON.parse(errorMessage.message) };
+          } catch (e) {
+            errorMessage = error.response?.data;
+          }
+
+          reject(
+            new HttpException(
+              errorMessage || 'internal-server-error',
+              error.response?.data?.statusCode || 500
+            )
+          );
+        }
       });
+    });
   }
 }
