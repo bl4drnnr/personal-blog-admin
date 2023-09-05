@@ -9,7 +9,7 @@ import { ComponentsModule } from '@components/components.module';
 import { PagesModule } from '@pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from '@interceptors/auth.interceptor';
-import {LayoutsModule} from "@layouts/layouts.module";
+import { LayoutsModule } from '@layouts/layouts.module';
 
 @NgModule({
   declarations: [AppComponent],
