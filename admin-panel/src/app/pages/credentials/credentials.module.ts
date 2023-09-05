@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { LoginComponent } from '@pages/login/login.component';
 import { ComponentsModule } from '@components/components.module';
-import {RouterModule, Routes} from "@angular/router";
-import {ModeToggleModule} from "@components/theme-toggle/theme-toggle.module";
+import { RouterModule, Routes } from '@angular/router';
+import { ModeToggleModule } from '@components/theme-toggle/theme-toggle.module';
 
-const components = [
-  LoginComponent,
-];
+const components = [LoginComponent];
 
 const routes: Routes = [
   {

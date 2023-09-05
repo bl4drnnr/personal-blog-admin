@@ -1,7 +1,7 @@
-import { Global, Module } from '@nestjs/common';
-import { ApiConfigService } from '@shared/config.service';
-import { ProxyHttpService } from '@shared/http.service';
-import { HttpModule } from '@nestjs/axios';
+import { Global, Module } from "@nestjs/common";
+import { ApiConfigService } from "@shared/config.service";
+import { ProxyHttpService } from "@shared/http.service";
+import { HttpModule } from "@nestjs/axios";
 
 const providers = [ApiConfigService, ProxyHttpService];
 
@@ -9,6 +9,6 @@ const providers = [ApiConfigService, ProxyHttpService];
 @Module({
   providers,
   exports: [...providers],
-  imports: [HttpModule]
+  imports: [HttpModule],
 })
 export class SharedModule {}

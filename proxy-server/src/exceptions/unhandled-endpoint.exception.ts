@@ -1,7 +1,7 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException } from "@nestjs/common";
 
 export class UnhandledEndpointException extends BadRequestException {
-  constructor(message = 'unhandled-endpoint') {
+  constructor(message = "unhandled-endpoint") {
     super(message);
   }
 }

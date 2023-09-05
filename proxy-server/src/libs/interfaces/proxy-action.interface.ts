@@ -1,18 +1,18 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DocsProperty } from '@interfaces/docs-property.enum';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { DocsProperty } from "@interfaces/docs-property.enum";
 
 export class ProxyActionInterface {
   @ApiProperty({
     type: String,
     description: DocsProperty.METHOD_DESC,
-    example: DocsProperty.METHOD_EXAMPLE
+    example: DocsProperty.METHOD_EXAMPLE,
   })
   readonly method: string;
 
   @ApiProperty({
     type: Object,
     description: DocsProperty.PAYLOAD_DESC,
-    example: DocsProperty.PAYLOAD_EXAMPLE
+    example: DocsProperty.PAYLOAD_EXAMPLE,
   })
   @ApiPropertyOptional()
   readonly payload?: object;
@@ -20,7 +20,7 @@ export class ProxyActionInterface {
   @ApiProperty({
     type: Object,
     description: DocsProperty.PARAMS_DESC,
-    example: DocsProperty.PARAMS_EXAMPLE
+    example: DocsProperty.PARAMS_EXAMPLE,
   })
   @ApiPropertyOptional()
   readonly params?: object;

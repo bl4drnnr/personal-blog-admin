@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "NODE_ENV=development npm run start --workspace=front-proxy & npm run start --workspace=admin-panel",
     "proxy:dev": "NODE_ENV=development npm run start --workspace=front-proxy",
-    "panel:dev": "npm run start --workspace=admin-panel"
+    "panel:dev": "npm run start --workspace=admin-panel",
+    "format:proxy": "npm run format --workspace=front-proxy",
+    "format:panel": "npm run format --workspace=admin-panel",
+    "format": "npm run format --workspace=front-proxy; npm run format --workspace=admin-panel"
   },
   "workspaces": [
     "./*"

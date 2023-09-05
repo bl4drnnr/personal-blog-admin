@@ -9,9 +9,7 @@ import { ErrorMessagesInterface } from '@interfaces/error-messages.interface';
   providedIn: 'root'
 })
 export class ErrorHandlerService {
-  constructor(
-    private readonly globalMessageService: GlobalMessageService
-  ) {}
+  constructor(private readonly globalMessageService: GlobalMessageService) {}
 
   async errorHandler(error: HttpErrorResponse) {
     const errorPayload: ErrorPayloadInterface = error.error;

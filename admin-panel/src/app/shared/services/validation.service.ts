@@ -23,7 +23,7 @@ export class ValidationService {
       spec: string;
       digit: string;
       upper: string;
-    } =  {
+    } = {
       eightChars: 'Password length should be more than 8 characters',
       lower: 'Password should contain at least one lowercase character',
       spec: 'Password should contain at least one special character',

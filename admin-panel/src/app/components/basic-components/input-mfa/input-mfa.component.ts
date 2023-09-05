@@ -32,9 +32,7 @@ export class InputMfaComponent implements OnInit {
   resendMessage: string;
   isCountdownRunning = false;
 
-  constructor(
-    public loaderService: LoaderService
-  ) {}
+  constructor(public loaderService: LoaderService) {}
 
   resendButtonDisabled() {
     return this.isCountdownRunning || this.loaderService.getStatus();
@@ -74,7 +72,7 @@ export class InputMfaComponent implements OnInit {
   }
 
   private async updateResendMessage(time: number) {
-    this.resendMessage = '';
+    this.resendMessage = `You can resent the message in the ${time} sec`;
   }
 
   private resetTime() {

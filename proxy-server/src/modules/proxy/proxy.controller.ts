@@ -5,15 +5,15 @@ import {
   ApiOperation,
   ApiQuery,
   ApiResponse,
-  ApiTags
-} from '@nestjs/swagger';
-import { Controller, Param, Post, Body, Res, Headers } from '@nestjs/common';
-import { ProxyService } from '@proxy/proxy.service';
-import { ProxyActionInterface } from '@interfaces/proxy-action.interface';
-import { ProxyDocs } from '@docs/proxy.docs';
+  ApiTags,
+} from "@nestjs/swagger";
+import { Controller, Param, Post, Body, Res, Headers } from "@nestjs/common";
+import { ProxyService } from "@proxy/proxy.service";
+import { ProxyActionInterface } from "@interfaces/proxy-action.interface";
+import { ProxyDocs } from "@docs/proxy.docs";
 
-@ApiTags('Proxy')
-@Controller('proxy')
+@ApiTags("Proxy")
+@Controller("proxy")
 export class ProxyController {
   constructor(private readonly proxyService: ProxyService) {}
 
@@ -25,14 +25,14 @@ export class ProxyController {
   @ApiQuery(ProxyDocs.ProxyAction.ApiActionQuery)
   @ApiHeader(ProxyDocs.ProxyAction.ApiAccessTokenHeader)
   @ApiHeader(ProxyDocs.ProxyAction.ApiCookieHeader)
-  @Post(':controller/:action')
+  @Post(":controller/:action")
   async proxyAction(
-    @Param('controller') controller: string,
-    @Param('action') action: string,
+    @Param("controller") controller: string,
+    @Param("action") action: string,
     @Res({ passthrough: true }) res,
     @Body() { method, payload, params }: ProxyActionInterface,
-    @Headers('X-Access-Token') accessToken?: string,
-    @Headers('cookie') cookies?: string
+    @Headers("X-Access-Token") accessToken?: string,
+    @Headers("cookie") cookies?: string
   ) {
     const response = await this.proxyService.proxyAction({
       controller,
@@ -41,11 +41,11 @@ export class ProxyController {
       method,
       params,
       cookies,
-      accessToken
+      accessToken,
     });
 
-    if ('_at' in response && '_rt' in response) {
-      res.cookie('_rt', response._rt, { httpOnly: true });
+    if ("_at" in response && "_rt" in response) {
+      res.cookie("_rt", response._rt, { httpOnly: true });
       return { _at: response._at };
     } else {
       return response;

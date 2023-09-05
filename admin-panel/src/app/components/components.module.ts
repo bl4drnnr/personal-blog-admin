@@ -4,10 +4,7 @@ import { BasicComponentsModule } from '@components/basic-components.module';
 import { LayoutComponentsModule } from '@components/layout-components.module';
 
 @NgModule({
-  exports: [
-    BasicComponentsModule,
-    LayoutComponentsModule
-  ],
+  exports: [BasicComponentsModule, LayoutComponentsModule],
   imports: [CommonModule]
 })
 export class ComponentsModule {}

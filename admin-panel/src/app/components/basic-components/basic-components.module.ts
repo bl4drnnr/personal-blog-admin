@@ -33,15 +33,8 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [
-    ...components,
-  ],
-  imports: [
-    CommonModule,
-    NgOptimizedImage,
-    FormsModule,
-    ModeToggleModule
-  ],
+  declarations: [...components],
+  imports: [CommonModule, NgOptimizedImage, FormsModule, ModeToggleModule],
   exports: [...components]
 })
 export class BasicComponentsModule {}
