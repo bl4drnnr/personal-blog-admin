@@ -8,6 +8,9 @@ import { LoginPayload } from '@payloads/login.interface';
 import { LoginResponse } from '@responses/login.enum';
 import { LogoutResponse } from '@responses/logout.enum';
 import { RefreshTokensInterface } from '@payloads/refresh-tokens.interface';
+import { ConfirmAccountInterface } from '@payloads/confirm-account.interface';
+import { ConfirmAccountResponse } from '@responses/confirm-account.enum';
+import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +47,17 @@ export class AuthenticationService {
       controller: Controller.AUTH,
       action: AuthEndpoint.LOGOUT,
       accessToken
+    });
+  }
+
+  confirmAccount({
+    confirmationHash
+  }: ConfirmAccountInterface): Observable<{ message: ConfirmAccountResponse }> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.CONFIRMATION_HASH,
+      action: ConfirmationHashEndpoint.ACCOUNT_CONFIRMATION,
+      params: { confirmationHash }
     });
   }
 }

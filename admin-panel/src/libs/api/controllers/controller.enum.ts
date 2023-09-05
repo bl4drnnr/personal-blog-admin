@@ -1,3 +1,6 @@
 export enum Controller {
-  AUTH = 'auth'
+  AUTH = 'auth',
+  CONFIRMATION_HASH = 'confirmation-hash',
+  SECURITY = 'security',
+  RECOVERY = 'recovery'
 }

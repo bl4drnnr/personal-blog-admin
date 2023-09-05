@@ -4,10 +4,22 @@ import { LoginComponent } from '@pages/login/login.component';
 import { ComponentsModule } from '@components/components.module';
 import { RouterModule, Routes } from '@angular/router';
 import { ModeToggleModule } from '@components/theme-toggle/theme-toggle.module';
+import { RegistrationComponent } from './registration/registration.component';
+import { AccountModule } from '@pages/account/account.module';
+import { AccountConfirmationComponent } from '@pages/account-confirmation/account-confirmation.component';
+import { PagesComponentsModule } from '@components/pages-components/pages-components.module';
 
-const components = [LoginComponent];
+const components = [
+  LoginComponent,
+  RegistrationComponent,
+  AccountConfirmationComponent
+];
 
 const routes: Routes = [
+  {
+    path: 'registration',
+    component: RegistrationComponent
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -15,6 +27,10 @@ const routes: Routes = [
   {
     path: 'home',
     redirectTo: 'dashboard'
+  },
+  {
+    path: 'account-confirmation/:hash',
+    component: AccountConfirmationComponent
   },
   {
     path: 'index',
@@ -26,10 +42,12 @@ const routes: Routes = [
   declarations: [...components],
   imports: [
     RouterModule.forRoot(routes),
+    AccountModule,
     CommonModule,
     ComponentsModule,
     NgOptimizedImage,
-    ModeToggleModule
+    ModeToggleModule,
+    PagesComponentsModule
   ],
   exports: [...components]
 })

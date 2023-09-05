@@ -42,10 +42,14 @@
         "src/app/shared/services/*"
       ],
       "@responses/*": [
-        "src/libs/api/responses/auth/*"
+        "src/libs/api/responses/auth/*",
+        "src/libs/api/responses/mfa/*",
+        "src/libs/api/responses/recovery/*"
       ],
       "@payloads/*": [
-        "src/libs/api/payloads/auth/*"
+        "src/libs/api/payloads/auth/*",
+        "src/libs/api/payloads/mfa/*",
+        "src/libs/api/payloads/recovery/*"
       ],
       "@env/*": ["src/app/environments/*"],
       "@guards/*": ["src/app/guards/*"],

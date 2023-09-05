@@ -27,10 +27,14 @@ export class LoginComponent implements OnInit {
   incorrectEmail: boolean;
   incorrectPassword: boolean;
 
+  isPhoneRequired: boolean;
   isMfaRequired: boolean;
 
   phoneCode: string;
   mfaCode: string;
+
+  isMfaNotSet = true;
+  isRecoveryKeysNotSet = true;
 
   constructor(
     private readonly authenticationService: AuthenticationService,
@@ -59,6 +63,25 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: async ({ message, _at }) => {
           switch (message) {
+            case LoginResponse.MFA_NOT_SET:
+              this.step = 1;
+              this.isMfaNotSet = true;
+              this.isRecoveryKeysNotSet = false;
+              break;
+            case LoginResponse.RECOVERY_KEYS_NOT_SET:
+              this.step = 1;
+              this.isMfaNotSet = false;
+              this.isRecoveryKeysNotSet = true;
+              break;
+            case LoginResponse.FULL_MFA_REQUIRED:
+              this.step = 3;
+              this.isPhoneRequired = true;
+              this.isMfaRequired = true;
+              break;
+            case LoginResponse.PHONE_REQUIRED:
+              this.step = 3;
+              this.isPhoneRequired = true;
+              break;
             case LoginResponse.TOKEN_TWO_FA_REQUIRED:
               this.step = 3;
               this.isMfaRequired = true;
