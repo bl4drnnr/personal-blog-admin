@@ -3,6 +3,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { LoginComponent } from '@pages/login/login.component';
 import { ComponentsModule } from '@components/components.module';
 import {RouterModule, Routes} from "@angular/router";
+import {ModeToggleModule} from "@components/theme-toggle/theme-toggle.module";
 
 const components = [
   LoginComponent,
@@ -12,6 +13,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'home',
+    redirectTo: 'dashboard'
+  },
+  {
+    path: 'index',
+    redirectTo: 'dashboard'
   }
 ];
 
@@ -21,7 +30,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CommonModule,
     ComponentsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ModeToggleModule
   ],
   exports: [...components]
 })

@@ -7,6 +7,7 @@ import { AuthenticationService } from '@services/authentication.service';
 @Component({
   selector: 'page-login',
   templateUrl: './login.component.html',
+  styleUrls: ['../shared/credentials.component.scss'],
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
