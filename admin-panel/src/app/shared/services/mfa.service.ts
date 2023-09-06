@@ -6,7 +6,7 @@ import { Controller } from '@interfaces/controller.enum';
 import { SecurityEndpoint } from '@interfaces/security.enum';
 import { VerifyTwoFaPayload } from '@payloads/verify-two-fa.interface';
 import { VerifyTwoFaResponse } from '@responses/verify-two-fa.enum';
-import { LoginPhonePayload } from '@payloads/login-phone.interface';
+import { MfaPayloadInterface } from '@payloads/mfa-payload.interface';
 import { GenerateTwoFaResponse } from '@responses/generate-two-fa.interface';
 import { RegistrationGenerate2faInterface } from '@payloads/registration-generate-2fa.interface';
 
@@ -28,23 +28,13 @@ export class MfaService {
   }
 
   loginGenerateTwoFaQrCode(
-    payload: LoginPhonePayload
+    payload: MfaPayloadInterface
   ): Observable<GenerateTwoFaResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.SECURITY,
       action: SecurityEndpoint.LOGIN_GENERATE_2FA_QR,
       payload
-    });
-  }
-
-  generateTwoFaQrCode(): Observable<GenerateTwoFaResponse> {
-    const accessToken = localStorage.getItem('_at')!;
-    return this.apiService.apiProxyRequest({
-      method: Method.GET,
-      controller: Controller.SECURITY,
-      action: SecurityEndpoint.GENERATE_2FA_QR,
-      accessToken
     });
   }
 
@@ -70,19 +60,6 @@ export class MfaService {
       controller: Controller.SECURITY,
       action: SecurityEndpoint.LOGIN_VERIFY_2FA,
       payload
-    });
-  }
-
-  verifyTwoFaQrCode(
-    payload: VerifyTwoFaPayload
-  ): Observable<{ message: VerifyTwoFaResponse }> {
-    const accessToken = localStorage.getItem('_at')!;
-    return this.apiService.apiProxyRequest({
-      method: Method.POST,
-      controller: Controller.SECURITY,
-      action: SecurityEndpoint.VERIFY_2FA,
-      payload,
-      accessToken
     });
   }
 }

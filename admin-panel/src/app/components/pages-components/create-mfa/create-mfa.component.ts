@@ -29,7 +29,7 @@ export class CreateMfaComponent {
   constructor(private readonly mfaService: MfaService) {}
 
   async changeMfaOption() {
-    this.selectedMfaOption = this.mfaOptions[1];
+    this.selectedMfaOption = this.mfaOptions[0];
     await this.generateTwoFaQrCode();
   }
 

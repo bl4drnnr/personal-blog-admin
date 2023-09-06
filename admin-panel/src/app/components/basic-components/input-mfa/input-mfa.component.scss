@@ -1,0 +1,94 @@
+@import 'variables';
+
+.two-factor-auth {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.resend-message {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin-top: 10px;
+  opacity: 0.8;
+
+  &.on-white {
+    color: $color-black;
+  }
+}
+
+.two-factor-input[type="text"] {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--input-shadow);
+  transition: all 0.3s;
+  color: var(--text-color);
+
+  &.on-white {
+    border: 1px solid rgba($color-main-border, .5);
+    background-color: $color-white;
+    color: $text-color;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      background-color: $color-white;
+      border: 1px solid rgba($color-black, .1);
+    }
+  }
+
+  @include respond_device(to_m) {
+    width: 42px;
+    height: 42px;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--input-shadow);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+  }
+}
+
+.resend-button {
+  height: 50px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--main-color-hover);
+  transition: .3s;
+
+  &.disabled {
+    background-color: var(--disabled-color);
+    border: 1px solid var(--border-color);
+
+    &:hover {
+      cursor: default;
+      box-shadow: none !important;
+      background-color: var(--border-color) !important;
+    }
+  }
+
+  &:hover {
+    box-shadow: var(--input-shadow);
+    background-color: var(--color-hover);
+    border: 1px solid var(--border-color);
+  }
+}
+
+.resend-button-label {
+  padding: 0 10px;
+
+  &.on-white {
+    color: $color-black;
+  }
+}

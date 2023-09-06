@@ -6,11 +6,13 @@
 
   <p class="paragraph">According to Security & Privacy policies you are obligated to secure your personal account with additional measures. This measure is multi-factor authentication (MFA/2FA).</p>
 
-  <basic-dropdown
-    [options]="[{ key: 'mfa', value: 'Authentication application' }]"
-    (selectedOption)="changeMfaOption()"
-    defaultLabel="Select MFA option"
-  />
+  <div class="dropdown-wrapper">
+    <basic-dropdown
+      [options]="[{ key: 'mfa', value: 'Authentication application' }]"
+      (selectedOption)="changeMfaOption()"
+      defaultLabel="Select MFA option"
+    />
+  </div>
 
   <div *ngIf="selectedMfaOption?.key === 'mfa'">
     <basic-qr-mfa
