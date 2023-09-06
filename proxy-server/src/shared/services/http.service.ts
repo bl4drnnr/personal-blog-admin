@@ -23,7 +23,15 @@ export class ProxyHttpService {
   }: ProxyActionPayloadInterface): Promise<object> {
     const allowedMethods = this.configService.allowedRequestMethods;
     const allowedControllers = this.configService.allowedControllers;
-    const allowedEndpoints = this.configService.allowedEndpoints;
+    const allowedEndpoints = [
+      ...this.configService.allowedEndpoints.authEndpoints,
+      ...this.configService.allowedEndpoints.hashEndpoints,
+      ...this.configService.allowedEndpoints.projectsEndpoints,
+      ...this.configService.allowedEndpoints.postsEndpoints,
+      ...this.configService.allowedEndpoints.usersEndpoints,
+      ...this.configService.allowedEndpoints.securityEndpoints,
+      ...this.configService.allowedEndpoints.recoveryEndpoints,
+    ];
 
     const originApiUrl = this.configService.originApiUrl;
 
