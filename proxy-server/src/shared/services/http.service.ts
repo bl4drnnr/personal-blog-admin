@@ -26,7 +26,6 @@ export class ProxyHttpService {
     const allowedEndpoints = [
       ...this.configService.allowedEndpoints.authEndpoints,
       ...this.configService.allowedEndpoints.hashEndpoints,
-      ...this.configService.allowedEndpoints.projectsEndpoints,
       ...this.configService.allowedEndpoints.postsEndpoints,
       ...this.configService.allowedEndpoints.usersEndpoints,
       ...this.configService.allowedEndpoints.securityEndpoints,

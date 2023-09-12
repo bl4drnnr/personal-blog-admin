@@ -1,6 +1,21 @@
 <div class="sidebar-container" *ngIf="isSidebarOpen" (click)="handleCloseSidebar()">
   <div class="sidebar-box" [@slideInOut]="true">
-    <div class="sidebar-side"></div>
+    <div class="sidebar-side">
+      <div class="button-wrapper">
+        <basic-button
+          label="Dashboard"
+          (buttonClick)="handleRedirect('account/dashboard')"
+          [fillButton]="currentRoute === '/account/dashboard'"
+        />
+      </div>
+      <div class="button-wrapper">
+        <basic-button
+          label="Posts"
+          (buttonClick)="handleRedirect('account/posts')"
+          [fillButton]="currentRoute === '/account/posts'"
+        />
+      </div>
+    </div>
 
     <div class="sidebar-side">
       <basic-button

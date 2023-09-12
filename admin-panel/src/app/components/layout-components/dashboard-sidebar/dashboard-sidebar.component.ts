@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 
@@ -18,10 +18,12 @@ import { Router } from '@angular/router';
     ])
   ]
 })
-export class DashboardSidebarComponent {
+export class DashboardSidebarComponent implements OnInit {
   @Input() isSidebarOpen = false;
 
   @Output() closeSidebar = new EventEmitter<void>();
+
+  currentRoute: string;
 
   constructor(private readonly router: Router) {}
 
@@ -32,5 +34,9 @@ export class DashboardSidebarComponent {
 
   async handleRedirect(path: string) {
     await this.router.navigate([path]);
+  }
+
+  ngOnInit() {
+    this.currentRoute = this.router.url;
   }
 }

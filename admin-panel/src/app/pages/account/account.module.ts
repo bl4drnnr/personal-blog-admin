@@ -4,8 +4,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { LayoutsModule } from '@layouts/layouts.module';
+import { PostsComponent } from './posts/posts.component';
+import { PostComponent } from './post/post.component';
 
-const components = [DashboardComponent, SettingsComponent];
+const components = [
+  DashboardComponent,
+  SettingsComponent,
+  PostsComponent,
+  PostComponent
+];
 
 const routes: Routes = [
   {
@@ -15,6 +22,14 @@ const routes: Routes = [
   {
     path: 'account/settings',
     component: SettingsComponent
+  },
+  {
+    path: 'account/posts',
+    component: PostsComponent
+  },
+  {
+    path: 'account/post/:slug',
+    component: PostComponent
   },
   {
     path: '',

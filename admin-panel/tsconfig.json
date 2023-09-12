@@ -44,11 +44,13 @@
       "@responses/*": [
         "src/libs/api/responses/auth/*",
         "src/libs/api/responses/mfa/*",
+        "src/libs/api/responses/posts/*",
         "src/libs/api/responses/recovery/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
         "src/libs/api/payloads/mfa/*",
+        "src/libs/api/payloads/posts/*",
         "src/libs/api/payloads/recovery/*"
       ],
       "@env/*": ["src/app/environments/*"],
@@ -62,11 +64,13 @@
         "src/libs/interfaces/pages/*",
         "src/libs/interfaces/api/*",
         "src/libs/types/translations/*",
+        "src/libs/types/*",
         "src/libs/api/controllers/*",
         "src/libs/api/endpoints/*",
         "src/libs/api/methods/*",
         "src/libs/api/errors/*",
-        "src/libs/enums/api/*"
+        "src/libs/enums/api/*",
+        "src/libs/enums/*"
       ],
       "@directives/*": ["src/app/directives/*"],
       "@translations/*": ["src/libs/enums/translations/*"],
