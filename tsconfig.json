@@ -1,0 +1,58 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "paths": {
+      "@components/*": [
+        "src/app/components/*",
+        "src/app/components/basic-components/*",
+        "src/app/components/pages-components/*",
+        "src/app/components/layout-components/*",
+        "src/app/components/dashboard-components/*"
+      ],
+      "@pages/*": [
+        "src/app/pages/*",
+        "src/app/pages/credentials/*",
+        "src/app/pages/dashboard/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*",
+        "src/app/shared/api/*"
+      ],
+      "@services/*": [
+        "src/app/shared/services/*"
+      ],
+      "@responses/*": [],
+      "@payloads/*": [],
+      "@layouts/*": ["src/app/layouts/*"],
+      "@modules/*": ["src/app/modules/*"],
+      "@interfaces/*": []
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
