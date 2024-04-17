@@ -1,23 +1,24 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "strictPropertyInitialization": false,
     "lib": [
       "ES2022",
       "dom"
@@ -37,16 +38,55 @@
       ],
       "@shared/*": [
         "src/app/shared/*",
-        "src/app/shared/api/*"
+        "src/app/shared/api/*",
+        "src/app/shared/global-components-services/*"
       ],
+      "@env/*": ["src/app/environments/*"],
       "@services/*": [
         "src/app/shared/services/*"
       ],
-      "@responses/*": [],
-      "@payloads/*": [],
+      "@interfaces/*": [
+        "src/libs/interfaces/*",
+        "src/libs/interfaces/components/*",
+        "src/libs/interfaces/pages/*",
+        "src/libs/interfaces/api/*",
+        "src/libs/types/components/*",
+        "src/libs/types/api/*",
+        "src/libs/types/translations/*",
+        "src/libs/api/controllers/*",
+        "src/libs/api/endpoints/*",
+        "src/libs/api/methods/*",
+        "src/libs/api/errors/*",
+        "src/libs/enums/api/*"
+      ],
+      "@responses/*": [
+        "src/libs/api/responses/auth/*",
+        "src/libs/api/responses/mfa/*",
+        "src/libs/api/responses/phone/*",
+        "src/libs/api/responses/recovery/*",
+        "src/libs/api/responses/users/*",
+        "src/libs/api/responses/email/*",
+        "src/libs/api/responses/company/*",
+        "src/libs/api/responses/company-roles/*",
+        "src/libs/api/responses/company-users/*",
+        "src/libs/api/responses/products/*",
+        "src/libs/api/responses/categories/*"
+      ],
+      "@payloads/*": [
+        "src/libs/api/payloads/auth/*",
+        "src/libs/api/payloads/mfa/*",
+        "src/libs/api/payloads/phone/*",
+        "src/libs/api/payloads/recovery/*",
+        "src/libs/api/payloads/users/*",
+        "src/libs/api/payloads/email/*",
+        "src/libs/api/payloads/company/*",
+        "src/libs/api/payloads/company-roles/*",
+        "src/libs/api/payloads/company-users/*",
+        "src/libs/api/payloads/products/*",
+        "src/libs/api/payloads/categories/*"
+      ],
       "@layouts/*": ["src/app/layouts/*"],
-      "@modules/*": ["src/app/modules/*"],
-      "@interfaces/*": []
+      "@modules/*": ["src/app/modules/*"]
     }
   },
   "angularCompilerOptions": {

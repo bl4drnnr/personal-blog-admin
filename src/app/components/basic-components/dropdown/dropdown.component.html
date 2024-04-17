@@ -1,0 +1,26 @@
+<div class="dropdown">
+  <p
+    class="dropdown-label"
+    [ngClass]="{ 'on-white': onWhite }"
+    *ngIf="label"
+  >{{ label }}</p>
+  <button
+    class="dropdown-toggle"
+    [ngClass]="{ 'on-white': onWhite }"
+    (click)="toggleDropdown()"
+    [disabled]="disabled"
+  >
+    <basic-arrow [onWhite]="onWhite" [isArrowOpen]="isDropdownOpen" />
+    {{ defaultValue.value || currentOption || defaultLabel }}
+  </button>
+  <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen, 'on-white': onWhite }">
+    <button
+      *ngFor="let option of options"
+      class="dropdown-item"
+      [ngClass]="{ 'active': option.value === currentOption, 'on-white': onWhite }"
+      (click)="onSelect(option.key)"
+    >
+      {{ option.value }}
+    </button>
+  </div>
+</div>
