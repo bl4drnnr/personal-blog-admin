@@ -5,7 +5,7 @@ import { environment } from '@env/environment.development';
   providedIn: 'root'
 })
 export class EnvService {
-  get getFrontProxyUrl() {
+  get getApiUrl() {
     return environment.apiUrl;
   }
 

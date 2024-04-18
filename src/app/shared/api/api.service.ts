@@ -18,7 +18,7 @@ export class ApiService {
     private readonly errorHandler: ErrorHandlerService
   ) {}
 
-  private frontProxyUrl: string = this.envService.getFrontProxyUrl;
+  private apiUrl: string = this.envService.getApiUrl;
 
   apiProxyRequest({
     controller,
@@ -27,21 +27,32 @@ export class ApiService {
     payload,
     params
   }: ProxyRequestInterface): Observable<any> {
-    const requestUrl = `${this.frontProxyUrl}/${controller}/${action}`;
-    const requestBody: {
-      method: Method;
-      params?: object;
-      payload?: object;
-    } = { method };
+    const requestUrl = `${this.apiUrl}/${controller}/${action}`;
+
     const headers: { [key: string]: string } = {};
 
-    if (params) requestBody.params = params;
-    if (payload) requestBody.payload = payload;
+    let request$: Observable<any>;
 
-    const request$ = this.http.post<any>(requestUrl, requestBody, {
+    const requestOptions = {
       withCredentials: true,
+      params,
       headers
-    });
+    };
+
+    switch (method) {
+      case Method.POST:
+        request$ = this.http.post<any>(requestUrl, payload, requestOptions);
+        break;
+      case Method.GET:
+        request$ = this.http.get<any>(requestUrl, requestOptions);
+        break;
+      case Method.PATCH:
+        request$ = this.http.patch<any>(requestUrl, payload, requestOptions);
+        break;
+      case Method.DELETE:
+        request$ = this.http.delete<any>(requestUrl, requestOptions);
+        break;
+    }
 
     this.loaderService.start();
 

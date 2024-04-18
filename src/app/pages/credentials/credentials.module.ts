@@ -5,6 +5,7 @@ import { RegistrationComponent } from '@pages/registration/registration.componen
 import { LayoutsModule } from '@layouts/layouts.module';
 import { ComponentsModule } from '@components/components.module';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountConfirmationComponent } from '@pages/account-confirmation/account-confirmation.component';
 
 const routes: Routes = [
   {
@@ -14,10 +15,18 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationComponent
+  },
+  {
+    path: 'account-confirmation/:hash',
+    component: AccountConfirmationComponent
   }
 ];
 
-const components: any = [LoginComponent, RegistrationComponent];
+const components: any = [
+  LoginComponent,
+  RegistrationComponent,
+  AccountConfirmationComponent
+];
 
 @NgModule({
   declarations: [...components],

@@ -37,7 +37,7 @@ export class CreateMfaComponent {
 
   async changeMfaOption({ key }: DropdownInterface) {
     if (key === 'mfa') {
-      this.selectedMfaOption = this.mfaOptions[1];
+      this.selectedMfaOption = this.mfaOptions[0];
       await this.generateTwoFaQrCode();
     }
 
