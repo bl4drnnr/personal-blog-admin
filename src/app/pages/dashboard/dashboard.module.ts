@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'account/create-post',
     component: CreatePostComponent
-  },
+  }
 ];
 
 const components = [AccountComponent, CreatePostComponent];
