@@ -5,13 +5,15 @@ import { RecoveryEndpoint } from '@interfaces/recovery.enum';
 import { SecurityEndpoint } from '@interfaces/security.enum';
 import { UsersEndpoint } from '@interfaces/users.enum';
 import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
+import { PostsEndpoint } from '@interfaces/posts.enum';
 
 type EndpointsType =
   | AuthEndpoint
   | RecoveryEndpoint
   | SecurityEndpoint
   | UsersEndpoint
-  | ConfirmationHashEndpoint;
+  | ConfirmationHashEndpoint
+  | PostsEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

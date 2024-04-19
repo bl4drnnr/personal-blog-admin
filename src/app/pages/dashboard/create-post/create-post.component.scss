@@ -1,0 +1,59 @@
+@import 'variables';
+
+.create-post-wrapper {
+  width: 60%;
+  margin: 0 auto 150px auto;
+}
+
+.post-tags-wrapper {
+  display: flex;
+}
+
+.post-tag {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.toc-wrapper {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.toc-section-buttons {
+  display: flex;
+}
+
+.toc-section-button {
+  width: 100%;
+
+  &.margin-right {
+    margin-right: 5px;
+  }
+  &.margin-left {
+    margin-left: 5px;
+  }
+}
+
+.section-buttons {
+  display: flex;
+
+  .section-button {
+    width: 100%;
+    &.margin-right {
+      margin-right: 5px;
+    }
+    &.margin-left {
+      margin-left: 5px;
+    }
+  }
+}

@@ -1,19 +1,20 @@
 <div class="page-container">
-<!--  <dashboard-sidebar-->
-<!--    *ngIf="showSideBar"-->
-<!--    [isSidebarOpen]="isSidebarOpen"-->
-<!--    (closeSidebar)="isSidebarOpen = false"-->
-<!--  />-->
+  <dashboard-sidebar
+    *ngIf="showSideBar"
+    [userInfo]="userInfo"
+    [isSidebarOpen]="isSidebarOpen"
+    (closeSidebar)="isSidebarOpen = false"
+  />
 
-<!--  <layout-header-->
-<!--    *ngIf="showHeader"-->
-<!--    [showHeaderBurger]="showHeaderBurger"-->
-<!--    (openSidebar)="isSidebarOpen = true"-->
-<!--  />-->
+  <layout-header
+    *ngIf="showHeader"
+    [showHeaderBurger]="showHeaderBurger"
+    (openSidebar)="isSidebarOpen = true"
+  />
 
   <div class="content-wrapper">
     <ng-content />
   </div>
 
-<!--  <layout-footer *ngIf="showFooter"/>-->
+  <layout-footer *ngIf="showFooter"/>
 </div>

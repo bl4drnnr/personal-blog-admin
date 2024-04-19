@@ -13,6 +13,7 @@ import { LinkComponent } from '@components/link/link.component';
 import { EmojiComponent } from '@components/emoji/emoji.component';
 import { QrMfaComponent } from '@components/qr-mfa/qr-mfa.component';
 import { ArrowComponent } from '@components/arrow/arrow.component';
+import { TextareaComponent } from '@components/textarea/textarea.component';
 
 const components: any = [
   ButtonComponent,
@@ -26,7 +27,8 @@ const components: any = [
   LinkComponent,
   EmojiComponent,
   QrMfaComponent,
-  ArrowComponent
+  ArrowComponent,
+  TextareaComponent
 ];
 
 @NgModule({

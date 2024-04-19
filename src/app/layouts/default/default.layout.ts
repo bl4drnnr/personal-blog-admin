@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { UserInfoResponse } from '@responses/user-info.interface';
 
 @Component({
   selector: 'layout-default',
@@ -8,6 +9,7 @@ import { Component, Input } from '@angular/core';
 export class DefaultLayout {
   @Input() showHeader = true;
   @Input() showHeaderBurger = true;
+  @Input() userInfo: UserInfoResponse;
 
   @Input() showFooter = true;
   @Input() showSideBar = true;

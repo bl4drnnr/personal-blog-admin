@@ -1,0 +1,143 @@
+<layout-default
+  [userInfo]="userInfo"
+>
+  <div class="create-post-wrapper">
+    <h1>Create new post</h1>
+    <basic-input
+      [label]="'Post name'"
+      [placeholder]="'Provide the name of the post'"
+      [inputDescription]="'The name of the post will be the main title seen by users, also, this name will be used in slug'"
+      [value]="postName"
+      (valueChange)="postName = $event"
+    />
+    <basic-input
+      [label]="'Post description'"
+      [placeholder]="'Provide the description of the post'"
+      [inputDescription]="'The description is going to be used as a short introduction to the post'"
+      [value]="postDescription"
+      (valueChange)="postDescription = $event"
+    />
+    <basic-input
+      [label]="'Post tags'"
+      [placeholder]="'Provide the tags of the post'"
+      [inputDescription]="'Use space bar in order to push the tag to the list of post tags'"
+      [value]="postTag"
+      (valueChange)="postTag = $event"
+      (onSpace)="addPostTag()"
+    />
+
+    <div class="post-tags-wrapper" *ngIf="postTags">
+      <div *ngFor="let postTag of postTags">
+        <p class="post-tag" (click)="deletePostTag(postTag)">{{ postTag }}</p>
+      </div>
+    </div>
+
+    <div class="toc-wrapper">
+      <div class="toc-section-buttons">
+        <div class="toc-section-button margin-right">
+          <basic-button [label]="'Add section'" (buttonClick)="addSection()"/>
+        </div>
+        <div class="toc-section-button margin-left">
+          <basic-button
+            [fillButton]="true"
+            [label]="'Create post'"
+            [disabled]="disableCreatePostButton()"
+            (buttonClick)="createPost()"
+          />
+        </div>
+      </div>
+      <dashboard-table-of-contents [sections]="sections" />
+    </div>
+
+    <div *ngFor="let section of sections; let i = index">
+      <basic-input
+        [label]="'Section Name'"
+        [placeholder]="'Provide the name of the section'"
+        [value]="section.name"
+        (valueChange)="section.name = $event"
+      />
+
+      <basic-textarea
+        [label]="'Section Content'"
+        [placeholder]="'Content of the current section'"
+        [value]="section.content"
+        (valueChange)="section.content = $event"
+      />
+
+      <div class="section-buttons">
+        <div class="section-button margin-right">
+          <basic-button
+            *ngIf="section.level < 3"
+            [label]="'Add Subsection'"
+            (buttonClick)="addSubSection(section)"
+          />
+        </div>
+        <div class="section-button margin-left">
+          <basic-button
+            *ngIf="section.level < 3"
+            [label]="'Delete Section'"
+            [danger]="true"
+            (buttonClick)="deleteSection(i)"
+          />
+        </div>
+      </div>
+
+      <div *ngFor="let subsection of section.subsections; let j = index">
+        <basic-input
+          [label]="'Subsection Name'"
+          [placeholder]="'Provide the name of the subsection'"
+          [value]="subsection.name"
+          (valueChange)="subsection.name = $event"
+        />
+
+        <basic-textarea
+          [label]="'Subsection Content'"
+          [placeholder]="'Content of the current subsection'"
+          [value]="subsection.content"
+          (valueChange)="subsection.content = $event"
+        />
+
+        <div class="section-buttons">
+          <div class="section-button margin-right">
+            <basic-button
+              *ngIf="section.level < 3"
+              [label]="'Add Subsection'"
+              (buttonClick)="addSubSection(subsection)"
+            />
+          </div>
+          <div class="section-button margin-left">
+            <basic-button
+              *ngIf="section.level < 3"
+              [label]="'Delete Subsection'"
+              [danger]="true"
+              (buttonClick)="deleteSubSection(section, j)"
+            />
+          </div>
+        </div>
+
+        <div *ngFor="let subsubsection of subsection.subsections; let k = index">
+          <basic-input
+            [label]="'Sub-subsection Name'"
+            [placeholder]="'Provide the name of the sub-subsection'"
+            [value]="subsubsection.name"
+            (valueChange)="subsubsection.name = $event"
+          />
+
+          <basic-textarea
+            [label]="'Sub-subsection Content'"
+            [placeholder]="'Content of the current sub-subsection'"
+            [value]="subsubsection.content"
+            (valueChange)="subsubsection.content = $event"
+          />
+
+          <basic-button
+            *ngIf="section.level < 3"
+            [label]="'Delete Sub-subsection'"
+            [danger]="true"
+            (buttonClick)="deleteSubSection(subsection, k)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>
