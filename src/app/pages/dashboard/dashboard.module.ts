@@ -8,6 +8,8 @@ import { BasicComponentsModule } from '@components/basic-components.module';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponentsModule } from '@components/dashboard-components.module';
 import { NgxEditorModule } from 'ngx-editor';
+import { CategoriesComponent } from '@pages/categories/categories.component';
+import { ArticlesComponent } from '@pages/articles/articles.component';
 
 const routes: Routes = [
   {
@@ -22,10 +24,23 @@ const routes: Routes = [
   {
     path: 'account/create-article',
     component: CreateArticleComponent
+  },
+  {
+    path: 'account/categories',
+    component: CategoriesComponent
+  },
+  {
+    path: 'account/articles',
+    component: ArticlesComponent
   }
 ];
 
-const components = [AccountComponent, CreateArticleComponent];
+const components = [
+  AccountComponent,
+  CreateArticleComponent,
+  CategoriesComponent,
+  ArticlesComponent
+];
 
 @NgModule({
   declarations: [...components],

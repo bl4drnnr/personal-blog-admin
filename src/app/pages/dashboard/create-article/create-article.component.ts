@@ -1,11 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, SecurityContext } from '@angular/core';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { Router } from '@angular/router';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { ArticlesService } from '@services/articles.service';
 import { Editor, Toolbar } from 'ngx-editor';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
+import { CategoriesService } from '@services/categories.service';
+import { GetCategoryResponse } from '@responses/get-category.interface';
+import { DropdownInterface } from '@interfaces/dropdown.interface';
 
 @Component({
   selector: 'page-create-article',
@@ -17,11 +20,15 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   articleDescription: string;
   articleTag: string;
   articleTags: Array<string> = [];
+  articleCategory: DropdownInterface;
+  allCategories: Array<GetCategoryResponse> = [];
+  categoriesDropdown: Array<DropdownInterface>;
 
   userInfo: UserInfoResponse;
 
   editor: Editor;
-  html: '';
+  htmlContent: string = '';
+  sanitizedHtmlContent: string = '';
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -39,21 +46,26 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   constructor(
     private readonly title: Title,
     private readonly router: Router,
-    private readonly postsService: ArticlesService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly articlesService: ArticlesService,
+    private readonly categoriesService: CategoriesService,
     private readonly globalMessageService: GlobalMessageService,
     private readonly refreshTokensService: RefreshTokensService
   ) {}
 
-  onHtmlChange(html: any) {
-    this.html = html;
+  onHtmlChange(html: string) {
+    this.htmlContent = html;
+    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
   }
 
   createArticle() {
-    this.postsService
+    this.articlesService
       .createArticle({
         articleName: this.articleName,
         articleDescription: this.articleDescription,
-        articleTags: this.articleTags
+        articleTags: this.articleTags,
+        articleContent: this.sanitizedHtmlContent,
+        categoryId: this.articleCategory.key
       })
       .subscribe({
         next: async ({ link, message }) => {
@@ -65,7 +77,20 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
       });
   }
 
+  getAllCategories() {
+    this.categoriesService.getAllCategories().subscribe({
+      next: (allCategories) => {
+        this.allCategories = allCategories;
+        this.categoriesDropdown = allCategories.map(({ id, categoryName }) => {
+          return { key: id, value: categoryName };
+        });
+      }
+    });
+  }
+
   async addArticleTag() {
+    if (this.articleTag === ' ') return;
+
     const isTagPresent = this.articleTags.find(
       (tag) => tag === this.articleTag
     );
@@ -81,9 +106,17 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     this.articleTag = '';
   }
 
+  selectArticleCategory({ key, value }: DropdownInterface) {
+    this.articleCategory = { key, value };
+  }
+
   disableCreatePostButton() {
     return (
-      !this.articleName || !this.articleDescription || !this.articleTags.length
+      !this.articleName ||
+      !this.articleDescription ||
+      !this.articleTags.length ||
+      !this.articleCategory ||
+      !this.sanitizedHtmlContent
     );
   }
 
@@ -95,12 +128,8 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     await this.router.navigate([path]);
   }
 
-  async ngOnInit() {
-    this.title.setTitle('My Blog | Create article');
-    this.editor = new Editor();
-
+  async fetchUserInfo() {
     const userInfoRequest = await this.refreshTokensService.refreshTokens();
-
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -112,84 +141,20 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     }
   }
 
+  sanitizeHtmlContent(htmlString: string): string {
+    return this.sanitizer.sanitize(SecurityContext.HTML, htmlString)!;
+  }
+
+  async ngOnInit() {
+    this.title.setTitle('My Blog | Create article');
+    this.editor = new Editor();
+
+    await this.fetchUserInfo();
+
+    this.getAllCategories();
+  }
+
   ngOnDestroy() {
     this.editor.destroy();
   }
 }
-
-// import {
-//   Component,
-//   OnDestroy,
-//   OnInit,
-//   ViewEncapsulation,
-//   SecurityContext
-// } from "@angular/core";
-// import { AbstractControl, FormControl, FormGroup } from "@angular/forms";
-//
-// import { Validators, Editor, Toolbar } from "ngx-editor";
-// import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-//
-// //import jsonDoc from "./doc";
-// import plugins from "./plugins";
-//
-// @Component({
-//   selector: "app-root",
-//   templateUrl: "app.component.html",
-//   styleUrls: ["app.component.scss"],
-//   encapsulation: ViewEncapsulation.None
-// })
-// export class AppComponent implements OnInit, OnDestroy {
-//   constructor(private sanitizer: DomSanitizer) {}
-//   htmlContent =
-//     "<p>This editor has been wired up to render code blocks as instances of the <a href='https://codemirror.net' title='https://codemirror.net' target='_blank'>Simple HYPERLINK</a> code editor, which provides <a title='' target='_blank' href='http://testing.com/book.html?default=<script>alert(document.cookie)</script>'>XSS EXAMPLE </a></p>";
-//   renderedHtmlContent: SafeHtml = "";
-//   editor: Editor;
-//   toolbar: Toolbar = [
-//     ["bold", "italic"],
-//     [
-//       "underline"
-//       //"strike"
-//     ],
-//     //["code", "blockquote"],
-//     ["ordered_list", "bullet_list"]
-//     //[{ heading: ["h1", "h2", "h3", "h4", "h5", "h6"] }],
-//     //["link", "image"],
-//     //["text_color", "background_color"],
-//     //["align_left", "align_center", "align_right", "align_justify"]
-//   ];
-//
-//   form = new FormGroup({
-//     editorContent: new FormControl(this.htmlContent, Validators.required())
-//   });
-//
-//   get doc(): AbstractControl {
-//     return this.form.get("editorContent");
-//   }
-//
-//   // voir la doc : https://sibiraj-s.github.io/ngx-editor/#/configuration
-//   ngOnInit(): void {
-//     this.editor = new Editor({
-//       plugins
-//     });
-//   }
-//
-//   onSubmit() {
-//     //console.log("Your form data : ", this.form.value);
-//     console.log("KO SANITIZATION : ", this.form.get("editorContent").value);
-//     console.log(
-//       "OK SANITIZATION : ",
-//       this.sanitizeHtmlContent(this.form.get("editorContent").value)
-//     );
-//     this.renderedHtmlContent = this.sanitizeHtmlContent(
-//       this.form.get("editorContent").value
-//     );
-//   }
-//
-//   public sanitizeHtmlContent(htmlstring): SafeHtml {
-//     return this.sanitizer.sanitize(SecurityContext.HTML, htmlstring);
-//   }
-//
-//   ngOnDestroy(): void {
-//     this.editor.destroy();
-//   }
-// }

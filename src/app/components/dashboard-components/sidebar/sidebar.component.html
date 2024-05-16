@@ -12,8 +12,21 @@
       <div class="sidebar-side">
         <div class="sidebar-button-wrapper">
           <basic-button
-            [label]="'Create post'"
+            [label]="'Create article'"
             (buttonClick)="handleRedirect('account/create-article')"
+            [fillButton]="true"
+          />
+        </div>
+        <div class="sidebar-button-wrapper">
+          <basic-button
+            [label]="'Articles'"
+            (buttonClick)="handleRedirect('account/articles')"
+          />
+        </div>
+        <div class="sidebar-button-wrapper">
+          <basic-button
+            [label]="'Categories'"
+            (buttonClick)="handleRedirect('account/categories')"
           />
         </div>
         <div class="sidebar-button-wrapper">

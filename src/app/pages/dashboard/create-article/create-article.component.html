@@ -32,15 +32,23 @@
       </div>
     </div>
 
+    <div class="article-category-dropdown">
+      <basic-dropdown
+        [options]="categoriesDropdown"
+        (selectedOption)="selectArticleCategory($event)"
+        [defaultLabel]="'Select article category'"
+      />
+    </div>
+
     <div class="NgxEditor__Wrapper">
-      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"/>
       <ngx-editor
         [editor]="editor"
-        [ngModel]="html"
+        [(ngModel)]="htmlContent"
         (ngModelChange)="onHtmlChange($event)"
         [disabled]="false"
         [placeholder]="'Let\'s write something!'"
-      ></ngx-editor>
+      />
     </div>
 
     <div class="create-button-wrapper">
