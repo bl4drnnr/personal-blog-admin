@@ -69,7 +69,7 @@
         "src/libs/api/responses/company/*",
         "src/libs/api/responses/company-roles/*",
         "src/libs/api/responses/company-users/*",
-        "src/libs/api/responses/posts/*",
+        "src/libs/api/responses/articles/*",
         "src/libs/api/responses/categories/*"
       ],
       "@payloads/*": [
@@ -79,7 +79,7 @@
         "src/libs/api/payloads/recovery/*",
         "src/libs/api/payloads/users/*",
         "src/libs/api/payloads/email/*",
-        "src/libs/api/payloads/posts/*",
+        "src/libs/api/payloads/articles/*",
         "src/libs/api/payloads/categories/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],

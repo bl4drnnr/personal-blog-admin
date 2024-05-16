@@ -3,20 +3,20 @@ import { UserInfoResponse } from '@responses/user-info.interface';
 import { Router } from '@angular/router';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { GlobalMessageService } from '@shared/global-message.service';
-import { PostsService } from '@services/posts.service';
+import { ArticlesService } from '@services/articles.service';
 import { Editor, Toolbar } from 'ngx-editor';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'page-create-post',
-  templateUrl: './create-post.component.html',
-  styleUrl: './create-post.component.scss'
+  selector: 'page-create-article',
+  templateUrl: './create-article.component.html',
+  styleUrl: './create-article.component.scss'
 })
-export class CreatePostComponent implements OnInit, OnDestroy {
-  postName: string;
-  postDescription: string;
-  postTag: string;
-  postTags: Array<string> = [];
+export class CreateArticleComponent implements OnInit, OnDestroy {
+  articleName: string;
+  articleDescription: string;
+  articleTag: string;
+  articleTags: Array<string> = [];
 
   userInfo: UserInfoResponse;
 
@@ -39,7 +39,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   constructor(
     private readonly title: Title,
     private readonly router: Router,
-    private readonly postsService: PostsService,
+    private readonly postsService: ArticlesService,
     private readonly globalMessageService: GlobalMessageService,
     private readonly refreshTokensService: RefreshTokensService
   ) {}
@@ -48,12 +48,12 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     this.html = html;
   }
 
-  createPost() {
+  createArticle() {
     this.postsService
-      .createPost({
-        postName: this.postName,
-        postDescription: this.postDescription,
-        postTags: this.postTags
+      .createArticle({
+        articleName: this.articleName,
+        articleDescription: this.articleDescription,
+        articleTags: this.articleTags
       })
       .subscribe({
         next: async ({ link, message }) => {
@@ -65,26 +65,30 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       });
   }
 
-  async addPostTag() {
-    const isTagPresent = this.postTags.find((tag) => tag === this.postTag);
+  async addArticleTag() {
+    const isTagPresent = this.articleTags.find(
+      (tag) => tag === this.articleTag
+    );
 
     if (isTagPresent) {
       await this.globalMessageService.handleWarning({
         message: 'Tag is already on the list'
       });
     } else {
-      this.postTags.push(this.postTag);
+      this.articleTags.push(this.articleTag);
     }
 
-    this.postTag = '';
+    this.articleTag = '';
   }
 
   disableCreatePostButton() {
-    return !this.postName || !this.postDescription || !this.postTags.length;
+    return (
+      !this.articleName || !this.articleDescription || !this.articleTags.length
+    );
   }
 
   deletePostTag(postTag: string) {
-    this.postTags.splice(this.postTags.indexOf(postTag), 1);
+    this.articleTags.splice(this.articleTags.indexOf(postTag), 1);
   }
 
   async handleRedirect(path: string) {
@@ -92,7 +96,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.title.setTitle('My Blog | Create post');
+    this.title.setTitle('My Blog | Create article');
     this.editor = new Editor();
 
     const userInfoRequest = await this.refreshTokensService.refreshTokens();

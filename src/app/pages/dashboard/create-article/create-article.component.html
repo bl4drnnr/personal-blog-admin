@@ -1,0 +1,55 @@
+<layout-default
+  [userInfo]="userInfo"
+>
+  <div class="create-post-wrapper">
+    <h1>Create new article</h1>
+    <basic-input
+      [label]="'Article name'"
+      [placeholder]="'Provide the name of the article'"
+      [inputDescription]="'The name of the article will be the main title seen by users, also, this name will be used in slug'"
+      [value]="articleName"
+      (valueChange)="articleName = $event"
+    />
+    <basic-input
+      [label]="'Article description'"
+      [placeholder]="'Provide the description of the article'"
+      [inputDescription]="'The description is going to be used as a short introduction to the article'"
+      [value]="articleDescription"
+      (valueChange)="articleDescription = $event"
+    />
+    <basic-input
+      [label]="'Article tags'"
+      [placeholder]="'Provide the tags of the article'"
+      [inputDescription]="'Use space bar in order to push the tag to the list of article tags'"
+      [value]="articleTag"
+      (valueChange)="articleTag = $event"
+      (onSpace)="addArticleTag()"
+    />
+
+    <div class="post-tags-wrapper" *ngIf="articleTags">
+      <div *ngFor="let postTag of articleTags">
+        <p class="post-tag" (click)="deletePostTag(postTag)">{{ postTag }}</p>
+      </div>
+    </div>
+
+    <div class="NgxEditor__Wrapper">
+      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+      <ngx-editor
+        [editor]="editor"
+        [ngModel]="html"
+        (ngModelChange)="onHtmlChange($event)"
+        [disabled]="false"
+        [placeholder]="'Let\'s write something!'"
+      ></ngx-editor>
+    </div>
+
+    <div class="create-button-wrapper">
+      <basic-button
+        [fillButton]="true"
+        [label]="'Create article'"
+        [disabled]="disableCreatePostButton()"
+        (buttonClick)="createArticle()"
+      />
+    </div>
+  </div>
+</layout-default>

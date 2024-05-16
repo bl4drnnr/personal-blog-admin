@@ -3,7 +3,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from '@pages/account/account.component';
 import { LayoutsModule } from '@layouts/layouts.module';
-import { CreatePostComponent } from '@pages/create-post/create-post.component';
+import { CreateArticleComponent } from '@pages/create-article/create-article.component';
 import { BasicComponentsModule } from '@components/basic-components.module';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponentsModule } from '@components/dashboard-components.module';
@@ -20,12 +20,12 @@ const routes: Routes = [
     component: AccountComponent
   },
   {
-    path: 'account/create-post',
-    component: CreatePostComponent
+    path: 'account/create-article',
+    component: CreateArticleComponent
   }
 ];
 
-const components = [AccountComponent, CreatePostComponent];
+const components = [AccountComponent, CreateArticleComponent];
 
 @NgModule({
   declarations: [...components],
