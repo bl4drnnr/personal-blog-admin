@@ -4,6 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { LoginResponse } from '@responses/login.enum';
 import { ValidationService } from '@services/validation.service';
 import { AuthenticationService } from '@services/authentication.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-login',
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
   isRecoveryKeysNotSet = true;
 
   constructor(
+    private readonly title: Title,
     private readonly authenticationService: AuthenticationService,
     private readonly validationService: ValidationService,
     private readonly router: Router
@@ -99,6 +101,7 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.title.setTitle('My Blog | Login');
     const accessToken = localStorage.getItem('_at');
     if (accessToken) await this.handleRedirect('account/dashboard');
   }

@@ -7,6 +7,7 @@
 
 .post-tags-wrapper {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .post-tag {
@@ -22,38 +23,6 @@
   }
 }
 
-.toc-wrapper {
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  padding: 15px;
-  margin-top: 15px;
-}
-
-.toc-section-buttons {
-  display: flex;
-}
-
-.toc-section-button {
-  width: 100%;
-
-  &.margin-right {
-    margin-right: 5px;
-  }
-  &.margin-left {
-    margin-left: 5px;
-  }
-}
-
-.section-buttons {
-  display: flex;
-
-  .section-button {
-    width: 100%;
-    &.margin-right {
-      margin-right: 5px;
-    }
-    &.margin-left {
-      margin-left: 5px;
-    }
-  }
+.create-button-wrapper {
+  margin-top: 20px;
 }

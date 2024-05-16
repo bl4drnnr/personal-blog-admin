@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/authentication.service';
 import { RegistrationPayload } from '@payloads/registration.interface';
 import { WrongCredentialsInterface } from '@interfaces/wrong-credentials.interface';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-registration',
@@ -19,7 +20,7 @@ import { WrongCredentialsInterface } from '@interfaces/wrong-credentials.interfa
     ])
   ]
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
   step = 1;
   tac = false;
 
@@ -35,6 +36,7 @@ export class RegistrationComponent {
   incorrectLastName: boolean;
 
   constructor(
+    private readonly title: Title,
     private readonly authenticationService: AuthenticationService,
     private readonly router: Router
   ) {}
@@ -84,5 +86,9 @@ export class RegistrationComponent {
 
   async handleRedirect(path: string) {
     await this.router.navigate([path]);
+  }
+
+  ngOnInit() {
+    this.title.setTitle('My Blog | Registration');
   }
 }
