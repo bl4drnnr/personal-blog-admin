@@ -30,3 +30,18 @@
 .article-category-dropdown {
   margin-bottom: 20px;
 }
+
+.select-photo-btn-wrapper {
+  margin-bottom: 20px;
+}
+
+.article-main-picture {
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.picture-preview {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}

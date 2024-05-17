@@ -1,3 +1,5 @@
 export enum ArticlesEndpoint {
-  CREATE = 'create'
+  CREATE = 'create',
+  GET_BY_SLUG = 'get-by-slug',
+  DELETE = 'delete'
 }

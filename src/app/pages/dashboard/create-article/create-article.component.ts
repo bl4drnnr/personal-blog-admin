@@ -43,6 +43,9 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     ['undo', 'redo']
   ];
 
+  selectedFiles?: FileList;
+  articlePicture: string | ArrayBuffer | null = '';
+
   constructor(
     private readonly title: Title,
     private readonly router: Router,
@@ -63,8 +66,9 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
       .createArticle({
         articleName: this.articleName,
         articleDescription: this.articleDescription,
-        articleTags: this.articleTags,
+        articleTags: this.articleTags.map((tag) => tag.replace(/\s+/g, '')),
         articleContent: this.sanitizedHtmlContent,
+        articlePicture: this.articlePicture as string,
         categoryId: this.articleCategory.key
       })
       .subscribe({
@@ -116,12 +120,13 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
       !this.articleDescription ||
       !this.articleTags.length ||
       !this.articleCategory ||
-      !this.sanitizedHtmlContent
+      !this.sanitizedHtmlContent ||
+      !this.articlePicture
     );
   }
 
-  deletePostTag(postTag: string) {
-    this.articleTags.splice(this.articleTags.indexOf(postTag), 1);
+  deleteArticleTag(articleTag: string) {
+    this.articleTags.splice(this.articleTags.indexOf(articleTag), 1);
   }
 
   async handleRedirect(path: string) {
@@ -139,6 +144,17 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    if (!this.selectedFiles) return;
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.articlePicture = reader.result;
+    };
   }
 
   sanitizeHtmlContent(htmlString: string): string {

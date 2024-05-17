@@ -27,8 +27,8 @@
     />
 
     <div class="post-tags-wrapper" *ngIf="articleTags">
-      <div *ngFor="let postTag of articleTags">
-        <p class="post-tag" (click)="deletePostTag(postTag)">{{ postTag }}</p>
+      <div *ngFor="let articleTag of articleTags">
+        <p class="post-tag" (click)="deleteArticleTag(articleTag)">{{ articleTag }}</p>
       </div>
     </div>
 
@@ -39,6 +39,31 @@
         [defaultLabel]="'Select article category'"
       />
     </div>
+
+    <div class="select-photo-btn-wrapper">
+      <basic-button
+        [label]="'Select photo'"
+        (click)="fileInput.click()"
+      />
+    </div>
+
+    <div class="picture-preview">
+      <img
+        *ngIf="articlePicture"
+        [src]="articlePicture"
+        (click)="articlePicture = ''"
+        class="article-main-picture"
+        alt="avatar"
+      />
+    </div>
+
+    <input
+      type="file"
+      accept="image/*"
+      (change)="selectFile($event)"
+      #fileInput
+      hidden
+    />
 
     <div class="NgxEditor__Wrapper">
       <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"/>

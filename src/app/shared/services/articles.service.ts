@@ -6,12 +6,27 @@ import { CreateArticlePayload } from '@payloads/create-article.interface';
 import { Observable } from 'rxjs';
 import { ArticlesEndpoint } from '@interfaces/articles.enum';
 import { ArticleCreatedResponse } from '@responses/article-created.interface';
+import { GetBySlugInterface } from '@payloads/get-by-slug.interface';
+import { GetArticleBySlugResponse } from '@responses/get-article-by-slug.interface';
+import { DeleteArticlePayload } from '@payloads/delete-article.interface';
+import { ArticleDeletedResponse } from '@responses/article-deleted.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticlesService {
   constructor(private readonly apiService: ApiService) {}
+
+  getArticleBySlug(
+    params: GetBySlugInterface
+  ): Observable<GetArticleBySlugResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.GET_BY_SLUG,
+      params
+    });
+  }
 
   createArticle(
     payload: CreateArticlePayload
@@ -21,6 +36,17 @@ export class ArticlesService {
       controller: Controller.ARTICLES,
       action: ArticlesEndpoint.CREATE,
       payload
+    });
+  }
+
+  deleteArticle(
+    params: DeleteArticlePayload
+  ): Observable<ArticleDeletedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.DELETE,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.DELETE,
+      params
     });
   }
 }

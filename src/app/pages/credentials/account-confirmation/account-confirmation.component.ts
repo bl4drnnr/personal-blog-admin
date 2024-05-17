@@ -29,7 +29,6 @@ export class AccountConfirmationComponent implements OnInit {
   accountConfirmationError: boolean;
 
   hash: string;
-  phone: string;
   code: string;
 
   constructor(

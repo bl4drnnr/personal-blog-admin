@@ -10,6 +10,7 @@ import { DashboardComponentsModule } from '@components/dashboard-components.modu
 import { NgxEditorModule } from 'ngx-editor';
 import { CategoriesComponent } from '@pages/categories/categories.component';
 import { ArticlesComponent } from '@pages/articles/articles.component';
+import { ArticleComponent } from '@pages/article/article.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'account/articles',
     component: ArticlesComponent
+  },
+  {
+    path: 'account/article/:slug',
+    component: ArticleComponent
   }
 ];
 
@@ -39,7 +44,8 @@ const components = [
   AccountComponent,
   CreateArticleComponent,
   CategoriesComponent,
-  ArticlesComponent
+  ArticlesComponent,
+  ArticleComponent
 ];
 
 @NgModule({

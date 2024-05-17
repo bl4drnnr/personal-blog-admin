@@ -1,0 +1,38 @@
+@import 'variables';
+
+.article-wrapper {
+  width: 60%;
+  margin: 30px auto 150px auto;
+}
+
+.article-mgmt-buttons {
+  display: flex;
+}
+
+.article-mgmt-button {
+  width: 100%;
+
+  &.right {
+    margin-right: 5px;
+  }
+
+  &.left {
+    margin-left: 5px;
+  }
+}
+
+.article-second-field {
+  opacity: .5;
+}
+
+.article-tags-wrapper {
+  display: flex;
+  margin: 20px 0;
+}
+
+.article-tag {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+}
