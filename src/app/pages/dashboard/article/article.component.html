@@ -19,21 +19,21 @@
     </div>
 
     <div *ngIf="!articleEditMode">
-      <h1>{{ article.articleName }}</h1>
-      <p>{{ article.articleDescription }}</p>
-      <p class="article-second-field">Created at: {{ dayjs(article.createdAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
-      <p class="article-second-field">Updated at: {{ dayjs(article.updatedAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
+<!--      <h1>{{ article.articleName }}</h1>-->
+<!--      <p>{{ article.articleDescription }}</p>-->
+<!--      <p class="article-second-field">Created at: {{ dayjs(article.createdAt).format('YYYY/MM/DD HH:mm:ss') }}</p>-->
+<!--      <p class="article-second-field">Updated at: {{ dayjs(article.updatedAt).format('YYYY/MM/DD HH:mm:ss') }}</p>-->
 
-      <div class="article-tags-wrapper">
-        <div *ngFor="let articleTag of article.articleTags">
-          <p class="article-tag">{{ articleTag }}</p>
-        </div>
-      </div>
+<!--      <div class="article-tags-wrapper">-->
+<!--        <div *ngFor="let articleTag of article.articleTags">-->
+<!--          <p class="article-tag">{{ articleTag }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <img
-        [src]="staticStorage + article.articleImage"
-        [alt]="article.articleName"
-      >
+<!--      <img-->
+<!--        [src]="staticStorage + article.articleImage"-->
+<!--        [alt]="article.articleName"-->
+<!--      >-->
     </div>
 
     <div *ngIf="articleEditMode"></div>
