@@ -5,5 +5,6 @@ export interface ListArticleInterface {
   articleName: string;
   articleSlug: string;
   articleTags: Array<string>;
+  articlePosted: boolean;
   category: { categoryName: string };
 }

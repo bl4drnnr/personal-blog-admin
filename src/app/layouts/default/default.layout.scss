@@ -9,4 +9,12 @@
 .content-wrapper {
   padding-top: 60px;
   padding-bottom: 60px;
+
+  &.no-footer {
+    padding-bottom: 20px;
+  }
+
+  &.no-header {
+    padding-top: 20px;
+  }
 }

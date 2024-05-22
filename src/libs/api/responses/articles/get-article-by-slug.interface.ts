@@ -6,8 +6,10 @@ export interface GetArticleBySlugResponse {
   articleTags: Array<string>;
   articleContent: string;
   articleImage: string;
+  articlePosted: boolean;
   userId: string;
   categoryId: string;
+  category: { categoryName: string };
   createdAt: Date;
   updatedAt: Date;
 }

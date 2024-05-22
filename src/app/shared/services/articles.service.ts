@@ -12,6 +12,10 @@ import { DeleteArticlePayload } from '@payloads/delete-article.interface';
 import { ArticleDeletedResponse } from '@responses/article-deleted.interface';
 import { ListArticlesPayload } from '@payloads/list-articles.interface';
 import { ListArticlesResponse } from '@responses/list-articles.interface';
+import { EditArticlePayload } from '@payloads/edit-article.interface';
+import { ArticleEditedResponse } from '@responses/article-edited.interface';
+import { ChangePublishArticleStatusPayload } from '@payloads/change-publish-article-status.interface';
+import { ArticlePublishedResponse } from '@responses/article-published.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +45,17 @@ export class ArticlesService {
     });
   }
 
+  changePublishArticleStatus(
+    params: ChangePublishArticleStatusPayload
+  ): Observable<ArticlePublishedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.CHANGE_PUBLISH,
+      params
+    });
+  }
+
   deleteArticle(
     params: DeleteArticlePayload
   ): Observable<ArticleDeletedResponse> {
@@ -49,6 +64,15 @@ export class ArticlesService {
       controller: Controller.ARTICLES,
       action: ArticlesEndpoint.DELETE,
       params
+    });
+  }
+
+  editArticle(payload: EditArticlePayload): Observable<ArticleEditedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.EDIT,
+      payload
     });
   }
 

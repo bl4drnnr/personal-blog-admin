@@ -12,7 +12,10 @@
     (openSidebar)="isSidebarOpen = true"
   />
 
-  <div class="content-wrapper">
+  <div
+    class="content-wrapper"
+    [ngClass]="{ 'no-footer': !showFooter, 'no-header': !showHeader }"
+  >
     <ng-content />
   </div>
 
