@@ -1,1 +1,42 @@
-<p>articles works!</p>
+<layout-default
+  [userInfo]="userInfo"
+>
+  <div class="articles-wrapper">
+    <h1>All articles</h1>
+    <basic-input
+      [label]="'Article query'"
+      [placeholder]="'Provide article query to search for'"
+      [inputDescription]="'The articles will be found based on their names, description and slugs'"
+      [value]="articleSearchQuery"
+      (valueChange)="handleArticleQuery($event)"
+    />
+
+    <div
+      class="article-wrapper"
+      *ngFor="let article of articles"
+      (click)="handleRedirect('account/article/' + article.articleSlug)"
+    >
+      <h1>{{ article.articleName }}</h1>
+      <h3>{{ article.articleDescription }}</h3>
+      <br>
+      <p><b>Category:</b> {{ article.category.categoryName }}</p>
+      <p><b>Tags:</b> {{ article.articleTags.join(', ') }}</p>
+    </div>
+
+    <div *ngIf="articles.length === 0">
+      <h1>No articles found</h1>
+    </div>
+
+    <div class="pagination-container">
+      <basic-pagination
+        [itemsPerPageLabel]="'Article per page'"
+        [currentPage]="page"
+        [itemsPerPage]="pageSize"
+        [totalItems]="totalItems"
+        (setCurrentPage)="setCurrentPage($event)"
+        (setItemsPerPage)="setArticlesPerPage($event)"
+        (fetchItems)="listArticles()"
+      />
+    </div>
+  </div>
+</layout-default>

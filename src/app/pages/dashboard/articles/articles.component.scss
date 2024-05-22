@@ -1,0 +1,29 @@
+@import 'variables';
+
+.articles-wrapper {
+  width: 60%;
+  margin: 30px auto 150px auto;
+}
+
+.article-wrapper {
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .2s;
+  margin-bottom: 20px;
+
+  h1, h3 {
+    margin: 0;
+  }
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.pagination-container {
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+}

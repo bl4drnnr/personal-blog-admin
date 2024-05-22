@@ -10,6 +10,8 @@ import { GetBySlugInterface } from '@payloads/get-by-slug.interface';
 import { GetArticleBySlugResponse } from '@responses/get-article-by-slug.interface';
 import { DeleteArticlePayload } from '@payloads/delete-article.interface';
 import { ArticleDeletedResponse } from '@responses/article-deleted.interface';
+import { ListArticlesPayload } from '@payloads/list-articles.interface';
+import { ListArticlesResponse } from '@responses/list-articles.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +48,15 @@ export class ArticlesService {
       method: Method.DELETE,
       controller: Controller.ARTICLES,
       action: ArticlesEndpoint.DELETE,
+      params
+    });
+  }
+
+  listArticles(params: ListArticlesPayload): Observable<ListArticlesResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.LIST,
       params
     });
   }
