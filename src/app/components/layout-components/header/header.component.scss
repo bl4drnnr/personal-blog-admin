@@ -1,0 +1,94 @@
+@import 'variables';
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: var(--card-shadow);
+  background-color: var(--bg-color);
+  @include z-index(header);
+}
+
+.header-content {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-side {
+  display: flex;
+  align-items: center;
+}
+
+.header-products-search {
+  width: 500px;
+  display: flex;
+  margin-top: 20px;
+}
+
+.header-products-search-input {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.header-products-search-btn {
+  min-width: 100px;
+}
+
+.header-button-wrapper {
+  margin: 0 10px;
+}
+
+.lang-button-wrapper {
+  margin: 0 5px;
+}
+
+.sidebar-burger {
+  cursor: pointer;
+  filter: var(--svg-color);
+}
+
+.sidebar-header {
+  margin: 0;
+  padding: 0;
+  transition: .2s;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-color);
+  }
+}
+
+.hide {
+  transform: translateY(-100%);
+}
+
+.user-account-wrapper {
+  border: 1px solid var(--main-color);
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  transition: .2s;
+  position: relative;
+
+  &:hover {
+    background-color: var(--color-hover);
+  }
+}
+
+.user-account-icon {
+  filter: var(--svg-color);
+}
+
+.user-account-title {
+  margin: 0 5px;
+}

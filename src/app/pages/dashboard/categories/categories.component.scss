@@ -1,0 +1,40 @@
+@import 'variables';
+
+.categories-wrapper {
+  width: 60%;
+  margin: 0 auto 150px auto;
+}
+
+.create-button-wrapper {
+  margin-top: 20px;
+}
+
+.category-wrapper {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-name {
+  margin: 0;
+}
+
+.category-desc {
+  width: 60%;
+}
+
+.edit-category-btn-wrapper {
+  margin-bottom: 5px;
+}
+
+.category-btns {
+  width: 30%;
+}
+
+.category-desc-p {
+  opacity: .6;
+}
