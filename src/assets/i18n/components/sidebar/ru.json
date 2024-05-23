@@ -1,0 +1,8 @@
+{
+  "sidebarWelcomeTitle": "Рады вас снова видеть, {{ firstName }} {{ lastName }}",
+  "yourAccountSidebarTitle": "Ваш аккаунт",
+  "sidebarUserFullName": "Полное имя",
+  "sidebarUserEmail": "Электронная почта",
+  "sidebarUserId": "ID пользователя",
+  "companySettingsSidebarTitle": "Ваша компания"
+}

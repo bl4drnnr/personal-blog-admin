@@ -6,6 +6,10 @@ import { LayoutsModule } from '@layouts/layouts.module';
 import { ComponentsModule } from '@components/components.module';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountConfirmationComponent } from '@pages/account-confirmation/account-confirmation.component';
+import { TranslocoModule } from '@ngneat/transloco';
+import { ForgotPasswordComponent } from '@pages/forgot-password/forgot-password.component';
+import { RecoverAccountComponent } from '@pages/recover-account/recover-account.component';
+import { ResetPasswordComponent } from '@pages/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -19,13 +23,28 @@ const routes: Routes = [
   {
     path: 'account-confirmation/:hash',
     component: AccountConfirmationComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'recover-account',
+    component: RecoverAccountComponent
+  },
+  {
+    path: 'reset-password/:hash',
+    component: ResetPasswordComponent
   }
 ];
 
 const components: any = [
   LoginComponent,
   RegistrationComponent,
-  AccountConfirmationComponent
+  AccountConfirmationComponent,
+  ForgotPasswordComponent,
+  RecoverAccountComponent,
+  ResetPasswordComponent
 ];
 
 @NgModule({
@@ -35,7 +54,8 @@ const components: any = [
     CommonModule,
     ComponentsModule,
     NgOptimizedImage,
-    LayoutsModule
+    LayoutsModule,
+    TranslocoModule
   ],
   exports: [...components]
 })

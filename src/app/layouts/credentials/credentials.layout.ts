@@ -2,12 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EnvService } from '@shared/env.service';
 import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
+import { CredentialsTranslationProvider } from '@layouts/credentials/credentials.translation';
 
 @Component({
   selector: 'layout-credentials',
   templateUrl: './credentials.layout.html',
   styleUrls: ['./credentials.layout.scss'],
-  providers: []
+  providers: [CredentialsTranslationProvider]
 })
 export class CredentialsLayout implements OnInit {
   @Input() renderSide: 'right' | 'left';

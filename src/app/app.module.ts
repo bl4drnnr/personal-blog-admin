@@ -11,6 +11,7 @@ import { PagesModule } from '@pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideLottieOptions } from 'ngx-lottie';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HttpClientModule,
     LayoutsModule,
     ComponentsModule,
+    TranslocoRootModule,
     PagesModule
   ],
   providers: [

@@ -1,4 +1,4 @@
-<div>
+<div *transloco="let t">
   <div class="two-factor-auth">
     <input
       class="two-factor-input"
@@ -91,7 +91,7 @@
       <p
         class="resend-button-label"
         [ngClass]="{ 'on-white': onWhite }"
-      >Resend code</p>
+      >{{ t('button.resendCode') }}</p>
     </button>
   </div>
   <p

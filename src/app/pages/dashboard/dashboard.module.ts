@@ -13,6 +13,11 @@ import { ArticleComponent } from '@pages/article/article.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: ArticlesComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'account/create-article',
     component: CreateArticleComponent
   },

@@ -1,0 +1,14 @@
+{
+  "home": "MBPB | Домашняя",
+  "tac": "MBPB | Условия и положения",
+  "resetPassword": "MBPB | Сбросить пароль",
+  "registration": "MBPB | Регистрация",
+  "forgotPassword": "MBPB | Забыли пароль",
+  "accConfirm": "MBPB | Подтверждение учетной записи",
+  "dashboard": "MBPB | Панель управления",
+  "settings": "MBPB | Настройки",
+  "recoverAccount": "MBPB | Восстановить аккаунт",
+  "emailChangeConfirm": "MBPB | Подтверждение изменения по электронной почте",
+  "login": "MBPB | Войти",
+  "contact": "MBPB | Контакт"
+}
