@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountComponent } from '@pages/account/account.component';
 import { LayoutsModule } from '@layouts/layouts.module';
 import { CreateArticleComponent } from '@pages/create-article/create-article.component';
 import { BasicComponentsModule } from '@components/basic-components.module';
@@ -13,15 +12,6 @@ import { ArticlesComponent } from '@pages/articles/articles.component';
 import { ArticleComponent } from '@pages/article/article.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'account/dashboard',
-    pathMatch: 'full'
-  },
-  {
-    path: 'account/dashboard',
-    component: AccountComponent
-  },
   {
     path: 'account/create-article',
     component: CreateArticleComponent
@@ -41,7 +31,6 @@ const routes: Routes = [
 ];
 
 const components = [
-  AccountComponent,
   CreateArticleComponent,
   CategoriesComponent,
   ArticlesComponent,

@@ -237,7 +237,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(async (params) => {
       const slug = params.get('slug');
       if (!slug) {
-        await this.handleRedirect('account/dashboard');
+        await this.handleRedirect('account/articles');
       } else {
         this.articleSlug = slug;
         await this.fetchUserInfo();

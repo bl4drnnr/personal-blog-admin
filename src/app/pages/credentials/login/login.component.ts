@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
             default:
               if (_at) {
                 localStorage.setItem('_at', _at);
-                await this.router.navigate(['account/dashboard']);
+                await this.router.navigate(['account/articles']);
               }
           }
         }
@@ -103,6 +103,6 @@ export class LoginComponent implements OnInit {
   async ngOnInit() {
     this.title.setTitle('My Blog | Login');
     const accessToken = localStorage.getItem('_at');
-    if (accessToken) await this.handleRedirect('account/dashboard');
+    if (accessToken) await this.handleRedirect('account/articles');
   }
 }

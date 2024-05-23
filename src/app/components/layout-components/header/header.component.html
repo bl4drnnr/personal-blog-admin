@@ -17,8 +17,8 @@
     </div>
 
     <div class="header-side" *ngIf="isUserLoggedIn">
-      <div class="user-account-wrapper" (click)="handleRedirect('account/dashboard')">
-        <p class="user-account-title">Your account</p>
+      <div class="user-account-wrapper" (click)="handleRedirect('account/articles')">
+        <p class="user-account-title">Your articles</p>
         <img
           class="user-account-icon"
           [ngSrc]="userIcon"
