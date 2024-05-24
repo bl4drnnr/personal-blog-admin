@@ -4,6 +4,7 @@ import { RecoveryKeysComponent } from '@components/recovery-keys/recovery-keys.c
 import { BasicComponentsModule } from '@components/basic-components.module';
 import { CreateMfaComponent } from '@components/create-mfa/create-mfa.component';
 import { CreatePasswordComponent } from '@components/create-password/create-password.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const components = [
   RecoveryKeysComponent,
@@ -13,7 +14,7 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, BasicComponentsModule],
+  imports: [CommonModule, BasicComponentsModule, TranslocoModule],
   exports: [...components]
 })
 export class PagesComponentsModule {}

@@ -1,0 +1,20 @@
+{
+  "success": "Sukces",
+  "photo-uploaded": "Zdjęcie przesłane",
+  "user-updated": "Użytkownik został pomyślnie zaktualizowany",
+  "company-updated": "Informacje o firmie zostały pomyślnie zaktualizowane",
+  "company-member-deleted": "Członek firmy został pomyślnie usunięty",
+  "company-role-created": "Niestandardowa rola użytkownika firmy została pomyślnie utworzona",
+  "company-role-deleted": "Niestandardowa rola firmy została pomyślnie usunięta",
+  "company-role-updated": "Rola firmy została pomyślnie zaktualizowana",
+  "contact-message-sent": "Wiadomość kontaktowa została pomyślnie wysłana",
+  "product-posted": "Produkt został pomyślnie opublikowany",
+  "product-updated": "Produkt został pomyślnie zaktualizowany",
+  "product-deleted": "Produkt został pomyślnie usunięty",
+  "company-product-deleted": "Produkt firmy został pomyślnie usunięty",
+  "product-deleted-from-favorites": "Produkt został usunięty z ulubionych",
+  "product-added-to-favorites": "Produkt został dodany do ulubionych",
+  "company-ownership-transferred": "Własność firmy została pomyślnie przeniesiona",
+  "user-invited": "Użytkownicy zostali zaproszeni do firmy",
+  "company-member-role-changed": "Rola członka firmy została pomyślnie zmieniona"
+}

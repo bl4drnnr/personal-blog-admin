@@ -11,7 +11,15 @@ import { PagesModule } from '@pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideLottieOptions } from 'ngx-lottie';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TranslocoRootModule } from './transloco-root.module';
 
+// @TODO Implement credentials functions on the back-end
+// @TODO Implement languages on all projects
+// @TODO Post translation and language selection
+// @TODO Translation of admin panel
+// @TODO Translation of blog front
+// @TODO SEO optimization of blog front
+// @TODO Deployment of all parts of infrastructure
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,6 +31,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HttpClientModule,
     LayoutsModule,
     ComponentsModule,
+    TranslocoRootModule,
     PagesModule
   ],
   providers: [

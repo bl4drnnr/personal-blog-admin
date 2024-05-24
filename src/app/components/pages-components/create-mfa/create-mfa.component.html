@@ -1,51 +1,53 @@
-<h2 class="third-title flex">
-  <span>Secure your account&nbsp;</span>
-  <basic-emoji emoji="shield.png" [width]="32" [height]="32"/>
-</h2>
-<p class="paragraph">According to Security & Privacy policies you are obligated to secure your personal account with additional measures. This measure is multi-factor authentication (MFA/2FA).</p>
+<ng-container *transloco="let t">
+  <h2 class="third-title flex">
+    <span>{{ t('mfa.secureYourAcc') }}&nbsp;</span>
+    <basic-emoji emoji="shield.png" [width]="32" [height]="32"/>
+  </h2>
+  <p class="paragraph">{{ t('mfa.mfaObligation') }}</p>
 
-<ul class="options-list">
-  <li class="option-item">
-    <b><span>Authenticator application</span></b>
-    <span> - use authenticator application (such as Google Authenticator or Microsoft Authenticator) in order to store token that will be generating one-time code for you every time you log in.</span>
-  </li>
-</ul>
+  <ul class="options-list">
+    <li class="option-item">
+      <span>{{ t('mfa.twoOptions') }}</span>
+      (<b><span>{{ t('mfa.canBeChangedLater') }}</span></b>):
+    </li>
+  </ul>
 
-<basic-dropdown
-  [options]="mfaOptions"
-  (selectedOption)="changeMfaOption($event)"
-  [defaultLabel]="'Select an MFA option'"
-/>
-
-<div *ngIf="selectedMfaOption?.key === 'mfa'">
-  <p class="paragraph">
-    <span>Scan the QR code below using applications such as&nbsp;</span>
-    <basic-link
-      label="Google Authenticator"
-      [bold]="true"
-      [href]="googleAuthAppLink"
-    />
-    <span>&nbsp;or&nbsp;</span>
-    <basic-link
-      label="Microsoft Authenticator"
-      [bold]="true"
-      [href]="microsoftAuthAppLink"
-    />
-    <span>&nbsp;and provide the 6-digit code in the field.</span>
-  </p>
-
-  <basic-qr-mfa
-    [qrCode]="qrCode"
-    [twoFaToken]="twoFaToken"
-    [showQr]="showQr"
-    (code)="code = $event"
+  <basic-dropdown
+    [options]="mfaOptions"
+    (selectedOption)="changeMfaOption($event)"
+    [defaultLabel]="t('dropdown.selectMfaOption')"
   />
-</div>
 
-<div class="last-button">
-  <basic-button
-    [label]="'Continue'"
-    [disabled]="!isAllFieldsCorrect()"
-    (buttonClick)="setUserMfa()"
-  />
-</div>
+  <div *ngIf="selectedMfaOption?.key === 'mfa'">
+    <p class="paragraph">
+      <span>{{ t('mfa.scanQr1') }}</span>
+      <basic-link
+        label="Google Authenticator"
+        [bold]="true"
+        [href]="googleAuthAppLink"
+      />
+      <span>{{ t('mfa.scanQr2') }}</span><span>&nbsp;or&nbsp;</span>
+      <basic-link
+        label="Microsoft Authenticator"
+        [bold]="true"
+        [href]="microsoftAuthAppLink"
+      />
+      <span>{{ t('mfa.scanQr3') }}</span>
+    </p>
+
+    <basic-qr-mfa
+      [qrCode]="qrCode"
+      [twoFaToken]="twoFaToken"
+      [showQr]="showQr"
+      (code)="code = $event"
+    />
+  </div>
+
+  <div class="last-button">
+    <basic-button
+      [label]="t('button.continue')"
+      [disabled]="!isAllFieldsCorrect()"
+      (buttonClick)="setUserMfa()"
+    />
+  </div>
+</ng-container>

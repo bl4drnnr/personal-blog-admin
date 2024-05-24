@@ -14,6 +14,8 @@ import { EmojiComponent } from '@components/emoji/emoji.component';
 import { QrMfaComponent } from '@components/qr-mfa/qr-mfa.component';
 import { ArrowComponent } from '@components/arrow/arrow.component';
 import { TextareaComponent } from '@components/textarea/textarea.component';
+import { ChangeLanguageComponent } from '@components/change-language/change-language.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const components: any = [
   ButtonComponent,
@@ -28,12 +30,13 @@ const components: any = [
   EmojiComponent,
   QrMfaComponent,
   ArrowComponent,
-  TextareaComponent
+  TextareaComponent,
+  ChangeLanguageComponent
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, NgOptimizedImage, FormsModule],
+  imports: [CommonModule, NgOptimizedImage, FormsModule, TranslocoModule],
   exports: [...components]
 })
 export class BasicComponentsModule {}

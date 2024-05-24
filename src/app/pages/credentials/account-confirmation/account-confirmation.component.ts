@@ -4,7 +4,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ConfirmAccountResponse } from '@responses/confirm-account.enum';
 import { AuthenticationService } from '@services/authentication.service';
 import { StaticService } from '@services/static.service';
-import { Title } from '@angular/platform-browser';
+import { Titles } from '@interfaces/titles.enum';
+import { TranslationService } from '@services/translation.service';
 
 @Component({
   selector: 'page-account-confirmation',
@@ -32,8 +33,8 @@ export class AccountConfirmationComponent implements OnInit {
   code: string;
 
   constructor(
-    private readonly title: Title,
     private readonly authenticationService: AuthenticationService,
+    private readonly translationService: TranslationService,
     private readonly staticService: StaticService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
@@ -91,7 +92,8 @@ export class AccountConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle('My Blog | Account Confirmation');
+    this.translationService.setPageTitle(Titles.ACCOUNT_CONFIRMATION);
+
     this.route.paramMap.subscribe(async (params) => {
       const hash = params.get('hash');
       if (!hash) {

@@ -1,0 +1,14 @@
+{
+  "home": "MBPB | Domowa",
+  "tac": "MBPB | Regulamin",
+  "resetPassword": "MBPB | Resetuj hasło",
+  "registration": "MBPB | Rejestracja",
+  "forgotPassword": "MBPB | Zapomniałem hasła",
+  "accConfirm": "MBPB | Potwierdzenie konta",
+  "dashboard": "MBPB | Pulpit nawigacyjny",
+  "settings": "MBPB | Ustawienia",
+  "recoverAccount": "MBPB | Odzyskaj konto",
+  "emailChangeConfirm": "MBPB | Potwierdzenie zmiany adresu e-mail",
+  "login": "MBPB | Logowanie",
+  "contact": "MBPB | Kontakt"
+}

@@ -1,0 +1,20 @@
+{
+  "success": "Success",
+  "photo-uploaded": "Photo uploaded",
+  "user-updated": "User has been successfully updated",
+  "company-updated": "Company information has been successfully updated",
+  "company-member-deleted": "Company member has been successfully deleted",
+  "company-role-created": "Company user custom role has been successfully created",
+  "company-role-deleted": "Company custom role has been successfully deleted",
+  "company-role-updated": "Company role has been successfully updated",
+  "contact-message-sent": "Contact message has been successfully sent",
+  "product-posted": "Product has been successfully posted",
+  "product-updated": "Product has been successfully updated",
+  "product-deleted": "Product has been successfully deleted",
+  "company-product-deleted": "Company product has been deleted",
+  "product-deleted-from-favorites": "Product has been deleted from favorites",
+  "product-added-to-favorites": "Product has been added to favorites",
+  "company-ownership-transferred": "Company ownership has been successfully transferred",
+  "user-invited": "User(s) have been invited to the company",
+  "company-member-role-changed": "Company member role has been successfully changed"
+}

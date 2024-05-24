@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { DefaultLayout } from '@layouts/default/default.layout';
 import { ComponentsModule } from '@components/components.module';
 import { LottieComponent } from 'ngx-lottie';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const components = [DefaultLayout, CredentialsLayout];
 
@@ -15,7 +16,8 @@ const components = [DefaultLayout, CredentialsLayout];
     RouterModule,
     NgOptimizedImage,
     ComponentsModule,
-    LottieComponent
+    LottieComponent,
+    TranslocoModule
   ],
   exports: [...components]
 })
