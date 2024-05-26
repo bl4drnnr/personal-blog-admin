@@ -13,7 +13,6 @@ import { provideLottieOptions } from 'ngx-lottie';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
 
-// @TODO Implement credentials functions on the back-end
 // @TODO Implement languages on all projects
 // @TODO Post translation and language selection
 // @TODO Translation of admin panel
