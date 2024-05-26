@@ -4,12 +4,13 @@ import { GlobalMessageComponent } from '@components/global-message/global-messag
 import { HeaderComponent } from '@components/header/header.component';
 import { FooterComponent } from '@components/footer/footer.component';
 import { BasicComponentsModule } from '@components/basic-components.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const components = [GlobalMessageComponent, HeaderComponent, FooterComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, NgOptimizedImage, BasicComponentsModule],
+  imports: [CommonModule, NgOptimizedImage, BasicComponentsModule, TranslocoModule],
   exports: [...components]
 })
 export class LayoutComponentsModule {}

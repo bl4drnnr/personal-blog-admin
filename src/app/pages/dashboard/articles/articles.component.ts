@@ -3,8 +3,9 @@ import { ArticlesService } from '@services/articles.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { ListArticleInterface } from '@interfaces/list-article.interface';
+import { TranslationService } from '@services/translation.service';
+import { Titles } from '@interfaces/titles.enum';
 
 @Component({
   selector: 'app-articles',
@@ -23,9 +24,9 @@ export class ArticlesComponent implements OnInit {
   userInfo: UserInfoResponse;
 
   constructor(
-    private readonly title: Title,
     private readonly router: Router,
     private readonly articlesService: ArticlesService,
+    private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService
   ) {}
 
@@ -83,8 +84,10 @@ export class ArticlesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.title.setTitle('My Blog | Articles');
+    this.translationService.setPageTitle(Titles.ARTICLES);
+
     await this.fetchUserInfo();
+
     this.listArticles();
   }
 }

@@ -2,11 +2,13 @@ import dayjs from 'dayjs';
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '@services/categories.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { GetCategoryResponse } from '@responses/get-category.interface';
 import { GlobalMessageService } from '@shared/global-message.service';
+import { TranslationService } from '@services/translation.service';
+import { Titles } from '@interfaces/titles.enum';
+import { CreateCategoryPayload } from '@payloads/create-category.interface';
 
 @Component({
   selector: 'page-categories',
@@ -14,26 +16,40 @@ import { GlobalMessageService } from '@shared/global-message.service';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
+  categories: Array<CreateCategoryPayload> = [{
+    categoryName: '',
+    categoryDescription: '',
+    categoryLanguage: 'PL'
+  }, {
+    categoryName: '',
+    categoryDescription: '',
+    categoryLanguage: 'EN'
+  }, {
+    categoryName: '',
+    categoryDescription: '',
+    categoryLanguage: 'RU'
+  }];
+
   categoryName: string;
   categoryDescription: string;
+  categoryLanguage: string;
   editingCategoryId: string;
+
   allCategories: Array<GetCategoryResponse> = [];
+
   userInfo: UserInfoResponse;
 
   constructor(
-    private readonly title: Title,
     private readonly router: Router,
     private readonly categoriesService: CategoriesService,
+    private readonly translationService: TranslationService,
     private readonly globalMessageService: GlobalMessageService,
     private readonly refreshTokensService: RefreshTokensService
   ) {}
 
   createCategory() {
     this.categoriesService
-      .createCategory({
-        categoryName: this.categoryName,
-        categoryDescription: this.categoryDescription
-      })
+      .createCategory([])
       .subscribe({
         next: ({ message }) => {
           this.categoryName = '';
@@ -103,9 +119,15 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  getCategoryByLanguage() {
+    return this.categories.find(category => category.categoryLanguage === this.categoryLanguage)!;
+  }
+
   async ngOnInit() {
-    this.title.setTitle('My Blog | Categories');
+    this.translationService.setPageTitle(Titles.CATEGORIES);
+
     await this.fetchUserInfo();
+
     this.getAllCategories();
   }
 

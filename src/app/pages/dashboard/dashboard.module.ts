@@ -10,6 +10,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CategoriesComponent } from '@pages/categories/categories.component';
 import { ArticlesComponent } from '@pages/articles/articles.component';
 import { ArticleComponent } from '@pages/article/article.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const routes: Routes = [
   {
@@ -84,7 +85,8 @@ const components = [
         remove: 'Remove',
         enterValidUrl: 'Please enter a valid URL'
       }
-    })
+    }),
+    TranslocoModule
   ],
   exports: [...components]
 })

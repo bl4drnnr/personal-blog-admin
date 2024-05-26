@@ -5,4 +5,5 @@ export interface CreateArticlePayload {
   articleContent: string;
   articlePicture: string;
   categoryId: string;
+  articleLanguage: string;
 }

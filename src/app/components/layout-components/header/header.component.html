@@ -1,42 +1,44 @@
-<header [ngClass]="{'hide': scrolled}">
-  <div class="header-content">
-    <div class="header-side">
-      <img
-        class="sidebar-burger"
-        *ngIf="showHeaderBurger"
-        (click)="openSidebar.emit()"
-        [ngSrc]="staticStorageLink + '/icons/hamburger.svg'"
-        [width]="25"
-        [height]="25"
-        alt="burger"
-      >
-      <h3
-        class="sidebar-header"
-        *ngIf="!showHeaderBurger"
-      >MBPB</h3>
-    </div>
-
-    <div class="header-side" *ngIf="isUserLoggedIn">
-      <div class="user-account-wrapper" (click)="handleRedirect('account/articles')">
-        <p class="user-account-title">Your articles</p>
+<ng-container *transloco="let t">
+  <header [ngClass]="{'hide': scrolled}">
+    <div class="header-content">
+      <div class="header-side">
         <img
-          class="user-account-icon"
-          [ngSrc]="userIcon"
-          [width]="24"
-          [height]="24"
-          alt="user"
+          class="sidebar-burger"
+          *ngIf="showHeaderBurger"
+          (click)="openSidebar.emit()"
+          [ngSrc]="staticStorageLink + '/icons/hamburger.svg'"
+          [width]="25"
+          [height]="25"
+          alt="burger"
         >
+        <h3
+          class="sidebar-header"
+          *ngIf="!showHeaderBurger"
+        >MBPB</h3>
       </div>
-      <div class="header-button-wrapper">
-        <basic-button
-          [label]="'Log Out'"
-          [danger]="true"
-          (buttonClick)="logout()"
-        />
-      </div>
-      <div class="lang-button-wrapper">
-        <basic-change-language/>
+
+      <div class="header-side" *ngIf="isUserLoggedIn">
+        <div class="user-account-wrapper" (click)="handleRedirect('account/articles')">
+          <p class="user-account-title">{{ t('button.yourArticles') }}</p>
+          <img
+            class="user-account-icon"
+            [ngSrc]="userIcon"
+            [width]="24"
+            [height]="24"
+            alt="user"
+          >
+        </div>
+        <div class="header-button-wrapper">
+          <basic-button
+            [label]="t('button.logOut')"
+            [danger]="true"
+            (buttonClick)="logout()"
+          />
+        </div>
+        <div class="lang-button-wrapper">
+          <basic-change-language/>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
+</ng-container>
