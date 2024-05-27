@@ -19,34 +19,38 @@ import { CreateArticleInterface } from '@interfaces/create-article.interface';
   styleUrl: './create-article.component.scss'
 })
 export class CreateArticleComponent implements OnInit, OnDestroy {
-  articles: Array<CreateArticleInterface> = [{
-    articleName: '',
-    articleDescription: '',
-    articleTag: '',
-    articleTags: [],
-    articleContent: '',
-    articlePicture: '',
-    articleCategory: { key: '', value: '' },
-    articleLanguage: 'PL'
-  }, {
-    articleName: '',
-    articleDescription: '',
-    articleTag: '',
-    articleTags: [],
-    articleContent: '',
-    articlePicture: '',
-    articleCategory: { key: '', value: '' },
-    articleLanguage: 'EN'
-  }, {
-    articleName: '',
-    articleDescription: '',
-    articleTag: '',
-    articleTags: [],
-    articleContent: '',
-    articlePicture: '',
-    articleCategory: { key: '', value: '' },
-    articleLanguage: 'RU'
-  }];
+  articles: Array<CreateArticleInterface> = [
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'PL'
+    },
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'EN'
+    },
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'RU'
+    }
+  ];
 
   articleName: string;
   articleDescription: string;
@@ -114,9 +118,14 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     this.categoriesService.getAllCategories().subscribe({
       next: (allCategories) => {
         this.allCategories = allCategories;
-        this.categoriesDropdown = allCategories.map(({ id, categoryName }) => {
-          return { key: id, value: categoryName };
-        });
+        this.categoriesDropdown = allCategories.map(
+          ({ id, categoryName, categoryLanguage }) => {
+            return {
+              key: id,
+              value: `${categoryName} (${categoryLanguage.toUpperCase()})`
+            };
+          }
+        );
       }
     });
   }
@@ -244,7 +253,9 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   }
 
   getArticleByLanguage() {
-    return this.articles.find(article => article.articleLanguage === this.articleLanguage)!;
+    return this.articles.find(
+      (article) => article.articleLanguage === this.articleLanguage
+    )!;
   }
 
   sanitizeHtmlContent(htmlString: string): string {

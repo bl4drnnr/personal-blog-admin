@@ -1,5 +1,5 @@
+import { CategoryInterface } from '@payloads/category.interface';
+
 export interface CreateCategoryPayload {
-  categoryName: string;
-  categoryDescription: string;
-  categoryLanguage: string;
+  categories: Array<CategoryInterface>;
 }

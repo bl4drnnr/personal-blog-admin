@@ -8,7 +8,7 @@ import { GetCategoryResponse } from '@responses/get-category.interface';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
-import { CreateCategoryPayload } from '@payloads/create-category.interface';
+import { CategoryInterface } from '@payloads/category.interface';
 
 @Component({
   selector: 'page-categories',
@@ -16,23 +16,27 @@ import { CreateCategoryPayload } from '@payloads/create-category.interface';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  categories: Array<CreateCategoryPayload> = [{
-    categoryName: '',
-    categoryDescription: '',
-    categoryLanguage: 'PL'
-  }, {
-    categoryName: '',
-    categoryDescription: '',
-    categoryLanguage: 'EN'
-  }, {
-    categoryName: '',
-    categoryDescription: '',
-    categoryLanguage: 'RU'
-  }];
+  categories: Array<CategoryInterface> = [
+    {
+      categoryName: '',
+      categoryDescription: '',
+      categoryLanguage: 'pl'
+    },
+    {
+      categoryName: '',
+      categoryDescription: '',
+      categoryLanguage: 'en'
+    },
+    {
+      categoryName: '',
+      categoryDescription: '',
+      categoryLanguage: 'ru'
+    }
+  ];
 
   categoryName: string;
   categoryDescription: string;
-  categoryLanguage: string;
+  categoryLanguage: string = 'en';
   editingCategoryId: string;
 
   allCategories: Array<GetCategoryResponse> = [];
@@ -49,11 +53,31 @@ export class CategoriesComponent implements OnInit {
 
   createCategory() {
     this.categoriesService
-      .createCategory([])
+      .createCategory({ categories: this.categories })
       .subscribe({
         next: ({ message }) => {
           this.categoryName = '';
           this.categoryDescription = '';
+          this.categoryLanguage = 'en';
+
+          this.categories = [
+            {
+              categoryName: '',
+              categoryDescription: '',
+              categoryLanguage: 'pl'
+            },
+            {
+              categoryName: '',
+              categoryDescription: '',
+              categoryLanguage: 'en'
+            },
+            {
+              categoryName: '',
+              categoryDescription: '',
+              categoryLanguage: 'ru'
+            }
+          ];
+
           this.globalMessageService.handle({ message });
           this.getAllCategories();
         }
@@ -98,8 +122,39 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+  changeCategoryName(categoryName: string) {
+    this.categoryName = categoryName;
+    const category = this.getCategoryByLanguage();
+    category.categoryName = categoryName;
+  }
+
+  changeCategoryDescription(categoryDescription: string) {
+    this.categoryDescription = categoryDescription;
+    const category = this.getCategoryByLanguage();
+    category.categoryDescription = categoryDescription;
+  }
+
+  changeCategoryLanguage(categoryLanguage: string) {
+    this.categoryLanguage = categoryLanguage;
+
+    const category = this.getCategoryByLanguage();
+
+    this.categoryName = category.categoryName;
+    this.categoryDescription = category.categoryDescription;
+  }
+
   disableCreateCategoryButton() {
-    return !this.categoryName || !this.categoryDescription;
+    const category1 = this.categories[0];
+    const category2 = this.categories[1];
+    const category3 = this.categories[2];
+    return (
+      !category1.categoryName ||
+      !category1.categoryDescription ||
+      !category2.categoryName ||
+      !category2.categoryDescription ||
+      !category3.categoryName ||
+      !category3.categoryDescription
+    );
   }
 
   async handleRedirect(path: string) {
@@ -120,7 +175,9 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategoryByLanguage() {
-    return this.categories.find(category => category.categoryLanguage === this.categoryLanguage)!;
+    return this.categories.find(
+      (category) => category.categoryLanguage === this.categoryLanguage
+    )!;
   }
 
   async ngOnInit() {

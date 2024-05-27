@@ -5,19 +5,43 @@
     <div class="categories-wrapper">
       <h1>{{ t('categories.createCategoryTitle') }}</h1>
 
+      <div class="language-selection-buttons">
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'PL'"
+            [fillButton]="categoryLanguage === 'pl'"
+            (buttonClick)="changeCategoryLanguage('pl')"
+          />
+        </div>
+        <div class="language-selection-button margin">
+          <basic-button
+            [label]="'EN'"
+            [fillButton]="categoryLanguage === 'en'"
+            (buttonClick)="changeCategoryLanguage('en')"
+          />
+        </div>
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'RU'"
+            [fillButton]="categoryLanguage === 'ru'"
+            (buttonClick)="changeCategoryLanguage('ru')"
+          />
+        </div>
+      </div>
+
       <basic-input
         [label]="t('input.categoryNameLabel')"
         [placeholder]="t('input.categoryNamePlaceholder')"
         [inputDescription]="t('input.categoryNameDesc')"
         [value]="categoryName"
-        (valueChange)="categoryName = $event"
+        (valueChange)="changeCategoryName($event)"
       />
       <basic-input
         [label]="t('input.categoryDescLabel')"
         [placeholder]="t('input.categoryDescPlaceholder')"
         [inputDescription]="t('input.categoryDescDesc')"
         [value]="categoryDescription"
-        (valueChange)="categoryDescription = $event"
+        (valueChange)="changeCategoryDescription($event)"
       />
 
       <div class="create-button-wrapper">
@@ -56,10 +80,13 @@
             (valueChange)="category.categoryDescription = $event"
           />
           <p class="category-desc-p">
+            {{ t('categories.categoryLanguage', { lang: category.categoryLanguage.toUpperCase() }) }}
+          </p>
+          <p class="category-desc-p">
             {{ t('categories.categoryCreatedAt', { createdAt: dayjs(category.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}
           </p>
           <p class="category-desc-p">
-            {{ t('categories.categoryUpdatedAt', { createdAt: dayjs(category.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}
+            {{ t('categories.categoryUpdatedAt', { updatedAt: dayjs(category.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}
           </p>
         </div>
 
@@ -71,7 +98,7 @@
               *ngIf="editingCategoryId !== category.id"
             />
             <basic-button
-              [label]="t('button.saveChange')"
+              [label]="t('button.saveChanges')"
               [fillButton]="true"
               *ngIf="editingCategoryId === category.id"
               (buttonClick)="editCategory(category.id)"

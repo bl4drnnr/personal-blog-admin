@@ -192,7 +192,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (article) => {
-          this.translationService.setPageTitle(Titles.ARTICLE, { articleName: article.articleName });
+          this.translationService.setPageTitle(Titles.ARTICLE, {
+            articleName: article.articleName
+          });
           this.article = article;
           this.articleName = article.articleName;
           this.articleDescription = article.articleDescription;

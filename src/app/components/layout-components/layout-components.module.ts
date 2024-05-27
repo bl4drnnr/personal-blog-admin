@@ -10,7 +10,12 @@ const components = [GlobalMessageComponent, HeaderComponent, FooterComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, NgOptimizedImage, BasicComponentsModule, TranslocoModule],
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    BasicComponentsModule,
+    TranslocoModule
+  ],
   exports: [...components]
 })
 export class LayoutComponentsModule {}

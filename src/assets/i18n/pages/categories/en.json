@@ -3,5 +3,6 @@
   "listAllCategories": "List of all categories",
   "noCategories": "There are no any categories...",
   "categoryCreatedAt": "Created at: {{ createdAt }}",
-  "categoryUpdatedAt": "Updated at: {{ updatedAt }}"
+  "categoryUpdatedAt": "Updated at: {{ updatedAt }}",
+  "categoryLanguage": "Category language: {{ lang }}"
 }

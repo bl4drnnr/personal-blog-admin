@@ -19,7 +19,7 @@ export class CategoriesService {
   constructor(private readonly apiService: ApiService) {}
 
   createCategory(
-    payload: Array<CreateCategoryPayload>
+    payload: CreateCategoryPayload
   ): Observable<CategoryCreatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
