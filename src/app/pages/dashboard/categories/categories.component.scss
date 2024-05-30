@@ -38,3 +38,16 @@
 .category-desc-p {
   opacity: .6;
 }
+
+.language-selection-buttons {
+  display: flex;
+}
+
+.language-selection-button {
+  width: 100%;
+
+  &.margin {
+    margin: 0 5px
+  }
+}
+

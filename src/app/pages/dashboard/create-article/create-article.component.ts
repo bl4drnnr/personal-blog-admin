@@ -5,10 +5,13 @@ import { RefreshTokensService } from '@services/refresh-token.service';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { ArticlesService } from '@services/articles.service';
 import { Editor, Toolbar } from 'ngx-editor';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { CategoriesService } from '@services/categories.service';
 import { GetCategoryResponse } from '@responses/get-category.interface';
 import { DropdownInterface } from '@interfaces/dropdown.interface';
+import { TranslationService } from '@services/translation.service';
+import { Titles } from '@interfaces/titles.enum';
+import { CreateArticleInterface } from '@interfaces/create-article.interface';
 
 @Component({
   selector: 'page-create-article',
@@ -16,11 +19,45 @@ import { DropdownInterface } from '@interfaces/dropdown.interface';
   styleUrl: './create-article.component.scss'
 })
 export class CreateArticleComponent implements OnInit, OnDestroy {
+  articles: Array<CreateArticleInterface> = [
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'PL'
+    },
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'EN'
+    },
+    {
+      articleName: '',
+      articleDescription: '',
+      articleTag: '',
+      articleTags: [],
+      articleContent: '',
+      articlePicture: '',
+      articleCategory: { key: '', value: '' },
+      articleLanguage: 'RU'
+    }
+  ];
+
   articleName: string;
   articleDescription: string;
   articleTag: string;
   articleTags: Array<string> = [];
   articleCategory: DropdownInterface;
+  articleLanguage: string = 'EN';
   allCategories: Array<GetCategoryResponse> = [];
   categoriesDropdown: Array<DropdownInterface>;
 
@@ -44,22 +81,17 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   ];
 
   selectedFiles?: FileList;
-  articlePicture: string | ArrayBuffer | null = '';
+  articlePicture: string;
 
   constructor(
-    private readonly title: Title,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer,
     private readonly articlesService: ArticlesService,
     private readonly categoriesService: CategoriesService,
+    private readonly translationService: TranslationService,
     private readonly globalMessageService: GlobalMessageService,
     private readonly refreshTokensService: RefreshTokensService
   ) {}
-
-  onHtmlChange(html: string) {
-    this.htmlContent = html;
-    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
-  }
 
   createArticle() {
     this.articlesService
@@ -68,8 +100,9 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
         articleDescription: this.articleDescription,
         articleTags: this.articleTags.map((tag) => tag.replace(/\s+/g, '')),
         articleContent: this.sanitizedHtmlContent,
-        articlePicture: this.articlePicture as string,
-        categoryId: this.articleCategory.key
+        articlePicture: this.articlePicture,
+        categoryId: this.articleCategory.key,
+        articleLanguage: this.articleLanguage
       })
       .subscribe({
         next: async ({ link, message }) => {
@@ -85,18 +118,49 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     this.categoriesService.getAllCategories().subscribe({
       next: (allCategories) => {
         this.allCategories = allCategories;
-        this.categoriesDropdown = allCategories.map(({ id, categoryName }) => {
-          return { key: id, value: categoryName };
-        });
+        this.categoriesDropdown = allCategories.map(
+          ({ id, categoryName, categoryLanguage }) => {
+            return {
+              key: id,
+              value: `${categoryName} (${categoryLanguage.toUpperCase()})`
+            };
+          }
+        );
       }
     });
+  }
+
+  modifyArticleName(articleName: string) {
+    this.articleName = articleName;
+    const article = this.getArticleByLanguage();
+    article.articleName = articleName;
+  }
+
+  modifyArticleDesc(articleDescription: string) {
+    this.articleDescription = articleDescription;
+    const article = this.getArticleByLanguage();
+    article.articleDescription = articleDescription;
+  }
+
+  modifyArticleTag(articleTag: string) {
+    this.articleTag = articleTag;
+    const article = this.getArticleByLanguage();
+    article.articleTag = articleTag;
+  }
+
+  selectArticleCategory({ key, value }: DropdownInterface) {
+    this.articleCategory = { key, value };
+    const article = this.getArticleByLanguage();
+    article.articleCategory = { key, value };
   }
 
   async addArticleTag() {
     if (this.articleTag === ' ') return;
 
-    const isTagPresent = this.articleTags.find(
-      (tag) => tag === this.articleTag
+    const article = this.getArticleByLanguage();
+
+    const isTagPresent = article.articleTags.find(
+      (tag) => tag === article.articleTag
     );
 
     if (isTagPresent) {
@@ -104,14 +168,60 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
         message: 'Tag is already on the list'
       });
     } else {
-      this.articleTags.push(this.articleTag);
+      article.articleTags.push(this.articleTag);
     }
 
+    article.articleTag = '';
     this.articleTag = '';
   }
 
-  selectArticleCategory({ key, value }: DropdownInterface) {
-    this.articleCategory = { key, value };
+  deleteArticleTag(articleTag: string) {
+    const article = this.getArticleByLanguage();
+    article.articleTags.splice(article.articleTags.indexOf(articleTag), 1);
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+
+    if (!this.selectedFiles) return;
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const article = this.getArticleByLanguage();
+      this.articlePicture = reader.result as string;
+      article.articlePicture = reader.result as string;
+    };
+  }
+
+  clearArticlePicture() {
+    const article = this.getArticleByLanguage();
+    this.articlePicture = '';
+    article.articlePicture = '';
+  }
+
+  onHtmlChange(html: string) {
+    this.htmlContent = html;
+    const article = this.getArticleByLanguage();
+    article.articleContent = this.sanitizeHtmlContent(this.htmlContent);
+    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
+  }
+
+  changeArticleLanguage(articleLanguage: string) {
+    this.articleLanguage = articleLanguage;
+
+    const article = this.getArticleByLanguage();
+
+    this.articleName = article.articleName;
+    this.articleDescription = article.articleDescription;
+    this.articleTag = article.articleTag;
+    this.articleTags = article.articleTags;
+    this.htmlContent = article.articleContent;
+    this.articlePicture = article.articlePicture;
+    this.articleCategory = article.articleCategory;
   }
 
   disableCreatePostButton() {
@@ -123,10 +233,6 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
       !this.sanitizedHtmlContent ||
       !this.articlePicture
     );
-  }
-
-  deleteArticleTag(articleTag: string) {
-    this.articleTags.splice(this.articleTags.indexOf(articleTag), 1);
   }
 
   async handleRedirect(path: string) {
@@ -146,15 +252,10 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectFile(event: any) {
-    this.selectedFiles = event.target.files;
-    if (!this.selectedFiles) return;
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.articlePicture = reader.result;
-    };
+  getArticleByLanguage() {
+    return this.articles.find(
+      (article) => article.articleLanguage === this.articleLanguage
+    )!;
   }
 
   sanitizeHtmlContent(htmlString: string): string {
@@ -162,7 +263,8 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.title.setTitle('My Blog | Create article');
+    this.translationService.setPageTitle(Titles.CREATE_ARTICLE);
+
     this.editor = new Editor();
 
     await this.fetchUserInfo();

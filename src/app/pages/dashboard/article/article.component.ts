@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Component, OnDestroy, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticlesService } from '@services/articles.service';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { GetArticleBySlugResponse } from '@responses/get-article-by-slug.interface';
@@ -13,6 +13,8 @@ import { GetCategoryResponse } from '@responses/get-category.interface';
 import { DropdownInterface } from '@interfaces/dropdown.interface';
 import { Editor, Toolbar } from 'ngx-editor';
 import { EditArticlePayload } from '@payloads/edit-article.interface';
+import { TranslationService } from '@services/translation.service';
+import { Titles } from '@interfaces/titles.enum';
 
 @Component({
   selector: 'page-article',
@@ -59,13 +61,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   articlePicture: string | ArrayBuffer | null = '';
 
   constructor(
-    private readonly title: Title,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly envService: EnvService,
     private readonly sanitizer: DomSanitizer,
     private readonly articlesService: ArticlesService,
     private readonly categoriesService: CategoriesService,
+    private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
   ) {}
@@ -190,7 +192,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (article) => {
-          this.title.setTitle(`My Blog | ${article.articleName}`);
+          this.translationService.setPageTitle(Titles.ARTICLE, {
+            articleName: article.articleName
+          });
           this.article = article;
           this.articleName = article.articleName;
           this.articleDescription = article.articleDescription;

@@ -1,0 +1,7 @@
+{
+  "allArticles": "All articles",
+  "articleCategory": "Category: {{ categoryName }}",
+  "articleTags": "Tags: {{ categoryTags }}",
+  "noArticles": "No articles found",
+  "createArticleTitle": "Create new article"
+}

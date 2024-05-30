@@ -1,78 +1,117 @@
 <layout-default
   [userInfo]="userInfo"
 >
-  <div class="categories-wrapper">
-    <h1>Create new category</h1>
-    <basic-input
-      [label]="'Category name'"
-      [placeholder]="'Provide the name of the new category'"
-      [inputDescription]="'The name of the category will be assigned to articles and visible for all end users'"
-      [value]="categoryName"
-      (valueChange)="categoryName = $event"
-    ></basic-input>
-    <basic-input
-      [label]="'Category description'"
-      [placeholder]="'Provide the description of the new category'"
-      [inputDescription]="'The category description is used only internally and will only be visible for internal users'"
-      [value]="categoryDescription"
-      (valueChange)="categoryDescription = $event"
-    ></basic-input>
+  <ng-container *transloco="let t">
+    <div class="categories-wrapper">
+      <h1>{{ t('categories.createCategoryTitle') }}</h1>
 
-    <div class="create-button-wrapper">
-      <basic-button
-        [fillButton]="true"
-        [label]="'Create category'"
-        [disabled]="disableCreateCategoryButton()"
-        (buttonClick)="createCategory()"
-      ></basic-button>
-    </div>
-
-    <h1>List of all categories</h1>
-
-    <p *ngIf="allCategories.length === 0">There are no any categories...</p>
-
-    <div class="category-wrapper" *ngFor="let category of allCategories">
-      <div class="category-desc">
-        <h2 class="category-name" *ngIf="editingCategoryId !== category.id">{{ category.categoryName }}</h2>
-        <basic-input
-          [label]="'Edit category name'"
-          [placeholder]="'Provide new name for the category'"
-          *ngIf="editingCategoryId === category.id"
-          [value]="category.categoryName"
-          (valueChange)="category.categoryName = $event"
-        />
-        <p *ngIf="editingCategoryId !== category.id">{{ category.categoryDescription }}</p>
-        <basic-input
-          [label]="'Edit category description'"
-          [placeholder]="'Provide new description for the category'"
-          *ngIf="editingCategoryId === category.id"
-          [value]="category.categoryDescription"
-          (valueChange)="category.categoryDescription = $event"
-        />
-        <p class="category-desc-p">Created at: {{ dayjs(category.createdAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
-        <p class="category-desc-p">Updated at: {{ dayjs(category.updatedAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
-      </div>
-      <div class="category-btns">
-        <div class="edit-category-btn-wrapper">
+      <div class="language-selection-buttons">
+        <div class="language-selection-button">
           <basic-button
-            [label]="'Edit category'"
-            (buttonClick)="editingCategoryId = category.id"
-            *ngIf="editingCategoryId !== category.id"
-          />
-          <basic-button
-            [label]="'Save changes'"
-            [fillButton]="true"
-            *ngIf="editingCategoryId === category.id"
-            (buttonClick)="editCategory(category.id)"
-            [disabled]="!category.categoryName || !category.categoryDescription"
+            [label]="'PL'"
+            [fillButton]="categoryLanguage === 'pl'"
+            (buttonClick)="changeCategoryLanguage('pl')"
           />
         </div>
+        <div class="language-selection-button margin">
+          <basic-button
+            [label]="'EN'"
+            [fillButton]="categoryLanguage === 'en'"
+            (buttonClick)="changeCategoryLanguage('en')"
+          />
+        </div>
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'RU'"
+            [fillButton]="categoryLanguage === 'ru'"
+            (buttonClick)="changeCategoryLanguage('ru')"
+          />
+        </div>
+      </div>
+
+      <basic-input
+        [label]="t('input.categoryNameLabel')"
+        [placeholder]="t('input.categoryNamePlaceholder')"
+        [inputDescription]="t('input.categoryNameDesc')"
+        [value]="categoryName"
+        (valueChange)="changeCategoryName($event)"
+      />
+      <basic-input
+        [label]="t('input.categoryDescLabel')"
+        [placeholder]="t('input.categoryDescPlaceholder')"
+        [inputDescription]="t('input.categoryDescDesc')"
+        [value]="categoryDescription"
+        (valueChange)="changeCategoryDescription($event)"
+      />
+
+      <div class="create-button-wrapper">
         <basic-button
-          [label]="'Delete category'"
-          [danger]="true"
-          (buttonClick)="deleteCategory(category.id)"
+          [fillButton]="true"
+          [label]="t('button.createCategory')"
+          [disabled]="disableCreateCategoryButton()"
+          (buttonClick)="createCategory()"
         />
       </div>
+
+      <h1>{{ t('categories.listAllCategories') }}</h1>
+
+      <p *ngIf="allCategories.length === 0">
+        {{ t('categories.noCategories') }}
+      </p>
+
+      <div class="category-wrapper" *ngFor="let category of allCategories">
+        <div class="category-desc">
+          <h2 class="category-name" *ngIf="editingCategoryId !== category.id">
+            {{ category.categoryName }}
+          </h2>
+          <basic-input
+            [label]="t('input.editCategoryNameLabel')"
+            [placeholder]="t('input.editCategoryNamePlaceholder')"
+            *ngIf="editingCategoryId === category.id"
+            [value]="category.categoryName"
+            (valueChange)="category.categoryName = $event"
+          />
+          <p *ngIf="editingCategoryId !== category.id">{{ category.categoryDescription }}</p>
+          <basic-input
+            [label]="t('input.editCategoryDescLabel')"
+            [placeholder]="t('input.editCategoryDescPlaceholder')"
+            *ngIf="editingCategoryId === category.id"
+            [value]="category.categoryDescription"
+            (valueChange)="category.categoryDescription = $event"
+          />
+          <p class="category-desc-p">
+            {{ t('categories.categoryLanguage', { lang: category.categoryLanguage.toUpperCase() }) }}
+          </p>
+          <p class="category-desc-p">
+            {{ t('categories.categoryCreatedAt', { createdAt: dayjs(category.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}
+          </p>
+          <p class="category-desc-p">
+            {{ t('categories.categoryUpdatedAt', { updatedAt: dayjs(category.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}
+          </p>
+        </div>
+
+        <div class="category-btns">
+          <div class="edit-category-btn-wrapper">
+            <basic-button
+              [label]="t('button.editCategory')"
+              (buttonClick)="editingCategoryId = category.id"
+              *ngIf="editingCategoryId !== category.id"
+            />
+            <basic-button
+              [label]="t('button.saveChanges')"
+              [fillButton]="true"
+              *ngIf="editingCategoryId === category.id"
+              (buttonClick)="editCategory(category.id)"
+              [disabled]="!category.categoryName || !category.categoryDescription"
+            />
+          </div>
+          <basic-button
+            [label]="t('button.deleteCategory')"
+            [danger]="true"
+            (buttonClick)="deleteCategory(category.id)"
+          />
+        </div>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </layout-default>

@@ -37,6 +37,10 @@ export class AuthenticationService {
   registration(
     payload: RegistrationPayload
   ): Observable<{ message: RegistrationResponse }> {
+    const language = localStorage.getItem('translocoLang');
+
+    if (language) payload.language = language;
+
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.AUTH,
@@ -75,6 +79,10 @@ export class AuthenticationService {
   forgotPassword(
     payload: ForgotPasswordPayload
   ): Observable<{ message: ForgotPasswordResponse }> {
+    const language = localStorage.getItem('translocoLang');
+
+    if (language) payload.language = language;
+
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.USERS,
@@ -87,6 +95,9 @@ export class AuthenticationService {
     message: ResetUserPasswordResponse;
   }> {
     const params = { confirmationHash: payload.hash };
+    const language = localStorage.getItem('translocoLang');
+
+    if (language) payload.language = language;
 
     return this.apiService.apiProxyRequest({
       method: Method.POST,

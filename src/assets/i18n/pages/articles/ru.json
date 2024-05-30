@@ -1,0 +1,7 @@
+{
+  "allArticles": "Все статьи",
+  "articleCategory": "Категория: {{ categoryName }}",
+  "articleTags": "Теги: {{ categoryTags }}",
+  "noArticles": "Статей не найдено",
+  "createArticleTitle": "Создать новую статью"
+}

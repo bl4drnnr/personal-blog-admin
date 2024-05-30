@@ -10,5 +10,9 @@
   "recoverAccount": "MBPB | Восстановить аккаунт",
   "emailChangeConfirm": "MBPB | Подтверждение изменения по электронной почте",
   "login": "MBPB | Войти",
-  "contact": "MBPB | Контакт"
+  "contact": "MBPB | Контакт",
+  "articles": "MBPB | Статьи",
+  "categories": "MBPB | Категории",
+  "createArticle": "MBPB | Написать статью",
+  "article": "MBPB | Статья | {{ articleName }}"
 }

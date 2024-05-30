@@ -1,0 +1,8 @@
+{
+  "createCategoryTitle": "Utwórz nową kategorię",
+  "listAllCategories": "Lista wszystkich kategorii",
+  "noCategories": "Nie ma żadnych kategorii...",
+  "categoryCreatedAt": "Utworzono o: {{ createdAt }}",
+  "categoryUpdatedAt": "Aktualizacja o: {{ updatedAt }}",
+  "categoryLanguage": "Język kategorii: {{ lang }}"
+}

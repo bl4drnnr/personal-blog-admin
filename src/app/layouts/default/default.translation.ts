@@ -2,6 +2,7 @@ import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { MessagesTranslation } from '@translations/messages.enum';
 import { ComponentsTranslation } from '@translations/components.enum';
 import { CredentialsTranslation } from '@translations/credentials.enum';
+import { PageTranslation } from '@translations/pages.enum';
 
 export const DefaultTranslation = {
   provide: TRANSLOCO_SCOPE,
@@ -45,6 +46,14 @@ export const DefaultTranslation = {
     {
       scope: CredentialsTranslation.REGISTRATION,
       alias: CredentialsTranslation.REGISTRATION_ALIAS
+    },
+    {
+      scope: PageTranslation.ARTICLES,
+      alias: PageTranslation.ARTICLES_ALIAS
+    },
+    {
+      scope: PageTranslation.CATEGORIES,
+      alias: PageTranslation.CATEGORIES_ALIAS
     }
   ]
 };

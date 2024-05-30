@@ -10,5 +10,9 @@
   "recoverAccount": "MBPB | Recover Account",
   "emailChangeConfirm": "MBPB | Email Change Confirmation",
   "login": "MBPB | Login",
-  "contact": "MBPB | Contact"
+  "contact": "MBPB | Contact",
+  "articles": "MBPB | Articles",
+  "categories": "MBPB | Categories",
+  "createArticle": "MBPB | Create article",
+  "article": "MBPB | Article | {{ articleName }}"
 }
