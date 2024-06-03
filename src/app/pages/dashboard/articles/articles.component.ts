@@ -9,6 +9,7 @@ import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { MessagesTranslation } from '@translations/messages.enum';
+import { EnvService } from '@shared/env.service';
 
 @Component({
   selector: 'app-articles',
@@ -28,11 +29,14 @@ export class ArticlesComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
+    private readonly envService: EnvService,
     private readonly articlesService: ArticlesService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
   ) {}
+
+  staticStorage = `${this.envService.getStaticStorageLink}/articles-main-pictures/`;
 
   setCurrentPage(currentPage: string) {
     this.page = currentPage;
