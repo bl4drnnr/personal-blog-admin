@@ -31,7 +31,7 @@ const routes: Routes = [
     component: ArticlesComponent
   },
   {
-    path: 'account/article/:slug',
+    path: 'account/article/:language/:slug',
     component: ArticleComponent
   }
 ];

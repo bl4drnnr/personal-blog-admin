@@ -15,13 +15,43 @@
       <div
         class="article-wrapper"
         *ngFor="let article of articles"
-        (click)="handleRedirect('account/article/' + article.articleSlug)"
       >
         <h1>{{ article.articleName }}</h1>
         <h3>{{ article.articleDescription }}</h3>
         <br>
+        <p>{{ t('articles.articleCreatedAt', { createdAt: dayjs(article.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+        <p>{{ t('articles.articleUpdatedAt', { updatedAt: dayjs(article.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+        <p>{{ t('articles.articleLanguage', { articleLanguage: article.articleLanguage.toUpperCase() }) }}</p>
         <p>{{ t('articles.articleCategory', { categoryName: article.category.categoryName }) }}</p>
-        <p>{{ t('articles.articleTags', { categoryTags: article.articleTags.join(', ') }) }}</p>
+
+        <div class="article-tags-wrapper">
+          <div *ngFor="let articleTag of article.articleTags">
+            <p class="article-tag">{{ articleTag }}</p>
+          </div>
+        </div>
+
+        <div class="article-btns-wrapper">
+          <div class="article-btn-wrapper right">
+            <basic-button
+              [label]="t('button.editArticle')"
+              (click)="handleArticleRedirect(article)"
+            />
+          </div>
+          <div class="article-btn-wrapper">
+            <basic-button
+              [fillButton]="article.articlePosted"
+              [label]="article.articlePosted ? t('button.deleteArticlePosted') : t('button.postArticle')"
+              (buttonClick)="changePublishArticleStatus(article.id)"
+            />
+          </div>
+          <div class="article-btn-wrapper left">
+            <basic-button
+              [label]="t('button.deleteArticle')"
+              [danger]="true"
+              (buttonClick)="deleteArticle(article.id)"
+            />
+          </div>
+        </div>
       </div>
 
       <div *ngIf="articles.length === 0">

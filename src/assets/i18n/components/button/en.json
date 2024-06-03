@@ -50,5 +50,11 @@
   "createArticle": "Create article",
   "createCategory": "Create category",
   "editCategory": "Edit category",
-  "deleteCategory": "Delete category"
+  "deleteCategory": "Delete category",
+  "categories": "Categories",
+  "editArticle": "Edit article",
+  "deleteArticle": "Delete article",
+  "deleteArticlePosted": "Delete article from posted",
+  "postArticle": "Post article",
+  "closeEditMode": "Close edit article mode"
 }

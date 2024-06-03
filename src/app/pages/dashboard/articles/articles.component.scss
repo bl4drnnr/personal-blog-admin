@@ -9,16 +9,10 @@
   border: 1px solid var(--border-color);
   padding: 12px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: .2s;
   margin-bottom: 20px;
 
   h1, h3 {
     margin: 0;
-  }
-
-  &:hover {
-    background: var(--color-hover);
   }
 }
 
@@ -26,4 +20,35 @@
   min-height: 250px;
   display: flex;
   justify-content: center;
+}
+
+.article-btns-wrapper {
+  margin-top: 10px;
+  display: flex;
+}
+
+.article-btn-wrapper {
+  width: 100%;
+
+  &.right {
+    margin-right: 5px;
+  }
+
+  &.left {
+    margin-left: 5px;
+  }
+}
+
+.article-tags-wrapper {
+  display: flex;
+  margin-top: 10px;
+}
+
+.article-tag {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+  transition: .2s;
 }

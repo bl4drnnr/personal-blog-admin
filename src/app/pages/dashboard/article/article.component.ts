@@ -15,6 +15,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 import { EditArticlePayload } from '@payloads/edit-article.interface';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-article',
@@ -25,6 +26,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   article: GetArticleBySlugResponse;
 
   articleSlug: string;
+  articleLanguage: string;
 
   articleName: string;
   articleDescription: string;
@@ -121,8 +123,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
         articleId: this.article.id
       })
       .subscribe({
-        next: ({ message }) => {
-          this.globalMessageService.handle({ message });
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           this.getArticleBySlug();
         }
       });
@@ -165,8 +172,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
         ...articlePayload
       })
       .subscribe({
-        next: ({ message }) => {
-          this.globalMessageService.handle({ message });
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           this.getArticleBySlug();
         }
       });
@@ -179,7 +191,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: async ({ message }) => {
-          this.globalMessageService.handle({ message });
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           await this.handleRedirect('account/articles');
         }
       });
@@ -188,7 +205,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   getArticleBySlug() {
     this.articlesService
       .getArticleBySlug({
-        slug: this.articleSlug
+        slug: this.articleSlug,
+        language: this.articleLanguage
       })
       .subscribe({
         next: (article) => {
@@ -240,11 +258,16 @@ export class ArticleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       const slug = params.get('slug');
-      if (!slug) {
+      const language = params.get('language');
+
+      if (!slug || !language) {
         await this.handleRedirect('account/articles');
       } else {
         this.articleSlug = slug;
+        this.articleLanguage = language;
+
         await this.fetchUserInfo();
+
         this.getArticleBySlug();
         this.getAllCategories();
       }

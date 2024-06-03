@@ -7,4 +7,7 @@ export interface ListArticleInterface {
   articleTags: Array<string>;
   articlePosted: boolean;
   category: { categoryName: string };
+  createdAt: Date;
+  updatedAt: Date;
+  articleLanguage: string;
 }

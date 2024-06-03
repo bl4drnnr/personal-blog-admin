@@ -9,6 +9,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
 import { CategoryInterface } from '@payloads/category.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-categories',
@@ -55,7 +56,7 @@ export class CategoriesComponent implements OnInit {
     this.categoriesService
       .createCategory({ categories: this.categories })
       .subscribe({
-        next: ({ message }) => {
+        next: async ({ message }) => {
           this.categoryName = '';
           this.categoryDescription = '';
           this.categoryLanguage = 'en';
@@ -78,7 +79,12 @@ export class CategoriesComponent implements OnInit {
             }
           ];
 
-          this.globalMessageService.handle({ message });
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           this.getAllCategories();
         }
       });
@@ -95,9 +101,14 @@ export class CategoriesComponent implements OnInit {
         categoryId: category.id
       })
       .subscribe({
-        next: ({ message }) => {
+        next: async ({ message }) => {
           this.editingCategoryId = '';
-          this.globalMessageService.handle({ message });
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           this.getAllCategories();
         }
       });
@@ -109,8 +120,13 @@ export class CategoriesComponent implements OnInit {
         categoryId
       })
       .subscribe({
-        next: ({ message }) => {
-          this.globalMessageService.handle({ message });
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
           this.getAllCategories();
         }
       });

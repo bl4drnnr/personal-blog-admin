@@ -3,5 +3,10 @@
   "articleCategory": "Категория: {{ categoryName }}",
   "articleTags": "Теги: {{ categoryTags }}",
   "noArticles": "Статей не найдено",
-  "createArticleTitle": "Создать новую статью"
+  "createArticleTitle": "Создать новую статью",
+  "articleLanguage": "Язык статьи: {{ articleLanguage }}",
+  "articleCreatedAt": "Статья создана: {{ createdAt }}",
+  "articleUpdatedAt": "Статья обновлена: {{ updatedAt }}",
+  "articleEditionMode": "Режим редактирования статьи",
+  "articlePreviewMode": "Режим предварительного просмотра статьи"
 }
