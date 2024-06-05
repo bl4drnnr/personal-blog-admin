@@ -7,7 +7,12 @@ import { BasicComponentsModule } from '@components/basic-components.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { LoaderComponent } from '@components/loader/loader.component';
 
-const components = [GlobalMessageComponent, HeaderComponent, FooterComponent, LoaderComponent];
+const components = [
+  GlobalMessageComponent,
+  HeaderComponent,
+  FooterComponent,
+  LoaderComponent
+];
 
 @NgModule({
   declarations: [...components],
