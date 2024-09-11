@@ -2,174 +2,176 @@
   [userInfo]="userInfo"
   [showFooter]="false"
 >
-  <div *ngIf="article" class="article-wrapper">
-    <div class="article-mgmt-buttons">
-      <div class="article-mgmt-button right">
-        <basic-button
-          [label]="articleEditMode ? 'Close edit article mode' : 'Edit article'"
-          (buttonClick)="articleEditMode = !articleEditMode"
-        />
-      </div>
-      <div class="article-mgmt-button">
-        <basic-button
-          [fillButton]="article.articlePosted"
-          [label]="article.articlePosted ? 'Delete article from posted' : 'Post article'"
-          (buttonClick)="changePublishArticleStatus()"
-        />
-      </div>
-      <div class="article-mgmt-button left">
-        <basic-button
-          [label]="'Delete article'"
-          [danger]="true"
-          (buttonClick)="deleteArticle()"
-        />
-      </div>
-    </div>
-
-    <div *ngIf="!articleEditMode">
-      <h1>{{ article.articleName }}</h1>
-      <p>{{ article.articleDescription }}</p>
-      <br>
-      <p><b>Created at: </b>{{ dayjs(article.createdAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
-      <p><b>Updated at: </b>{{ dayjs(article.updatedAt).format('YYYY/MM/DD HH:mm:ss') }}</p>
-      <p><b>Category: </b>{{ article.category.categoryName }}</p>
-
-      <div class="post-tags-wrapper">
-        <div *ngFor="let articleTag of article.articleTags">
-          <p class="post-tag">{{ articleTag }}</p>
+  <ng-container *transloco="let t">
+    <div *ngIf="article" class="article-wrapper">
+      <div class="article-mgmt-buttons">
+        <div class="article-mgmt-button right">
+          <basic-button
+            [label]="articleEditMode ? t('button.closeEditMode') : t('button.editArticle')"
+            (buttonClick)="articleEditMode = !articleEditMode"
+          />
         </div>
-      </div>
-    </div>
-
-    <div *ngIf="articleEditMode">
-      <h1>Article edition mode</h1>
-      <basic-input
-        [label]="'Article name'"
-        [placeholder]="'Provide the name of the article'"
-        [inputDescription]="'The name of the article will be the main title seen by users, also, this name will be used in slug'"
-        [value]="articleName"
-        (valueChange)="articleName = $event"
-      />
-      <basic-input
-        [label]="'Article description'"
-        [placeholder]="'Provide the description of the article'"
-        [inputDescription]="'The description is going to be used as a short introduction to the article'"
-        [value]="articleDescription"
-        (valueChange)="articleDescription = $event"
-      />
-      <basic-input
-        [label]="'Article tags'"
-        [placeholder]="'Provide the tags of the article'"
-        [inputDescription]="'Use space bar in order to push the tag to the list of article tags'"
-        [value]="articleTag"
-        (valueChange)="articleTag = $event"
-        (onSpace)="addArticleTag()"
-      />
-
-      <div class="post-tags-wrapper" *ngIf="articleTags">
-        <div *ngFor="let articleTag of articleTags">
-          <p class="post-tag" (click)="deleteArticleTag(articleTag)">{{ articleTag }}</p>
+        <div class="article-mgmt-button">
+          <basic-button
+            [fillButton]="article.articlePosted"
+            [label]="article.articlePosted ? t('button.deleteArticlePosted') : t('button.postArticle')"
+            (buttonClick)="changePublishArticleStatus()"
+          />
+        </div>
+        <div class="article-mgmt-button left">
+          <basic-button
+            [label]="t('button.deleteArticle')"
+            [danger]="true"
+            (buttonClick)="deleteArticle()"
+          />
         </div>
       </div>
 
-      <div class="article-category-dropdown">
-        <basic-dropdown
-          [options]="categoriesDropdown"
-          (selectedOption)="selectArticleCategory($event)"
-          [defaultLabel]="'Select article category'"
-        />
-      </div>
+      <div *ngIf="!articleEditMode">
+        <h1>{{ article.articleName }}</h1>
+        <p>{{ article.articleDescription }}</p>
+        <br>
+        <p>{{ t('articles.articleCreatedAt', { createdAt: dayjs(article.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+        <p>{{ t('articles.articleUpdatedAt', { updatedAt: dayjs(article.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+        <p>{{ t('articles.articleCategory', { categoryName: article.category.categoryName }) }}</p>
 
-      <div class="select-photo-btn-wrapper">
-        <basic-button
-          [label]="'Select photo'"
-          (click)="fileInput.click()"
-        />
-      </div>
-
-      <div class="picture-preview">
-        <img
-          *ngIf="!articlePicture"
-          [src]="staticStorage + articleImage"
-          alt="article-picture"
-        />
-        <img
-          *ngIf="articlePicture"
-          [src]="articlePicture"
-          (click)="articlePicture = ''"
-          class="article-main-picture"
-          alt="article-picture"
-        />
-      </div>
-
-      <input
-        type="file"
-        accept="image/*"
-        (change)="selectFile($event)"
-        #fileInput
-        hidden
-      />
-
-      <div class="NgxEditor__Wrapper">
-        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"/>
-        <ngx-editor
-          [editor]="editor"
-          [(ngModel)]="articleContent"
-          (ngModelChange)="onHtmlChange($event)"
-          [disabled]="false"
-          [placeholder]="'Let\'s write something!'"
-        />
-      </div>
-
-      <div class="edit-button-wrapper">
-        <basic-button
-          [fillButton]="true"
-          [label]="'Save changes'"
-          [disabled]="!articleEdited()"
-          (buttonClick)="editArticle()"
-        />
-      </div>
-    </div>
-
-    <div *ngIf="!articleEditMode && article">
-      <h1>Article preview mode</h1>
-    </div>
-  </div>
-
-  <div class="preview-wrapper" *ngIf="!articleEditMode && article">
-    <div class="hero-section">
-      <div class="blog-post-header-wrapper">
-        <div class="category-holder">
-          <a class="blog-category-link">{{ articleCategory.value }}</a>
-        </div>
-        <div class="heading-holder">
-          <h1 class="blog-article-heading">{{ articleName }}</h1>
-        </div>
-        <div class="additional-info-holder">
-          <h3 class="blog-additional-info">{{ dayjs(article.createdAt).format('MMMM D, YYYY') }}</h3>
+        <div class="post-tags-wrapper">
+          <div *ngFor="let articleTag of article.articleTags">
+            <p class="post-tag">{{ articleTag }}</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="main-image-section">
-      <div class="image-wrapper">
-        <img
-          *ngIf="!articlePicture"
-          [src]="staticStorage + articleImage"
-          class="image-cover"
-          alt="article-picture"
+      <div *ngIf="articleEditMode">
+        <h1>{{ t('articles.articleEditionMode') }}</h1>
+        <basic-input
+          [label]="t('input.articleNameLabel')"
+          [placeholder]="t('input.articleNamePlaceholder')"
+          [inputDescription]="t('input.articleNameDesc')"
+          [value]="articleName"
+          (valueChange)="articleName = $event"
         />
-        <img
-          *ngIf="articlePicture"
-          [src]="articlePicture"
-          class="image-cover"
-          alt="article-picture"
+        <basic-input
+          [label]="t('input.articleDescLabel')"
+          [placeholder]="t('input.articleDescPlaceholder')"
+          [inputDescription]="t('input.articleDescDesc')"
+          [value]="articleDescription"
+          (valueChange)="articleDescription = $event"
         />
+        <basic-input
+          [label]="t('input.articleTagsLabel')"
+          [placeholder]="t('input.articleTagsPlaceholder')"
+          [inputDescription]="t('input.articleTagsDesc')"
+          [value]="articleTag"
+          (valueChange)="articleTag = $event"
+          (onSpace)="addArticleTag()"
+        />
+
+        <div class="post-tags-wrapper" *ngIf="articleTags">
+          <div *ngFor="let articleTag of articleTags">
+            <p class="post-tag" (click)="deleteArticleTag(articleTag)">{{ articleTag }}</p>
+          </div>
+        </div>
+
+        <div class="article-category-dropdown">
+          <basic-dropdown
+            [options]="categoriesDropdown"
+            (selectedOption)="selectArticleCategory($event)"
+            [defaultLabel]="t('dropdown.articleCategory')"
+          />
+        </div>
+
+        <div class="select-photo-btn-wrapper">
+          <basic-button
+            [label]="t('button.selectPhoto')"
+            (click)="fileInput.click()"
+          />
+        </div>
+
+        <div class="picture-preview">
+          <img
+            *ngIf="!articlePicture"
+            [src]="staticStorage + articleImage"
+            alt="article-picture"
+          />
+          <img
+            *ngIf="articlePicture"
+            [src]="articlePicture"
+            (click)="articlePicture = ''"
+            class="article-main-picture"
+            alt="article-picture"
+          />
+        </div>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="selectFile($event)"
+          #fileInput
+          hidden
+        />
+
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"/>
+          <ngx-editor
+            [editor]="editor"
+            [(ngModel)]="articleContent"
+            (ngModelChange)="onHtmlChange($event)"
+            [disabled]="false"
+            [placeholder]="t('input.htmlEditorPlaceholder')"
+          />
+        </div>
+
+        <div class="edit-button-wrapper">
+          <basic-button
+            [fillButton]="true"
+            [label]="t('button.saveChanges')"
+            [disabled]="!articleEdited()"
+            (buttonClick)="editArticle()"
+          />
+        </div>
+      </div>
+
+      <div *ngIf="!articleEditMode && article">
+        <h1>{{ t('articles.articlePreviewMode') }}</h1>
       </div>
     </div>
 
-    <div class="blog-article-section">
-      <div class="rich-text-block" [innerHTML]="articleContent"></div>
+    <div class="preview-wrapper" *ngIf="!articleEditMode && article">
+      <div class="hero-section">
+        <div class="blog-post-header-wrapper">
+          <div class="category-holder">
+            <a class="blog-category-link">{{ articleCategory.value }}</a>
+          </div>
+          <div class="heading-holder">
+            <h1 class="blog-article-heading">{{ articleName }}</h1>
+          </div>
+          <div class="additional-info-holder">
+            <h3 class="blog-additional-info">{{ dayjs(article.createdAt).format('MMMM D, YYYY') }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-image-section">
+        <div class="image-wrapper">
+          <img
+            *ngIf="!articlePicture"
+            [src]="staticStorage + articleImage"
+            class="image-cover"
+            alt="article-picture"
+          />
+          <img
+            *ngIf="articlePicture"
+            [src]="articlePicture"
+            class="image-cover"
+            alt="article-picture"
+          />
+        </div>
+      </div>
+
+      <div class="blog-article-section">
+        <div class="rich-text-block" [innerHTML]="articleContent"></div>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </layout-default>

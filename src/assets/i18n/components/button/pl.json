@@ -50,5 +50,11 @@
   "createArticle": "Utwórz artykuł",
   "createCategory": "Utwórz kategorię",
   "editCategory": "Edytuj kategorię",
-  "deleteCategory": "Usuń kategorię"
+  "deleteCategory": "Usuń kategorię",
+  "categories": "Kategorię",
+  "editArticle": "Edytuj artykuł",
+  "deleteArticle": "Usuń artykuł",
+  "deleteArticlePosted": "Usuń artykuł z opublikowanego",
+  "postArticle": "Opublikuj artykuł",
+  "closeEditMode": "Zamknij tryb edycji artykułu"
 }

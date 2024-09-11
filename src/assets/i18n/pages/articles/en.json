@@ -3,5 +3,10 @@
   "articleCategory": "Category: {{ categoryName }}",
   "articleTags": "Tags: {{ categoryTags }}",
   "noArticles": "No articles found",
-  "createArticleTitle": "Create new article"
+  "createArticleTitle": "Create new article",
+  "articleLanguage": "Article language: {{ articleLanguage }}",
+  "articleCreatedAt": "Article created at: {{ createdAt }}",
+  "articleUpdatedAt": "Article updated at: {{ updatedAt }}",
+  "articleEditionMode": "Article edition mode",
+  "articlePreviewMode": "Article preview mode"
 }

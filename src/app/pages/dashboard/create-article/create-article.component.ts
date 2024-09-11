@@ -12,6 +12,7 @@ import { DropdownInterface } from '@interfaces/dropdown.interface';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
 import { CreateArticleInterface } from '@interfaces/create-article.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-create-article',
@@ -94,24 +95,28 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   ) {}
 
   createArticle() {
-    this.articlesService
-      .createArticle({
-        articleName: this.articleName,
-        articleDescription: this.articleDescription,
-        articleTags: this.articleTags.map((tag) => tag.replace(/\s+/g, '')),
-        articleContent: this.sanitizedHtmlContent,
-        articlePicture: this.articlePicture,
-        categoryId: this.articleCategory.key,
-        articleLanguage: this.articleLanguage
-      })
-      .subscribe({
-        next: async ({ link, message }) => {
-          this.globalMessageService.handle({
-            message
-          });
-          await this.handleRedirect(link);
-        }
-      });
+    const articles = this.articles.map((article) => {
+      return {
+        articleName: article.articleName,
+        articleDescription: article.articleDescription,
+        articleContent: article.articleContent,
+        articleTags: article.articleTags.map((tag) => tag.replace(/\s+/g, '')),
+        articlePicture: article.articlePicture,
+        categoryId: article.articleCategory.key,
+        articleLanguage: article.articleLanguage.toLowerCase()
+      };
+    });
+
+    this.articlesService.createArticle({ articles }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        await this.handleRedirect('account/articles');
+      }
+    });
   }
 
   getAllCategories() {
@@ -180,6 +185,11 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     article.articleTags.splice(article.articleTags.indexOf(articleTag), 1);
   }
 
+  getArticleTags() {
+    const article = this.getArticleByLanguage();
+    return article.articleTags;
+  }
+
   selectFile(event: any) {
     this.selectedFiles = event.target.files;
 
@@ -191,9 +201,10 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
-      const article = this.getArticleByLanguage();
+      this.articles.map(
+        (article) => (article.articlePicture = reader.result as string)
+      );
       this.articlePicture = reader.result as string;
-      article.articlePicture = reader.result as string;
     };
   }
 
@@ -220,18 +231,19 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     this.articleTag = article.articleTag;
     this.articleTags = article.articleTags;
     this.htmlContent = article.articleContent;
-    this.articlePicture = article.articlePicture;
     this.articleCategory = article.articleCategory;
   }
 
   disableCreatePostButton() {
-    return (
-      !this.articleName ||
-      !this.articleDescription ||
-      !this.articleTags.length ||
-      !this.articleCategory ||
-      !this.sanitizedHtmlContent ||
-      !this.articlePicture
+    return this.articles.some(
+      (article) =>
+        !article.articleName ||
+        !article.articleDescription ||
+        article.articleTags.length === 0 ||
+        !article.articleContent ||
+        !article.articlePicture ||
+        !article.articleCategory.key ||
+        !article.articleCategory.value
     );
   }
 

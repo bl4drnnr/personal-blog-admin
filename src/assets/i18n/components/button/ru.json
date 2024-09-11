@@ -50,5 +50,11 @@
   "createArticle": "Создать статью",
   "createCategory": "Создать категорию",
   "editCategory": "Изменить категорию",
-  "deleteCategory": "Удалить категорию"
+  "deleteCategory": "Удалить категорию",
+  "categories": "Категорию",
+  "editArticle": "Редактировать статью",
+  "deleteArticle": "Удалить статью",
+  "deleteArticlePosted": "Удалить статью из опубликованных",
+  "postArticle": "Опубликовать статью",
+  "closeEditMode": "Закрыть режим редактирования статьи"
 }

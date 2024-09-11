@@ -52,8 +52,8 @@
         (onSpace)="addArticleTag()"
       />
 
-      <div class="post-tags-wrapper" *ngIf="articleTags">
-        <div *ngFor="let articleTag of articleTags">
+      <div class="post-tags-wrapper">
+        <div *ngFor="let articleTag of getArticleTags()">
           <p class="post-tag" (click)="deleteArticleTag(articleTag)">{{ articleTag }}</p>
         </div>
       </div>

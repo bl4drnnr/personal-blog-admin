@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Component, OnInit } from '@angular/core';
 import { ArticlesService } from '@services/articles.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
@@ -6,6 +7,9 @@ import { Router } from '@angular/router';
 import { ListArticleInterface } from '@interfaces/list-article.interface';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
+import { GlobalMessageService } from '@shared/global-message.service';
+import { MessagesTranslation } from '@translations/messages.enum';
+import { EnvService } from '@shared/env.service';
 
 @Component({
   selector: 'app-articles',
@@ -25,10 +29,14 @@ export class ArticlesComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
+    private readonly envService: EnvService,
     private readonly articlesService: ArticlesService,
     private readonly translationService: TranslationService,
-    private readonly refreshTokensService: RefreshTokensService
+    private readonly refreshTokensService: RefreshTokensService,
+    private readonly globalMessageService: GlobalMessageService
   ) {}
+
+  staticStorage = `${this.envService.getStaticStorageLink}/articles-main-pictures/`;
 
   setCurrentPage(currentPage: string) {
     this.page = currentPage;
@@ -66,6 +74,32 @@ export class ArticlesComponent implements OnInit {
       });
   }
 
+  changePublishArticleStatus(articleId: string) {
+    this.articlesService.changePublishArticleStatus({ articleId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        this.listArticles();
+      }
+    });
+  }
+
+  deleteArticle(articleId: string) {
+    this.articlesService.deleteArticle({ articleId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        this.listArticles();
+      }
+    });
+  }
+
   async fetchUserInfo() {
     const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
@@ -83,6 +117,12 @@ export class ArticlesComponent implements OnInit {
     await this.router.navigate([path]);
   }
 
+  async handleArticleRedirect(article: ListArticleInterface) {
+    await this.handleRedirect(
+      `account/article/${article.articleLanguage}/${article.articleSlug}`
+    );
+  }
+
   async ngOnInit() {
     this.translationService.setPageTitle(Titles.ARTICLES);
 
@@ -90,4 +130,6 @@ export class ArticlesComponent implements OnInit {
 
     this.listArticles();
   }
+
+  protected readonly dayjs = dayjs;
 }
