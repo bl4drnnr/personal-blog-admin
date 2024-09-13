@@ -1,0 +1,108 @@
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="create-certification-wrapper">
+      <h1>{{ t('certs.createCertTitle') }}</h1>
+
+      <basic-input
+        [label]="t('input.certNameLabel')"
+        [placeholder]="t('input.certNamePlaceholder')"
+        [inputDescription]="t('input.certNameDesc')"
+        [value]="certName"
+        (valueChange)="certName = $event"
+      />
+      <basic-input
+        [label]="t('input.certDescLabel')"
+        [placeholder]="t('input.certDescPlaceholder')"
+        [inputDescription]="t('input.certDescDesc')"
+        [value]="certDescription"
+        (valueChange)="certDescription = $event"
+      />
+      <basic-input
+        [label]="t('input.certObtainedSkillLabel')"
+        [placeholder]="t('input.certObtainedSkillPlaceholder')"
+        [inputDescription]="t('input.certObtainedSkillDesc')"
+        [value]="obtainedSkill"
+        (valueChange)="obtainedSkill = $event"
+        (onSpace)="addObtainedSkills()"
+      />
+
+      <div class="cert-skills-wrapper">
+        <div *ngFor="let skill of obtainedSkills">
+          <p class="cert-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
+        </div>
+      </div>
+
+      <div class="create-certification-dates">
+        <div class="margin-right">
+          <basic-input
+            type="date"
+            [label]="t('input.certObtainingDateLabel')"
+            [placeholder]="t('input.certObtainingDatePlaceholder')"
+            [inputDescription]="t('input.certObtainingDateDesc')"
+            [value]="obtainingDate"
+            (valueChange)="obtainingDate = $event"
+          />
+        </div>
+        <div class="margin-left">
+          <basic-input
+            type="date"
+            [label]="t('input.certExpirationDateLabel')"
+            [placeholder]="t('input.certExpirationDatePlaceholder')"
+            [inputDescription]="t('input.certExpirationDateDesc')"
+            [value]="expirationDate"
+            (valueChange)="expirationDate = $event"
+          />
+        </div>
+      </div>
+
+      <div class="select-photo-btn-wrapper">
+        <basic-button
+          [label]="t('button.selectPhoto')"
+          (click)="fileInput.click()"
+        />
+      </div>
+
+      <div class="picture-preview">
+        <img
+          *ngIf="certPicture"
+          [src]="certPicture"
+          (click)="clearCertPicture()"
+          class="article-main-picture"
+          alt="article-picture"
+        />
+      </div>
+
+      <basic-button
+        [label]="'Select certificate file'"
+        (click)="certInput.click()"
+      />
+
+      <input
+        type="file"
+        accept=".pdf,.doc,.docx"
+        (change)="fileChange($event)"
+        #certInput
+        hidden
+      />
+
+      <input
+        type="file"
+        accept="image/*"
+        (change)="selectFile($event)"
+        #fileInput
+        hidden
+      />
+
+      <div class="create-button-wrapper">
+        <basic-button
+          [fillButton]="true"
+          [label]="t('button.createCert')"
+          [disabled]="disableCreateCertButton()"
+          (buttonClick)="createCertification()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

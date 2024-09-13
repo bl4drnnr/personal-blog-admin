@@ -1,0 +1,65 @@
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="create-author-wrapper">
+      <h1>{{ t('authors.createAuthorTitle') }}</h1>
+
+      <basic-input
+        [label]="t('input.authorFirstNameLabel')"
+        [placeholder]="t('input.authorFirstNamePlaceholder')"
+        [inputDescription]="t('input.authorFirstNameDesc')"
+        [value]="firstName"
+        (valueChange)="firstName = $event"
+      />
+      <basic-input
+        [label]="t('input.authorLastNameLabel')"
+        [placeholder]="t('input.authorLastNamePlaceholder')"
+        [inputDescription]="t('input.authorLastNameDesc')"
+        [value]="lastName"
+        (valueChange)="lastName = $event"
+      />
+      <basic-input
+        [label]="t('input.authorDescNameLabel')"
+        [placeholder]="t('input.authorDescNamePlaceholder')"
+        [inputDescription]="t('input.authorDescNameDesc')"
+        [value]="description"
+        (valueChange)="description = $event"
+      />
+
+      <div class="select-photo-btn-wrapper">
+        <basic-button
+          [label]="t('button.selectPhoto')"
+          (click)="fileInput.click()"
+        />
+      </div>
+
+      <div class="picture-preview">
+        <img
+          *ngIf="profilePicture"
+          [src]="profilePicture"
+          (click)="clearProfilePicture()"
+          class="article-main-picture"
+          alt="article-picture"
+        />
+      </div>
+
+      <input
+        type="file"
+        accept="image/*"
+        (change)="selectFile($event)"
+        #fileInput
+        hidden
+      />
+
+      <div class="create-button-wrapper">
+        <basic-button
+          [fillButton]="true"
+          [label]="t('button.createAuthor')"
+          [disabled]="disableCreateAuthorButton()"
+          (buttonClick)="createAuthor()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

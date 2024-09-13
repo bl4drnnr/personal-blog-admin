@@ -1,0 +1,21 @@
+@import 'variables';
+
+.create-author-wrapper {
+  width: 60%;
+  margin: 0 auto 150px auto;
+}
+
+.select-photo-btn-wrapper {
+  margin-bottom: 20px;
+}
+
+.article-main-picture {
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.picture-preview {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}

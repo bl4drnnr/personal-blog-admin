@@ -56,5 +56,9 @@
   "deleteArticle": "Usuń artykuł",
   "deleteArticlePosted": "Usuń artykuł z opublikowanego",
   "postArticle": "Opublikuj artykuł",
-  "closeEditMode": "Zamknij tryb edycji artykułu"
+  "closeEditMode": "Zamknij tryb edycji artykułu",
+  "createAuthor": "Utwórz autora",
+  "authors": "Autorzy",
+  "certifications": "Certyfikaty",
+  "createCert": "Utwórz certyfikat"
 }

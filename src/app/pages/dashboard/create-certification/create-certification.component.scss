@@ -1,0 +1,57 @@
+@import 'variables';
+
+.create-certification-wrapper {
+  width: 60%;
+  margin: 0 auto 150px auto;
+}
+
+.create-certification-dates {
+  display: flex;
+
+  .margin-right {
+    width: 100%;
+    margin-right: 5px;
+  }
+
+  .margin-left {
+    width: 100%;
+    margin-left: 5px;
+  }
+}
+
+.create-button-wrapper {
+  margin-top: 20px;
+}
+
+.cert-skills-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.cert-skill {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.select-photo-btn-wrapper {
+  margin-bottom: 20px;
+}
+
+.article-main-picture {
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.picture-preview {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}

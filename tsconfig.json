@@ -71,7 +71,11 @@
         "src/libs/api/responses/company-roles/*",
         "src/libs/api/responses/company-users/*",
         "src/libs/api/responses/articles/*",
-        "src/libs/api/responses/categories/*"
+        "src/libs/api/responses/categories/*",
+        "src/libs/api/responses/authors/*",
+        "src/libs/api/responses/certifications/*",
+        "src/libs/api/responses/socials/*",
+        "src/libs/api/responses/experiences/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -81,7 +85,11 @@
         "src/libs/api/payloads/users/*",
         "src/libs/api/payloads/email/*",
         "src/libs/api/payloads/articles/*",
-        "src/libs/api/payloads/categories/*"
+        "src/libs/api/payloads/categories/*",
+        "src/libs/api/payloads/authors/*",
+        "src/libs/api/payloads/certifications/*",
+        "src/libs/api/payloads/socials/*",
+        "src/libs/api/payloads/experiences/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@modules/*": ["src/app/modules/*"],

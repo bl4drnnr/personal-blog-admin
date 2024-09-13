@@ -260,17 +260,16 @@ export class ArticleComponent implements OnInit, OnDestroy {
       const slug = params.get('slug');
       const language = params.get('language');
 
-      if (!slug || !language) {
-        await this.handleRedirect('account/articles');
-      } else {
-        this.articleSlug = slug;
-        this.articleLanguage = language;
+      if (!slug || !language)
+        return await this.handleRedirect('account/articles');
 
-        await this.fetchUserInfo();
+      this.articleSlug = slug;
+      this.articleLanguage = language;
 
-        this.getArticleBySlug();
-        this.getAllCategories();
-      }
+      await this.fetchUserInfo();
+
+      this.getArticleBySlug();
+      this.getAllCategories();
     });
 
     this.editor = new Editor();

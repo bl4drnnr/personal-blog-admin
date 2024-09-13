@@ -74,5 +74,6 @@
   "category-not-found": "Kategorii nie znaleziono",
   "order-by-error": "Niewłaściwa kolejność według wartości",
   "order-error": "Nieprawidłowa wartość kolejności",
-  "user-not-logged-in": "Użytkownik niezalogowany"
+  "user-not-logged-in": "Użytkownik niezalogowany",
+  "author-not-found": "Autor nie znaleziony"
 }

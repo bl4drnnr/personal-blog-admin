@@ -56,5 +56,9 @@
   "deleteArticle": "Удалить статью",
   "deleteArticlePosted": "Удалить статью из опубликованных",
   "postArticle": "Опубликовать статью",
-  "closeEditMode": "Закрыть режим редактирования статьи"
+  "closeEditMode": "Закрыть режим редактирования статьи",
+  "createAuthor": "Создать автора",
+  "authors": "Авторы",
+  "certifications": "Сертификаты",
+  "createCert": "Создать сертификат"
 }

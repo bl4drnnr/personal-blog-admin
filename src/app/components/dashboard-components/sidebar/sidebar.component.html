@@ -10,7 +10,10 @@
             <p>{{ t('sidebar.sidebarUserId') }}: <b>{{ userInfo.userIdHash }}</b></p>
           </div>
         </div>
+
         <div class="sidebar-side">
+          <h3>{{ t('sidebar.sidebarArticlesTitle') }}</h3>
+
           <div class="sidebar-button-wrapper">
             <basic-button
               [label]="t('button.createArticle')"
@@ -24,12 +27,50 @@
               (buttonClick)="handleRedirect('account/articles')"
             />
           </div>
+
+          <h3>{{ t('sidebar.sidebarCategoriesTitle') }}</h3>
+
           <div class="sidebar-button-wrapper">
             <basic-button
               [label]="t('button.categories')"
               (buttonClick)="handleRedirect('account/categories')"
             />
           </div>
+
+          <h3>{{ t('sidebar.sidebarAuthorsTitle') }}</h3>
+
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.createAuthor')"
+              (buttonClick)="handleRedirect('account/create-author')"
+            />
+          </div>
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [label]="t('button.authors')"
+              (buttonClick)="handleRedirect('account/authors')"
+            />
+          </div>
+
+          <h3>{{ t('sidebar.sidebarCertsTitle') }}</h3>
+
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.createCert')"
+              (buttonClick)="handleRedirect('account/create-certification')"
+            />
+          </div>
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [label]="t('button.certifications')"
+              (buttonClick)="handleRedirect('account/certifications')"
+            />
+          </div>
+
+          <h3>{{ t('sidebar.sidebarExperienceTitle') }}</h3>
+          <h3>{{ t('sidebar.sidebarProjectsTitle') }}</h3>
         </div>
       </div>
 

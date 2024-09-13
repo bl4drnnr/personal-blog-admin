@@ -11,6 +11,12 @@ import { CategoriesComponent } from '@pages/categories/categories.component';
 import { ArticlesComponent } from '@pages/articles/articles.component';
 import { ArticleComponent } from '@pages/article/article.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { AuthorsComponent } from '@pages/authors/authors.component';
+import { AuthorComponent } from '@pages/author/author.component';
+import { CreateAuthorComponent } from '@pages/create-author/create-author.component';
+import { CertificationComponent } from '@pages/certification/certification.component';
+import { CertificationsComponent } from '@pages/certifications/certifications.component';
+import { CreateCertificationComponent } from '@pages/create-certification/create-certification.component';
 
 const routes: Routes = [
   {
@@ -33,6 +39,30 @@ const routes: Routes = [
   {
     path: 'account/article/:language/:slug',
     component: ArticleComponent
+  },
+  {
+    path: 'account/authors',
+    component: AuthorsComponent
+  },
+  {
+    path: 'account/author/:authorId',
+    component: AuthorComponent
+  },
+  {
+    path: 'account/create-author',
+    component: CreateAuthorComponent
+  },
+  {
+    path: 'account/certifications',
+    component: CertificationsComponent
+  },
+  {
+    path: 'account/certification/:certificationId',
+    component: CertificationComponent
+  },
+  {
+    path: 'account/create-certification',
+    component: CreateCertificationComponent
   }
 ];
 
@@ -40,7 +70,13 @@ const components = [
   CreateArticleComponent,
   CategoriesComponent,
   ArticlesComponent,
-  ArticleComponent
+  ArticleComponent,
+  AuthorsComponent,
+  AuthorComponent,
+  CreateAuthorComponent,
+  CertificationComponent,
+  CertificationsComponent,
+  CreateCertificationComponent
 ];
 
 @NgModule({

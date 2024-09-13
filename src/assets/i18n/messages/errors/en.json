@@ -74,5 +74,6 @@
   "category-not-found": "Category not found",
   "order-by-error": "Wrong order by value",
   "order-error": "Wrong order value",
-  "user-not-logged-in": "User not logged in"
+  "user-not-logged-in": "User not logged in",
+  "author-not-found": "Author not found"
 }

@@ -6,7 +6,7 @@ import { CreateArticlePayload } from '@payloads/create-article.interface';
 import { Observable } from 'rxjs';
 import { ArticlesEndpoint } from '@interfaces/articles.enum';
 import { ArticleCreatedResponse } from '@responses/article-created.interface';
-import { GetBySlugInterface } from '@payloads/get-by-slug.interface';
+import { GetBySlugPayload } from '@payloads/get-by-slug.interface';
 import { GetArticleBySlugResponse } from '@responses/get-article-by-slug.interface';
 import { DeleteArticlePayload } from '@payloads/delete-article.interface';
 import { ArticleDeletedResponse } from '@responses/article-deleted.interface';
@@ -24,7 +24,7 @@ export class ArticlesService {
   constructor(private readonly apiService: ApiService) {}
 
   getArticleBySlug(
-    params: GetBySlugInterface
+    params: GetBySlugPayload
   ): Observable<GetArticleBySlugResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,

@@ -12,7 +12,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 import { EnvService } from '@shared/env.service';
 
 @Component({
-  selector: 'app-articles',
+  selector: 'page-articles',
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.scss'
 })
