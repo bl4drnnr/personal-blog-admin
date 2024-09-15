@@ -109,5 +109,8 @@
   "certObtainedSkillDesc": "Press Space to add the new one and click on the existing one to delete it",
   "authorQueryLabel": "Author query",
   "authorQueryPlaceholder": "Provide author query to search for",
-  "authorQueryDesc": "The articles will be found based on their names and description"
+  "authorQueryDesc": "The articles will be found based on their names and description",
+  "certQueryLabel": "Certification query",
+  "certQueryPlaceholder": "Provide the query to find certifications",
+  "certQueryDesc": "The certifications will be found based on name and description"
 }

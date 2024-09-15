@@ -65,5 +65,12 @@
   "deleteCertFile": "Delete certification file",
   "editAuthor": "Edit author",
   "changeAuthorSelection": "Change author selection",
-  "deleteAuthor": "Delete author"
+  "deleteAuthor": "Delete author",
+  "editCert": "Edit certification",
+  "changeCertSelection": "Change certification selection",
+  "deleteCert": "Delete certification",
+  "createExperience": "Create experience",
+  "experiences": "Experiences",
+  "createProject": "Create project",
+  "projects": "Projects"
 }

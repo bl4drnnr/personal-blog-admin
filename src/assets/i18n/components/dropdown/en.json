@@ -4,5 +4,6 @@
   "selectMfaOption": "Select an MFA option",
   "articlesPerPage": "Articles per page",
   "articleCategory": "Select article category",
-  "authorsPerPage": "Authors per page"
+  "authorsPerPage": "Authors per page",
+  "certsPerPage": "Certifications per page"
 }

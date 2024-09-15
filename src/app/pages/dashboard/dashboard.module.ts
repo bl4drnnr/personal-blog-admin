@@ -18,6 +18,12 @@ import { CertificationComponent } from '@pages/certification/certification.compo
 import { CertificationsComponent } from '@pages/certifications/certifications.component';
 import { CreateCertificationComponent } from '@pages/create-certification/create-certification.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CreateProjectComponent } from '@pages/create-project/create-project.component';
+import { ProjectsComponent } from '@pages/projects/projects.component';
+import { CreateExperienceComponent } from '@pages/create-experience/create-experience.component';
+import { ExperiencesComponent } from '@pages/experiences/experiences.component';
+import { ExperienceComponent } from '@pages/experience/experience.component';
+import { ProjectComponent } from '@pages/project/project.component';
 
 const routes: Routes = [
   {
@@ -64,6 +70,30 @@ const routes: Routes = [
   {
     path: 'account/create-certification',
     component: CreateCertificationComponent
+  },
+  {
+    path: 'account/create-project',
+    component: CreateProjectComponent
+  },
+  {
+    path: 'account/projects',
+    component: ProjectsComponent
+  },
+  {
+    path: 'account/create-experience',
+    component: CreateExperienceComponent
+  },
+  {
+    path: 'account/experiences',
+    component: ExperiencesComponent
+  },
+  {
+    path: 'account/project/:projectId',
+    component: ProjectComponent
+  },
+  {
+    path: 'account/experience/:experienceId',
+    component: ExperienceComponent
   }
 ];
 
@@ -77,7 +107,13 @@ const components = [
   CreateAuthorComponent,
   CertificationComponent,
   CertificationsComponent,
-  CreateCertificationComponent
+  CreateCertificationComponent,
+  CreateProjectComponent,
+  ProjectsComponent,
+  CreateExperienceComponent,
+  ExperiencesComponent,
+  ExperienceComponent,
+  ProjectComponent
 ];
 
 @NgModule({

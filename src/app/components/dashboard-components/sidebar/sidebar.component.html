@@ -70,7 +70,36 @@
           </div>
 
           <h3>{{ t('sidebar.sidebarExperienceTitle') }}</h3>
+
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.createExperience')"
+              (buttonClick)="handleRedirect('account/create-experience')"
+            />
+          </div>
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [label]="t('button.experiences')"
+              (buttonClick)="handleRedirect('account/experiences')"
+            />
+          </div>
+
           <h3>{{ t('sidebar.sidebarProjectsTitle') }}</h3>
+
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.createProject')"
+              (buttonClick)="handleRedirect('account/create-project')"
+            />
+          </div>
+          <div class="sidebar-button-wrapper">
+            <basic-button
+              [label]="t('button.projects')"
+              (buttonClick)="handleRedirect('account/projects')"
+            />
+          </div>
         </div>
       </div>
 

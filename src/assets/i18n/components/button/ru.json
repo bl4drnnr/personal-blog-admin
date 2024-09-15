@@ -65,5 +65,12 @@
   "deleteCertFile": "Удалить файл сертификации",
   "editAuthor": "Изменить автора",
   "changeAuthorSelection": "Изменить выбор автора",
-  "deleteAuthor": "Удалить автора"
+  "deleteAuthor": "Удалить автора",
+  "editCert": "Изменить сертификацию",
+  "changeCertSelection": "Изменить выбор сертификации",
+  "deleteCert": "Удалить сертификацию",
+  "createExperience": "Создать опыт",
+  "experiences": "Опыты",
+  "createProject": "Создать проект",
+  "projects": "Проекты"
 }

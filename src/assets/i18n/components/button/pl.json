@@ -65,5 +65,12 @@
   "deleteCertFile": "Usuń plik certyfikacji",
   "editAuthor": "Edytuj autora",
   "changeAuthorSelection": "Zmień wybór autora",
-  "deleteAuthor": "Usuń autora"
+  "deleteAuthor": "Usuń autora",
+  "editCert": "Edytuj certyfikację",
+  "changeCertSelection": "Zmień wybór certyfikacji",
+  "deleteCert": "Usuń certyfikację",
+  "createExperience": "Utwórz doświadczenie",
+  "experiences": "Doświadczenia",
+  "createProject": "Utwórz projekt",
+  "projects": "Projekty"
 }

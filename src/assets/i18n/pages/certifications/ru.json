@@ -1,5 +1,11 @@
 {
   "createCertTitle": "Создание сертификата",
   "certificateFileName": "Имя файла сертификата: {{ certFileName }}",
-  "certificateFileSize": "Размер файла сертификата: {{ certFileSize }}MB"
+  "certificateFileSize": "Размер файла сертификата: {{ certFileSize }}MB",
+  "noCerts": "Сертификаты не найдены",
+  "allCertifications": "Все сертификации",
+  "certObtainingDate": "Дата получения сертификата: {{ certObtainingDate }}",
+  "certExpirationDate": "Дата истечения срока действия сертификата: {{ certExpirationDate }}",
+  "certCreatedAt": "Сертификация создана: {{ certCreatedAt }}",
+  "certUpdatedAt": "Сертификация обновлена: {{ certUpdatedAt }}"
 }

@@ -109,5 +109,8 @@
   "certObtainedSkillDesc": "Naciśnij spację, aby dodać nową, a następnie kliknij istniejącą, aby ją usunąć",
   "authorQueryLabel": "Zapytanie autora",
   "authorQueryPlaceholder": "Podaj zapytanie autora do wyszukania",
-  "authorQueryDesc": "Artykuły zostaną znalezione na podstawie ich nazw i opisu"
+  "authorQueryDesc": "Artykuły zostaną znalezione na podstawie ich nazw i opisu",
+  "certQueryLabel": "Zapytanie o certyfikację",
+  "certQueryPlaceholder": "Podaj zapytanie, aby znaleźć certyfikaty",
+  "certQueryDesc": "Certyfikaty zostaną znalezione na podstawie nazwy i opisu"
 }

@@ -18,5 +18,6 @@
   "experience-deleted": "Experience has been successfully deleted",
   "experience-updated": "Experience has been successfully updated",
   "certification-file-uploaded": "Certification file has been successfully uploaded",
-  "tag-is-already-on-the-list": "Tag is already on the list"
+  "tag-is-already-on-the-list": "Tag is already on the list",
+  "certification-status-updated": "Certification status has been successfully updated"
 }
