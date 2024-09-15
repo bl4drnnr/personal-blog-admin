@@ -1,3 +1,5 @@
 {
-  "createCertTitle": "Utwórz certyfikat"
+  "createCertTitle": "Utwórz certyfikat",
+  "certificateFileName": "Nazwa pliku certyfikatu: {{ certFileName }}",
+  "certificateFileSize": "Rozmiar pliku certyfikatu: {{ certFileSize }}MB"
 }

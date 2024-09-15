@@ -1,3 +1,5 @@
 {
-  "createCertTitle": "Create a certificate"
+  "createCertTitle": "Create a certificate",
+  "certificateFileName": "Certificate file name: {{ certFileName }}",
+  "certificateFileSize": "Certificate file size: {{ certFileSize }}MB"
 }

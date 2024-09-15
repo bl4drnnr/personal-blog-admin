@@ -7,7 +7,15 @@
   "article-deleted": "Artykuł został pomyślnie usunięty",
   "article-edited": "Artykuł został pomyślnie edytowany",
   "article-publish-status-changed": "Status publikacji artykułu został pomyślnie zmieniony",
-  "category-created": "Kategoria została utworzona pomyślnie",
+  "category-created": "Kategoria została pomyślnie utworzona",
   "category-deleted": "Kategoria została pomyślnie usunięta",
-  "category-edited": "Kategoria została pomyślnie edytowana"
+  "category-edited": "Kategoria została pomyślnie edytowana",
+  "certification-deleted": "Certyfikat został pomyślnie usunięty",
+  "certification-updated": "Certyfikat został pomyślnie zaktualizowany",
+  "author-deleted": "Autor został pomyślnie usunięty",
+  "author-updated": "Autor został pomyślnie zaktualizowany",
+  "experience-deleted": "Doświadczenie zostało pomyślnie usunięte",
+  "experience-updated": "Doświadczenie zostało pomyślnie zaktualizowane",
+  "certification-file-uploaded": "Plik certyfikacji został pomyślnie przesłany",
+  "tag-is-already-on-the-list": "Tag jest już na liście"
 }

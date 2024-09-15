@@ -6,6 +6,7 @@ import { RefreshTokensService } from '@services/refresh-token.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { Titles } from '@interfaces/titles.enum';
 import { GlobalMessageService } from '@shared/global-message.service';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-create-certification',
@@ -17,7 +18,10 @@ export class CreateCertificationComponent implements OnInit {
   certDescription: string;
   selectedFiles?: FileList;
   certPicture: string;
-  certDocs: FormData;
+  certDocs: string;
+  certDocsFileInfo: File | null;
+  pdfSrc: string;
+  certificationDocument: FormData | null;
   obtainingDate: string;
   expirationDate: string;
   obtainedSkill: string;
@@ -39,20 +43,41 @@ export class CreateCertificationComponent implements OnInit {
     const expirationDate = new Date(this.expirationDate);
 
     const payload = {
-      certDocs: this.certDocs,
       certName: this.certName,
       certDescription: this.certDescription,
       certPicture: this.certPicture,
+      certDocs: '',
       obtainedSkills: this.obtainedSkills,
       authorId: this.authorId,
       obtainingDate,
       expirationDate
     };
 
-    this.certificationsService.createCertification({ ...payload }).subscribe({
-      next: async ({ certificationId }) =>
-        await this.handleRedirect(`account/certificate/${certificationId}`)
-    });
+    this.certificationsService
+      .certificationFileUpload(this.certificationDocument as FormData)
+      .subscribe({
+        next: async ({ message, certificationFileName }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+
+          this.globalMessageService.handle({ message: translationMessage });
+
+          payload.certDocs = certificationFileName;
+
+          this.certificationsService
+            .createCertification({ ...payload })
+            .subscribe({
+              next: async ({ certificationId }) => {
+                await this.handleRedirect(
+                  `account/certificate/${certificationId}`
+                );
+              }
+            });
+        }
+      });
   }
 
   async addObtainedSkills() {
@@ -61,8 +86,13 @@ export class CreateCertificationComponent implements OnInit {
     const isSkillPresent = this.obtainedSkills.includes(this.obtainedSkill);
 
     if (isSkillPresent) {
+      const translationMessage = await this.translationService.translateText(
+        'tag-is-already-on-the-list',
+        MessagesTranslation.RESPONSES
+      );
+
       await this.globalMessageService.handleWarning({
-        message: 'Tag is already on the list'
+        message: translationMessage
       });
     } else {
       this.obtainedSkills.push(this.obtainedSkill);
@@ -79,7 +109,12 @@ export class CreateCertificationComponent implements OnInit {
     this.certPicture = '';
   }
 
-  selectFile(event: any) {
+  clearCertDocument() {
+    this.certDocsFileInfo = null;
+    this.certificationDocument = null;
+  }
+
+  selectCertificationPicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;
@@ -94,14 +129,29 @@ export class CreateCertificationComponent implements OnInit {
     };
   }
 
-  fileChange(event: any) {
+  selectCertificationDocument(event: any) {
     const fileList: FileList = event.target.files;
 
     if (fileList.length < 0) return;
 
     const file: File = fileList[0];
-    this.certDocs = new FormData();
-    this.certDocs.append('uploadFile', file, file.name);
+    this.certDocs = file.name;
+    this.certDocsFileInfo = file;
+
+    this.certificationDocument = new FormData();
+    this.certificationDocument.append('certificateFile', file, file.name);
+
+    const $img: any = document.querySelector('#certificatePdf');
+
+    if (typeof FileReader !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+
+      reader.readAsArrayBuffer($img.files[0]);
+    }
   }
 
   disableCreateCertButton() {
@@ -110,6 +160,7 @@ export class CreateCertificationComponent implements OnInit {
       !this.certDescription ||
       !this.certPicture ||
       !this.certDocs ||
+      !this.certificationDocument ||
       this.obtainedSkills.length === 0 ||
       !this.obtainingDate ||
       !this.obtainingDate

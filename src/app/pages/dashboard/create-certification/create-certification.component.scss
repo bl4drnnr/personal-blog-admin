@@ -45,7 +45,7 @@
   margin-bottom: 20px;
 }
 
-.article-main-picture {
+.cert-main-picture {
   cursor: pointer;
   object-fit: cover;
 }
@@ -54,4 +54,18 @@
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+}
+
+.cert-doc-preview {
+  display: flex;
+  margin-top: 20px;
+}
+
+.cert-doc-info {
+  padding: 20px
+}
+
+.cert-doc-pdf-preview {
+  width: 400px;
+  height: 500px;
 }

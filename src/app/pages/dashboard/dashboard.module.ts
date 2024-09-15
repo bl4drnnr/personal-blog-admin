@@ -17,6 +17,7 @@ import { CreateAuthorComponent } from '@pages/create-author/create-author.compon
 import { CertificationComponent } from '@pages/certification/certification.component';
 import { CertificationsComponent } from '@pages/certifications/certifications.component';
 import { CreateCertificationComponent } from '@pages/create-certification/create-certification.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
   {
@@ -122,7 +123,8 @@ const components = [
         enterValidUrl: 'Please enter a valid URL'
       }
     }),
-    TranslocoModule
+    TranslocoModule,
+    PdfViewerModule
   ],
   exports: [...components]
 })

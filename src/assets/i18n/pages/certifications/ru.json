@@ -1,3 +1,5 @@
 {
-  "createCertTitle": "Создание сертификата"
+  "createCertTitle": "Создание сертификата",
+  "certificateFileName": "Имя файла сертификата: {{ certFileName }}",
+  "certificateFileSize": "Размер файла сертификата: {{ certFileSize }}MB"
 }

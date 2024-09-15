@@ -60,5 +60,7 @@
   "createAuthor": "Create author",
   "authors": "Authors",
   "certifications": "Certifications",
-  "createCert": "Create a certification"
+  "createCert": "Create a certification",
+  "selectCertificationFile": "Select certification file",
+  "deleteCertFile": "Delete certification file"
 }

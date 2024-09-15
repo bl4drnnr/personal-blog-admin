@@ -93,8 +93,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
     );
 
     if (isTagPresent) {
+      const translationMessage = await this.translationService.translateText(
+        'tag-is-already-on-the-list',
+        MessagesTranslation.RESPONSES
+      );
+
       await this.globalMessageService.handleWarning({
-        message: 'Tag is already on the list'
+        message: translationMessage
       });
     } else {
       this.articleTags.push(this.articleTag);

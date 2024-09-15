@@ -27,4 +27,5 @@ export interface ProxyRequestInterface {
   method: Method;
   payload?: object;
   params?: any;
+  isFileUpload?: boolean;
 }

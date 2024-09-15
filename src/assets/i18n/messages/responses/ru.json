@@ -1,7 +1,7 @@
 {
   "success": "Успех",
-  "photo-uploaded": "Фото загружено",
-  "user-updated": "Информация о пользователе успешно обновлена",
+  "photo-uploaded": "Фотография загружена",
+  "user-updated": "Пользователь успешно обновлен",
   "contact-message-sent": "Контактное сообщение успешно отправлено",
   "article-created": "Статья успешно создана",
   "article-deleted": "Статья успешно удалена",
@@ -9,5 +9,13 @@
   "article-publish-status-changed": "Статус публикации статьи успешно изменен",
   "category-created": "Категория успешно создана",
   "category-deleted": "Категория успешно удалена",
-  "category-edited": "Категория успешно отредактирована"
+  "category-edited": "Категория успешно отредактирована",
+  "certification-deleted": "Сертификация успешно удалена",
+  "certification-updated": "Сертификация успешно обновлена",
+  "author-deleted": "Автор успешно удален",
+  "author-updated": "Автор успешно обновлен",
+  "experience-deleted": "Опыт успешно удален",
+  "experience-updated": "Опыт успешно обновлен",
+  "certification-file-uploaded": "Файл сертификации успешно загружен",
+  "tag-is-already-on-the-list": "Тег уже есть в списке"
 }

@@ -28,7 +28,7 @@
         (onSpace)="addObtainedSkills()"
       />
 
-      <div class="cert-skills-wrapper">
+      <div *ngIf="obtainedSkills.length > 0" class="cert-skills-wrapper">
         <div *ngFor="let skill of obtainedSkills">
           <p class="cert-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
         </div>
@@ -64,33 +64,51 @@
         />
       </div>
 
-      <div class="picture-preview">
+      <div *ngIf="certPicture" class="picture-preview">
         <img
-          *ngIf="certPicture"
           [src]="certPicture"
           (click)="clearCertPicture()"
-          class="article-main-picture"
-          alt="article-picture"
+          class="cert-main-picture"
+          alt="cert-picture"
         />
       </div>
 
       <basic-button
-        [label]="'Select certificate file'"
-        (click)="certInput.click()"
+        [label]="t('button.selectCertificationFile')"
+        (click)="certificatePdf.click()"
       />
 
+      <div class="cert-doc-preview" *ngIf="certificationDocument && certDocsFileInfo">
+        <pdf-viewer
+          [src]="pdfSrc"
+          [render-text]="true"
+          [original-size]="false"
+          class="cert-doc-pdf-preview"
+        />
+        <div class="cert-doc-info">
+          <p>{{ t('certs.certificateFileName', { certFileName: certDocsFileInfo.name }) }}</p>
+          <p>{{ t('certs.certificateFileSize', { certFileSize: (certDocsFileInfo.size / 1024 / 1024).toFixed(2) }) }}</p>
+          <basic-button
+            [label]="t('button.deleteCertFile')"
+            [danger]="true"
+            (buttonClick)="clearCertDocument()"
+          />
+        </div>
+      </div>
+
       <input
+        id="certificatePdf"
         type="file"
         accept=".pdf,.doc,.docx"
-        (change)="fileChange($event)"
-        #certInput
+        (change)="selectCertificationDocument($event)"
+        #certificatePdf
         hidden
       />
 
       <input
         type="file"
         accept="image/*"
-        (change)="selectFile($event)"
+        (change)="selectCertificationPicture($event)"
         #fileInput
         hidden
       />

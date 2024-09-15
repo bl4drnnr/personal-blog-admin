@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideLottieOptions } from 'ngx-lottie';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TranslocoRootModule } from './transloco-root.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import { TranslocoRootModule } from './transloco-root.module';
     LayoutsModule,
     ComponentsModule,
     TranslocoRootModule,
-    PagesModule
+    PagesModule,
+    PdfViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

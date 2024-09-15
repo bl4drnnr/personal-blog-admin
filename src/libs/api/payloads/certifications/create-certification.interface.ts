@@ -2,7 +2,7 @@ export interface CreateCertificationPayload {
   certName: string;
   certDescription: string;
   certPicture: string;
-  certDocs: FormData;
+  certDocs: string;
   obtainingDate: Date;
   expirationDate: Date;
   obtainedSkills: Array<string>;

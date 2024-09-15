@@ -60,5 +60,7 @@
   "createAuthor": "Создать автора",
   "authors": "Авторы",
   "certifications": "Сертификаты",
-  "createCert": "Создать сертификат"
+  "createCert": "Создать сертификат",
+  "selectCertificationFile": "Выбрать файл сертификации",
+  "deleteCertFile": "Удалить файл сертификации"
 }

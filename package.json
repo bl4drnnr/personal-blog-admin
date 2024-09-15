@@ -24,6 +24,7 @@
     "dayjs": "^1.11.11",
     "file-saver": "^2.0.5",
     "lottie-web": "^5.12.2",
+    "ng2-pdf-viewer": "^10.3.1",
     "ngx-editor": "^17.5.4",
     "ngx-lottie": "^11.0.2",
     "rxjs": "~7.8.0",

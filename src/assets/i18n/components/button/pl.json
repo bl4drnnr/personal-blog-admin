@@ -60,5 +60,7 @@
   "createAuthor": "Utwórz autora",
   "authors": "Autorzy",
   "certifications": "Certyfikaty",
-  "createCert": "Utwórz certyfikat"
+  "createCert": "Utwórz certyfikat",
+  "selectCertificationFile": "Wybierz plik certyfikacji",
+  "deleteCertFile": "Usuń plik certyfikacji"
 }
