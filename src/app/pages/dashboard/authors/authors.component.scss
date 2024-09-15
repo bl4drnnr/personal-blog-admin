@@ -36,6 +36,7 @@
 
 .author-info-container {
   display: flex;
+  justify-content: space-between;
 }
 
 .author-picture-preview {
@@ -47,4 +48,8 @@
   font-size: 12px;
   opacity: .5;
   margin: 3px 0;
+}
+
+.author-info-text-fields {
+  padding-right: 10px;
 }

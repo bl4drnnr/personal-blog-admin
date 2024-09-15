@@ -1,0 +1,43 @@
+@import 'variables';
+
+.author-wrapper {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.author-mgmt-buttons {
+  display: flex;
+}
+
+.author-mgmt-button {
+  width: 100%;
+
+  &.right {
+    margin-right: 5px;
+  }
+
+  &.left {
+    margin-left: 5px;
+  }
+}
+
+.author-date {
+  font-size: 12px;
+  opacity: .5;
+  margin: 3px 0;
+}
+
+.select-photo-btn-wrapper {
+  margin: 20px 0;
+}
+
+.author-main-picture {
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.picture-preview {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}

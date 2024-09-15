@@ -7,6 +7,10 @@ import { TranslationService } from '@services/translation.service';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
+import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
+import { Titles } from '@interfaces/titles.enum';
+import { EditAuthorPayload } from '@payloads/edit-author.interface';
 
 @Component({
   selector: 'page-author',
@@ -14,7 +18,21 @@ import { UserInfoResponse } from '@responses/user-info.interface';
   styleUrl: './author.component.scss'
 })
 export class AuthorComponent implements OnInit {
+  author: GetAuthorByIdResponse;
+
   authorId: string;
+
+  authorFirstName: string;
+  authorLastName: string;
+  authorDescription: string;
+  selectedFiles?: FileList;
+  authorImage: string;
+  authorProfilePicture: string | ArrayBuffer | null = '';
+  isSelected: boolean;
+  authorCreatedAt: Date;
+  authorUpdatedAt: Date;
+  authorEditMode = false;
+
   userInfo: UserInfoResponse;
 
   constructor(
@@ -27,14 +45,87 @@ export class AuthorComponent implements OnInit {
     private readonly globalMessageService: GlobalMessageService
   ) {}
 
+  staticStorage = `${this.envService.getStaticStorageLink}/authors-pictures/`;
+
   getAuthorById() {
     this.authorsService
       .getAuthorById({
         authorId: this.authorId
       })
       .subscribe({
-        next: () => {}
+        next: (author) => {
+          this.translationService.setPageTitle(Titles.AUTHOR, {
+            authorFullName: `${author.firstName} ${author.lastName}`
+          });
+          this.author = author;
+          this.authorFirstName = author.firstName;
+          this.authorLastName = author.lastName;
+          this.authorDescription = author.description;
+          this.authorImage = author.profilePicture;
+          this.isSelected = author.isSelected;
+          this.authorCreatedAt = author.createdAt;
+          this.authorUpdatedAt = author.updatedAt;
+        },
+        error: async () => await this.handleRedirect('account/authors')
       });
+  }
+
+  editAuthor() {
+    const authorPayload: EditAuthorPayload = {
+      authorId: this.authorId
+    };
+
+    if (this.author.firstName !== this.authorFirstName)
+      authorPayload.firstName = this.authorFirstName;
+    if (this.author.lastName !== this.authorLastName)
+      authorPayload.lastName = this.authorLastName;
+    if (this.author.description !== this.authorDescription)
+      authorPayload.description = this.authorDescription;
+    if (this.authorProfilePicture)
+      authorPayload.profilePicture = this.authorProfilePicture as string;
+
+    this.authorsService
+      .editAuthor({
+        ...authorPayload
+      })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({ message: translationMessage });
+          this.authorEditMode = false;
+          this.getAuthorById();
+        }
+      });
+  }
+
+  changeAuthorSelectionStatus(authorId: string) {
+    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        this.getAuthorById();
+      }
+    });
+  }
+
+  deleteAuthor(authorId: string) {
+    this.authorsService.deleteAuthor({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        await this.handleRedirect('account/authors');
+      }
+    });
   }
 
   async fetchUserInfo() {
@@ -48,6 +139,26 @@ export class AuthorComponent implements OnInit {
         }
       });
     }
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    if (!this.selectedFiles) return;
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.authorProfilePicture = reader.result;
+    };
+  }
+
+  authorEdited() {
+    return (
+      this.author.firstName !== this.authorFirstName ||
+      this.author.lastName !== this.authorLastName ||
+      this.author.description !== this.authorDescription ||
+      this.authorProfilePicture
+    );
   }
 
   async handleRedirect(path: string) {

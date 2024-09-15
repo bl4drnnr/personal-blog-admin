@@ -17,7 +17,7 @@
         *ngFor="let author of authors"
       >
         <div class="author-info-container">
-          <div>
+          <div class="author-info-text-fields">
             <h2>{{ author.firstName }} {{ author.lastName }}</h2>
             <p>{{ author.description }}</p>
             <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(author.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>

@@ -14,6 +14,8 @@ import { AuthorSelectionStatusChangedResponse } from '@responses/author-selectio
 import { ChangeAuthorSelectionStatusPayload } from '@payloads/change-author-selection-status.interface';
 import { DeleteAuthorPayload } from '@payloads/delete-author.interface';
 import { AuthorDeletedResponse } from '@responses/author-deleted.interface';
+import { EditAuthorPayload } from '@payloads/edit-author.interface';
+import { AuthorUpdatedResponse } from '@responses/author-updated.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +71,15 @@ export class AuthorsService {
       controller: Controller.ABOUT_BLOG,
       action: AuthorsEndpoint.DELETE_AUTHOR,
       params
+    });
+  }
+
+  editAuthor(payload: EditAuthorPayload): Observable<AuthorUpdatedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ABOUT_BLOG,
+      action: AuthorsEndpoint.UPDATED_AUTHOR,
+      payload
     });
   }
 }

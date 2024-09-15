@@ -3,5 +3,6 @@ export enum AuthorsEndpoint {
   CREATE_AUTHOR = 'create-author',
   LIST_AUTHORS = 'list-authors',
   CHANGE_AUTHOR_SELECTION_STATUS = 'change-author-selection-status',
-  DELETE_AUTHOR = 'delete-author'
+  DELETE_AUTHOR = 'delete-author',
+  UPDATED_AUTHOR = 'update-author'
 }

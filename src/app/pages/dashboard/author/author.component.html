@@ -1,3 +1,106 @@
 <layout-default
   [userInfo]="userInfo"
-></layout-default>
+  [showFooter]="false"
+>
+  <ng-container *transloco="let t">
+    <div *ngIf="author" class="author-wrapper">
+      <div class="author-mgmt-buttons">
+        <div class="author-mgmt-button right">
+          <basic-button
+            [label]="authorEditMode ? t('button.closeEditMode') : t('button.editAuthor')"
+            (buttonClick)="authorEditMode = !authorEditMode"
+          />
+        </div>
+        <div class="author-mgmt-button">
+          <basic-button
+            [label]="t('button.changeAuthorSelection')"
+            [fillButton]="author.isSelected"
+            (buttonClick)="changeAuthorSelectionStatus(author.id)"
+          />
+        </div>
+        <div class="author-mgmt-button left">
+          <basic-button
+            [label]="t('button.deleteAuthor')"
+            [danger]="true"
+            (buttonClick)="deleteAuthor(author.id)"
+          />
+        </div>
+      </div>
+
+      <div *ngIf="!authorEditMode">
+        <h1>{{ author.firstName }} {{ author.lastName }}</h1>
+        <p>{{ author.description }}</p>
+        <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(authorCreatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+        <p class="author-date">{{ t('authors.authorUpdatedAt', { authorUpdatedAt: dayjs(authorUpdatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+
+        <img
+          [src]="staticStorage + author.profilePicture"
+          alt="author-picture"
+        >
+      </div>
+
+      <div *ngIf="authorEditMode">
+        <basic-input
+          [label]="t('input.authorFirstNameLabel')"
+          [placeholder]="t('input.authorFirstNamePlaceholder')"
+          [inputDescription]="t('input.authorFirstNameDesc')"
+          [value]="authorFirstName"
+          (valueChange)="authorFirstName = $event"
+        />
+        <basic-input
+          [label]="t('input.authorLastNameLabel')"
+          [placeholder]="t('input.authorLastNamePlaceholder')"
+          [inputDescription]="t('input.authorLastNameDesc')"
+          [value]="authorLastName"
+          (valueChange)="authorLastName = $event"
+        />
+        <basic-input
+          [label]="t('input.authorDescLabel')"
+          [placeholder]="t('input.authorDescPlaceholder')"
+          [inputDescription]="t('input.authorDescDesc')"
+          [value]="authorDescription"
+          (valueChange)="authorDescription = $event"
+        />
+
+        <div class="select-photo-btn-wrapper">
+          <basic-button
+            [label]="t('button.selectPhoto')"
+            (click)="fileInput.click()"
+          />
+        </div>
+
+        <div class="picture-preview">
+          <img
+            *ngIf="!authorProfilePicture"
+            [src]="staticStorage + authorImage"
+            alt="author-picture"
+          />
+          <img
+            *ngIf="authorProfilePicture"
+            [src]="authorProfilePicture"
+            (click)="authorProfilePicture = ''"
+            class="author-main-picture"
+            alt="author-picture"
+          />
+
+          <input
+            type="file"
+            accept="image/*"
+            (change)="selectFile($event)"
+            #fileInput
+            hidden
+          />
+        </div>
+
+        <div class="edit-button-wrapper">
+          <basic-button
+            [fillButton]="true"
+            [label]="t('button.saveChanges')"
+            [disabled]="!authorEdited()"
+            (buttonClick)="editAuthor()"
+          />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</layout-default>
