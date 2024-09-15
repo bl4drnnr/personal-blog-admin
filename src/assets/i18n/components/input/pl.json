@@ -106,5 +106,8 @@
   "certExpirationDateDesc": "Jeśli nie ma takiej daty, po prostu pozostaw to pole puste",
   "certObtainedSkillLabel": "Umiejętności uzyskane w ramach certyfikacji",
   "certObtainedSkillPlaceholder": "Podaj umiejętności, które uzyskałeś podczas uzyskiwania tej certyfikacji",
-  "certObtainedSkillDesc": "Naciśnij spację, aby dodać nową, a następnie kliknij istniejącą, aby ją usunąć"
+  "certObtainedSkillDesc": "Naciśnij spację, aby dodać nową, a następnie kliknij istniejącą, aby ją usunąć",
+  "authorQueryLabel": "Zapytanie autora",
+  "authorQueryPlaceholder": "Podaj zapytanie autora do wyszukania",
+  "authorQueryDesc": "Artykuły zostaną znalezione na podstawie ich nazw i opisu"
 }

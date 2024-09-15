@@ -9,6 +9,11 @@ import { Observable } from 'rxjs';
 import { AuthorCreatedResponse } from '@responses/author-created.interface';
 import { GetAuthorByIdPayload } from '@payloads/get-author-by-id.interface';
 import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
+import { ListAuthorsResponse } from '@responses/list-authors.interface';
+import { AuthorSelectionStatusChangedResponse } from '@responses/author-selection-status-changed.interface';
+import { ChangeAuthorSelectionStatusPayload } from '@payloads/change-author-selection-status.interface';
+import { DeleteAuthorPayload } from '@payloads/delete-author.interface';
+import { AuthorDeletedResponse } from '@responses/author-deleted.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +43,31 @@ export class AuthorsService {
     });
   }
 
-  listAuthors(params: ListAuthorsPayload) {
+  listAuthors(params: ListAuthorsPayload): Observable<ListAuthorsResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
       action: AuthorsEndpoint.LIST_AUTHORS,
+      params
+    });
+  }
+
+  changeAuthorSelectionStatus(
+    payload: ChangeAuthorSelectionStatusPayload
+  ): Observable<AuthorSelectionStatusChangedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ABOUT_BLOG,
+      action: AuthorsEndpoint.CHANGE_AUTHOR_SELECTION_STATUS,
+      payload
+    });
+  }
+
+  deleteAuthor(params: DeleteAuthorPayload): Observable<AuthorDeletedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.DELETE,
+      controller: Controller.ABOUT_BLOG,
+      action: AuthorsEndpoint.DELETE_AUTHOR,
       params
     });
   }

@@ -8,6 +8,8 @@ import { RefreshTokensService } from '@services/refresh-token.service';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { Titles } from '@interfaces/titles.enum';
+import { ListAuthor } from '@interfaces/list-author.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-authors',
@@ -21,7 +23,7 @@ export class AuthorsComponent implements OnInit {
   orderBy: string = 'DESC';
   authorSearchQuery: string = '';
   totalItems: number;
-  // articles: Array<ListArticleInterface> = [];
+  authors: Array<ListAuthor> = [];
 
   userInfo: UserInfoResponse;
 
@@ -34,6 +36,8 @@ export class AuthorsComponent implements OnInit {
     private readonly globalMessageService: GlobalMessageService
   ) {}
 
+  staticStorage = `${this.envService.getStaticStorageLink}/authors-pictures/`;
+
   listAuthors() {
     const listAuthorsPayload = {
       page: this.page,
@@ -44,10 +48,54 @@ export class AuthorsComponent implements OnInit {
     };
 
     this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
-      next: (data) => {
-        console.log('authors', data);
+      next: ({ rows, count }) => {
+        this.authors = rows;
+        this.totalItems = count;
       }
     });
+  }
+
+  changeAuthorSelectionStatus(authorId: string) {
+    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        this.listAuthors();
+      }
+    });
+  }
+
+  deleteAuthor(authorId: string) {
+    this.authorsService.deleteAuthor({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({ message: translationMessage });
+        this.listAuthors();
+      }
+    });
+  }
+
+  setCurrentPage(currentPage: string) {
+    this.page = currentPage;
+    this.listAuthors();
+  }
+
+  setArticlesPerPage(articlesPerPage: string) {
+    this.pageSize = articlesPerPage;
+    this.listAuthors();
+  }
+
+  handleAuthorQuery(authorQuery: string) {
+    {
+      this.authorSearchQuery = authorQuery;
+      this.listAuthors();
+    }
   }
 
   async fetchUserInfo() {

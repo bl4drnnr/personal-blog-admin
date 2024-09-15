@@ -3,5 +3,6 @@
   "authApp": "Aplikacja authenticator",
   "selectMfaOption": "Wybierz opcję uwierzytelniania wieloskładnikowego",
   "articlesPerPage": "Artykułów na stronę",
-  "articleCategory": "Wybierz kategorię artykułu"
+  "articleCategory": "Wybierz kategorię artykułu",
+  "authorsPerPage": "Autorów na stronie"
 }

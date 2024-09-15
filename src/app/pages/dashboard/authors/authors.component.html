@@ -1,1 +1,75 @@
-<p>authors works!</p>
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="authors-wrapper">
+      <h1>{{ t('authors.allAuthors') }}</h1>
+      <basic-input
+        [label]="t('input.authorQueryLabel')"
+        [placeholder]="t('input.authorQueryPlaceholder')"
+        [inputDescription]="t('input.authorQueryDesc')"
+        [value]="authorSearchQuery"
+        (valueChange)="handleAuthorQuery($event)"
+      />
+
+      <div
+        class="author-wrapper"
+        *ngFor="let author of authors"
+      >
+        <div class="author-info-container">
+          <div>
+            <h2>{{ author.firstName }} {{ author.lastName }}</h2>
+            <p>{{ author.description }}</p>
+            <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(author.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="author-date">{{ t('authors.authorUpdatedAt', { authorUpdatedAt: dayjs(author.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          </div>
+          <div>
+            <img
+              class="author-picture-preview"
+              [src]="staticStorage + author.profilePicture"
+              alt="author-picture"
+            >
+          </div>
+        </div>
+        <div class="author-control-buttons">
+          <div class="author-control-button-wrapper">
+            <basic-button
+              [label]="t('button.editAuthor')"
+              (buttonClick)="handleRedirect('/account/author/' + author.id)"
+            />
+          </div>
+          <div class="author-control-button-wrapper margin">
+            <basic-button
+              [label]="t('button.changeAuthorSelection')"
+              [fillButton]="author.isSelected"
+              (buttonClick)="changeAuthorSelectionStatus(author.id)"
+            />
+          </div>
+          <div class="author-control-button-wrapper">
+            <basic-button
+              [label]="t('button.deleteAuthor')"
+              [danger]="true"
+              (buttonClick)="deleteAuthor(author.id)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="authors.length === 0">
+        <h1>{{ t('authors.noAuthors') }}</h1>
+      </div>
+
+      <div class="pagination-container">
+        <basic-pagination
+          [itemsPerPageLabel]="t('dropdown.authorsPerPage')"
+          [currentPage]="page"
+          [itemsPerPage]="pageSize"
+          [totalItems]="totalItems"
+          (setCurrentPage)="setCurrentPage($event)"
+          (setItemsPerPage)="setArticlesPerPage($event)"
+          (fetchItems)="listAuthors()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

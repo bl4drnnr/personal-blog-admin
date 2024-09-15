@@ -106,5 +106,8 @@
   "certExpirationDateDesc": "If there is no such date, just leave this field blank",
   "certObtainedSkillLabel": "Certification obtained skills",
   "certObtainedSkillPlaceholder": "Provide skills that you obtained while getting this certification",
-  "certObtainedSkillDesc": "Press Space to add the new one and click on the existing one to delete it"
+  "certObtainedSkillDesc": "Press Space to add the new one and click on the existing one to delete it",
+  "authorQueryLabel": "Author query",
+  "authorQueryPlaceholder": "Provide author query to search for",
+  "authorQueryDesc": "The articles will be found based on their names and description"
 }

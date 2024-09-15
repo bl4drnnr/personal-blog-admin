@@ -62,5 +62,8 @@
   "certifications": "Сертификаты",
   "createCert": "Создать сертификат",
   "selectCertificationFile": "Выбрать файл сертификации",
-  "deleteCertFile": "Удалить файл сертификации"
+  "deleteCertFile": "Удалить файл сертификации",
+  "editAuthor": "Изменить автора",
+  "changeAuthorSelection": "Изменить выбор автора",
+  "deleteAuthor": "Удалить автора"
 }

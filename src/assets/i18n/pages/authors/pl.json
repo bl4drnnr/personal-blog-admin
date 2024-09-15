@@ -1,3 +1,7 @@
 {
-  "createAuthorTitle": "Utwórz nowego autora"
+  "createAuthorTitle": "Utwórz nowego autora",
+  "allAuthors": "Wszyscy autorzy",
+  "noAuthors": "Nie znaleziono autorów",
+  "authorCreatedAt": "Autor utworzony: {{ authorCreatedAt }}",
+  "authorUpdatedAt": "Autor zaktualizowany: {{ authorUpdatedAt }}"
 }

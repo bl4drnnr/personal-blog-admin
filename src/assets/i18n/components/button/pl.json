@@ -62,5 +62,8 @@
   "certifications": "Certyfikaty",
   "createCert": "Utwórz certyfikat",
   "selectCertificationFile": "Wybierz plik certyfikacji",
-  "deleteCertFile": "Usuń plik certyfikacji"
+  "deleteCertFile": "Usuń plik certyfikacji",
+  "editAuthor": "Edytuj autora",
+  "changeAuthorSelection": "Zmień wybór autora",
+  "deleteAuthor": "Usuń autora"
 }
