@@ -7,6 +7,8 @@ import { UserInfoResponse } from '@responses/user-info.interface';
 import { Titles } from '@interfaces/titles.enum';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { MessagesTranslation } from '@translations/messages.enum';
+import { AuthorsService } from '@services/authors.service';
+import { ListAuthor } from '@interfaces/list-author.interface';
 
 @Component({
   selector: 'page-create-certification',
@@ -27,12 +29,15 @@ export class CreateCertificationComponent implements OnInit {
   obtainedSkill: string;
   obtainedSkills: Array<string> = [];
   authorId: string;
+  authorSearchQuery: string;
 
   userInfo: UserInfoResponse;
+  authors: Array<ListAuthor> = [];
 
   constructor(
     private readonly router: Router,
     private readonly certificationsService: CertificationsService,
+    private readonly authorsService: AuthorsService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -72,12 +77,38 @@ export class CreateCertificationComponent implements OnInit {
             .subscribe({
               next: async ({ certificationId }) => {
                 await this.handleRedirect(
-                  `account/certificate/${certificationId}`
+                  `account/certification/${certificationId}`
                 );
               }
             });
         }
       });
+  }
+
+  listAuthors() {
+    const listAuthorsPayload = {
+      page: '0',
+      pageSize: '5',
+      order: 'created_at',
+      orderBy: 'DESC',
+      query: this.authorSearchQuery
+    };
+
+    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
+      next: ({ rows }) => (this.authors = rows)
+    });
+  }
+
+  handleAuthorQuery(authorQuery: string) {
+    this.authorSearchQuery = authorQuery;
+    if (this.authorSearchQuery) this.listAuthors();
+    else this.authors = [];
+  }
+
+  selectAuthor(author: ListAuthor) {
+    this.authorId = author.id;
+    this.authorSearchQuery = `${author.firstName} ${author.lastName}`;
+    this.authors = [];
   }
 
   async addObtainedSkills() {
@@ -161,6 +192,7 @@ export class CreateCertificationComponent implements OnInit {
       !this.certPicture ||
       !this.certDocs ||
       !this.certificationDocument ||
+      !this.authorId ||
       this.obtainedSkills.length === 0 ||
       !this.obtainingDate ||
       !this.obtainingDate

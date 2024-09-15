@@ -92,10 +92,8 @@ export class AuthorsComponent implements OnInit {
   }
 
   handleAuthorQuery(authorQuery: string) {
-    {
-      this.authorSearchQuery = authorQuery;
-      this.listAuthors();
-    }
+    this.authorSearchQuery = authorQuery;
+    this.listAuthors();
   }
 
   async fetchUserInfo() {

@@ -22,6 +22,10 @@ export class GlobalMessageService {
     this.message$.next(message);
     this.isError = isError;
     this.isWarning = isWarning;
+
+    setTimeout(() => {
+      this.clear();
+    }, 10000);
   }
 
   async handleError({ message }: HandleGlobalMessageInterface) {

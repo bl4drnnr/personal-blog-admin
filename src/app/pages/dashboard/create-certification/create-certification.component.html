@@ -57,6 +57,22 @@
         </div>
       </div>
 
+      <basic-input
+        [label]="t('input.authorQueryLabel')"
+        [placeholder]="t('input.authorQueryPlaceholder')"
+        [inputDescription]="t('input.authorQueryDesc')"
+        [value]="authorSearchQuery"
+        (valueChange)="handleAuthorQuery($event)"
+      />
+
+      <div class="authors-list" *ngIf="authors.length > 0">
+        <p
+          class="author-item"
+          *ngFor="let author of authors"
+          (click)="selectAuthor(author)"
+        >{{ author.firstName }} {{ author.lastName }}</p>
+      </div>
+
       <div class="select-photo-btn-wrapper">
         <basic-button
           [label]="t('button.selectPhoto')"
