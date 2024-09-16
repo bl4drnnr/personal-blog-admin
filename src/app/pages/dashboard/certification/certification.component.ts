@@ -13,6 +13,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
 import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
+import { ValidationService } from '@services/validation.service';
 
 @Component({
   selector: 'page-certification',
@@ -60,11 +61,13 @@ export class CertificationComponent implements OnInit {
     private readonly translationService: TranslationService,
     private readonly certificationsService: CertificationsService,
     private readonly authorsService: AuthorsService,
+    private readonly validationService: ValidationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
   ) {}
 
-  staticStorage = `${this.envService.getStaticStorageLink}/certs-pictures/`;
+  staticStorageCertPics = `${this.envService.getStaticStorageLink}/certs-pictures/`;
+  staticStorageCertFiles = `${this.envService.getStaticStorageLink}/certs-files/`;
 
   getCertificationById() {
     this.certificationsService
@@ -84,10 +87,10 @@ export class CertificationComponent implements OnInit {
           this.certificationDocs = certification.certDocs;
           this.certificationObtainingDate = dayjs(
             certification.obtainingDate
-          ).format('DD/MM/YYYY');
+          ).format('YYYY-MM-DD');
           this.certificationExpirationDate = dayjs(
             certification.expirationDate
-          ).format('DD/MM/YYYY');
+          ).format('YYYY-MM-DD');
           this.certificationObtainedSkills = certification.obtainedSkills;
           this.isSelected = certification.isSelected;
           this.certificationAuthorId = certification.authorId;
@@ -224,7 +227,23 @@ export class CertificationComponent implements OnInit {
   }
 
   certificationEdited() {
-    return true;
+    // @TODO Fix certifications lists
+    const areArraysEqual = this.validationService.areArraysEqual(
+      this.certification.obtainedSkills,
+      this.certificationObtainedSkills
+    );
+
+    return (
+      this.certificationName !== this.certification.certName ||
+      this.certificationDescription !== this.certificationDescription ||
+      dayjs(this.certificationObtainingDate).format('YYYY-MM-DD') !==
+        dayjs(this.certification.obtainingDate).format('YYYY-MM-DD') ||
+      dayjs(this.certificationExpirationDate).format('YYYY-MM-DD') !==
+        dayjs(this.certification.expirationDate).format('YYYY-MM-DD') ||
+      this.certNewPicture ||
+      this.certificationNewDocs ||
+      !areArraysEqual
+    );
   }
 
   async addObtainedSkills() {
@@ -244,7 +263,9 @@ export class CertificationComponent implements OnInit {
         message: translationMessage
       });
     } else {
-      this.certificationObtainedSkills.push(this.certificationObtainedSkill);
+      this.certificationObtainedSkills.push(
+        this.certificationObtainedSkill.trim()
+      );
     }
 
     this.certificationObtainedSkill = '';

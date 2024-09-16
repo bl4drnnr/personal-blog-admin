@@ -108,7 +108,7 @@
         <div class="picture-preview">
           <img
             *ngIf="!certNewPicture"
-            [src]="staticStorage + certificationPicture"
+            [src]="staticStorageCertPics + certificationPicture"
             alt="cert-picture"
           >
           <img
@@ -133,7 +133,38 @@
           (click)="certificatePdf.click()"
         />
 
-        <div class="cert-doc-preview"></div>
+        <div
+          class="cert-doc-preview"
+          *ngIf="certificationDocs && !certificationNewDocs"
+        >
+          <pdf-viewer
+            [src]="staticStorageCertFiles + certificationDocs"
+            [render-text]="true"
+            [original-size]="false"
+            class="cert-doc-pdf-preview"
+          />
+        </div>
+
+        <div
+          class="cert-doc-preview"
+          *ngIf="certificationNewDocs && certNewDocsFileInfo"
+        >
+          <pdf-viewer
+            [src]="pdfSrc"
+            [render-text]="true"
+            [original-size]="false"
+            class="cert-doc-pdf-preview"
+          />
+          <div class="cert-doc-info">
+            <p>{{ t('certs.certificateFileName', { certFileName: certNewDocsFileInfo.name }) }}</p>
+            <p>{{ t('certs.certificateFileSize', { certFileSize: (certNewDocsFileInfo.size / 1024 / 1024).toFixed(2) }) }}</p>
+            <basic-button
+              [label]="t('button.deleteCertFile')"
+              [danger]="true"
+              (buttonClick)="clearCertDocument()"
+            />
+          </div>
+        </div>
 
         <input
           id="certificatePdf"
@@ -143,6 +174,9 @@
           #certificatePdf
           hidden
         />
+
+        {{ this.certification.obtainedSkills }}
+        {{ this.certificationObtainedSkills }}
 
         <div class="edit-button-wrapper">
           <basic-button

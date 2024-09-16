@@ -87,4 +87,20 @@ export class ValidationService {
 
     return !corruptedKey;
   }
+
+  areArraysEqual(arr1: any[], arr2: any[]): boolean {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    const sortedArr1 = arr1
+      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .sort();
+
+    const sortedArr2 = arr2
+      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .sort();
+
+    return sortedArr1.every((value, index) => value === sortedArr2[index]);
+  }
 }
