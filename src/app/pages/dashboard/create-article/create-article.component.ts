@@ -17,7 +17,10 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-create-article',
   templateUrl: './create-article.component.html',
-  styleUrl: './create-article.component.scss'
+  styleUrls: [
+    './create-article.component.scss',
+    '../shared/article.styles.scss'
+  ]
 })
 export class CreateArticleComponent implements OnInit, OnDestroy {
   articles: Array<CreateArticleInterface> = [

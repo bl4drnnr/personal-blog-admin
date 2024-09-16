@@ -15,7 +15,7 @@ import { EditAuthorPayload } from '@payloads/edit-author.interface';
 @Component({
   selector: 'page-author',
   templateUrl: './author.component.html',
-  styleUrl: './author.component.scss'
+  styleUrls: ['./author.component.scss', '../shared/author.styles.scss']
 })
 export class AuthorComponent implements OnInit {
   author: GetAuthorByIdResponse;

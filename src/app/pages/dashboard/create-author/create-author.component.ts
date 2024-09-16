@@ -9,7 +9,7 @@ import { AuthorsService } from '@services/authors.service';
 @Component({
   selector: 'page-create-author',
   templateUrl: './create-author.component.html',
-  styleUrl: './create-author.component.scss'
+  styleUrls: ['./create-author.component.scss', '../shared/author.styles.scss']
 })
 export class CreateAuthorComponent implements OnInit {
   firstName: string;

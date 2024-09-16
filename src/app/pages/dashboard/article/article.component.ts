@@ -20,7 +20,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-article',
   templateUrl: './article.component.html',
-  styleUrl: './article.component.scss'
+  styleUrls: ['./article.component.scss', '../shared/article.styles.scss']
 })
 export class ArticleComponent implements OnInit, OnDestroy {
   article: GetArticleBySlugResponse;

@@ -14,7 +14,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-authors',
   templateUrl: './authors.component.html',
-  styleUrl: './authors.component.scss'
+  styleUrls: ['./authors.component.scss', '../shared/author.styles.scss']
 })
 export class AuthorsComponent implements OnInit {
   page: string = '0';

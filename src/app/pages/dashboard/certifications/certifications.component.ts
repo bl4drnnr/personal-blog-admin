@@ -14,7 +14,10 @@ import { EnvService } from '@shared/env.service';
 @Component({
   selector: 'page-certifications',
   templateUrl: './certifications.component.html',
-  styleUrl: './certifications.component.scss'
+  styleUrls: [
+    './certifications.component.scss',
+    '../shared/certification.styles.scss'
+  ]
 })
 export class CertificationsComponent implements OnInit {
   page: string = '0';

@@ -14,7 +14,7 @@ import { EnvService } from '@shared/env.service';
 @Component({
   selector: 'page-articles',
   templateUrl: './articles.component.html',
-  styleUrl: './articles.component.scss'
+  styleUrls: ['./articles.component.scss', '../shared/article.styles.scss']
 })
 export class ArticlesComponent implements OnInit {
   page: string = '0';

@@ -13,7 +13,10 @@ import { ListAuthor } from '@interfaces/list-author.interface';
 @Component({
   selector: 'page-create-certification',
   templateUrl: './create-certification.component.html',
-  styleUrl: './create-certification.component.scss'
+  styleUrls: [
+    './create-certification.component.scss',
+    '../shared/certification.styles.scss'
+  ]
 })
 export class CreateCertificationComponent implements OnInit {
   certName: string;

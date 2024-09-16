@@ -17,7 +17,10 @@ import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
 @Component({
   selector: 'page-certification',
   templateUrl: './certification.component.html',
-  styleUrl: './certification.component.scss'
+  styleUrls: [
+    './certification.component.scss',
+    '../shared/certification.styles.scss'
+  ]
 })
 export class CertificationComponent implements OnInit {
   certification: GetCertificationByIdResponse;
