@@ -52,7 +52,9 @@ export class CreateCertificationComponent implements OnInit {
       certDescription: this.certDescription,
       certPicture: this.certPicture,
       certDocs: '',
-      obtainedSkills: this.obtainedSkills,
+      obtainedSkills: this.obtainedSkills.map((skill) =>
+        skill.replace(/\s+/g, '')
+      ),
       authorId: this.authorId,
       obtainingDate,
       expirationDate

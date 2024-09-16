@@ -13,12 +13,25 @@ import { ChangeCertificationSelectionStatusPayload } from '@payloads/change-cert
 import { CertificationSelectionStatusChangedResponse } from '@responses/certification-selection-status-changed.interface';
 import { ListCertificationsPayload } from '@payloads/list-certifications.interface';
 import { ListCertificationsResponse } from '@responses/list-certifications.interface';
+import { GetCertificationByIdRequest } from '@payloads/get-certification-by-id.interface';
+import { GetCertificationByIdResponse } from '@responses/get-certification-by-id.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CertificationsService {
   constructor(private readonly apiService: ApiService) {}
+
+  getCertificationById(
+    params: GetCertificationByIdRequest
+  ): Observable<GetCertificationByIdResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ABOUT_BLOG,
+      action: CertificationEndpoint.GET_CERTIFICATION_BY_ID,
+      params
+    });
+  }
 
   createCertification(
     payload: CreateCertificationPayload

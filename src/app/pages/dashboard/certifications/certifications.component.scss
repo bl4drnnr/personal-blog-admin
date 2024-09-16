@@ -38,6 +38,10 @@
   padding-right: 10px;
 }
 
+.certification-info-title {
+  margin: 0;
+}
+
 .certification-date {
   font-size: 12px;
   opacity: .5;
@@ -45,6 +49,12 @@
 }
 
 .cert-picture-preview {
-  max-width: 300px;
+  max-width: 150px;
   border-radius: 5px;
+}
+
+.pagination-container {
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
 }

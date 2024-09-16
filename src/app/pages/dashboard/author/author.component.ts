@@ -27,7 +27,7 @@ export class AuthorComponent implements OnInit {
   authorDescription: string;
   selectedFiles?: FileList;
   authorImage: string;
-  authorProfilePicture: string | ArrayBuffer | null = '';
+  authorNewImage: string | ArrayBuffer | null = '';
   isSelected: boolean;
   authorCreatedAt: Date;
   authorUpdatedAt: Date;
@@ -81,8 +81,8 @@ export class AuthorComponent implements OnInit {
       authorPayload.lastName = this.authorLastName;
     if (this.author.description !== this.authorDescription)
       authorPayload.description = this.authorDescription;
-    if (this.authorProfilePicture)
-      authorPayload.profilePicture = this.authorProfilePicture as string;
+    if (this.authorNewImage)
+      authorPayload.profilePicture = this.authorNewImage as string;
 
     this.authorsService
       .editAuthor({
@@ -148,7 +148,7 @@ export class AuthorComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.authorProfilePicture = reader.result;
+      this.authorNewImage = reader.result;
     };
   }
 
@@ -157,7 +157,7 @@ export class AuthorComponent implements OnInit {
       this.author.firstName !== this.authorFirstName ||
       this.author.lastName !== this.authorLastName ||
       this.author.description !== this.authorDescription ||
-      this.authorProfilePicture
+      this.authorNewImage
     );
   }
 

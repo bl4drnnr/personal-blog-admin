@@ -71,14 +71,14 @@
 
         <div class="picture-preview">
           <img
-            *ngIf="!authorProfilePicture"
+            *ngIf="!authorNewImage"
             [src]="staticStorage + authorImage"
             alt="author-picture"
           />
           <img
-            *ngIf="authorProfilePicture"
-            [src]="authorProfilePicture"
-            (click)="authorProfilePicture = ''"
+            *ngIf="authorNewImage"
+            [src]="authorNewImage"
+            (click)="authorNewImage = ''"
             class="author-main-picture"
             alt="author-picture"
           />
