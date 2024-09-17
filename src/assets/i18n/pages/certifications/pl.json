@@ -7,5 +7,6 @@
   "certObtainingDate": "Data uzyskania certyfikatu: {{ certObtainingDate }}",
   "certExpirationDate": "Data wygaśnięcia certyfikatu: {{ certExpirationDate }}",
   "certCreatedAt": "Certyfikacja utworzona o: {{ certCreatedAt }}",
-  "certUpdatedAt": "Certyfikacja zaktualizowana o: {{ certUpdatedAt }}"
+  "certUpdatedAt": "Certyfikacja zaktualizowana o: {{ certUpdatedAt }}",
+  "certOwner": "Właściciel certyfikatu: {{ ownerFullName }}"
 }

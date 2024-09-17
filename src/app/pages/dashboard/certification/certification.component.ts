@@ -13,6 +13,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
 import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
+import { EditCertificationPayload } from '@payloads/edit-certification.interface';
 import { ValidationService } from '@services/validation.service';
 
 @Component({
@@ -91,7 +92,7 @@ export class CertificationComponent implements OnInit {
           this.certificationExpirationDate = dayjs(
             certification.expirationDate
           ).format('YYYY-MM-DD');
-          this.certificationObtainedSkills = certification.obtainedSkills;
+          this.certificationObtainedSkills = [...certification.obtainedSkills];
           this.isSelected = certification.isSelected;
           this.certificationAuthorId = certification.authorId;
           this.certificationCreatedAt = certification.createdAt;
@@ -138,7 +139,90 @@ export class CertificationComponent implements OnInit {
     });
   }
 
-  editCertification() {}
+  editCertification() {
+    const certificationPayload: EditCertificationPayload = {
+      certificationId: this.certificationId
+    };
+
+    const areArraysEqual = this.validationService.areArraysEqual(
+      this.certification.obtainedSkills,
+      this.certificationObtainedSkills
+    );
+
+    if (this.certification.certName !== this.certificationName)
+      certificationPayload.certName = this.certificationName;
+    if (this.certification.certDescription !== this.certificationDescription)
+      certificationPayload.certDescription = this.certificationDescription;
+    if (
+      dayjs(this.certificationObtainingDate).format('YYYY-MM-DD') !==
+      dayjs(this.certification.obtainingDate).format('YYYY-MM-DD')
+    )
+      certificationPayload.obtainingDate = this.certification.obtainingDate;
+    if (
+      dayjs(this.certificationExpirationDate).format('YYYY-MM-DD') !==
+      dayjs(this.certification.expirationDate).format('YYYY-MM-DD')
+    )
+      certificationPayload.expirationDate = new Date(
+        this.certificationExpirationDate
+      );
+    if (this.certNewPicture)
+      certificationPayload.certPicture = this.certNewPicture as string;
+    if (!areArraysEqual)
+      certificationPayload.obtainedSkills = this.certificationObtainedSkills;
+
+    if (this.certificationNewDocs) {
+      this.certificationsService
+        .certificationFileUpload(this.certificationNewDocs)
+        .subscribe({
+          next: async ({ message, certificationFileName }) => {
+            const translationMessage =
+              await this.translationService.translateText(
+                message,
+                MessagesTranslation.RESPONSES
+              );
+
+            this.globalMessageService.handle({ message: translationMessage });
+            certificationPayload.certDocs = certificationFileName;
+
+            this.certificationsService
+              .editCertification({ ...certificationPayload })
+              .subscribe({
+                next: async ({ message }) => {
+                  const translationMessage =
+                    await this.translationService.translateText(
+                      message,
+                      MessagesTranslation.RESPONSES
+                    );
+                  this.globalMessageService.handle({
+                    message: translationMessage
+                  });
+                  this.certificationEditMode = false;
+                  this.getCertificationById();
+                }
+              });
+          }
+        });
+    } else {
+      this.certificationsService
+        .editCertification({ ...certificationPayload })
+        .subscribe({
+          next: async ({ message }) => {
+            const translationMessage =
+              await this.translationService.translateText(
+                message,
+                MessagesTranslation.RESPONSES
+              );
+            this.globalMessageService.handle({ message: translationMessage });
+            this.certificationEditMode = false;
+            this.getCertificationById();
+          }
+        });
+    }
+
+    this.certNewPicture = null;
+    this.certNewDocsFileInfo = null;
+    this.certificationNewDocs = null;
+  }
 
   changeCertificationSelectionStatus(certificationId: string) {
     this.certificationsService
@@ -192,12 +276,16 @@ export class CertificationComponent implements OnInit {
 
   selectFile(event: any) {
     this.selectedFiles = event.target.files;
+
     if (!this.selectedFiles) return;
+
     const file = event.target.files[0];
     const reader = new FileReader();
+
     reader.readAsDataURL(file);
+
     reader.onload = () => {
-      this.certNewPicture = reader.result;
+      this.certNewPicture = reader.result as string;
     };
   }
 
@@ -227,7 +315,6 @@ export class CertificationComponent implements OnInit {
   }
 
   certificationEdited() {
-    // @TODO Fix certifications lists
     const areArraysEqual = this.validationService.areArraysEqual(
       this.certification.obtainedSkills,
       this.certificationObtainedSkills

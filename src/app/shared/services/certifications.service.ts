@@ -15,6 +15,8 @@ import { ListCertificationsPayload } from '@payloads/list-certifications.interfa
 import { ListCertificationsResponse } from '@responses/list-certifications.interface';
 import { GetCertificationByIdRequest } from '@payloads/get-certification-by-id.interface';
 import { GetCertificationByIdResponse } from '@responses/get-certification-by-id.interface';
+import { EditCertificationPayload } from '@payloads/edit-certification.interface';
+import { CertificationUpdatedResponse } from '@responses/certification-updated.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +76,17 @@ export class CertificationsService {
       controller: Controller.ABOUT_BLOG,
       action: CertificationEndpoint.DELETE_CERTIFICATION,
       params
+    });
+  }
+
+  editCertification(
+    payload: EditCertificationPayload
+  ): Observable<CertificationUpdatedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ABOUT_BLOG,
+      action: CertificationEndpoint.UPDATE_CERTIFICATION,
+      payload
     });
   }
 

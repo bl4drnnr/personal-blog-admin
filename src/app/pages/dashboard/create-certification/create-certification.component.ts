@@ -55,9 +55,7 @@ export class CreateCertificationComponent implements OnInit {
       certDescription: this.certDescription,
       certPicture: this.certPicture,
       certDocs: '',
-      obtainedSkills: this.obtainedSkills.map((skill) =>
-        skill.replace(/\s+/g, '')
-      ),
+      obtainedSkills: this.obtainedSkills,
       authorId: this.authorId,
       obtainingDate,
       expirationDate
@@ -131,7 +129,7 @@ export class CreateCertificationComponent implements OnInit {
         message: translationMessage
       });
     } else {
-      this.obtainedSkills.push(this.obtainedSkill);
+      this.obtainedSkills.push(this.obtainedSkill.trim());
     }
 
     this.obtainedSkill = '';

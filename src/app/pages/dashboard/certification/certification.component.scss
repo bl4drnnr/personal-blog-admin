@@ -21,12 +21,23 @@
   }
 }
 
-.cert-date {
-  font-size: 12px;
-  opacity: .5;
-  margin: 3px 0;
-}
-
 .edit-button-wrapper {
   margin: 20px 0;
+}
+
+.certification-preview-mode {
+  margin-top: 20px;
+  display: flex;
+}
+
+.cert-preview-mode-text {
+  width: 50%;
+}
+
+.cert-preview-mode-content {
+  width: 50%;
+}
+
+.cert-preview-mode-pic {
+  max-width: 500px;
 }

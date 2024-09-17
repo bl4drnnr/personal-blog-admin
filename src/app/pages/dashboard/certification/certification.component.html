@@ -27,7 +27,30 @@
         </div>
       </div>
 
-      <div *ngIf="!certificationEditMode"></div>
+      <div class="certification-preview-mode" *ngIf="!certificationEditMode">
+        <div class="cert-preview-mode-text">
+          <h1>{{ certification.certName }}</h1>
+          <p>{{ certification.certDescription }}</p>
+          <p class="cert-date">{{ t('certs.certObtainingDate', { certObtainingDate: dayjs(certification.obtainingDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p class="cert-date">{{ t('certs.certExpirationDate', { certExpirationDate: dayjs(certification.expirationDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p class="cert-date">{{ t('certs.certCreatedAt', { certCreatedAt: dayjs(certification.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p class="cert-date">{{ t('certs.certUpdatedAt', { certUpdatedAt: dayjs(certification.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p *ngIf="author">{{ t('certs.certOwner', { ownerFullName: author.firstName + ' ' + author.lastName }) }}</p>
+        </div>
+        <div class="cert-preview-mode-content">
+          <img
+            [src]="staticStorageCertPics + certification.certPicture"
+            class="cert-preview-mode-pic"
+            alt="cert-picture"
+          >
+          <pdf-viewer
+            [src]="staticStorageCertFiles + certification.certDocs"
+            [render-text]="true"
+            [original-size]="false"
+            class="cert-doc-pdf-preview"
+          />
+        </div>
+      </div>
 
       <div *ngIf="certificationEditMode">
         <basic-input
@@ -174,9 +197,6 @@
           #certificatePdf
           hidden
         />
-
-        {{ this.certification.obtainedSkills }}
-        {{ this.certificationObtainedSkills }}
 
         <div class="edit-button-wrapper">
           <basic-button

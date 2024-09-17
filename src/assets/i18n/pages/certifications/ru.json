@@ -7,5 +7,6 @@
   "certObtainingDate": "Дата получения сертификата: {{ certObtainingDate }}",
   "certExpirationDate": "Дата истечения срока действия сертификата: {{ certExpirationDate }}",
   "certCreatedAt": "Сертификация создана: {{ certCreatedAt }}",
-  "certUpdatedAt": "Сертификация обновлена: {{ certUpdatedAt }}"
+  "certUpdatedAt": "Сертификация обновлена: {{ certUpdatedAt }}",
+  "certOwner": "Владелец сертификата: {{ ownerFullName }}"
 }
