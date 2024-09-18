@@ -83,7 +83,12 @@
     "wrong-certification-id-format": "Wrong certification ID format",
     "wrong-contact-name-format": "Wrong contact name format",
     "wrong-contact-name-length": "Wrong contact name length",
-    "wrong-pdf-name-format": "Wrong PDF name format"
+    "wrong-pdf-name-format": "Wrong PDF name format",
+    "wrong-experience-position-id-format": "Wrong experience position ID format",
+    "wrong-position-title-format": "Wrong position title format",
+    "wrong-position-title-length": "Wrong position title length",
+    "wrong-position-desc-format": "Wrong position description format",
+    "wrong-position-desc-length": "Wrong position description length"
   },
   "wrong-timeframe": "Wrong timeframe",
   "invalid-recovery-keys": "Invalid recovery keys",
@@ -100,5 +105,6 @@
   "author-not-found": "Author not found",
   "article-not-found": "Article not found",
   "certification-not-found": "Certification not found",
-  "experience-not-found": "Experience not found"
+  "experience-not-found": "Experience not found",
+  "experience-position-not-found": "Experience position not found"
 }

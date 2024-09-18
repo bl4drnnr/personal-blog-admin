@@ -1,1 +1,110 @@
-<p>create-experience works!</p>
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="create-experience-wrapper">
+      <h1>{{ t('exp.createExpTitle') }}</h1>
+
+      <basic-input
+        [label]="t('input.experienceCompanyNameLabel')"
+        [placeholder]="t('input.experienceCompanyNamePlaceholder')"
+        [inputDescription]="t('input.experienceCompanyNameDesc')"
+        [value]="companyName"
+        (valueChange)="companyName = $event"
+      />
+      <basic-input
+        [label]="t('input.experienceCompanyDescLabel')"
+        [placeholder]="t('input.experienceCompanyDescPlaceholder')"
+        [inputDescription]="t('input.experienceCompanyDescDesc')"
+        [value]="companyDescription"
+        (valueChange)="companyDescription = $event"
+      />
+      <basic-input
+        [label]="t('input.experienceCompanyLinkLabel')"
+        [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
+        [inputDescription]="t('input.experienceCompanyLinkDesc')"
+        [value]="companyLink"
+        (valueChange)="companyLink = $event"
+      />
+      <basic-input
+        [label]="t('input.experienceCompanyLinkTitleLabel')"
+        [placeholder]="t('input.experienceCompanyLinkTitlePlaceholder')"
+        [inputDescription]="t('input.experienceCompanyLinkTitleDesc')"
+        [value]="companyLinkTitle"
+        (valueChange)="companyLinkTitle = $event"
+      />
+      <basic-input
+        [label]="t('input.authorQueryLabel')"
+        [placeholder]="t('input.authorQueryPlaceholder')"
+        [inputDescription]="t('input.authorQueryDesc')"
+        [value]="authorSearchQuery"
+        (valueChange)="handleAuthorQuery($event)"
+      />
+
+      <div class="authors-list" *ngIf="authors.length > 0">
+        <p
+          class="author-item"
+          *ngFor="let author of authors"
+          (click)="selectAuthor(author)"
+        >{{ author.firstName }} {{ author.lastName }}</p>
+      </div>
+
+      <div class="create-exp-dates">
+        <div class="margin-right">
+          <basic-input
+            type="date"
+            [label]="t('input.experienceStartDateLabel')"
+            [placeholder]="t('input.experienceStartDatePlaceholder')"
+            [inputDescription]="t('input.experienceStartDateDesc')"
+            [value]="startDate"
+            (valueChange)="startDate = $event"
+          />
+        </div>
+        <div class="margin-left">
+          <basic-input
+            type="date"
+            [label]="t('input.experienceEndDateLabel')"
+            [placeholder]="t('input.experienceEndDatePlaceholder')"
+            [inputDescription]="t('input.experienceEndDateDesc')"
+            [value]="endDate"
+            (valueChange)="endDate = $event"
+          />
+        </div>
+      </div>
+
+      <div class="select-photo-btn-wrapper">
+        <basic-button
+          [label]="t('button.selectPhoto')"
+          (click)="fileInput.click()"
+        />
+      </div>
+
+      <div class="picture-preview">
+        <img
+          *ngIf="companyPicture"
+          [src]="companyPicture"
+          (click)="clearProfilePicture()"
+          class="experience-main-picture"
+          alt="experience-picture"
+        />
+      </div>
+
+      <input
+        type="file"
+        accept="image/*"
+        (change)="selectFile($event)"
+        #fileInput
+        hidden
+      />
+
+      <div class="create-button-wrapper">
+        <basic-button
+          [fillButton]="true"
+          [label]="t('button.createExperience')"
+          [disabled]="disableCreateExpButton()"
+          (buttonClick)="createExperience()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

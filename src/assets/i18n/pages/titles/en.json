@@ -20,5 +20,8 @@
   "createAuthors": "Bahdashych on Security | Create Author",
   "certification": "Bahdashych on Security | Certification | {{ certName }}",
   "certifications": "Bahdashych on Security | Certifications",
-  "createCertification": "Bahdashych on Security | Create Certification"
+  "createCertification": "Bahdashych on Security | Create Certification",
+  "experience": "Bahdashych on Security | Experience | {{ experienceName }}",
+  "experiences": "Bahdashych on Security | Experiences",
+  "createExperience": "Bahdashych on Security | Create Experience"
 }

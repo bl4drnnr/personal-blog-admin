@@ -9,6 +9,7 @@ import { ArticlesEndpoint } from '@interfaces/articles.enum';
 import { CategoriesEndpoint } from '@interfaces/categories.enum';
 import { AuthorsEndpoint } from '@interfaces/authors.enum';
 import { CertificationEndpoint } from '@interfaces/certifications.enum';
+import { ExperienceEndpoint } from '@interfaces/experience.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -19,7 +20,8 @@ type EndpointsType =
   | ArticlesEndpoint
   | CategoriesEndpoint
   | AuthorsEndpoint
-  | CertificationEndpoint;
+  | CertificationEndpoint
+  | ExperienceEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

@@ -83,7 +83,12 @@
     "wrong-certification-id-format": "Nieprawidłowy format identyfikatora certyfikacji",
     "wrong-contact-name-format": "Nieprawidłowy format nazwy kontaktu",
     "wrong-contact-name-length": "Nieprawidłowa długość nazwy kontaktu",
-    "wrong-pdf-name-format": "Nieprawidłowy format nazwy pliku PDF"
+    "wrong-pdf-name-format": "Nieprawidłowy format nazwy pliku PDF",
+    "wrong-experience-position-id-format": "Nieprawidłowy format identyfikatora stanowiska doświadczenia",
+    "wrong-position-title-format": "Nieprawidłowy format tytułu stanowiska",
+    "wrong-position-title-length": "Nieprawidłowa długość tytułu stanowiska",
+    "wrong-position-desc-format": "Nieprawidłowy format opisu stanowiska",
+    "wrong-position-desc-length": "Nieprawidłowa długość opisu stanowiska"
   },
   "wrong-timeframe": "Niewłaściwy przedział czasowy",
   "invalid-recovery-keys": "Nieprawidłowe klucze odzyskiwania",
@@ -100,5 +105,6 @@
   "author-not-found": "Autor nie znaleziony",
   "article-not-found": "Artykuł nie został znaleziony",
   "certification-not-found": "Certyfikacja nie została znaleziona",
-  "experience-not-found": "Doświadczenie nie zostało znalezione"
+  "experience-not-found": "Doświadczenie nie zostało znalezione",
+  "experience-position-not-found": "Nie znaleziono pozycji doświadczenia"
 }

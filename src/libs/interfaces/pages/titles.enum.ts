@@ -14,5 +14,8 @@ export enum Titles {
   CREATE_CERTIFICATION = 'createCertification',
   CATEGORIES = 'categories',
   CREATE_ARTICLE = 'createArticle',
-  ARTICLE = 'article'
+  ARTICLE = 'article',
+  EXPERIENCE = 'experience',
+  EXPERIENCES = 'experiences',
+  CREATE_EXPERIENCE = 'createExperience'
 }

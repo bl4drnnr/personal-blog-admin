@@ -62,6 +62,10 @@ export const DefaultTranslation = {
     {
       scope: PageTranslation.CERTIFICATION,
       alias: PageTranslation.CERTIFICATION_ALIAS
+    },
+    {
+      scope: PageTranslation.EXPERIENCES,
+      alias: PageTranslation.EXPERIENCES_ALIAS
     }
   ]
 };

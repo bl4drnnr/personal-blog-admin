@@ -83,7 +83,12 @@
     "wrong-certification-id-format": "Неправильный формат идентификатора сертификации",
     "wrong-contact-name-format": "Неправильный формат имени контакта",
     "wrong-contact-name-length": "Неправильная длина имени контакта",
-    "wrong-pdf-name-format": "Неправильный формат имени PDF"
+    "wrong-pdf-name-format": "Неправильный формат имени PDF",
+    "wrong-experience-position-id-format": "Неправильный формат идентификатора позиции опыта",
+    "wrong-position-title-format": "Неправильный формат названия позиции",
+    "wrong-position-title-length": "Неправильная длина названия позиции",
+    "wrong-position-desc-format": "Неправильный формат описания позиции",
+    "wrong-position-desc-length": "Неправильная длина описания позиции"
   },
   "wrong-timeframe": "Неверный таймфрейм",
   "invalid-recovery-keys": "Недействительные ключи восстановления",
@@ -100,5 +105,6 @@
   "author-not-found": "Автор не найден",
   "article-not-found": "Статья не найдена",
   "certification-not-found": "Сертификация не найдена",
-  "experience-not-found": "Опыт не найден"
+  "experience-not-found": "Опыт не найден",
+  "experience-position-not-found": "Опытная позиция не найдена"
 }

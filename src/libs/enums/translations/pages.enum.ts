@@ -7,5 +7,7 @@ export enum PageTranslation {
   AUTHORS = 'pages/authors',
   AUTHORS_ALIAS = 'authors',
   CERTIFICATION = 'pages/certifications',
-  CERTIFICATION_ALIAS = 'certs'
+  CERTIFICATION_ALIAS = 'certs',
+  EXPERIENCES = 'pages/experiences',
+  EXPERIENCES_ALIAS = 'exp'
 }
