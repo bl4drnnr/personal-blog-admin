@@ -86,8 +86,8 @@ export class AuthorsComponent implements OnInit {
     this.listAuthors();
   }
 
-  setArticlesPerPage(articlesPerPage: string) {
-    this.pageSize = articlesPerPage;
+  setAuthorsPerPage(authorsPerPage: string) {
+    this.pageSize = authorsPerPage;
     this.listAuthors();
   }
 

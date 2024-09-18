@@ -12,12 +12,28 @@ import { DeleteExperiencePositionPayload } from '@payloads/delete-experience-pos
 import { ExperiencePositionDeletedResponse } from '@responses/experience-position-deleted.interface';
 import { CreateExperiencePayload } from '@payloads/create-experience.interface';
 import { ExperienceCreatedResponse } from '@responses/experience-created.interface';
+import { ListExperiencesResponse } from '@responses/list-experiences.interface';
+import { ListExperiencesPayload } from '@payloads/list-experiences.interface';
+import { GetExperienceByIdPayload } from '@payloads/get-experience.interface';
+import { ChangeExperienceSelectionStatusPayload } from '@payloads/change-experience-selection-status.interface';
+import { ExperienceSelectionStatusChangedResponse } from '@responses/experience-selection-status-changed.interface';
+import { DeleteExperiencePayload } from '@payloads/delete-experience.interface';
+import { ExperienceDeletedResponse } from '@responses/experience-deleted.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExperienceService {
   constructor(private readonly apiService: ApiService) {}
+
+  getExperienceById(params: GetExperienceByIdPayload) {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ABOUT_BLOG,
+      action: ExperienceEndpoint.GET_EXPERIENCE_BY_ID,
+      params
+    });
+  }
 
   createExperience(
     payload: CreateExperiencePayload
@@ -28,6 +44,43 @@ export class ExperienceService {
       action: ExperienceEndpoint.CREATE_EXPERIENCE,
       payload
     });
+  }
+
+  listCertifications(
+    params: ListExperiencesPayload
+  ): Observable<ListExperiencesResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ABOUT_BLOG,
+      action: ExperienceEndpoint.LIST_EXPERIENCES,
+      params
+    });
+  }
+
+  changeExperienceSelectionStatus(
+    payload: ChangeExperienceSelectionStatusPayload
+  ): Observable<ExperienceSelectionStatusChangedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ABOUT_BLOG,
+      action: ExperienceEndpoint.CHANGE_EXPERIENCE_SELECTION_STATUS,
+      payload
+    });
+  }
+
+  deleteExperience(
+    params: DeleteExperiencePayload
+  ): Observable<ExperienceDeletedResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.DELETE,
+      controller: Controller.ABOUT_BLOG,
+      action: ExperienceEndpoint.DELETE_EXPERIENCE,
+      params
+    });
+  }
+
+  editExperience() {
+    //
   }
 
   createExperiencePosition(

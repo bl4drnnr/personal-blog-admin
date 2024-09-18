@@ -1,1 +1,21 @@
-<p>experiences works!</p>
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="experiences-wrapper">
+      <h1></h1>
+
+      <div class="pagination-container">
+        <basic-pagination
+          [itemsPerPageLabel]="t('dropdown.experiencesPerPage')"
+          [currentPage]="page"
+          [itemsPerPage]="pageSize"
+          [totalItems]="totalItems"
+          (setCurrentPage)="setCurrentPage($event)"
+          (setItemsPerPage)="setExperiencesPerPage($event)"
+          (fetchItems)="listExperiences()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>
