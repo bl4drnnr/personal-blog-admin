@@ -130,5 +130,8 @@
   "experienceStartDateDesc": "Data rozpoczęcia pracy w tej firmie",
   "experienceEndDateLabel": "Data zakończenia",
   "experienceEndDatePlaceholder": "Wprowadź datę zakończenia",
-  "experienceEndDateDesc": "Data zakończenia pracy w tej firmie. Pozostaw puste, jeśli nadal pracujesz w tej firmie"
+  "experienceEndDateDesc": "Data zakończenia pracy w tej firmie. Pozostaw puste, jeśli nadal pracujesz w tej firmie",
+  "expQueryLabel": "Zapytanie o doświadczenie",
+  "expQueryPlaceholder": "Podaj zapytanie o doświadczenie, którego chcesz szukać",
+  "expQueryDesc": "Doświadczenie zostanie znalezione na podstawie jego nazwy i opisu"
 }

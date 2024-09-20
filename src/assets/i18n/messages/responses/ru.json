@@ -22,5 +22,6 @@
   "certification-status-updated": "Статус сертификации успешно обновлен",
   "experience-position-created": "Позиция опыта успешно создана",
   "experience-position-deleted": "Позиция опыта успешно удалена",
-  "experience-position-updated": "Позиция опыта успешно обновлена"
+  "experience-position-updated": "Позиция опыта успешно обновлена",
+  "experience-status-updated": "Статус опыта успешно обновлен"
 }

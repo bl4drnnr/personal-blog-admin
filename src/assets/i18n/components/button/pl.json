@@ -72,5 +72,8 @@
   "createExperience": "Utwórz doświadczenie",
   "experiences": "Doświadczenia",
   "createProject": "Utwórz projekt",
-  "projects": "Projekty"
+  "projects": "Projekty",
+  "editExperience": "Edytuj doświadczenie",
+  "changeExpSelection": "Zmień wybór doświadczenia",
+  "deleteExp": "Usuń doświadczenie"
 }

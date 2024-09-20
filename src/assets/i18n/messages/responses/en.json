@@ -22,5 +22,6 @@
   "certification-status-updated": "Certification status has been successfully updated",
   "experience-position-created": "Experience position has been successfully created",
   "experience-position-deleted": "Experience position has been successfully deleted",
-  "experience-position-updated": "Experience position has been successfully updated "
+  "experience-position-updated": "Experience position has been successfully updated ",
+  "experience-status-updated": "Experience status has been successfully updated"
 }

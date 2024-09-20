@@ -130,5 +130,8 @@
   "experienceStartDateDesc": "The date when you started at this company",
   "experienceEndDateLabel": "End date",
   "experienceEndDatePlaceholder": "Input the end date",
-  "experienceEndDateDesc": "The date when you finished working for this company. Leave blank if you still working for this company"
+  "experienceEndDateDesc": "The date when you finished working for this company. Leave blank if you still working for this company",
+  "expQueryLabel": "Experience query",
+  "expQueryPlaceholder": "Provide experience query to search for",
+  "expQueryDesc": "Experience will be found based on its name and description"
 }

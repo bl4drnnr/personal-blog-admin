@@ -72,5 +72,8 @@
   "createExperience": "Создать опыт",
   "experiences": "Опыты",
   "createProject": "Создать проект",
-  "projects": "Проекты"
+  "projects": "Проекты",
+  "editExperience": "Изменить опыт",
+  "changeExpSelection": "Изменить выбор опыта",
+  "deleteExp": "Удалить опыт"
 }

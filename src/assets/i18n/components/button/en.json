@@ -72,5 +72,8 @@
   "createExperience": "Create experience",
   "experiences": "Experiences",
   "createProject": "Create project",
-  "projects": "Projects"
+  "projects": "Projects",
+  "editExperience": "Edit experience",
+  "changeExpSelection": "Change experience selection",
+  "deleteExp": "Delete experience"
 }

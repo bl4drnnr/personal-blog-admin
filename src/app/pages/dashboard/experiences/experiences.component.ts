@@ -9,6 +9,7 @@ import { EnvService } from '@shared/env.service';
 import { ExperienceService } from '@services/experience.service';
 import { ListExperience } from '@interfaces/list-experience.interface';
 import { MessagesTranslation } from '@translations/messages.enum';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'page-experiences',
@@ -98,6 +99,11 @@ export class ExperiencesComponent implements OnInit {
     this.listExperiences();
   }
 
+  handleExperiencesQuery(experiencesQuery: string) {
+    this.experiencesSearchQuery = experiencesQuery;
+    this.listExperiences();
+  }
+
   async fetchUserInfo() {
     const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
@@ -122,4 +128,6 @@ export class ExperiencesComponent implements OnInit {
 
     this.listExperiences();
   }
+
+  protected readonly dayjs = dayjs;
 }

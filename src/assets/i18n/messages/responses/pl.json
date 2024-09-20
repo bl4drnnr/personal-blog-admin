@@ -22,5 +22,6 @@
   "certification-status-updated": "Status certyfikacji został pomyślnie zaktualizowany",
   "experience-position-created": "Pozycja doświadczenia została pomyślnie utworzona",
   "experience-position-deleted": "Pozycja doświadczenia została pomyślnie usunięta",
-  "experience-position-updated": "Pozycja doświadczenia została pomyślnie zaktualizowana"
+  "experience-position-updated": "Pozycja doświadczenia została pomyślnie zaktualizowana",
+  "experience-status-updated": "Status doświadczenia został pomyślnie zaktualizowany"
 }

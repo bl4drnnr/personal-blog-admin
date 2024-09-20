@@ -1,3 +1,9 @@
 {
-  "createExpTitle": "Utwórz doświadczenie"
+  "createExpTitle": "Utwórz doświadczenie",
+  "allExperiences": "Wszystkie doświadczenia",
+  "noExps": "Nie znaleziono żadnych doświadczeń",
+  "experienceStartDate": "Data rozpoczęcia doświadczenia: {{ experienceStartDate }}",
+  "experienceEndDate": "Data zakończenia doświadczenia: {{ experienceEndDate }}",
+  "experienceCreatedAt": "Doświadczenie utworzone o: {{ experienceCreatedAt }}",
+  "experienceUpdatedAt": "Doświadczenie zaktualizowane o: {{ experienceUpdatedAt }}"
 }
