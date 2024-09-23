@@ -106,5 +106,6 @@
   "article-not-found": "Article not found",
   "certification-not-found": "Certification not found",
   "experience-not-found": "Experience not found",
-  "experience-position-not-found": "Experience position not found"
+  "experience-position-not-found": "Experience position not found",
+  "tag-is-already-on-the-list": "Tag is already on the list"
 }

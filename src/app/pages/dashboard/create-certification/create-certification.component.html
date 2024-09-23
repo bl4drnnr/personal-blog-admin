@@ -23,13 +23,13 @@
         [label]="t('input.certObtainedSkillLabel')"
         [placeholder]="t('input.certObtainedSkillPlaceholder')"
         [inputDescription]="t('input.certObtainedSkillDesc')"
-        [value]="obtainedSkill"
-        (valueChange)="obtainedSkill = $event"
+        [value]="certObtainedSkill"
+        (valueChange)="certObtainedSkill = $event"
         (onSpace)="addObtainedSkills()"
       />
 
-      <div *ngIf="obtainedSkills.length > 0" class="cert-skills-wrapper">
-        <div *ngFor="let skill of obtainedSkills">
+      <div *ngIf="certObtainedSkills.length > 0" class="cert-skills-wrapper">
+        <div *ngFor="let skill of certObtainedSkills">
           <p class="cert-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
         </div>
       </div>

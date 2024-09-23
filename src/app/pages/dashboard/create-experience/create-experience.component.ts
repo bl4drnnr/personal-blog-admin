@@ -8,6 +8,7 @@ import { ExperienceService } from '@services/experience.service';
 import { CreateExperiencePayload } from '@payloads/create-experience.interface';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
+import { GlobalMessageService } from '@shared/global-message.service';
 
 @Component({
   selector: 'page-create-experience',
@@ -26,6 +27,8 @@ export class CreateExperienceComponent implements OnInit {
   companyPicture: string;
   startDate: string;
   endDate: string;
+  experienceObtainedSkill: string;
+  experienceObtainedSkills: Array<string> = [];
   authorId: string;
   authorSearchQuery: string;
 
@@ -37,7 +40,8 @@ export class CreateExperienceComponent implements OnInit {
     private readonly authorsService: AuthorsService,
     private readonly experienceService: ExperienceService,
     private readonly translationService: TranslationService,
-    private readonly refreshTokensService: RefreshTokensService
+    private readonly refreshTokensService: RefreshTokensService,
+    private readonly globalMessageService: GlobalMessageService
   ) {}
 
   createExperience() {
@@ -50,6 +54,7 @@ export class CreateExperienceComponent implements OnInit {
       companyLinkTitle: this.companyLinkTitle,
       companyPicture: this.companyPicture,
       authorId: this.authorId,
+      obtainedSkills: this.experienceObtainedSkills,
       startDate
     };
 
@@ -108,7 +113,33 @@ export class CreateExperienceComponent implements OnInit {
       !this.companyLinkTitle ||
       !this.companyPicture ||
       !this.startDate ||
+      this.experienceObtainedSkills.length === 0 ||
       !this.authorId
+    );
+  }
+
+  async addObtainedSkills() {
+    if (this.experienceObtainedSkill === ' ') return;
+
+    const isSkillPresent = this.experienceObtainedSkills.includes(
+      this.experienceObtainedSkill.trim()
+    );
+
+    if (isSkillPresent) {
+      await this.globalMessageService.handleWarning({
+        message: 'tag-is-already-on-the-list'
+      });
+    } else {
+      this.experienceObtainedSkills.push(this.experienceObtainedSkill.trim());
+    }
+
+    this.experienceObtainedSkill = '';
+  }
+
+  deleteObtainedSkill(obtainedSkill: string) {
+    this.experienceObtainedSkills.splice(
+      this.experienceObtainedSkills.indexOf(obtainedSkill),
+      1
     );
   }
 

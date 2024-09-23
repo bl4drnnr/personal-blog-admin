@@ -38,3 +38,21 @@
     background: var(--color-hover);
   }
 }
+
+.exp-skills-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.exp-skill {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}

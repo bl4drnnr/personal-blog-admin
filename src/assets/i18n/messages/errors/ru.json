@@ -106,5 +106,6 @@
   "article-not-found": "Статья не найдена",
   "certification-not-found": "Сертификация не найдена",
   "experience-not-found": "Опыт не найден",
-  "experience-position-not-found": "Опытная позиция не найдена"
+  "experience-position-not-found": "Опытная позиция не найдена",
+  "tag-is-already-on-the-list": "Тег уже есть в списке"
 }

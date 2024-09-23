@@ -41,7 +41,6 @@ export class CertificationComponent implements OnInit {
   certificationExpirationDate: string;
   certificationObtainedSkill: string;
   certificationObtainedSkills: Array<string>;
-  isSelected: boolean;
   certificationAuthorId: string;
   certificationCreatedAt: Date;
   certificationUpdatedAt: Date;
@@ -93,7 +92,6 @@ export class CertificationComponent implements OnInit {
             certification.expirationDate
           ).format('YYYY-MM-DD');
           this.certificationObtainedSkills = [...certification.obtainedSkills];
-          this.isSelected = certification.isSelected;
           this.certificationAuthorId = certification.authorId;
           this.certificationCreatedAt = certification.createdAt;
           this.certificationUpdatedAt = certification.updatedAt;
@@ -140,7 +138,7 @@ export class CertificationComponent implements OnInit {
   }
 
   editCertification() {
-    const certificationPayload: EditCertificationPayload = {
+    const editCertificationPayload: EditCertificationPayload = {
       certificationId: this.certificationId
     };
 
@@ -150,25 +148,26 @@ export class CertificationComponent implements OnInit {
     );
 
     if (this.certification.certName !== this.certificationName)
-      certificationPayload.certName = this.certificationName;
+      editCertificationPayload.certName = this.certificationName;
     if (this.certification.certDescription !== this.certificationDescription)
-      certificationPayload.certDescription = this.certificationDescription;
+      editCertificationPayload.certDescription = this.certificationDescription;
     if (
       dayjs(this.certificationObtainingDate).format('YYYY-MM-DD') !==
       dayjs(this.certification.obtainingDate).format('YYYY-MM-DD')
     )
-      certificationPayload.obtainingDate = this.certification.obtainingDate;
+      editCertificationPayload.obtainingDate = this.certification.obtainingDate;
     if (
       dayjs(this.certificationExpirationDate).format('YYYY-MM-DD') !==
       dayjs(this.certification.expirationDate).format('YYYY-MM-DD')
     )
-      certificationPayload.expirationDate = new Date(
+      editCertificationPayload.expirationDate = new Date(
         this.certificationExpirationDate
       );
     if (this.certNewPicture)
-      certificationPayload.certPicture = this.certNewPicture as string;
+      editCertificationPayload.certPicture = this.certNewPicture as string;
     if (!areArraysEqual)
-      certificationPayload.obtainedSkills = this.certificationObtainedSkills;
+      editCertificationPayload.obtainedSkills =
+        this.certificationObtainedSkills;
 
     if (this.certificationNewDocs) {
       this.certificationsService
@@ -182,10 +181,10 @@ export class CertificationComponent implements OnInit {
               );
 
             this.globalMessageService.handle({ message: translationMessage });
-            certificationPayload.certDocs = certificationFileName;
+            editCertificationPayload.certDocs = certificationFileName;
 
             this.certificationsService
-              .editCertification({ ...certificationPayload })
+              .editCertification({ ...editCertificationPayload })
               .subscribe({
                 next: async ({ message }) => {
                   const translationMessage =
@@ -204,7 +203,7 @@ export class CertificationComponent implements OnInit {
         });
     } else {
       this.certificationsService
-        .editCertification({ ...certificationPayload })
+        .editCertification({ ...editCertificationPayload })
         .subscribe({
           next: async ({ message }) => {
             const translationMessage =
@@ -240,9 +239,9 @@ export class CertificationComponent implements OnInit {
       });
   }
 
-  deleteCertification(certificationId: string) {
+  deleteCertification() {
     this.certificationsService
-      .deleteCertification({ certificationId })
+      .deleteCertification({ certificationId: this.certificationId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage =
@@ -251,7 +250,7 @@ export class CertificationComponent implements OnInit {
               MessagesTranslation.RESPONSES
             );
           this.globalMessageService.handle({ message: translationMessage });
-          this.getCertificationById();
+          await this.handleRedirect('account/certifications');
         }
       });
   }
@@ -337,17 +336,12 @@ export class CertificationComponent implements OnInit {
     if (this.certificationObtainedSkill === ' ') return;
 
     const isSkillPresent = this.certificationObtainedSkills.includes(
-      this.certificationObtainedSkill
+      this.certificationObtainedSkill.trim()
     );
 
     if (isSkillPresent) {
-      const translationMessage = await this.translationService.translateText(
-        'tag-is-already-on-the-list',
-        MessagesTranslation.RESPONSES
-      );
-
       await this.globalMessageService.handleWarning({
-        message: translationMessage
+        message: 'tag-is-already-on-the-list'
       });
     } else {
       this.certificationObtainedSkills.push(

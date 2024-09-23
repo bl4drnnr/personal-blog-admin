@@ -49,6 +49,21 @@
         >{{ author.firstName }} {{ author.lastName }}</p>
       </div>
 
+      <basic-input
+        [label]="t('input.certObtainedSkillLabel')"
+        [placeholder]="t('input.certObtainedSkillPlaceholder')"
+        [inputDescription]="t('input.certObtainedSkillDesc')"
+        [value]="experienceObtainedSkill"
+        (valueChange)="experienceObtainedSkill = $event"
+        (onSpace)="addObtainedSkills()"
+      />
+
+      <div *ngIf="experienceObtainedSkills.length > 0" class="exp-skills-wrapper">
+        <div *ngFor="let skill of experienceObtainedSkills">
+          <p class="exp-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
+        </div>
+      </div>
+
       <div class="create-exp-dates">
         <div class="margin-right">
           <basic-input

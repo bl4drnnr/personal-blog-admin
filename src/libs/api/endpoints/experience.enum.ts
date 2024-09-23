@@ -3,6 +3,7 @@ export enum ExperienceEndpoint {
   CREATE_EXPERIENCE = 'create-experience',
   LIST_EXPERIENCES = 'list-experiences',
   DELETE_EXPERIENCE = 'delete-experience',
+  UPDATE_EXPERIENCE = 'update-experience',
   CREATE_EXPERIENCE_POSITION = 'create-experience-position',
   UPDATE_EXPERIENCE_POSITION = 'update-experience-position',
   DELETE_EXPERIENCE_POSITION = 'delete-experience-position',

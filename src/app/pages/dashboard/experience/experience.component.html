@@ -1,1 +1,128 @@
-<p>experience works!</p>
+<layout-default
+  [userInfo]="userInfo"
+  [showFooter]="false"
+>
+  <ng-container *transloco="let t">
+    <div *ngIf="experience" class="experience-wrapper">
+      <div class="experience-mgmt-buttons">
+        <div class="experience-mgmt-button right">
+          <basic-button
+            [label]="experienceEditMode ? t('button.closeEditMode') : t('button.editExperience')"
+            (buttonClick)="experienceEditMode = !experienceEditMode"
+          />
+        </div>
+        <div class="experience-mgmt-button">
+          <basic-button
+            [label]="t('button.changeExpSelection')"
+            [fillButton]="experience.isSelected"
+            (buttonClick)="changeExperienceSelectionStatus(experience.id)"
+          />
+        </div>
+        <div class="experience-mgmt-button left">
+          <basic-button
+            [label]="t('button.deleteExp')"
+            [danger]="true"
+            (buttonClick)="deleteExperience()"
+          />
+        </div>
+      </div>
+
+      <div class="experience-preview-mode" *ngIf="!experienceEditMode">
+
+      </div>
+
+      <div *ngIf="experienceEditMode">
+        <basic-input
+          [label]="t('input.experienceCompanyNameLabel')"
+          [placeholder]="t('input.experienceCompanyNamePlaceholder')"
+          [inputDescription]="t('input.experienceCompanyNameDesc')"
+          [value]="experienceCompanyName"
+          (valueChange)="experienceCompanyName = $event"
+        />
+        <basic-input
+          [label]="t('input.experienceCompanyDescLabel')"
+          [placeholder]="t('input.experienceCompanyDescPlaceholder')"
+          [inputDescription]="t('input.experienceCompanyDescDesc')"
+          [value]="experienceCompanyDescription"
+          (valueChange)="experienceCompanyDescription = $event"
+        />
+        <basic-input
+          [label]="t('input.experienceCompanyLinkLabel')"
+          [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
+          [inputDescription]="t('input.experienceCompanyLinkDesc')"
+          [value]="experienceCompanyLink"
+          (valueChange)="experienceCompanyLink = $event"
+        />
+        <basic-input
+          [label]="t('input.experienceCompanyLinkTitleLabel')"
+          [placeholder]="t('input.experienceCompanyLinkTitlePlaceholder')"
+          [inputDescription]="t('input.experienceCompanyLinkTitleDesc')"
+          [value]="experienceCompanyLinkTitle"
+          (valueChange)="experienceCompanyLinkTitle = $event"
+        />
+        <basic-input
+          [label]="t('input.authorQueryLabel')"
+          [placeholder]="t('input.authorQueryPlaceholder')"
+          [inputDescription]="t('input.authorQueryDesc')"
+          [value]="authorSearchQuery"
+          (valueChange)="handleAuthorQuery($event)"
+        />
+
+        <div class="authors-list" *ngIf="authors.length > 0">
+          <p
+            class="author-item"
+            *ngFor="let author of authors"
+            (click)="selectAuthor(author)"
+          >{{ author.firstName }} {{ author.lastName }}</p>
+        </div>
+
+        <basic-input
+          [label]="t('input.certObtainedSkillLabel')"
+          [placeholder]="t('input.certObtainedSkillPlaceholder')"
+          [inputDescription]="t('input.certObtainedSkillDesc')"
+          [value]="experienceObtainedSkill"
+          (valueChange)="experienceObtainedSkill = $event"
+          (onSpace)="addObtainedSkills()"
+        />
+
+        <div *ngIf="experienceObtainedSkills.length > 0" class="exp-skills-wrapper">
+          <div *ngFor="let skill of experienceObtainedSkills">
+            <p class="exp-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
+          </div>
+        </div>
+
+        <div class="create-exp-dates">
+          <div class="margin-right">
+            <basic-input
+              type="date"
+              [label]="t('input.experienceStartDateLabel')"
+              [placeholder]="t('input.experienceStartDatePlaceholder')"
+              [inputDescription]="t('input.experienceStartDateDesc')"
+              [value]="experienceStartDate"
+              (valueChange)="experienceStartDate = $event"
+            />
+          </div>
+          <div class="margin-left">
+            <basic-input
+              type="date"
+              [label]="t('input.experienceEndDateLabel')"
+              [placeholder]="t('input.experienceEndDatePlaceholder')"
+              [inputDescription]="t('input.experienceEndDateDesc')"
+              [value]="experienceEndDate"
+              (valueChange)="experienceEndDate = $event"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-button-wrapper">
+        <basic-button
+          [fillButton]="true"
+          [label]="t('button.saveChanges')"
+          [disabled]="!experienceEdited()"
+          (buttonClick)="editExperience()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

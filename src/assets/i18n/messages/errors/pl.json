@@ -106,5 +106,6 @@
   "article-not-found": "Artykuł nie został znaleziony",
   "certification-not-found": "Certyfikacja nie została znaleziona",
   "experience-not-found": "Doświadczenie nie zostało znalezione",
-  "experience-position-not-found": "Nie znaleziono pozycji doświadczenia"
+  "experience-position-not-found": "Nie znaleziono pozycji doświadczenia",
+  "tag-is-already-on-the-list": "Tag jest już na liście"
 }

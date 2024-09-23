@@ -29,8 +29,8 @@ export class CreateCertificationComponent implements OnInit {
   certificationDocument: FormData | null;
   obtainingDate: string;
   expirationDate: string;
-  obtainedSkill: string;
-  obtainedSkills: Array<string> = [];
+  certObtainedSkill: string;
+  certObtainedSkills: Array<string> = [];
   authorId: string;
   authorSearchQuery: string;
 
@@ -55,7 +55,7 @@ export class CreateCertificationComponent implements OnInit {
       certDescription: this.certDescription,
       certPicture: this.certPicture,
       certDocs: '',
-      obtainedSkills: this.obtainedSkills,
+      obtainedSkills: this.certObtainedSkills,
       authorId: this.authorId,
       obtainingDate,
       expirationDate
@@ -115,28 +115,28 @@ export class CreateCertificationComponent implements OnInit {
   }
 
   async addObtainedSkills() {
-    if (this.obtainedSkill === ' ') return;
+    if (this.certObtainedSkill === ' ') return;
 
-    const isSkillPresent = this.obtainedSkills.includes(this.obtainedSkill);
+    const isSkillPresent = this.certObtainedSkills.includes(
+      this.certObtainedSkill.trim()
+    );
 
     if (isSkillPresent) {
-      const translationMessage = await this.translationService.translateText(
-        'tag-is-already-on-the-list',
-        MessagesTranslation.RESPONSES
-      );
-
       await this.globalMessageService.handleWarning({
-        message: translationMessage
+        message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.obtainedSkills.push(this.obtainedSkill.trim());
+      this.certObtainedSkills.push(this.certObtainedSkill.trim());
     }
 
-    this.obtainedSkill = '';
+    this.certObtainedSkill = '';
   }
 
   deleteObtainedSkill(obtainedSkill: string) {
-    this.obtainedSkills.splice(this.obtainedSkills.indexOf(obtainedSkill), 1);
+    this.certObtainedSkills.splice(
+      this.certObtainedSkills.indexOf(obtainedSkill),
+      1
+    );
   }
 
   clearCertPicture() {
@@ -196,7 +196,7 @@ export class CreateCertificationComponent implements OnInit {
       !this.certDocs ||
       !this.certificationDocument ||
       !this.authorId ||
-      this.obtainedSkills.length === 0 ||
+      this.certObtainedSkills.length === 0 ||
       !this.obtainingDate ||
       !this.obtainingDate
     );

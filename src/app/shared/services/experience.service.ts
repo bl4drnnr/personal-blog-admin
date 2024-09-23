@@ -19,6 +19,9 @@ import { ChangeExperienceSelectionStatusPayload } from '@payloads/change-experie
 import { ExperienceSelectionStatusChangedResponse } from '@responses/experience-selection-status-changed.interface';
 import { DeleteExperiencePayload } from '@payloads/delete-experience.interface';
 import { ExperienceDeletedResponse } from '@responses/experience-deleted.interface';
+import { GetExperienceByIdResponse } from '@responses/get-experience-by-id.interface';
+import { EditExperiencePayload } from '@payloads/edit-experience.interface';
+import { EditExperienceResponse } from '@responses/edit-experience.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +29,9 @@ import { ExperienceDeletedResponse } from '@responses/experience-deleted.interfa
 export class ExperienceService {
   constructor(private readonly apiService: ApiService) {}
 
-  getExperienceById(params: GetExperienceByIdPayload) {
+  getExperienceById(
+    params: GetExperienceByIdPayload
+  ): Observable<GetExperienceByIdResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
@@ -79,8 +84,15 @@ export class ExperienceService {
     });
   }
 
-  editExperience() {
-    //
+  editExperience(
+    payload: EditExperiencePayload
+  ): Observable<EditExperienceResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PATCH,
+      controller: Controller.ABOUT_BLOG,
+      action: ExperienceEndpoint.UPDATE_EXPERIENCE,
+      payload
+    });
   }
 
   createExperiencePosition(

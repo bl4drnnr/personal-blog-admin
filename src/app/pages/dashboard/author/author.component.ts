@@ -115,8 +115,8 @@ export class AuthorComponent implements OnInit {
     });
   }
 
-  deleteAuthor(authorId: string) {
-    this.authorsService.deleteAuthor({ authorId }).subscribe({
+  deleteAuthor() {
+    this.authorsService.deleteAuthor({ authorId: this.authorId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,

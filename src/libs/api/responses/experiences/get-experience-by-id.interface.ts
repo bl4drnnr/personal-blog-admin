@@ -1,4 +1,4 @@
-export interface ListExperience {
+export interface GetExperienceByIdResponse {
   id: string;
   companyName: string;
   companyDescription: string;
@@ -8,6 +8,10 @@ export interface ListExperience {
   startDate: Date;
   endDate: Date;
   isSelected: boolean;
+  obtainedSkills: Array<string>;
+  authorId: string;
   createdAt: Date;
   updatedAt: Date;
+  // @TODO
+  // experiencePositions
 }

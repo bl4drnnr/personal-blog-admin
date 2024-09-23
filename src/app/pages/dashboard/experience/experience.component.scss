@@ -1,0 +1,27 @@
+@import 'variables';
+
+.experience-wrapper {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.experience-mgmt-buttons {
+  display: flex;
+}
+
+.experience-mgmt-button {
+  width: 100%;
+
+  &.right {
+    margin-right: 5px;
+  }
+
+  &.left {
+    margin-left: 5px;
+  }
+}
+
+.edit-button-wrapper {
+  margin: 20px 0;
+}
+
