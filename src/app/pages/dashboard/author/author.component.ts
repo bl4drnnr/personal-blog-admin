@@ -11,6 +11,8 @@ import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
 import { MessagesTranslation } from '@translations/messages.enum';
 import { Titles } from '@interfaces/titles.enum';
 import { EditAuthorPayload } from '@payloads/edit-author.interface';
+import { SocialInterface } from '@interfaces/social.interface';
+import { ValidationService } from '@services/validation.service';
 
 @Component({
   selector: 'page-author',
@@ -30,11 +32,16 @@ export class AuthorComponent implements OnInit {
   authorDescription: string;
   selectedFiles?: FileList;
   authorImage: string;
+  authorSocials: Array<SocialInterface> = [];
   authorNewImage: string | ArrayBuffer | null = '';
   isSelected: boolean;
   authorCreatedAt: Date;
   authorUpdatedAt: Date;
   authorEditMode = false;
+
+  socialTitle: string;
+  socialLink: string;
+  addingSocial: boolean = false;
 
   userInfo: UserInfoResponse;
 
@@ -43,6 +50,7 @@ export class AuthorComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly envService: EnvService,
     private readonly authorsService: AuthorsService,
+    private readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -61,6 +69,7 @@ export class AuthorComponent implements OnInit {
             authorFullName: `${author.firstName} ${author.lastName}`
           });
           this.author = author;
+          this.authorSocials = [...author.socials];
           this.authorFirstName = author.firstName;
           this.authorLastName = author.lastName;
           this.authorDescription = author.description;
@@ -75,6 +84,7 @@ export class AuthorComponent implements OnInit {
   }
 
   editAuthor() {
+    // @TODO Continue here
     const authorPayload: EditAuthorPayload = {
       authorId: this.authorId
     };
@@ -169,12 +179,53 @@ export class AuthorComponent implements OnInit {
     };
   }
 
+  async addSocial() {
+    const isSocialLinkPresent = this.authorSocials.find(
+      ({ link }) => this.socialLink === link
+    );
+    const isSocialTitlePresent = this.authorSocials.find(
+      ({ title }) => this.socialTitle === title
+    );
+
+    if (isSocialLinkPresent || isSocialTitlePresent) {
+      await this.globalMessageService.handleWarning({
+        message: 'tag-is-already-on-the-list'
+      });
+    } else {
+      this.authorSocials.push({
+        link: this.socialLink,
+        title: this.socialTitle
+      });
+      this.socialLink = '';
+      this.socialTitle = '';
+      this.addingSocial = false;
+    }
+  }
+
+  deleteSocial(social: SocialInterface) {
+    this.authorSocials = this.validationService.deleteObjectFromArray(
+      this.authorSocials,
+      'title',
+      social.title
+    );
+  }
+
+  addingSocialDisabled() {
+    return !this.socialLink || !this.socialTitle;
+  }
+
   authorEdited() {
+    const areArraysObjectEqual = this.validationService.areArraysObjectEqual(
+      this.authorSocials,
+      this.author.socials
+    );
+
     return (
       this.author.firstName !== this.authorFirstName ||
       this.author.lastName !== this.authorLastName ||
       this.author.description !== this.authorDescription ||
-      this.authorNewImage
+      this.authorNewImage ||
+      !areArraysObjectEqual
     );
   }
 
