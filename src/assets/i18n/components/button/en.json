@@ -75,5 +75,9 @@
   "projects": "Projects",
   "editExperience": "Edit experience",
   "changeExpSelection": "Change experience selection",
-  "deleteExp": "Delete experience"
+  "deleteExp": "Delete experience",
+  "addSocial": "Add social",
+  "addNewSocial": "Add new social",
+  "deleteSocial": "Delete social",
+  "editSocial": "Edit social"
 }

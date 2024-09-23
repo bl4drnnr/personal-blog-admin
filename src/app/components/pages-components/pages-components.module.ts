@@ -6,12 +6,20 @@ import { CreateMfaComponent } from '@components/create-mfa/create-mfa.component'
 import { CreatePasswordComponent } from '@components/create-password/create-password.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { PreviewArticleComponent } from '@components/preview-article/preview-article.component';
+import { PreviewAboutComponent } from '@components/preview-about/preview-about.component';
+import { AboutCertsCellComponent } from '@components/about-certs-cell/about-certs-cell.component';
+import { AboutExperienceCellComponent } from '@components/about-experience-cell/about-experience-cell.component';
+import { AboutTeamCellComponent } from '@components/about-team-cell/about-team-cell.component';
 
 const components = [
   RecoveryKeysComponent,
   CreateMfaComponent,
   CreatePasswordComponent,
-  PreviewArticleComponent
+  PreviewArticleComponent,
+  PreviewAboutComponent,
+  AboutCertsCellComponent,
+  AboutExperienceCellComponent,
+  AboutTeamCellComponent
 ];
 
 @NgModule({

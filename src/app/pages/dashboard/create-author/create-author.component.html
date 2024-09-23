@@ -27,6 +27,71 @@
         (valueChange)="description = $event"
       />
 
+      <basic-button
+        *ngIf="!addingSocial"
+        [label]="t('button.addNewSocial')"
+        (buttonClick)="addingSocial = true"
+      />
+
+      <basic-button
+        *ngIf="addingSocial"
+        [label]="t('button.addSocial')"
+        [disabled]="addingSocialDisabled()"
+        (buttonClick)="addSocial()"
+      />
+
+      <div *ngIf="addingSocial">
+        <basic-input
+          [label]="t('input.socialLinkLabel')"
+          [placeholder]="t('input.socialLinkPlaceholder')"
+          [inputDescription]="t('input.socialLinkDesc')"
+          [value]="socialLink"
+          (valueChange)="socialLink = $event"
+        />
+        <basic-input
+          [label]="t('input.socialTitleLabel')"
+          [placeholder]="t('input.socialTitlePlaceholder')"
+          [inputDescription]="t('input.socialTitleDesc')"
+          [value]="socialTitle"
+          (valueChange)="socialTitle = $event"
+        />
+      </div>
+
+      <div *ngIf="socials.length > 0">
+        <div
+          class="social-box"
+          *ngFor="let social of socials"
+        >
+          <div class="social-box-item">
+            <basic-input
+              [label]="t('input.socialLinkLabel')"
+              [placeholder]="t('input.socialLinkPlaceholder')"
+              [inputDescription]="t('input.socialLinkDesc')"
+              [value]="social.link"
+              (valueChange)="social.link = $event"
+            />
+          </div>
+          <div class="social-box-item margin">
+            <basic-input
+              [label]="t('input.socialTitleLabel')"
+              [placeholder]="t('input.socialTitlePlaceholder')"
+              [inputDescription]="t('input.socialTitleDesc')"
+              [value]="social.title"
+              (valueChange)="social.title = $event"
+            />
+          </div>
+          <div class="social-box-item buttons">
+            <div class="social-box-item">
+              <basic-button
+                [label]="t('button.deleteSocial')"
+                [danger]="true"
+                (buttonClick)="deleteSocial(social)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="select-photo-btn-wrapper">
         <basic-button
           [label]="t('button.selectPhoto')"

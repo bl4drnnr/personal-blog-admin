@@ -133,5 +133,11 @@
   "experienceEndDateDesc": "The date when you finished working for this company. Leave blank if you still working for this company",
   "expQueryLabel": "Experience query",
   "expQueryPlaceholder": "Provide experience query to search for",
-  "expQueryDesc": "Experience will be found based on its name and description"
+  "expQueryDesc": "Experience will be found based on its name and description",
+  "socialLinkLabel": "Social link",
+  "socialLinkPlaceholder": "Provide the link of the social",
+  "socialLinkDesc": "Provide the link to your social media",
+  "socialTitleLabel": "Social link title",
+  "socialTitlePlaceholder": "Provide the social link title",
+  "socialTitleDesc": "Provide the title under which this link will be available"
 }

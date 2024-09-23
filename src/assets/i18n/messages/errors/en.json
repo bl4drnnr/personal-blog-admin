@@ -88,7 +88,10 @@
     "wrong-position-title-format": "Wrong position title format",
     "wrong-position-title-length": "Wrong position title length",
     "wrong-position-desc-format": "Wrong position description format",
-    "wrong-position-desc-length": "Wrong position description length"
+    "wrong-position-desc-length": "Wrong position description length",
+    "wrong-social-title-format": "Wrong social title format",
+    "wrong-social-title-length": "Wrong social title length",
+    "wrong-social-id-format": "Wrong social ID format"
   },
   "wrong-timeframe": "Wrong timeframe",
   "invalid-recovery-keys": "Invalid recovery keys",
@@ -107,5 +110,6 @@
   "certification-not-found": "Certification not found",
   "experience-not-found": "Experience not found",
   "experience-position-not-found": "Experience position not found",
-  "tag-is-already-on-the-list": "Tag is already on the list"
+  "tag-is-already-on-the-list": "Tag is already on the list",
+  "social-not-found": "Social not found"
 }

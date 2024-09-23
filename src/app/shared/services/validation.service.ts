@@ -117,4 +117,12 @@ export class ValidationService {
       (value, index) => value === sortedArr2[index]
     );
   }
+
+  deleteObjectFromArray(
+    arr: Array<any>,
+    key: string,
+    value: any
+  ): Array<any> {
+    return arr.filter((item) => item[key] !== value);
+  }
 }

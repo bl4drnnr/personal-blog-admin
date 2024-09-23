@@ -75,5 +75,9 @@
   "projects": "Проекты",
   "editExperience": "Изменить опыт",
   "changeExpSelection": "Изменить выбор опыта",
-  "deleteExp": "Удалить опыт"
+  "deleteExp": "Удалить опыт",
+  "addSocial": "Добавить социальный",
+  "addNewSocial": "Добавить новый социальный",
+  "deleteSocial": "Удалить социальный",
+  "editSocial": "Редактировать социальный"
 }

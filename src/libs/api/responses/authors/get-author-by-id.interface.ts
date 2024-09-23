@@ -1,4 +1,5 @@
 import { ListCertification } from '@interfaces/list-certification.interface';
+import { SocialResponse } from '@interfaces/social-response.interface';
 
 export interface GetAuthorByIdResponse {
   id: string;
@@ -10,8 +11,7 @@ export interface GetAuthorByIdResponse {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
-  // @TODO
-  // socials: Array<>;
+  socials: Array<SocialResponse>;
   certs: Array<ListCertification>;
   // experiences: Array<>;
 }

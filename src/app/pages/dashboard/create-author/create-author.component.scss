@@ -9,3 +9,20 @@
   cursor: pointer;
   object-fit: cover;
 }
+
+.social-box {
+  display: flex;
+}
+
+.social-box-item {
+  width: 100%;
+
+  &.margin {
+    margin: 0 10px;
+  }
+
+  &.buttons {
+    display: flex;
+    align-items: center;
+  }
+}

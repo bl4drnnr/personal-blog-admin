@@ -88,7 +88,10 @@
     "wrong-position-title-format": "Неправильный формат названия позиции",
     "wrong-position-title-length": "Неправильная длина названия позиции",
     "wrong-position-desc-format": "Неправильный формат описания позиции",
-    "wrong-position-desc-length": "Неправильная длина описания позиции"
+    "wrong-position-desc-length": "Неправильная длина описания позиции",
+    "wrong-social-title-format": "Неверный формат социального заголовка",
+    "wrong-social-title-length": "Неверная длина социального заголовка",
+    "wrong-social-id-format": "Неверный формат социального идентификатора"
   },
   "wrong-timeframe": "Неверный таймфрейм",
   "invalid-recovery-keys": "Недействительные ключи восстановления",
@@ -107,5 +110,6 @@
   "certification-not-found": "Сертификация не найдена",
   "experience-not-found": "Опыт не найден",
   "experience-position-not-found": "Опытная позиция не найдена",
-  "tag-is-already-on-the-list": "Тег уже есть в списке"
+  "tag-is-already-on-the-list": "Тег уже есть в списке",
+  "social-not-found": "Социальные сети не найдены"
 }

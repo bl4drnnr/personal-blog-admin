@@ -88,7 +88,10 @@
     "wrong-position-title-format": "Nieprawidłowy format tytułu stanowiska",
     "wrong-position-title-length": "Nieprawidłowa długość tytułu stanowiska",
     "wrong-position-desc-format": "Nieprawidłowy format opisu stanowiska",
-    "wrong-position-desc-length": "Nieprawidłowa długość opisu stanowiska"
+    "wrong-position-desc-length": "Nieprawidłowa długość opisu stanowiska",
+    "wrong-social-title-format": "Nieprawidłowy format tytułu społecznościowego",
+    "wrong-social-title-length": "Nieprawidłowa długość tytułu społecznościowego",
+    "wrong-social-id-format": "Nieprawidłowy format identyfikatora społecznościowego"
   },
   "wrong-timeframe": "Niewłaściwy przedział czasowy",
   "invalid-recovery-keys": "Nieprawidłowe klucze odzyskiwania",
@@ -107,5 +110,6 @@
   "certification-not-found": "Certyfikacja nie została znaleziona",
   "experience-not-found": "Doświadczenie nie zostało znalezione",
   "experience-position-not-found": "Nie znaleziono pozycji doświadczenia",
-  "tag-is-already-on-the-list": "Tag jest już na liście"
+  "tag-is-already-on-the-list": "Tag jest już na liście",
+  "social-not-found": "Nie znaleziono społeczności"
 }

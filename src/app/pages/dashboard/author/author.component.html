@@ -102,5 +102,13 @@
         </div>
       </div>
     </div>
+
+    <div *ngIf="!authorEditMode">
+      <page-component-preview-about
+        [getMembers]="true"
+        [getExperience]="true"
+        [getCertifications]="true"
+      />
+    </div>
   </ng-container>
 </layout-default>

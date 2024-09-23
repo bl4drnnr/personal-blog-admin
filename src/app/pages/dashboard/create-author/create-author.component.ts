@@ -5,6 +5,11 @@ import { TranslationService } from '@services/translation.service';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { AuthorsService } from '@services/authors.service';
+import { SocialInterface } from '@interfaces/social.interface';
+import { SocialsService } from '@services/socials.service';
+import { CreateSocialPayload } from '@payloads/create-social.interface';
+import { ValidationService } from '@services/validation.service';
+import { GlobalMessageService } from '@shared/global-message.service';
 
 @Component({
   selector: 'page-create-author',
@@ -20,14 +25,21 @@ export class CreateAuthorComponent implements OnInit {
   description: string;
   selectedFiles?: FileList;
   profilePicture: string;
+  socials: Array<SocialInterface> = [];
+  socialTitle: string;
+  socialLink: string;
+  addingSocial: boolean = false;
 
   userInfo: UserInfoResponse;
 
   constructor(
     private readonly router: Router,
+    private readonly socialsService: SocialsService,
     private readonly authorsService: AuthorsService,
+    private readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
-    private readonly refreshTokensService: RefreshTokensService
+    private readonly refreshTokensService: RefreshTokensService,
+    private readonly globalMessageService: GlobalMessageService
   ) {}
 
   createAuthor() {
@@ -39,8 +51,21 @@ export class CreateAuthorComponent implements OnInit {
     };
 
     this.authorsService.createAuthor({ ...payload }).subscribe({
-      next: async ({ authorId }) =>
-        await this.handleRedirect(`account/author/${authorId}`)
+      next: async ({ authorId }) => {
+        if (this.socials.length > 0) {
+          for (const social of this.socials) {
+            const socialPayload: CreateSocialPayload = {
+              authorId,
+              ...social
+            };
+            this.socialsService
+              .createSocial({ ...socialPayload })
+              .subscribe();
+          }
+        }
+
+        await this.handleRedirect(`account/author/${authorId}`);
+      }
     });
   }
 
@@ -56,6 +81,41 @@ export class CreateAuthorComponent implements OnInit {
         }
       });
     }
+  }
+
+  async addSocial() {
+    const isSocialLinkPresent = this.socials.find(
+      ({ link }) => this.socialLink === link
+    );
+    const isSocialTitlePresent = this.socials.find(
+      ({ title }) => this.socialTitle === title
+    );
+
+    if (isSocialLinkPresent || isSocialTitlePresent) {
+      await this.globalMessageService.handleWarning({
+        message: 'tag-is-already-on-the-list'
+      });
+    } else {
+      this.socials.push({
+        link: this.socialLink,
+        title: this.socialTitle
+      });
+      this.socialLink = '';
+      this.socialTitle = '';
+      this.addingSocial = false;
+    }
+  }
+
+  deleteSocial(social: SocialInterface) {
+    this.socials = this.validationService.deleteObjectFromArray(
+      this.socials,
+      'title',
+      social.title
+    );
+  }
+
+  addingSocialDisabled() {
+    return !this.socialLink || !this.socialTitle;
   }
 
   clearProfilePicture() {

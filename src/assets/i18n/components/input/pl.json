@@ -133,5 +133,11 @@
   "experienceEndDateDesc": "Data zakończenia pracy w tej firmie. Pozostaw puste, jeśli nadal pracujesz w tej firmie",
   "expQueryLabel": "Zapytanie o doświadczenie",
   "expQueryPlaceholder": "Podaj zapytanie o doświadczenie, którego chcesz szukać",
-  "expQueryDesc": "Doświadczenie zostanie znalezione na podstawie jego nazwy i opisu"
+  "expQueryDesc": "Doświadczenie zostanie znalezione na podstawie jego nazwy i opisu",
+  "socialLinkLabel": "Link społecznościowy",
+  "socialLinkPlaceholder": "Podaj link do serwisu społecznościowego",
+  "socialLinkDesc": "Podaj link do swoich mediów społecznościowych",
+  "socialTitleLabel": "Tytuł linku społecznościowego",
+  "socialTitlePlaceholder": "Podaj tytuł linku społecznościowego",
+  "socialTitleDesc": "Podaj tytuł, pod którym ten link będzie dostępny"
 }

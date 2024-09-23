@@ -22,5 +22,8 @@
   "experience-position-created": "Pozycja doświadczenia została pomyślnie utworzona",
   "experience-position-deleted": "Pozycja doświadczenia została pomyślnie usunięta",
   "experience-position-updated": "Pozycja doświadczenia została pomyślnie zaktualizowana",
-  "experience-status-updated": "Status doświadczenia został pomyślnie zaktualizowany"
+  "experience-status-updated": "Status doświadczenia został pomyślnie zaktualizowany",
+  "social-created": "Link społecznościowy został pomyślnie utworzony",
+  "social-updated": "Link społecznościowy został pomyślnie zaktualizowany",
+  "social-deleted": "Link społecznościowy został pomyślnie usunięty"
 }
