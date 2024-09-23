@@ -70,23 +70,30 @@ export class ExperiencesComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.listExperiences();
         }
       });
   }
 
   deleteExperience(experienceId: string) {
-    this.experiencesService.deleteExperience({ experienceId }).subscribe({
-      next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({ message: translationMessage });
-        this.listExperiences();
-      }
-    });
+    this.experiencesService
+      .deleteExperience({ experienceId })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
+          this.listExperiences();
+        }
+      });
   }
 
   setCurrentPage(currentPage: string) {
@@ -105,7 +112,8 @@ export class ExperiencesComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

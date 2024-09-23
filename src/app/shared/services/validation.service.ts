@@ -8,7 +8,9 @@ import { ComponentsTranslation } from '@translations/components.enum';
   providedIn: 'root'
 })
 export class ValidationService {
-  constructor(private readonly translationService: TranslationService) {}
+  constructor(
+    private readonly translationService: TranslationService
+  ) {}
 
   isEmailCorrect(email: string) {
     if (email) {
@@ -19,7 +21,10 @@ export class ValidationService {
     } else return email === '';
   }
 
-  mfaButtonDisable({ isMfaRequired, mfaCode }: MfaButtonDisableInterface) {
+  mfaButtonDisable({
+    isMfaRequired,
+    mfaCode
+  }: MfaButtonDisableInterface) {
     return isMfaRequired && mfaCode?.length !== 6;
   }
 
@@ -83,7 +88,10 @@ export class ValidationService {
     let corruptedKey = false;
 
     if (recoveryKeys.length !== 5) return false;
-    else recoveryKeys.forEach((key) => (corruptedKey = key.length !== 1024));
+    else
+      recoveryKeys.forEach(
+        (key) => (corruptedKey = key.length !== 1024)
+      );
 
     return !corruptedKey;
   }
@@ -94,13 +102,19 @@ export class ValidationService {
     }
 
     const sortedArr1 = arr1
-      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .map((item) =>
+        typeof item === 'string' ? item.toLowerCase() : item
+      )
       .sort();
 
     const sortedArr2 = arr2
-      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .map((item) =>
+        typeof item === 'string' ? item.toLowerCase() : item
+      )
       .sort();
 
-    return sortedArr1.every((value, index) => value === sortedArr2[index]);
+    return sortedArr1.every(
+      (value, index) => value === sortedArr2[index]
+    );
   }
 }

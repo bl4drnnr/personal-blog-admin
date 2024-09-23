@@ -102,7 +102,8 @@ export class AuthenticationService {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.CONFIRMATION_HASH,
-      action: ConfirmationHashEndpoint.RESET_USER_PASSWORD_CONFIRMATION,
+      action:
+        ConfirmationHashEndpoint.RESET_USER_PASSWORD_CONFIRMATION,
       params,
       payload
     });

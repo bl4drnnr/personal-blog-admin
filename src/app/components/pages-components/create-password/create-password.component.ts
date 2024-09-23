@@ -1,5 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import {
+  animate,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { ValidationService } from '@services/validation.service';
 
 @Component({
@@ -27,7 +37,9 @@ export class CreatePasswordComponent {
   showPasswordRepeatError: boolean;
   passwordErrors: Array<{ error: boolean; text: string }>;
 
-  constructor(private readonly validationService: ValidationService) {}
+  constructor(
+    private readonly validationService: ValidationService
+  ) {}
 
   async onInput(password: string, passwordRepeat: string) {
     this.password = password;
@@ -42,7 +54,8 @@ export class CreatePasswordComponent {
   async passwordRepeatError() {
     const passwordPresent = this.password.length > 0;
     const passwordRepeatPresent = this.passwordRepeat.length > 0;
-    const isRepeatPassIncorrect = await this.isRepeatPasswordIncorrect();
+    const isRepeatPassIncorrect =
+      await this.isRepeatPasswordIncorrect();
     const isPasswordsMatch = !this.isPasswordsMatch();
 
     const passwordError = passwordRepeatPresent
@@ -55,7 +68,9 @@ export class CreatePasswordComponent {
 
   async isRepeatPasswordIncorrect() {
     const isPasswordIncorrect =
-      await this.validationService.checkPasswordsRules(this.passwordRepeat);
+      await this.validationService.checkPasswordsRules(
+        this.passwordRepeat
+      );
     return isPasswordIncorrect.some((rule) => rule.error);
   }
 

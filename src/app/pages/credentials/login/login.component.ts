@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { LoginResponse } from '@responses/login.enum';
 import { ValidationService } from '@services/validation.service';
 import { AuthenticationService } from '@services/authentication.service';

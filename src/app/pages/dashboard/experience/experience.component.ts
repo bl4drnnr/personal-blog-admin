@@ -14,11 +14,15 @@ import { AuthorsService } from '@services/authors.service';
 import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
 import { EditExperiencePayload } from '@payloads/edit-experience.interface';
 import { MessagesTranslation } from '@translations/messages.enum';
+import { ValidationService } from '@services/validation.service';
 
 @Component({
   selector: 'page-experience',
   templateUrl: './experience.component.html',
-  styleUrls: ['./experience.component.scss', '../shared/experience.styles.scss']
+  styleUrls: [
+    './experience.component.scss',
+    '../shared/experience.styles.scss'
+  ]
 })
 export class ExperienceComponent implements OnInit {
   experience: GetExperienceByIdResponse;
@@ -41,6 +45,8 @@ export class ExperienceComponent implements OnInit {
   experienceEditMode = false;
 
   userInfo: UserInfoResponse;
+  selectedFiles?: FileList;
+  experienceNewPicture: string | ArrayBuffer | null = '';
 
   constructor(
     private readonly router: Router,
@@ -48,6 +54,7 @@ export class ExperienceComponent implements OnInit {
     private readonly envService: EnvService,
     private readonly authorsService: AuthorsService,
     private readonly experienceService: ExperienceService,
+    private readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -66,21 +73,26 @@ export class ExperienceComponent implements OnInit {
           this.experience = experience;
           this.authorId = experience.authorId;
           this.experienceCompanyName = experience.companyName;
-          this.experienceCompanyDescription = experience.companyDescription;
+          this.experienceCompanyDescription =
+            experience.companyDescription;
           this.experienceCompanyLink = experience.companyLink;
-          this.experienceCompanyLinkTitle = experience.companyLinkTitle;
+          this.experienceCompanyLinkTitle =
+            experience.companyLinkTitle;
           this.experienceCompanyPicture = experience.companyPicture;
-          this.experienceObtainedSkills = [...experience.obtainedSkills];
-          this.experienceStartDate = dayjs(experience.startDate).format(
-            'YYYY-MM-DD'
-          );
+          this.experienceObtainedSkills = [
+            ...experience.obtainedSkills
+          ];
+          this.experienceStartDate = dayjs(
+            experience.startDate
+          ).format('YYYY-MM-DD');
           this.experienceEndDate = dayjs(experience.endDate).format(
             'YYYY-MM-DD'
           );
 
           this.getAuthorById();
         },
-        error: async () => await this.handleRedirect('account/experiences')
+        error: async () =>
+          await this.handleRedirect('account/experiences')
       });
   }
 
@@ -94,7 +106,9 @@ export class ExperienceComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getExperienceById();
         }
       });
@@ -110,7 +124,9 @@ export class ExperienceComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           await this.handleRedirect('account/experiences');
         }
       });
@@ -137,22 +153,27 @@ export class ExperienceComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
-      next: ({ rows }) => (this.authors = rows)
-    });
+    this.authorsService
+      .listAuthors({ ...listAuthorsPayload })
+      .subscribe({
+        next: ({ rows }) => (this.authors = rows)
+      });
   }
 
   getAuthorById() {
-    this.authorsService.getAuthorById({ authorId: this.authorId }).subscribe({
-      next: (author) => {
-        this.author = author;
-        this.selectAuthor(author);
-      }
-    });
+    this.authorsService
+      .getAuthorById({ authorId: this.authorId })
+      .subscribe({
+        next: (author) => {
+          this.author = author;
+          this.selectAuthor(author);
+        }
+      });
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -169,6 +190,45 @@ export class ExperienceComponent implements OnInit {
       experienceId: this.experienceId
     };
 
+    const areArraysEqual = this.validationService.areArraysEqual(
+      this.experience.obtainedSkills,
+      this.experience.obtainedSkills
+    );
+
+    if (this.experienceCompanyName !== this.experience.companyName)
+      editExperiencePayload.companyName = this.experienceCompanyName;
+    if (
+      this.experienceCompanyDescription !==
+      this.experience.companyDescription
+    )
+      editExperiencePayload.companyDescription =
+        this.experienceCompanyDescription;
+    if (this.experienceCompanyLink !== this.experience.companyLink)
+      editExperiencePayload.companyLink = this.experienceCompanyLink;
+    if (
+      this.experienceCompanyLinkTitle !==
+      this.experience.companyLinkTitle
+    )
+      editExperiencePayload.companyLinkTitle =
+        this.experienceCompanyLinkTitle;
+    if (
+      dayjs(this.experienceStartDate).format('YYYY-MM-DD') !==
+      dayjs(this.experience.startDate).format('YYYY-MM-DD')
+    )
+      editExperiencePayload.startDate = new Date(
+        this.experienceStartDate
+      );
+    if (
+      dayjs(this.experienceEndDate).format('YYYY-MM-DD') !==
+      dayjs(this.experience.endDate).format('YYYY-MM-DD')
+    )
+      editExperiencePayload.endDate = new Date(
+        this.experienceEndDate
+      );
+    if (!areArraysEqual)
+      editExperiencePayload.obtainedSkills =
+        this.experienceObtainedSkills;
+
     return this.experienceService
       .editExperience({
         ...editExperiencePayload
@@ -181,14 +241,34 @@ export class ExperienceComponent implements OnInit {
               MessagesTranslation.RESPONSES
             );
 
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getExperienceById();
         }
       });
   }
 
   experienceEdited() {
-    return true;
+    const areArraysEqual = this.validationService.areArraysEqual(
+      this.experience.obtainedSkills,
+      this.experience.obtainedSkills
+    );
+
+    return (
+      this.experienceCompanyName !== this.experience.companyName ||
+      this.experienceCompanyDescription !==
+        this.experience.companyDescription ||
+      this.experienceCompanyLink !== this.experience.companyLink ||
+      this.experienceCompanyLinkTitle !==
+        this.experience.companyLinkTitle ||
+      dayjs(this.experienceStartDate).format('YYYY-MM-DD') !==
+        dayjs(this.experience.startDate).format('YYYY-MM-DD') ||
+      dayjs(this.experienceEndDate).format('YYYY-MM-DD') !==
+        dayjs(this.experience.endDate).format('YYYY-MM-DD') ||
+      this.experienceNewPicture ||
+      !areArraysEqual
+    );
   }
 
   async addObtainedSkills() {
@@ -203,7 +283,9 @@ export class ExperienceComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.experienceObtainedSkills.push(this.experienceObtainedSkill.trim());
+      this.experienceObtainedSkills.push(
+        this.experienceObtainedSkill.trim()
+      );
     }
 
     this.experienceObtainedSkill = '';
@@ -214,6 +296,21 @@ export class ExperienceComponent implements OnInit {
       this.experienceObtainedSkills.indexOf(experienceSkill),
       1
     );
+  }
+
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+
+    if (!this.selectedFiles) return;
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      this.experienceNewPicture = reader.result as string;
+    };
   }
 
   // @TODO

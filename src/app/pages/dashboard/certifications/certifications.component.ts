@@ -70,7 +70,9 @@ export class CertificationsComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.listCertifications();
         }
       });
@@ -86,7 +88,9 @@ export class CertificationsComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.listCertifications();
         }
       });
@@ -108,7 +112,8 @@ export class CertificationsComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

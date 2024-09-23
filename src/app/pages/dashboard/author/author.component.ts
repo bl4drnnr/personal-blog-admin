@@ -15,7 +15,10 @@ import { EditAuthorPayload } from '@payloads/edit-author.interface';
 @Component({
   selector: 'page-author',
   templateUrl: './author.component.html',
-  styleUrls: ['./author.component.scss', '../shared/author.styles.scss']
+  styleUrls: [
+    './author.component.scss',
+    '../shared/author.styles.scss'
+  ]
 })
 export class AuthorComponent implements OnInit {
   author: GetAuthorByIdResponse;
@@ -66,7 +69,8 @@ export class AuthorComponent implements OnInit {
           this.authorCreatedAt = author.createdAt;
           this.authorUpdatedAt = author.updatedAt;
         },
-        error: async () => await this.handleRedirect('account/authors')
+        error: async () =>
+          await this.handleRedirect('account/authors')
       });
   }
 
@@ -95,7 +99,9 @@ export class AuthorComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.authorEditMode = false;
           this.getAuthorById();
         }
@@ -103,33 +109,44 @@ export class AuthorComponent implements OnInit {
   }
 
   changeAuthorSelectionStatus(authorId: string) {
-    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
-      next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({ message: translationMessage });
-        this.getAuthorById();
-      }
-    });
+    this.authorsService
+      .changeAuthorSelectionStatus({ authorId })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
+          this.getAuthorById();
+        }
+      });
   }
 
   deleteAuthor() {
-    this.authorsService.deleteAuthor({ authorId: this.authorId }).subscribe({
-      next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({ message: translationMessage });
-        await this.handleRedirect('account/authors');
-      }
-    });
+    this.authorsService
+      .deleteAuthor({ authorId: this.authorId })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
+          await this.handleRedirect('account/authors');
+        }
+      });
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -169,7 +186,8 @@ export class AuthorComponent implements OnInit {
     this.route.paramMap.subscribe(async (params) => {
       const authorId = params.get('authorId');
 
-      if (!authorId) return await this.handleRedirect('account/authors');
+      if (!authorId)
+        return await this.handleRedirect('account/authors');
 
       this.authorId = authorId;
 

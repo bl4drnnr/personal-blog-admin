@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { ConfirmAccountResponse } from '@responses/confirm-account.enum';
 import { AuthenticationService } from '@services/authentication.service';
 import { StaticService } from '@services/static.service';
@@ -41,7 +46,8 @@ export class AccountConfirmationComponent implements OnInit {
   ) {}
 
   googleAuthAppLink = this.staticService.getMfaAuthApps().google;
-  microsoftAuthAppLink = this.staticService.getMfaAuthApps().microsoft;
+  microsoftAuthAppLink =
+    this.staticService.getMfaAuthApps().microsoft;
 
   confirmUserAccount(hash: string) {
     this.authenticationService

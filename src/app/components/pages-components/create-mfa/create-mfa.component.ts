@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 import { DropdownInterface } from '@interfaces/dropdown.interface';
 import { MfaService } from '@services/mfa.service';
 import { StaticService } from '@services/static.service';
@@ -33,7 +38,8 @@ export class CreateMfaComponent {
   ) {}
 
   googleAuthAppLink = this.staticService.getMfaAuthApps().google;
-  microsoftAuthAppLink = this.staticService.getMfaAuthApps().microsoft;
+  microsoftAuthAppLink =
+    this.staticService.getMfaAuthApps().microsoft;
 
   async changeMfaOption({ key }: DropdownInterface) {
     if (key === 'mfa') {

@@ -45,7 +45,9 @@ export class AuthorsService {
     });
   }
 
-  listAuthors(params: ListAuthorsPayload): Observable<ListAuthorsResponse> {
+  listAuthors(
+    params: ListAuthorsPayload
+  ): Observable<ListAuthorsResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
@@ -65,7 +67,9 @@ export class AuthorsService {
     });
   }
 
-  deleteAuthor(params: DeleteAuthorPayload): Observable<AuthorDeletedResponse> {
+  deleteAuthor(
+    params: DeleteAuthorPayload
+  ): Observable<AuthorDeletedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.DELETE,
       controller: Controller.ABOUT_BLOG,
@@ -74,7 +78,9 @@ export class AuthorsService {
     });
   }
 
-  editAuthor(payload: EditAuthorPayload): Observable<AuthorUpdatedResponse> {
+  editAuthor(
+    payload: EditAuthorPayload
+  ): Observable<AuthorUpdatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ABOUT_BLOG,

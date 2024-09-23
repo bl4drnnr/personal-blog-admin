@@ -9,7 +9,10 @@ import { AuthorsService } from '@services/authors.service';
 @Component({
   selector: 'page-create-author',
   templateUrl: './create-author.component.html',
-  styleUrls: ['./create-author.component.scss', '../shared/author.styles.scss']
+  styleUrls: [
+    './create-author.component.scss',
+    '../shared/author.styles.scss'
+  ]
 })
 export class CreateAuthorComponent implements OnInit {
   firstName: string;
@@ -42,7 +45,8 @@ export class CreateAuthorComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

@@ -1,5 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import {
+  trigger,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/authentication.service';
 import { UserInfoResponse } from '@responses/user-info.interface';
@@ -13,10 +23,16 @@ import { EnvService } from '@shared/env.service';
     trigger('slideInOut', [
       transition(':enter', [
         style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateX(0)' }))
+        animate(
+          '300ms ease-in',
+          style({ transform: 'translateX(0)' })
+        )
       ]),
       transition(':leave', [
-        animate('300ms ease-out', style({ transform: 'translateX(-100%)' }))
+        animate(
+          '300ms ease-out',
+          style({ transform: 'translateX(-100%)' })
+        )
       ])
     ])
   ]

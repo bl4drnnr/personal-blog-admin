@@ -71,7 +71,9 @@ export class CreateCertificationComponent implements OnInit {
               MessagesTranslation.RESPONSES
             );
 
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
 
           payload.certDocs = certificationFileName;
 
@@ -97,9 +99,11 @@ export class CreateCertificationComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
-      next: ({ rows }) => (this.authors = rows)
-    });
+    this.authorsService
+      .listAuthors({ ...listAuthorsPayload })
+      .subscribe({
+        next: ({ rows }) => (this.authors = rows)
+      });
   }
 
   handleAuthorQuery(authorQuery: string) {
@@ -173,7 +177,11 @@ export class CreateCertificationComponent implements OnInit {
     this.certDocsFileInfo = file;
 
     this.certificationDocument = new FormData();
-    this.certificationDocument.append('certificateFile', file, file.name);
+    this.certificationDocument.append(
+      'certificateFile',
+      file,
+      file.name
+    );
 
     const $img: any = document.querySelector('#certificatePdf');
 
@@ -203,7 +211,8 @@ export class CreateCertificationComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

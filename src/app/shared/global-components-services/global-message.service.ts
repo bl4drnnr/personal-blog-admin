@@ -12,7 +12,9 @@ export class GlobalMessageService {
   isError = false;
   isWarning = false;
 
-  constructor(private readonly translationService: TranslationService) {}
+  constructor(
+    private readonly translationService: TranslationService
+  ) {}
 
   handle({
     message,
@@ -29,19 +31,21 @@ export class GlobalMessageService {
   }
 
   async handleError({ message }: HandleGlobalMessageInterface) {
-    const translationMessage = await this.translationService.translateText(
-      message,
-      MessagesTranslation.ERRORS
-    );
+    const translationMessage =
+      await this.translationService.translateText(
+        message,
+        MessagesTranslation.ERRORS
+      );
 
     this.handle({ message: translationMessage, isError: true });
   }
 
   async handleWarning({ message }: HandleGlobalMessageInterface) {
-    const translationMessage = await this.translationService.translateText(
-      message,
-      MessagesTranslation.ERRORS
-    );
+    const translationMessage =
+      await this.translationService.translateText(
+        message,
+        MessagesTranslation.ERRORS
+      );
 
     this.handle({ message: translationMessage, isWarning: true });
   }

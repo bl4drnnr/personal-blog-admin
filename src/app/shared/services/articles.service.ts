@@ -67,7 +67,9 @@ export class ArticlesService {
     });
   }
 
-  editArticle(payload: EditArticlePayload): Observable<ArticleEditedResponse> {
+  editArticle(
+    payload: EditArticlePayload
+  ): Observable<ArticleEditedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ARTICLES,
@@ -76,7 +78,9 @@ export class ArticlesService {
     });
   }
 
-  listArticles(params: ListArticlesPayload): Observable<ListArticlesResponse> {
+  listArticles(
+    params: ListArticlesPayload
+  ): Observable<ListArticlesResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ARTICLES,

@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 import {
   animate,
   state,
@@ -33,7 +38,10 @@ import { ValidationService } from '@services/validation.service';
       transition('* => void', animate('0.5s'))
     ]),
     trigger('descriptionAnimation', [
-      state('void', style({ transform: 'translateY(-5px)', opacity: 0 })),
+      state(
+        'void',
+        style({ transform: 'translateY(-5px)', opacity: 0 })
+      ),
       state('*', style({ transform: 'translateY(0)', opacity: 0.5 })),
       transition('void => *', animate('0.5s')),
       transition('* => void', animate('0.5s'))

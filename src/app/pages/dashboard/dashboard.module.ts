@@ -24,6 +24,7 @@ import { CreateExperienceComponent } from '@pages/create-experience/create-exper
 import { ExperiencesComponent } from '@pages/experiences/experiences.component';
 import { ExperienceComponent } from '@pages/experience/experience.component';
 import { ProjectComponent } from '@pages/project/project.component';
+import { PagesComponentsModule } from '@components/pages-components.module';
 
 const routes: Routes = [
   {
@@ -160,7 +161,8 @@ const components = [
       }
     }),
     TranslocoModule,
-    PdfViewerModule
+    PdfViewerModule,
+    PagesComponentsModule
   ],
   exports: [...components]
 })

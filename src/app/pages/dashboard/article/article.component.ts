@@ -1,5 +1,10 @@
 import dayjs from 'dayjs';
-import { Component, OnDestroy, OnInit, SecurityContext } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  SecurityContext
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticlesService } from '@services/articles.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -20,7 +25,10 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss', '../shared/article.styles.scss']
+  styleUrls: [
+    './article.component.scss',
+    '../shared/article.styles.scss'
+  ]
 })
 export class ArticleComponent implements OnInit, OnDestroy {
   article: GetArticleBySlugResponse;
@@ -35,7 +43,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
   articleContent: string;
   articleImage: string;
   articleCategory: DropdownInterface;
-  categoryId: string;
   articleEditMode = false;
 
   userInfo: UserInfoResponse;
@@ -78,7 +85,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   onHtmlChange(html: string) {
     this.htmlContent = html;
-    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
+    this.sanitizedHtmlContent = this.sanitizeHtmlContent(
+      this.htmlContent
+    );
   }
 
   sanitizeHtmlContent(htmlString: string): string {
@@ -93,10 +102,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
     );
 
     if (isTagPresent) {
-      const translationMessage = await this.translationService.translateText(
-        'tag-is-already-on-the-list',
-        MessagesTranslation.RESPONSES
-      );
+      const translationMessage =
+        await this.translationService.translateText(
+          'tag-is-already-on-the-list',
+          MessagesTranslation.RESPONSES
+        );
 
       await this.globalMessageService.handleWarning({
         message: translationMessage
@@ -134,7 +144,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getArticleBySlug();
         }
       });
@@ -183,7 +195,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getArticleBySlug();
         }
       });
@@ -201,7 +215,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           await this.handleRedirect('account/articles');
         }
       });
@@ -236,15 +252,18 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.categoriesService.getAllCategories().subscribe({
       next: (allCategories) => {
         this.allCategories = allCategories;
-        this.categoriesDropdown = allCategories.map(({ id, categoryName }) => {
-          return { key: id, value: categoryName };
-        });
+        this.categoriesDropdown = allCategories.map(
+          ({ id, categoryName }) => {
+            return { key: id, value: categoryName };
+          }
+        );
       }
     });
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

@@ -36,7 +36,12 @@ const components: any = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, NgOptimizedImage, FormsModule, TranslocoModule],
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    FormsModule,
+    TranslocoModule
+  ],
   exports: [...components]
 })
 export class BasicComponentsModule {}

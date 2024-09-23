@@ -23,7 +23,8 @@ export class ErrorHandlerService {
     function tryParseJSON(value: string): any {
       try {
         const parsed = JSON.parse(value);
-        if (typeof parsed === 'object' && parsed !== null) return parsed;
+        if (typeof parsed === 'object' && parsed !== null)
+          return parsed;
       } catch (error) {}
       return value;
     }
@@ -37,10 +38,11 @@ export class ErrorHandlerService {
     } else if (Array.isArray(parsedErrorMessage)) {
       for (const messageItem of parsedErrorMessage) {
         for (const message of messageItem.error) {
-          const errorText = await this.translationService.translateText(
-            `validation.${message}`,
-            MessagesTranslation.ERRORS
-          );
+          const errorText =
+            await this.translationService.translateText(
+              `validation.${message}`,
+              MessagesTranslation.ERRORS
+            );
 
           displayErrorMessage += `${errorText}<br>`;
         }

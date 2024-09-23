@@ -5,11 +5,13 @@ import { BasicComponentsModule } from '@components/basic-components.module';
 import { CreateMfaComponent } from '@components/create-mfa/create-mfa.component';
 import { CreatePasswordComponent } from '@components/create-password/create-password.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { PreviewArticleComponent } from '@components/preview-article/preview-article.component';
 
 const components = [
   RecoveryKeysComponent,
   CreateMfaComponent,
-  CreatePasswordComponent
+  CreatePasswordComponent,
+  PreviewArticleComponent
 ];
 
 @NgModule({

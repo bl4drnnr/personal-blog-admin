@@ -41,13 +41,21 @@ export class ApiService {
 
     switch (method) {
       case Method.POST:
-        request$ = this.http.post<any>(requestUrl, payload, requestOptions);
+        request$ = this.http.post<any>(
+          requestUrl,
+          payload,
+          requestOptions
+        );
         break;
       case Method.GET:
         request$ = this.http.get<any>(requestUrl, requestOptions);
         break;
       case Method.PATCH:
-        request$ = this.http.patch<any>(requestUrl, payload, requestOptions);
+        request$ = this.http.patch<any>(
+          requestUrl,
+          payload,
+          requestOptions
+        );
         break;
       case Method.DELETE:
         request$ = this.http.delete<any>(requestUrl, requestOptions);

@@ -14,7 +14,10 @@ import { EnvService } from '@shared/env.service';
 @Component({
   selector: 'page-articles',
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss', '../shared/article.styles.scss']
+  styleUrls: [
+    './articles.component.scss',
+    '../shared/article.styles.scss'
+  ]
 })
 export class ArticlesComponent implements OnInit {
   page: string = '0';
@@ -75,33 +78,42 @@ export class ArticlesComponent implements OnInit {
   }
 
   changePublishArticleStatus(articleId: string) {
-    this.articlesService.changePublishArticleStatus({ articleId }).subscribe({
-      next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({ message: translationMessage });
-        this.listArticles();
-      }
-    });
+    this.articlesService
+      .changePublishArticleStatus({ articleId })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage =
+            await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
+          this.listArticles();
+        }
+      });
   }
 
   deleteArticle(articleId: string) {
     this.articlesService.deleteArticle({ articleId }).subscribe({
       next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({ message: translationMessage });
+        const translationMessage =
+          await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
         this.listArticles();
       }
     });
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

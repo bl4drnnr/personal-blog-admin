@@ -60,10 +60,14 @@ export class CreateExperienceComponent implements OnInit {
 
     if (this.endDate) payload.endDate = new Date(this.endDate);
 
-    return this.experienceService.createExperience({ ...payload }).subscribe({
-      next: async ({ experienceId }) =>
-        await this.handleRedirect(`account/experience/${experienceId}`)
-    });
+    return this.experienceService
+      .createExperience({ ...payload })
+      .subscribe({
+        next: async ({ experienceId }) =>
+          await this.handleRedirect(
+            `account/experience/${experienceId}`
+          )
+      });
   }
 
   listAuthors() {
@@ -75,9 +79,11 @@ export class CreateExperienceComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
-      next: ({ rows }) => (this.authors = rows)
-    });
+    this.authorsService
+      .listAuthors({ ...listAuthorsPayload })
+      .subscribe({
+        next: ({ rows }) => (this.authors = rows)
+      });
   }
 
   handleAuthorQuery(authorQuery: string) {
@@ -93,7 +99,8 @@ export class CreateExperienceComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -130,7 +137,9 @@ export class CreateExperienceComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.experienceObtainedSkills.push(this.experienceObtainedSkill.trim());
+      this.experienceObtainedSkills.push(
+        this.experienceObtainedSkill.trim()
+      );
     }
 
     this.experienceObtainedSkill = '';

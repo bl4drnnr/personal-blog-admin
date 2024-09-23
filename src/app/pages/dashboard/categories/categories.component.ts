@@ -84,14 +84,18 @@ export class CategoriesComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });
   }
 
   editCategory(categoryId: string) {
-    const category = this.allCategories.find((cat) => cat.id === categoryId);
+    const category = this.allCategories.find(
+      (cat) => cat.id === categoryId
+    );
     if (!category) return;
 
     this.categoriesService
@@ -108,7 +112,9 @@ export class CategoriesComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });
@@ -126,7 +132,9 @@ export class CategoriesComponent implements OnInit {
               message,
               MessagesTranslation.RESPONSES
             );
-          this.globalMessageService.handle({ message: translationMessage });
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });
@@ -178,7 +186,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest = await this.refreshTokensService.refreshTokens();
+    const userInfoRequest =
+      await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -192,7 +201,8 @@ export class CategoriesComponent implements OnInit {
 
   getCategoryByLanguage() {
     return this.categories.find(
-      (category) => category.categoryLanguage === this.categoryLanguage
+      (category) =>
+        category.categoryLanguage === this.categoryLanguage
     )!;
   }
 

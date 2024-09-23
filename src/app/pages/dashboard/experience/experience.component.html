@@ -113,15 +113,45 @@
             />
           </div>
         </div>
-      </div>
 
-      <div class="edit-button-wrapper">
-        <basic-button
-          [fillButton]="true"
-          [label]="t('button.saveChanges')"
-          [disabled]="!experienceEdited()"
-          (buttonClick)="editExperience()"
-        />
+        <div class="select-photo-btn-wrapper">
+          <basic-button
+            [label]="t('button.selectPhoto')"
+            (click)="fileInput.click()"
+          />
+        </div>
+
+        <div class="picture-preview">
+          <img
+            *ngIf="!experienceNewPicture"
+            [src]="staticStorage + experienceCompanyPicture"
+            alt="cert-picture"
+          >
+          <img
+            *ngIf="experienceNewPicture"
+            [src]="experienceNewPicture"
+            (click)="experienceNewPicture = ''"
+            class="cert-main-picture"
+            alt="cert-picture"
+          >
+
+          <input
+            type="file"
+            accept="image/*"
+            (change)="selectFile($event)"
+            #fileInput
+            hidden
+          />
+        </div>
+
+        <div class="edit-button-wrapper">
+          <basic-button
+            [fillButton]="true"
+            [label]="t('button.saveChanges')"
+            [disabled]="!experienceEdited()"
+            (buttonClick)="editExperience()"
+          />
+        </div>
       </div>
     </div>
   </ng-container>
