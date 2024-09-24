@@ -1,7 +1,7 @@
 export interface SocialResponse {
-  id: string;
+  id?: string;
   link: string;
   title: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

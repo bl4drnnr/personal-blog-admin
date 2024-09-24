@@ -11,8 +11,9 @@ import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
 import { MessagesTranslation } from '@translations/messages.enum';
 import { Titles } from '@interfaces/titles.enum';
 import { EditAuthorPayload } from '@payloads/edit-author.interface';
-import { SocialInterface } from '@interfaces/social.interface';
 import { ValidationService } from '@services/validation.service';
+import { SocialsService } from '@services/socials.service';
+import { SocialResponse } from '@interfaces/social-response.interface';
 
 @Component({
   selector: 'page-author',
@@ -32,7 +33,7 @@ export class AuthorComponent implements OnInit {
   authorDescription: string;
   selectedFiles?: FileList;
   authorImage: string;
-  authorSocials: Array<SocialInterface> = [];
+  authorSocials: Array<SocialResponse> = [];
   authorNewImage: string | ArrayBuffer | null = '';
   isSelected: boolean;
   authorCreatedAt: Date;
@@ -50,6 +51,7 @@ export class AuthorComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly envService: EnvService,
     private readonly authorsService: AuthorsService,
+    private readonly socialsService: SocialsService,
     private readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
@@ -69,7 +71,9 @@ export class AuthorComponent implements OnInit {
             authorFullName: `${author.firstName} ${author.lastName}`
           });
           this.author = author;
-          this.authorSocials = [...author.socials];
+          this.authorSocials = author.socials.map((social) => ({
+            ...social
+          }));
           this.authorFirstName = author.firstName;
           this.authorLastName = author.lastName;
           this.authorDescription = author.description;
@@ -84,7 +88,6 @@ export class AuthorComponent implements OnInit {
   }
 
   editAuthor() {
-    // @TODO Continue here
     const authorPayload: EditAuthorPayload = {
       authorId: this.authorId
     };
@@ -113,6 +116,9 @@ export class AuthorComponent implements OnInit {
             message: translationMessage
           });
           this.authorEditMode = false;
+
+          this.handleSocialsChanges();
+
           this.getAuthorById();
         }
       });
@@ -152,6 +158,36 @@ export class AuthorComponent implements OnInit {
           await this.handleRedirect('account/authors');
         }
       });
+  }
+
+  handleSocialsChanges() {
+    const areArraysObjectEqual =
+      this.validationService.areArraysObjectEqual(
+        this.authorSocials,
+        this.author.socials
+      );
+
+    if (!areArraysObjectEqual) {
+      for (const social of this.authorSocials) {
+        if (social.hasOwnProperty('id')) {
+          this.socialsService
+            .updateSocial({
+              socialId: social.id as string,
+              title: social.title,
+              link: social.link
+            })
+            .subscribe();
+        } else {
+          this.socialsService
+            .createSocial({
+              authorId: this.authorId,
+              title: social.title,
+              link: social.link
+            })
+            .subscribe();
+        }
+      }
+    }
   }
 
   async fetchUserInfo() {
@@ -202,12 +238,35 @@ export class AuthorComponent implements OnInit {
     }
   }
 
-  deleteSocial(social: SocialInterface) {
-    this.authorSocials = this.validationService.deleteObjectFromArray(
-      this.authorSocials,
-      'title',
-      social.title
-    );
+  deleteSocial(social: SocialResponse) {
+    if (social.hasOwnProperty('id')) {
+      this.socialsService
+        .deleteSocial({
+          socialId: social.id as string
+        })
+        .subscribe({
+          next: async ({ message }) => {
+            const translationMessage =
+              await this.translationService.translateText(
+                message,
+                MessagesTranslation.RESPONSES
+              );
+
+            this.globalMessageService.handle({
+              message: translationMessage
+            });
+
+            this.getAuthorById();
+          }
+        });
+    } else {
+      this.authorSocials =
+        this.validationService.deleteObjectFromArray(
+          this.authorSocials,
+          'title',
+          social.title
+        );
+    }
   }
 
   addingSocialDisabled() {
@@ -215,10 +274,11 @@ export class AuthorComponent implements OnInit {
   }
 
   authorEdited() {
-    const areArraysObjectEqual = this.validationService.areArraysObjectEqual(
-      this.authorSocials,
-      this.author.socials
-    );
+    const areArraysObjectEqual =
+      this.validationService.areArraysObjectEqual(
+        this.authorSocials,
+        this.author.socials
+      );
 
     return (
       this.author.firstName !== this.authorFirstName ||

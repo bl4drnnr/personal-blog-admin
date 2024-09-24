@@ -30,6 +30,11 @@
       <div *ngIf="!authorEditMode">
         <h1>{{ author.firstName }} {{ author.lastName }}</h1>
         <p>{{ author.description }}</p>
+        <basic-link
+          *ngFor="let authorSocial of author.socials"
+          [label]="authorSocial.title"
+          [href]="authorSocial.link"
+        />
         <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(authorCreatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
         <p class="author-date">{{ t('authors.authorUpdatedAt', { authorUpdatedAt: dayjs(authorUpdatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
 

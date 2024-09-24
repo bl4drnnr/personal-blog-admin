@@ -119,8 +119,8 @@ export class ValidationService {
   }
 
   areArraysObjectEqual<T>(arr1: T[], arr2: T[]): boolean {
-    const arr1Sorted = arr1.map(obj => JSON.stringify(obj)).sort();
-    const arr2Sorted = arr2.map(obj => JSON.stringify(obj)).sort();
+    const arr1Sorted = arr1.map((obj) => JSON.stringify(obj)).sort();
+    const arr2Sorted = arr2.map((obj) => JSON.stringify(obj)).sort();
 
     if (arr1Sorted.length !== arr2Sorted.length) {
       return false;
