@@ -14,10 +14,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 @Component({
   selector: 'page-create-author',
   templateUrl: './create-author.component.html',
-  styleUrls: [
-    './create-author.component.scss',
-    '../shared/author.styles.scss'
-  ]
+  styleUrls: ['./create-author.component.scss', '../shared/author.styles.scss']
 })
 export class CreateAuthorComponent implements OnInit {
   firstName: string;
@@ -67,15 +64,12 @@ export class CreateAuthorComponent implements OnInit {
         ...social
       };
 
-      this.socialsService
-        .createSocial({ ...socialPayload })
-        .subscribe();
+      this.socialsService.createSocial({ ...socialPayload }).subscribe();
     }
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -144,10 +138,7 @@ export class CreateAuthorComponent implements OnInit {
 
   disableCreateAuthorButton() {
     return (
-      !this.firstName ||
-      !this.lastName ||
-      !this.description ||
-      !this.profilePicture
+      !this.firstName || !this.lastName || !this.description || !this.profilePicture
     );
   }
 

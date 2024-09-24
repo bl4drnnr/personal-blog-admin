@@ -34,6 +34,7 @@ export class CreateExperienceComponent implements OnInit {
   experienceObtainedSkills: Array<string> = [];
   authorId: string;
   authorSearchQuery: string;
+
   experiencePositions: Array<ExperiencePositionInterface> = [];
   experiencePositionTitle: string;
   experiencePositionDescription: string;
@@ -70,34 +71,25 @@ export class CreateExperienceComponent implements OnInit {
 
     if (this.endDate) payload.endDate = new Date(this.endDate);
 
-    return this.experienceService
-      .createExperience({ ...payload })
-      .subscribe({
-        next: async ({ experienceId }) => {
-          this.handleExperiencePositionsCreation(experienceId);
-          await this.handleRedirect(
-            `account/experience/${experienceId}`
-          );
-        }
-      });
+    return this.experienceService.createExperience({ ...payload }).subscribe({
+      next: async ({ experienceId }) => {
+        this.handleExperiencePositionsCreation(experienceId);
+        await this.handleRedirect(`account/experience/${experienceId}`);
+      }
+    });
   }
 
   handleExperiencePositionsCreation(experienceId: string) {
     if (this.experiencePositions.length === 0) return;
 
     for (const experiencePosition of this.experiencePositions) {
-      const experiencePositionPayload: CreateExperiencePositionPayload =
-        {
-          experienceId,
-          positionTitle: experiencePosition.positionTitle,
-          positionDescription: experiencePosition.positionDescription,
-          positionStartDate: new Date(
-            experiencePosition.positionStartDate
-          ),
-          positionEndDate: new Date(
-            experiencePosition.positionEndDate
-          )
-        };
+      const experiencePositionPayload: CreateExperiencePositionPayload = {
+        experienceId,
+        positionTitle: experiencePosition.positionTitle,
+        positionDescription: experiencePosition.positionDescription,
+        positionStartDate: new Date(experiencePosition.positionStartDate),
+        positionEndDate: new Date(experiencePosition.positionEndDate)
+      };
 
       this.experienceService
         .createExperiencePosition({ ...experiencePositionPayload })
@@ -114,11 +106,9 @@ export class CreateExperienceComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService
-      .listAuthors({ ...listAuthorsPayload })
-      .subscribe({
-        next: ({ rows }) => (this.authors = rows)
-      });
+    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
+      next: ({ rows }) => (this.authors = rows)
+    });
   }
 
   handleAuthorQuery(authorQuery: string) {
@@ -135,8 +125,7 @@ export class CreateExperienceComponent implements OnInit {
 
   async addExperiencePosition() {
     const isExperienceTitlePresent = this.experiencePositions.find(
-      ({ positionTitle }) =>
-        this.experiencePositionTitle === positionTitle
+      ({ positionTitle }) => this.experiencePositionTitle === positionTitle
     );
 
     if (isExperienceTitlePresent) {
@@ -159,15 +148,12 @@ export class CreateExperienceComponent implements OnInit {
     this.addingExperiencePosition = false;
   }
 
-  deleteExperiencePosition(
-    experiencePosition: ExperiencePositionInterface
-  ) {
-    this.experiencePositions =
-      this.validationService.deleteObjectFromArray(
-        this.experiencePositions,
-        'positionTitle',
-        experiencePosition.positionTitle
-      );
+  deleteExperiencePosition(experiencePosition: ExperiencePositionInterface) {
+    this.experiencePositions = this.validationService.deleteObjectFromArray(
+      this.experiencePositions,
+      'positionTitle',
+      experiencePosition.positionTitle
+    );
   }
 
   addingExperiencePositionDisabled() {
@@ -180,8 +166,7 @@ export class CreateExperienceComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -218,9 +203,7 @@ export class CreateExperienceComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.experienceObtainedSkills.push(
-        this.experienceObtainedSkill.trim()
-      );
+      this.experienceObtainedSkills.push(this.experienceObtainedSkill.trim());
     }
 
     this.experienceObtainedSkill = '';

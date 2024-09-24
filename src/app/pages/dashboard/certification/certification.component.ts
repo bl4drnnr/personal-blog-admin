@@ -82,8 +82,7 @@ export class CertificationComponent implements OnInit {
           this.certification = certification;
           this.authorId = certification.authorId;
           this.certificationName = certification.certName;
-          this.certificationDescription =
-            certification.certDescription;
+          this.certificationDescription = certification.certDescription;
           this.certificationPicture = certification.certPicture;
           this.certificationDocs = certification.certDocs;
           this.certificationObtainingDate = dayjs(
@@ -92,17 +91,14 @@ export class CertificationComponent implements OnInit {
           this.certificationExpirationDate = dayjs(
             certification.expirationDate
           ).format('YYYY-MM-DD');
-          this.certificationObtainedSkills = [
-            ...certification.obtainedSkills
-          ];
+          this.certificationObtainedSkills = [...certification.obtainedSkills];
           this.certificationAuthorId = certification.authorId;
           this.certificationCreatedAt = certification.createdAt;
           this.certificationUpdatedAt = certification.updatedAt;
 
           this.getAuthorById();
         },
-        error: async () =>
-          await this.handleRedirect('account/certifications')
+        error: async () => await this.handleRedirect('account/certifications')
       });
   }
 
@@ -127,22 +123,18 @@ export class CertificationComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService
-      .listAuthors({ ...listAuthorsPayload })
-      .subscribe({
-        next: ({ rows }) => (this.authors = rows)
-      });
+    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
+      next: ({ rows }) => (this.authors = rows)
+    });
   }
 
   getAuthorById() {
-    this.authorsService
-      .getAuthorById({ authorId: this.authorId })
-      .subscribe({
-        next: (author) => {
-          this.author = author;
-          this.selectAuthor(author);
-        }
-      });
+    this.authorsService.getAuthorById({ authorId: this.authorId }).subscribe({
+      next: (author) => {
+        this.author = author;
+        this.selectAuthor(author);
+      }
+    });
   }
 
   editCertification() {
@@ -150,19 +142,15 @@ export class CertificationComponent implements OnInit {
       certificationId: this.certificationId
     };
 
-    const areArraysEqual = this.validationService.areArraysEqual(
+    const areCertSkillsEqual = this.validationService.areArraysEqual(
       this.certification.obtainedSkills,
       this.certificationObtainedSkills
     );
 
     if (this.certification.certName !== this.certificationName)
       editCertificationPayload.certName = this.certificationName;
-    if (
-      this.certification.certDescription !==
-      this.certificationDescription
-    )
-      editCertificationPayload.certDescription =
-        this.certificationDescription;
+    if (this.certification.certDescription !== this.certificationDescription)
+      editCertificationPayload.certDescription = this.certificationDescription;
     if (
       dayjs(this.certificationObtainingDate).format('YYYY-MM-DD') !==
       dayjs(this.certification.obtainingDate).format('YYYY-MM-DD')
@@ -178,26 +166,23 @@ export class CertificationComponent implements OnInit {
         this.certificationExpirationDate
       );
     if (this.certNewPicture)
-      editCertificationPayload.certPicture = this
-        .certNewPicture as string;
-    if (!areArraysEqual)
-      editCertificationPayload.obtainedSkills =
-        this.certificationObtainedSkills;
+      editCertificationPayload.certPicture = this.certNewPicture as string;
+    if (!areCertSkillsEqual)
+      editCertificationPayload.obtainedSkills = this.certificationObtainedSkills;
 
     if (this.certificationNewDocs) {
       this.certificationsService
         .certificationFileUpload(this.certificationNewDocs)
         .subscribe({
           next: async ({ message, certificationFileName }) => {
-            const translationMessage =
-              await this.translationService.translateText(
-                message,
-                MessagesTranslation.RESPONSES
-              );
-
+            const translationMessage = await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
             this.globalMessageService.handle({
               message: translationMessage
             });
+
             editCertificationPayload.certDocs = certificationFileName;
 
             this.certificationsService
@@ -223,11 +208,10 @@ export class CertificationComponent implements OnInit {
         .editCertification({ ...editCertificationPayload })
         .subscribe({
           next: async ({ message }) => {
-            const translationMessage =
-              await this.translationService.translateText(
-                message,
-                MessagesTranslation.RESPONSES
-              );
+            const translationMessage = await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
             this.globalMessageService.handle({
               message: translationMessage
             });
@@ -247,11 +231,10 @@ export class CertificationComponent implements OnInit {
       .changeCertificationSelectionStatus({ certificationId })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -265,11 +248,10 @@ export class CertificationComponent implements OnInit {
       .deleteCertification({ certificationId: this.certificationId })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -279,8 +261,7 @@ export class CertificationComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -322,11 +303,7 @@ export class CertificationComponent implements OnInit {
     this.certNewDocsFileInfo = file;
 
     this.certificationNewDocs = new FormData();
-    this.certificationNewDocs.append(
-      'certificateFile',
-      file,
-      file.name
-    );
+    this.certificationNewDocs.append('certificateFile', file, file.name);
 
     const $img: any = document.querySelector('#certificatePdf');
 
@@ -342,26 +319,21 @@ export class CertificationComponent implements OnInit {
   }
 
   certificationEdited() {
-    const areArraysEqual = this.validationService.areArraysEqual(
+    const areCertSkillsEqual = this.validationService.areArraysEqual(
       this.certification.obtainedSkills,
       this.certificationObtainedSkills
     );
 
     return (
       this.certificationName !== this.certification.certName ||
-      this.certificationDescription !==
-        this.certificationDescription ||
+      this.certificationDescription !== this.certificationDescription ||
       dayjs(this.certificationObtainingDate).format('YYYY-MM-DD') !==
-        dayjs(this.certification.obtainingDate).format(
-          'YYYY-MM-DD'
-        ) ||
+        dayjs(this.certification.obtainingDate).format('YYYY-MM-DD') ||
       dayjs(this.certificationExpirationDate).format('YYYY-MM-DD') !==
-        dayjs(this.certification.expirationDate).format(
-          'YYYY-MM-DD'
-        ) ||
+        dayjs(this.certification.expirationDate).format('YYYY-MM-DD') ||
       this.certNewPicture ||
       this.certificationNewDocs ||
-      !areArraysEqual
+      !areCertSkillsEqual
     );
   }
 
@@ -377,9 +349,7 @@ export class CertificationComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.certificationObtainedSkills.push(
-        this.certificationObtainedSkill.trim()
-      );
+      this.certificationObtainedSkills.push(this.certificationObtainedSkill.trim());
     }
 
     this.certificationObtainedSkill = '';

@@ -26,8 +26,7 @@ export class ModalComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     document.body.style.overflow =
-      changes['showModal'] &&
-      changes['showModal'].currentValue === true
+      changes['showModal'] && changes['showModal'].currentValue === true
         ? 'hidden'
         : 'auto';
   }

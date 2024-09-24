@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  animate,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { AuthenticationService } from '@services/authentication.service';
 import { TranslationService } from '@services/translation.service';
 import { Titles } from '@interfaces/titles.enum';
@@ -44,25 +39,19 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPasswordButtonDisable() {
-    return (
-      this.incorrectEmail || !this.email || this.isCountdownRunning
-    );
+    return this.incorrectEmail || !this.email || this.isCountdownRunning;
   }
 
   handleForgotPassword() {
-    if (this.step === 1 && this.sendForgotPasswordEmailDisable())
-      return;
-    else if (this.step === 2 && this.forgotPasswordButtonDisable())
-      return;
+    if (this.step === 1 && this.sendForgotPasswordEmailDisable()) return;
+    else if (this.step === 2 && this.forgotPasswordButtonDisable()) return;
 
-    this.authenticationService
-      .forgotPassword({ email: this.email })
-      .subscribe({
-        next: () => {
-          this.step = 2;
-          this.startCountdown();
-        }
-      });
+    this.authenticationService.forgotPassword({ email: this.email }).subscribe({
+      next: () => {
+        this.step = 2;
+        this.startCountdown();
+      }
+    });
   }
 
   private startCountdown() {
@@ -74,15 +63,14 @@ export class ForgotPasswordComponent implements OnInit {
         this.isCountdownRunning = false;
         this.time = 180;
       }
-      this.resendMessage =
-        await this.translationService.translateText(
-          'resendEmailIn',
-          ComponentsTranslation.INPUT,
-          {
-            time: this.time,
-            s: this.time !== 1 ? 's' : ''
-          }
-        );
+      this.resendMessage = await this.translationService.translateText(
+        'resendEmailIn',
+        ComponentsTranslation.INPUT,
+        {
+          time: this.time,
+          s: this.time !== 1 ? 's' : ''
+        }
+      );
     }, 1000);
   }
 

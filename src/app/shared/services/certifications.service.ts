@@ -63,8 +63,7 @@ export class CertificationsService {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ABOUT_BLOG,
-      action:
-        CertificationEndpoint.CHANGE_CERTIFICATION_SELECTION_STATUS,
+      action: CertificationEndpoint.CHANGE_CERTIFICATION_SELECTION_STATUS,
       payload
     });
   }

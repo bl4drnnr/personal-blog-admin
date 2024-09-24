@@ -18,10 +18,7 @@ import { SocialResponse } from '@interfaces/social-response.interface';
 @Component({
   selector: 'page-author',
   templateUrl: './author.component.html',
-  styleUrls: [
-    './author.component.scss',
-    '../shared/author.styles.scss'
-  ]
+  styleUrls: ['./author.component.scss', '../shared/author.styles.scss']
 })
 export class AuthorComponent implements OnInit {
   author: GetAuthorByIdResponse;
@@ -82,8 +79,7 @@ export class AuthorComponent implements OnInit {
           this.authorCreatedAt = author.createdAt;
           this.authorUpdatedAt = author.updatedAt;
         },
-        error: async () =>
-          await this.handleRedirect('account/authors')
+        error: async () => await this.handleRedirect('account/authors')
       });
   }
 
@@ -107,11 +103,10 @@ export class AuthorComponent implements OnInit {
       })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -125,74 +120,66 @@ export class AuthorComponent implements OnInit {
   }
 
   changeAuthorSelectionStatus(authorId: string) {
-    this.authorsService
-      .changeAuthorSelectionStatus({ authorId })
-      .subscribe({
-        next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
-          this.getAuthorById();
-        }
-      });
+    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+        this.getAuthorById();
+      }
+    });
   }
 
   deleteAuthor() {
-    this.authorsService
-      .deleteAuthor({ authorId: this.authorId })
-      .subscribe({
-        next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
-          await this.handleRedirect('account/authors');
-        }
-      });
+    this.authorsService.deleteAuthor({ authorId: this.authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+        await this.handleRedirect('account/authors');
+      }
+    });
   }
 
   handleSocialsChanges() {
-    const areArraysObjectEqual =
-      this.validationService.areArraysObjectEqual(
-        this.authorSocials,
-        this.author.socials
-      );
+    const areAuthorSocialsEqual = this.validationService.areArraysObjectEqual(
+      this.authorSocials,
+      this.author.socials
+    );
 
-    if (!areArraysObjectEqual) {
-      for (const social of this.authorSocials) {
-        if (social.hasOwnProperty('id')) {
-          this.socialsService
-            .updateSocial({
-              socialId: social.id as string,
-              title: social.title,
-              link: social.link
-            })
-            .subscribe();
-        } else {
-          this.socialsService
-            .createSocial({
-              authorId: this.authorId,
-              title: social.title,
-              link: social.link
-            })
-            .subscribe();
-        }
+    if (areAuthorSocialsEqual) return;
+
+    for (const social of this.authorSocials) {
+      if (social.hasOwnProperty('id')) {
+        this.socialsService
+          .updateSocial({
+            socialId: social.id as string,
+            title: social.title,
+            link: social.link
+          })
+          .subscribe();
+      } else {
+        this.socialsService
+          .createSocial({
+            authorId: this.authorId,
+            title: social.title,
+            link: social.link
+          })
+          .subscribe();
       }
     }
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -206,10 +193,14 @@ export class AuthorComponent implements OnInit {
 
   selectFile(event: any) {
     this.selectedFiles = event.target.files;
+
     if (!this.selectedFiles) return;
+
     const file = event.target.files[0];
     const reader = new FileReader();
+
     reader.readAsDataURL(file);
+
     reader.onload = () => {
       this.authorNewImage = reader.result;
     };
@@ -224,18 +215,19 @@ export class AuthorComponent implements OnInit {
     );
 
     if (isSocialLinkPresent || isSocialTitlePresent) {
-      await this.globalMessageService.handleWarning({
+      return await this.globalMessageService.handleWarning({
         message: 'tag-is-already-on-the-list'
       });
-    } else {
-      this.authorSocials.push({
-        link: this.socialLink,
-        title: this.socialTitle
-      });
-      this.socialLink = '';
-      this.socialTitle = '';
-      this.addingSocial = false;
     }
+
+    this.authorSocials.push({
+      link: this.socialLink,
+      title: this.socialTitle
+    });
+
+    this.socialLink = '';
+    this.socialTitle = '';
+    this.addingSocial = false;
   }
 
   deleteSocial(social: SocialResponse) {
@@ -246,12 +238,10 @@ export class AuthorComponent implements OnInit {
         })
         .subscribe({
           next: async ({ message }) => {
-            const translationMessage =
-              await this.translationService.translateText(
-                message,
-                MessagesTranslation.RESPONSES
-              );
-
+            const translationMessage = await this.translationService.translateText(
+              message,
+              MessagesTranslation.RESPONSES
+            );
             this.globalMessageService.handle({
               message: translationMessage
             });
@@ -260,12 +250,11 @@ export class AuthorComponent implements OnInit {
           }
         });
     } else {
-      this.authorSocials =
-        this.validationService.deleteObjectFromArray(
-          this.authorSocials,
-          'title',
-          social.title
-        );
+      this.authorSocials = this.validationService.deleteObjectFromArray(
+        this.authorSocials,
+        'title',
+        social.title
+      );
     }
   }
 
@@ -274,18 +263,17 @@ export class AuthorComponent implements OnInit {
   }
 
   authorEdited() {
-    const areArraysObjectEqual =
-      this.validationService.areArraysObjectEqual(
-        this.authorSocials,
-        this.author.socials
-      );
+    const areAuthorSocialsEqual = this.validationService.areArraysObjectEqual(
+      this.authorSocials,
+      this.author.socials
+    );
 
     return (
       this.author.firstName !== this.authorFirstName ||
       this.author.lastName !== this.authorLastName ||
       this.author.description !== this.authorDescription ||
       this.authorNewImage ||
-      !areArraysObjectEqual
+      !areAuthorSocialsEqual
     );
   }
 
@@ -297,8 +285,7 @@ export class AuthorComponent implements OnInit {
     this.route.paramMap.subscribe(async (params) => {
       const authorId = params.get('authorId');
 
-      if (!authorId)
-        return await this.handleRedirect('account/authors');
+      if (!authorId) return await this.handleRedirect('account/authors');
 
       this.authorId = authorId;
 

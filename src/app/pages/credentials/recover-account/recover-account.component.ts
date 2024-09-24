@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  animate,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { RecoveryService } from '@services/recovery.service';
 import { Router } from '@angular/router';
 import { ValidationService } from '@services/validation.service';
@@ -70,8 +65,7 @@ export class RecoverAccountComponent implements OnInit {
       if (!recoveryKeysStr) return;
 
       const recoveryKeys = (recoveryKeysStr as string).split('\n\n');
-      const areKeyValid =
-        this.validationService.checkRecoveryKeys(recoveryKeys);
+      const areKeyValid = this.validationService.checkRecoveryKeys(recoveryKeys);
 
       if (!areKeyValid) {
         await this.globalMessageService.handleError({

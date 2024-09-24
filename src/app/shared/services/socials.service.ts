@@ -17,9 +17,7 @@ import { SocialDeletedResponse } from '@responses/social-deleted.interface';
 export class SocialsService {
   constructor(private readonly apiService: ApiService) {}
 
-  createSocial(
-    payload: CreateSocialPayload
-  ): Observable<SocialCreatedResponse> {
+  createSocial(payload: CreateSocialPayload): Observable<SocialCreatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.ABOUT_BLOG,
@@ -28,9 +26,7 @@ export class SocialsService {
     });
   }
 
-  updateSocial(
-    payload: UpdateSocialPayload
-  ): Observable<SocialUpdatedResponse> {
+  updateSocial(payload: UpdateSocialPayload): Observable<SocialUpdatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ABOUT_BLOG,
@@ -39,9 +35,7 @@ export class SocialsService {
     });
   }
 
-  deleteSocial(
-    params: DeleteSocialPayload
-  ): Observable<SocialDeletedResponse> {
+  deleteSocial(params: DeleteSocialPayload): Observable<SocialDeletedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.DELETE,
       controller: Controller.ABOUT_BLOG,

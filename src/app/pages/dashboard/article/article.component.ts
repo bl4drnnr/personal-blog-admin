@@ -1,10 +1,5 @@
 import dayjs from 'dayjs';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  SecurityContext
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticlesService } from '@services/articles.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -25,10 +20,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-article',
   templateUrl: './article.component.html',
-  styleUrls: [
-    './article.component.scss',
-    '../shared/article.styles.scss'
-  ]
+  styleUrls: ['./article.component.scss', '../shared/article.styles.scss']
 })
 export class ArticleComponent implements OnInit, OnDestroy {
   article: GetArticleBySlugResponse;
@@ -85,9 +77,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   onHtmlChange(html: string) {
     this.htmlContent = html;
-    this.sanitizedHtmlContent = this.sanitizeHtmlContent(
-      this.htmlContent
-    );
+    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
   }
 
   sanitizeHtmlContent(htmlString: string): string {
@@ -97,16 +87,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   async addArticleTag() {
     if (this.articleTag === ' ') return;
 
-    const isTagPresent = this.articleTags.find(
-      (tag) => tag === this.articleTag
-    );
+    const isTagPresent = this.articleTags.find((tag) => tag === this.articleTag);
 
     if (isTagPresent) {
-      const translationMessage =
-        await this.translationService.translateText(
-          'tag-is-already-on-the-list',
-          MessagesTranslation.RESPONSES
-        );
+      const translationMessage = await this.translationService.translateText(
+        'tag-is-already-on-the-list',
+        MessagesTranslation.RESPONSES
+      );
 
       await this.globalMessageService.handleWarning({
         message: translationMessage
@@ -139,11 +126,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -158,10 +144,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   selectFile(event: any) {
     this.selectedFiles = event.target.files;
+
     if (!this.selectedFiles) return;
+
     const file = event.target.files[0];
     const reader = new FileReader();
+
     reader.readAsDataURL(file);
+
     reader.onload = () => {
       this.articlePicture = reader.result;
     };
@@ -190,11 +180,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -210,11 +199,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -252,18 +240,15 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.categoriesService.getAllCategories().subscribe({
       next: (allCategories) => {
         this.allCategories = allCategories;
-        this.categoriesDropdown = allCategories.map(
-          ({ id, categoryName }) => {
-            return { key: id, value: categoryName };
-          }
-        );
+        this.categoriesDropdown = allCategories.map(({ id, categoryName }) => {
+          return { key: id, value: categoryName };
+        });
       }
     });
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
@@ -284,8 +269,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       const slug = params.get('slug');
       const language = params.get('language');
 
-      if (!slug || !language)
-        return await this.handleRedirect('account/articles');
+      if (!slug || !language) return await this.handleRedirect('account/articles');
 
       this.articleSlug = slug;
       this.articleLanguage = language;

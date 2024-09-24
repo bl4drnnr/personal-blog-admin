@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  SecurityContext
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, SecurityContext } from '@angular/core';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { Router } from '@angular/router';
 import { RefreshTokensService } from '@services/refresh-token.service';
@@ -22,10 +17,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-create-article',
   templateUrl: './create-article.component.html',
-  styleUrls: [
-    './create-article.component.scss',
-    '../shared/article.styles.scss'
-  ]
+  styleUrls: ['./create-article.component.scss', '../shared/article.styles.scss']
 })
 export class CreateArticleComponent implements OnInit, OnDestroy {
   articles: Array<CreateArticleInterface> = [
@@ -108,9 +100,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
         articleName: article.articleName,
         articleDescription: article.articleDescription,
         articleContent: article.articleContent,
-        articleTags: article.articleTags.map((tag) =>
-          tag.replace(/\s+/g, '')
-        ),
+        articleTags: article.articleTags.map((tag) => tag.replace(/\s+/g, '')),
         articlePicture: article.articlePicture,
         categoryId: article.articleCategory.key,
         articleLanguage: article.articleLanguage.toLowerCase()
@@ -119,11 +109,10 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
 
     this.articlesService.createArticle({ articles }).subscribe({
       next: async ({ message }) => {
-        const translationMessage =
-          await this.translationService.translateText(
-            message,
-            MessagesTranslation.RESPONSES
-          );
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
         this.globalMessageService.handle({
           message: translationMessage
         });
@@ -182,11 +171,10 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     );
 
     if (isTagPresent) {
-      const translationMessage =
-        await this.translationService.translateText(
-          'tag-is-already-on-the-list',
-          MessagesTranslation.RESPONSES
-        );
+      const translationMessage = await this.translationService.translateText(
+        'tag-is-already-on-the-list',
+        MessagesTranslation.RESPONSES
+      );
 
       await this.globalMessageService.handleWarning({
         message: translationMessage
@@ -201,10 +189,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
 
   deleteArticleTag(articleTag: string) {
     const article = this.getArticleByLanguage();
-    article.articleTags.splice(
-      article.articleTags.indexOf(articleTag),
-      1
-    );
+    article.articleTags.splice(article.articleTags.indexOf(articleTag), 1);
   }
 
   getArticleTags() {
@@ -224,8 +209,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
 
     reader.onload = () => {
       this.articles.map(
-        (article) =>
-          (article.articlePicture = reader.result as string)
+        (article) => (article.articlePicture = reader.result as string)
       );
       this.articlePicture = reader.result as string;
     };
@@ -240,12 +224,8 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   onHtmlChange(html: string) {
     this.htmlContent = html;
     const article = this.getArticleByLanguage();
-    article.articleContent = this.sanitizeHtmlContent(
-      this.htmlContent
-    );
-    this.sanitizedHtmlContent = this.sanitizeHtmlContent(
-      this.htmlContent
-    );
+    article.articleContent = this.sanitizeHtmlContent(this.htmlContent);
+    this.sanitizedHtmlContent = this.sanitizeHtmlContent(this.htmlContent);
   }
 
   changeArticleLanguage(articleLanguage: string) {
@@ -279,8 +259,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

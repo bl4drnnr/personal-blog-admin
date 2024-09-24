@@ -1,10 +1,5 @@
 import { saveAs } from 'file-saver';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ValidationService } from '@services/validation.service';
 import { RecoveryService } from '@services/recovery.service';
 
@@ -70,8 +65,7 @@ export class RecoveryKeysComponent {
           passphrase: this.passphrase
         })
         .subscribe({
-          next: ({ recoveryKeys }) =>
-            this.keyAreGenerated(recoveryKeys)
+          next: ({ recoveryKeys }) => this.keyAreGenerated(recoveryKeys)
         });
     } else if (this.email && this.password) {
       this.recoveryService
@@ -81,8 +75,7 @@ export class RecoveryKeysComponent {
           passphrase: this.passphrase
         })
         .subscribe({
-          next: ({ recoveryKeys }) =>
-            this.keyAreGenerated(recoveryKeys)
+          next: ({ recoveryKeys }) => this.keyAreGenerated(recoveryKeys)
         });
     } else {
       this.recoveryService
@@ -90,8 +83,7 @@ export class RecoveryKeysComponent {
           passphrase: this.passphrase
         })
         .subscribe({
-          next: ({ recoveryKeys }) =>
-            this.keyAreGenerated(recoveryKeys)
+          next: ({ recoveryKeys }) => this.keyAreGenerated(recoveryKeys)
         });
     }
   }

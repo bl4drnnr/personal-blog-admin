@@ -23,9 +23,7 @@ import { AuthorUpdatedResponse } from '@responses/author-updated.interface';
 export class AuthorsService {
   constructor(private readonly apiService: ApiService) {}
 
-  getAuthorById(
-    params: GetAuthorByIdPayload
-  ): Observable<GetAuthorByIdResponse> {
+  getAuthorById(params: GetAuthorByIdPayload): Observable<GetAuthorByIdResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
@@ -34,9 +32,7 @@ export class AuthorsService {
     });
   }
 
-  createAuthor(
-    payload: CreateAuthorPayload
-  ): Observable<AuthorCreatedResponse> {
+  createAuthor(payload: CreateAuthorPayload): Observable<AuthorCreatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.ABOUT_BLOG,
@@ -45,9 +41,7 @@ export class AuthorsService {
     });
   }
 
-  listAuthors(
-    params: ListAuthorsPayload
-  ): Observable<ListAuthorsResponse> {
+  listAuthors(params: ListAuthorsPayload): Observable<ListAuthorsResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
@@ -67,9 +61,7 @@ export class AuthorsService {
     });
   }
 
-  deleteAuthor(
-    params: DeleteAuthorPayload
-  ): Observable<AuthorDeletedResponse> {
+  deleteAuthor(params: DeleteAuthorPayload): Observable<AuthorDeletedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.DELETE,
       controller: Controller.ABOUT_BLOG,
@@ -78,9 +70,7 @@ export class AuthorsService {
     });
   }
 
-  editAuthor(
-    payload: EditAuthorPayload
-  ): Observable<AuthorUpdatedResponse> {
+  editAuthor(payload: EditAuthorPayload): Observable<AuthorUpdatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ABOUT_BLOG,

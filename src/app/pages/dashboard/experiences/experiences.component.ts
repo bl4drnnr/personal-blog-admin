@@ -14,10 +14,7 @@ import dayjs from 'dayjs';
 @Component({
   selector: 'page-experiences',
   templateUrl: './experiences.component.html',
-  styleUrls: [
-    './experiences.component.scss',
-    '../shared/experience.styles.scss'
-  ]
+  styleUrls: ['./experiences.component.scss', '../shared/experience.styles.scss']
 })
 export class ExperiencesComponent implements OnInit {
   page: string = '0';
@@ -65,11 +62,10 @@ export class ExperiencesComponent implements OnInit {
       .changeExperienceSelectionStatus({ experienceId })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -79,21 +75,18 @@ export class ExperiencesComponent implements OnInit {
   }
 
   deleteExperience(experienceId: string) {
-    this.experiencesService
-      .deleteExperience({ experienceId })
-      .subscribe({
-        next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
-          this.listExperiences();
-        }
-      });
+    this.experiencesService.deleteExperience({ experienceId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+        this.listExperiences();
+      }
+    });
   }
 
   setCurrentPage(currentPage: string) {
@@ -112,8 +105,7 @@ export class ExperiencesComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

@@ -23,9 +23,7 @@ import { ResetUserPasswordResponse } from '@responses/reset-user-password.enum';
 export class AuthenticationService {
   constructor(private readonly apiService: ApiService) {}
 
-  login(
-    payload: LoginPayload
-  ): Observable<{ message: LoginResponse; _at: string }> {
+  login(payload: LoginPayload): Observable<{ message: LoginResponse; _at: string }> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.AUTH,
@@ -102,8 +100,7 @@ export class AuthenticationService {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.CONFIRMATION_HASH,
-      action:
-        ConfirmationHashEndpoint.RESET_USER_PASSWORD_CONFIRMATION,
+      action: ConfirmationHashEndpoint.RESET_USER_PASSWORD_CONFIRMATION,
       params,
       payload
     });

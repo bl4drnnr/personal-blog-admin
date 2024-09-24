@@ -114,6 +114,112 @@
           </div>
         </div>
 
+        <basic-button
+          *ngIf="!addingExperiencePosition"
+          [label]="t('button.addNewExperiencePosition')"
+          (buttonClick)="addingExperiencePosition = true"
+        />
+
+        <basic-button
+          *ngIf="addingExperiencePosition"
+          [label]="t('button.addExperiencePosition')"
+          [disabled]="addingExperiencePositionDisabled()"
+          (buttonClick)="addExperiencePosition()"
+        />
+
+        <div
+          class="create-experience-inputs"
+          *ngIf="addingExperiencePosition"
+        >
+          <div class="create-experience-inputs-block margin-right">
+            <basic-input
+              [label]="t('input.expPositionTitleLabel')"
+              [placeholder]="t('input.expPositionTitlePlaceholder')"
+              [inputDescription]="t('input.expPositionTitleDesc')"
+              [value]="experiencePositionTitle"
+              (valueChange)="experiencePositionTitle = $event"
+            />
+            <basic-input
+              [label]="t('input.expPositionDescLabel')"
+              [placeholder]="t('input.expPositionDescPlaceholder')"
+              [inputDescription]="t('input.expPositionDescDesc')"
+              [value]="experiencePositionDescription"
+              (valueChange)="experiencePositionDescription = $event"
+            />
+          </div>
+          <div class="create-experience-inputs-block margin-left">
+            <basic-input
+              type="date"
+              [label]="t('input.expPositionStartDateLabel')"
+              [placeholder]="t('input.expPositionStartDatePlaceholder')"
+              [inputDescription]="t('input.expPositionStartDateDesc')"
+              [value]="experiencePositionStartDate"
+              (valueChange)="experiencePositionStartDate = $event"
+            />
+            <basic-input
+              type="date"
+              [label]="t('input.expPositionEndDateLabel')"
+              [placeholder]="t('input.expPositionEndDatePlaceholder')"
+              [inputDescription]="t('input.expPositionEndDateDesc')"
+              [value]="experiencePositionEndDate"
+              (valueChange)="experiencePositionEndDate = $event"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="experiencePositions.length > 0">
+          <div
+            class="experience-position-box"
+            *ngFor="let experiencePosition of experiencePositions"
+          >
+            <div class="create-experience-inputs-block margin-right">
+              <basic-input
+                [label]="t('input.expPositionTitleLabel')"
+                [placeholder]="t('input.expPositionTitlePlaceholder')"
+                [inputDescription]="t('input.expPositionTitleDesc')"
+                [value]="experiencePosition.positionTitle"
+                (valueChange)="experiencePosition.positionTitle = $event"
+              />
+            </div>
+            <div class="create-experience-inputs-block margin-right">
+              <basic-input
+                [label]="t('input.expPositionDescLabel')"
+                [placeholder]="t('input.expPositionDescPlaceholder')"
+                [inputDescription]="t('input.expPositionDescDesc')"
+                [value]="experiencePosition.positionDescription"
+                (valueChange)="experiencePosition.positionDescription = $event"
+              />
+            </div>
+            <div class="create-experience-inputs-block margin-right">
+              <basic-input
+                type="date"
+                [label]="t('input.expPositionStartDateLabel')"
+                [placeholder]="t('input.expPositionStartDatePlaceholder')"
+                [inputDescription]="t('input.expPositionStartDateDesc')"
+                [value]="dayjs(experiencePosition.positionStartDate).format('YYYY-MM-DD')"
+                (valueChange)="changeExperiencePositionDate(experiencePosition, 'start', $event)"
+              />
+            </div>
+            <div class="create-experience-inputs-block">
+              <basic-input
+                type="date"
+                [label]="t('input.expPositionEndDateLabel')"
+                [placeholder]="t('input.expPositionEndDatePlaceholder')"
+                [inputDescription]="t('input.expPositionEndDateDesc')"
+                [value]="dayjs(experiencePosition.positionEndDate).format('YYYY-MM-DD')"
+                (valueChange)="changeExperiencePositionDate(experiencePosition, 'end', $event)"
+              />
+            </div>
+            <div class="create-experience-inputs-block margin-left button">
+              <basic-button
+                [label]="t('button.deleteExperiencePosition')"
+                [danger]="true"
+                (buttonClick)="deleteExperiencePosition(experiencePosition)"
+              />
+            </div>
+          </div>
+        </div>
+
         <div class="select-photo-btn-wrapper">
           <basic-button
             [label]="t('button.selectPhoto')"

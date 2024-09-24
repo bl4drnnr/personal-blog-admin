@@ -65,27 +65,21 @@ export class CreateCertificationComponent implements OnInit {
       .certificationFileUpload(this.certificationDocument as FormData)
       .subscribe({
         next: async ({ message, certificationFileName }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
 
           payload.certDocs = certificationFileName;
 
-          this.certificationsService
-            .createCertification({ ...payload })
-            .subscribe({
-              next: async ({ certificationId }) => {
-                await this.handleRedirect(
-                  `account/certification/${certificationId}`
-                );
-              }
-            });
+          this.certificationsService.createCertification({ ...payload }).subscribe({
+            next: async ({ certificationId }) => {
+              await this.handleRedirect(`account/certification/${certificationId}`);
+            }
+          });
         }
       });
   }
@@ -99,11 +93,9 @@ export class CreateCertificationComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService
-      .listAuthors({ ...listAuthorsPayload })
-      .subscribe({
-        next: ({ rows }) => (this.authors = rows)
-      });
+    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
+      next: ({ rows }) => (this.authors = rows)
+    });
   }
 
   handleAuthorQuery(authorQuery: string) {
@@ -177,11 +169,7 @@ export class CreateCertificationComponent implements OnInit {
     this.certDocsFileInfo = file;
 
     this.certificationDocument = new FormData();
-    this.certificationDocument.append(
-      'certificateFile',
-      file,
-      file.name
-    );
+    this.certificationDocument.append('certificateFile', file, file.name);
 
     const $img: any = document.querySelector('#certificatePdf');
 
@@ -211,8 +199,7 @@ export class CreateCertificationComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

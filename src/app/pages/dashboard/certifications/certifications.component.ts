@@ -65,11 +65,10 @@ export class CertificationsComponent implements OnInit {
       .changeCertificationSelectionStatus({ certificationId })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
           this.globalMessageService.handle({
             message: translationMessage
           });
@@ -79,21 +78,18 @@ export class CertificationsComponent implements OnInit {
   }
 
   deleteCertification(certificationId: string) {
-    this.certificationsService
-      .deleteCertification({ certificationId })
-      .subscribe({
-        next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
-          this.listCertifications();
-        }
-      });
+    this.certificationsService.deleteCertification({ certificationId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+        this.listCertifications();
+      }
+    });
   }
 
   setCurrentPage(currentPage: string) {
@@ -112,8 +108,7 @@ export class CertificationsComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),

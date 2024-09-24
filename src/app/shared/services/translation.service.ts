@@ -19,8 +19,11 @@ export class TranslationService {
     scope: TranslationType,
     params?: { [key: string]: string | number }
   ): Promise<any> {
-    const translatedText =
-      this.translocoService.selectTranslateObject(key, params, scope);
+    const translatedText = this.translocoService.selectTranslateObject(
+      key,
+      params,
+      scope
+    );
 
     return await new Promise((resolve) => {
       translatedText.subscribe({
@@ -34,11 +37,7 @@ export class TranslationService {
     scope: TranslationType,
     params?: { [key: string]: string | number }
   ): Promise<string> {
-    const translatedText = this.translocoService.selectTranslate(
-      key,
-      params,
-      scope
-    );
+    const translatedText = this.translocoService.selectTranslate(key, params, scope);
 
     return await new Promise((resolve) => {
       translatedText.subscribe({
@@ -47,10 +46,7 @@ export class TranslationService {
     });
   }
 
-  setPageTitle(
-    title: Titles,
-    params?: { [key: string]: string | number }
-  ) {
+  setPageTitle(title: Titles, params?: { [key: string]: string | number }) {
     const pageTitle = this.translocoService.selectTranslate(
       title,
       params,

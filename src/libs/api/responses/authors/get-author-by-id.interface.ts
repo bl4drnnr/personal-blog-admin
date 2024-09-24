@@ -13,5 +13,6 @@ export interface GetAuthorByIdResponse {
   updatedAt: Date;
   socials: Array<SocialResponse>;
   certs: Array<ListCertification>;
+  // @todo
   // experiences: Array<>;
 }

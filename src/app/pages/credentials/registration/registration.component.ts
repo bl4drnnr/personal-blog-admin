@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  animate,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/authentication.service';
 import { RegistrationPayload } from '@payloads/registration.interface';
@@ -77,8 +72,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   wrongCredentials({ includeAll }: WrongCredentialsInterface) {
-    const incorrectCredentials =
-      this.incorrectPassword || this.incorrectEmail;
+    const incorrectCredentials = this.incorrectPassword || this.incorrectEmail;
 
     const incorrectAllCredentials =
       incorrectCredentials ||
@@ -88,9 +82,7 @@ export class RegistrationComponent implements OnInit {
       this.incorrectFirstName ||
       this.incorrectLastName;
 
-    return !includeAll
-      ? incorrectCredentials
-      : incorrectAllCredentials;
+    return !includeAll ? incorrectCredentials : incorrectAllCredentials;
   }
 
   async handleRedirect(path: string) {

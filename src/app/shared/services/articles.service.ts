@@ -23,9 +23,7 @@ import { ArticlePublishedResponse } from '@responses/article-published.interface
 export class ArticlesService {
   constructor(private readonly apiService: ApiService) {}
 
-  getArticleBySlug(
-    params: GetBySlugPayload
-  ): Observable<GetArticleBySlugResponse> {
+  getArticleBySlug(params: GetBySlugPayload): Observable<GetArticleBySlugResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ARTICLES,
@@ -34,9 +32,7 @@ export class ArticlesService {
     });
   }
 
-  createArticle(
-    payload: CreateArticlePayload
-  ): Observable<ArticleCreatedResponse> {
+  createArticle(payload: CreateArticlePayload): Observable<ArticleCreatedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.ARTICLES,
@@ -56,9 +52,7 @@ export class ArticlesService {
     });
   }
 
-  deleteArticle(
-    params: DeleteArticlePayload
-  ): Observable<ArticleDeletedResponse> {
+  deleteArticle(params: DeleteArticlePayload): Observable<ArticleDeletedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.DELETE,
       controller: Controller.ARTICLES,
@@ -67,9 +61,7 @@ export class ArticlesService {
     });
   }
 
-  editArticle(
-    payload: EditArticlePayload
-  ): Observable<ArticleEditedResponse> {
+  editArticle(payload: EditArticlePayload): Observable<ArticleEditedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ARTICLES,
@@ -78,9 +70,7 @@ export class ArticlesService {
     });
   }
 
-  listArticles(
-    params: ListArticlesPayload
-  ): Observable<ListArticlesResponse> {
+  listArticles(params: ListArticlesPayload): Observable<ListArticlesResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ARTICLES,

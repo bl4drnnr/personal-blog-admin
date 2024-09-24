@@ -14,10 +14,7 @@ import { MessagesTranslation } from '@translations/messages.enum';
 @Component({
   selector: 'page-authors',
   templateUrl: './authors.component.html',
-  styleUrls: [
-    './authors.component.scss',
-    '../shared/author.styles.scss'
-  ]
+  styleUrls: ['./authors.component.scss', '../shared/author.styles.scss']
 })
 export class AuthorsComponent implements OnInit {
   page: string = '0';
@@ -50,42 +47,36 @@ export class AuthorsComponent implements OnInit {
       query: this.authorSearchQuery
     };
 
-    this.authorsService
-      .listAuthors({ ...listAuthorsPayload })
-      .subscribe({
-        next: ({ rows, count }) => {
-          this.authors = rows;
-          this.totalItems = count;
-        }
-      });
+    this.authorsService.listAuthors({ ...listAuthorsPayload }).subscribe({
+      next: ({ rows, count }) => {
+        this.authors = rows;
+        this.totalItems = count;
+      }
+    });
   }
 
   changeAuthorSelectionStatus(authorId: string) {
-    this.authorsService
-      .changeAuthorSelectionStatus({ authorId })
-      .subscribe({
-        next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
-          this.listAuthors();
-        }
-      });
+    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+      next: async ({ message }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+        this.listAuthors();
+      }
+    });
   }
 
   deleteAuthor(authorId: string) {
     this.authorsService.deleteAuthor({ authorId }).subscribe({
       next: async ({ message }) => {
-        const translationMessage =
-          await this.translationService.translateText(
-            message,
-            MessagesTranslation.RESPONSES
-          );
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
         this.globalMessageService.handle({
           message: translationMessage
         });
@@ -110,8 +101,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   async fetchUserInfo() {
-    const userInfoRequest =
-      await this.refreshTokensService.refreshTokens();
+    const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
       userInfoRequest.subscribe({
         next: (userInfo) => (this.userInfo = userInfo),
