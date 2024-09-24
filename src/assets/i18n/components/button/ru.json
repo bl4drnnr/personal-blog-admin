@@ -79,5 +79,8 @@
   "addSocial": "Добавить социальный",
   "addNewSocial": "Добавить новый социальный",
   "deleteSocial": "Удалить социальный",
-  "editSocial": "Редактировать социальный"
+  "editSocial": "Редактировать социальный",
+  "addExperiencePosition": "Добавить позицию опыта",
+  "addNewExperiencePosition": "Добавить новую позицию опыта",
+  "deleteExperiencePosition": "Удалить позицию опыта"
 }

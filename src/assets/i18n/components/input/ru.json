@@ -107,6 +107,9 @@
   "certObtainedSkillLabel": "Навыки, полученные при сертификации",
   "certObtainedSkillPlaceholder": "Укажите навыки, которые вы получили при получении этой сертификации",
   "certObtainedSkillDesc": "Нажмите пробел, чтобы добавить новый, и щелкните по существующему, чтобы удалить его",
+  "expObtainedSkillLabel": "Опыт полученных навыков",
+  "expObtainedSkillPlaceholder": "Укажите навыки, которые вы получили, работая здесь",
+  "expObtainedSkillDesc": "Нажмите пробел, чтобы добавить новый, и нажмите на существующий, чтобы удалить его",
   "authorQueryLabel": "Запрос автора",
   "authorQueryPlaceholder": "Укажите запрос автора для поиска",
   "authorQueryDesc": "Статьи будут найдены по их названиям и описанию",
@@ -139,5 +142,17 @@
   "socialLinkDesc": "Укажите ссылку на ваши социальные сети",
   "socialTitleLabel": "Заголовок социальной ссылки",
   "socialTitlePlaceholder": "Укажите заголовок социальной ссылки",
-  "socialTitleDesc": "Укажите заголовок, под которым эта ссылка будет доступна"
+  "socialTitleDesc": "Укажите заголовок, под которым эта ссылка будет доступна",
+  "expPositionTitleLabel": "Опыт должности",
+  "expPositionTitlePlaceholder": "Укажите название должности",
+  "expPositionTitleDesc": "Это должно быть официальное название вашей должности",
+  "expPositionDescLabel": "Описание должности",
+  "expPositionDescPlaceholder": "Предоставьте описание должности",
+  "expPositionDescDesc": "Опишите, чем вы занимались/занимались, работая на этой должности",
+  "expPositionStartDateLabel": "Дата начала работы на должности",
+  "expPositionStartDatePlaceholder": "Укажите дату начала работы на должности",
+  "expPositionStartDateDesc": "Укажите дату начала работы на этой должности",
+  "expPositionEndDateLabel": "Дата окончания работы на должности",
+  "expPositionEndDatePlaceholder": "Укажите дату окончания работы на должности",
+  "expPositionEndDateDesc": "Укажите дату окончания работы на этой должности. Оставьте поле пустым, если вы все еще работаете там"
 }

@@ -1,3 +1,5 @@
+import { ExperiencePositionResponse } from '@interfaces/experience-position-response.interface';
+
 export interface GetExperienceByIdResponse {
   id: string;
   companyName: string;
@@ -12,6 +14,5 @@ export interface GetExperienceByIdResponse {
   authorId: string;
   createdAt: Date;
   updatedAt: Date;
-  // @TODO
-  // experiencePositions
+  experiencePositions: Array<ExperiencePositionResponse>;
 }

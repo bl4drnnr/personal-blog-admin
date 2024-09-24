@@ -107,6 +107,9 @@
   "certObtainedSkillLabel": "Umiejętności uzyskane w ramach certyfikacji",
   "certObtainedSkillPlaceholder": "Podaj umiejętności, które uzyskałeś podczas uzyskiwania tej certyfikacji",
   "certObtainedSkillDesc": "Naciśnij spację, aby dodać nową, a następnie kliknij istniejącą, aby ją usunąć",
+  "expObtainedSkillLabel": "Doświadczenie zdobyte umiejętności",
+  "expObtainedSkillPlaceholder": "Podaj umiejętności, które zdobyłeś podczas pracy tutaj",
+  "expObtainedSkillDesc": "Naciśnij spację, aby dodać nowe i kliknij na istniejące, aby je usunąć",
   "authorQueryLabel": "Zapytanie autora",
   "authorQueryPlaceholder": "Podaj zapytanie autora do wyszukania",
   "authorQueryDesc": "Artykuły zostaną znalezione na podstawie ich nazw i opisu",
@@ -139,5 +142,17 @@
   "socialLinkDesc": "Podaj link do swoich mediów społecznościowych",
   "socialTitleLabel": "Tytuł linku społecznościowego",
   "socialTitlePlaceholder": "Podaj tytuł linku społecznościowego",
-  "socialTitleDesc": "Podaj tytuł, pod którym ten link będzie dostępny"
+  "socialTitleDesc": "Podaj tytuł, pod którym ten link będzie dostępny",
+  "expPositionTitleLabel": "Doświadczenie tytuł stanowiska",
+  "expPositionTitlePlaceholder": "Podaj tytuł stanowiska",
+  "expPositionTitleDesc": "Powinna to być oficjalna nazwa stanowiska",
+  "expPositionDescLabel": "Opis stanowiska doświadczenia",
+  "expPositionDescPlaceholder": "Podaj opis stanowiska",
+  "expPositionDescDesc": "Opisz, co robiłeś/robiłaś pracując na tym stanowisku",
+  "expPositionStartDateLabel": "Data rozpoczęcia pracy na stanowisku z doświadczeniem",
+  "expPositionStartDatePlaceholder": "Podaj datę rozpoczęcia pracy na stanowisku z doświadczeniem",
+  "expPositionStartDateDesc": "Podaj datę rozpoczęcia pracy na tym stanowisku",
+  "expPositionEndDateLabel": "Data zakończenia pracy na stanowisku z doświadczeniem",
+  "expPositionEndDatePlaceholder": "Podaj datę zakończenia pracy na tym stanowisku",
+  "expPositionEndDateDesc": "Podaj datę zakończenia pracy na tym stanowisku. Pozostaw puste, jeśli nadal tam pracujesz"
 }

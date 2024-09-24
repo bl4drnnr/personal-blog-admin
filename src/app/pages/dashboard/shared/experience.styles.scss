@@ -56,3 +56,29 @@
     background: var(--color-hover);
   }
 }
+
+.experience-position-box {
+  display: flex;
+}
+
+.create-experience-inputs {
+  display: flex;
+}
+
+.create-experience-inputs-block {
+  width: 100%;
+
+  &.margin-right {
+    margin-right: 5px;
+  }
+
+  &.margin-left {
+    margin-left: 5px;
+  }
+
+  &.button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+}

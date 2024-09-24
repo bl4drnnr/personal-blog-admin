@@ -52,21 +52,25 @@ export class CreateAuthorComponent implements OnInit {
 
     this.authorsService.createAuthor({ ...payload }).subscribe({
       next: async ({ authorId }) => {
-        if (this.socials.length > 0) {
-          for (const social of this.socials) {
-            const socialPayload: CreateSocialPayload = {
-              authorId,
-              ...social
-            };
-            this.socialsService
-              .createSocial({ ...socialPayload })
-              .subscribe();
-          }
-        }
-
+        this.handleSocialsCreation(authorId);
         await this.handleRedirect(`account/author/${authorId}`);
       }
     });
+  }
+
+  handleSocialsCreation(authorId: string) {
+    if (this.socials.length === 0) return;
+
+    for (const social of this.socials) {
+      const socialPayload: CreateSocialPayload = {
+        authorId,
+        ...social
+      };
+
+      this.socialsService
+        .createSocial({ ...socialPayload })
+        .subscribe();
+    }
   }
 
   async fetchUserInfo() {
@@ -92,18 +96,19 @@ export class CreateAuthorComponent implements OnInit {
     );
 
     if (isSocialLinkPresent || isSocialTitlePresent) {
-      await this.globalMessageService.handleWarning({
-        message: 'tag-is-already-on-the-list'
+      return await this.globalMessageService.handleWarning({
+        message: 'is-already-on-the-list'
       });
-    } else {
-      this.socials.push({
-        link: this.socialLink,
-        title: this.socialTitle
-      });
-      this.socialLink = '';
-      this.socialTitle = '';
-      this.addingSocial = false;
     }
+
+    this.socials.push({
+      link: this.socialLink,
+      title: this.socialTitle
+    });
+
+    this.socialLink = '';
+    this.socialTitle = '';
+    this.addingSocial = false;
   }
 
   deleteSocial(social: SocialInterface) {

@@ -107,6 +107,9 @@
   "certObtainedSkillLabel": "Certification obtained skills",
   "certObtainedSkillPlaceholder": "Provide skills that you obtained while getting this certification",
   "certObtainedSkillDesc": "Press Space to add the new one and click on the existing one to delete it",
+  "expObtainedSkillLabel": "Experience obtained skills",
+  "expObtainedSkillPlaceholder": "Provide skills that you obtained while working here",
+  "expObtainedSkillDesc": "Press Space to add the new one and click on the existing one to delete it",
   "authorQueryLabel": "Author query",
   "authorQueryPlaceholder": "Provide author query to search for",
   "authorQueryDesc": "The articles will be found based on their names and description",
@@ -139,5 +142,17 @@
   "socialLinkDesc": "Provide the link to your social media",
   "socialTitleLabel": "Social link title",
   "socialTitlePlaceholder": "Provide the social link title",
-  "socialTitleDesc": "Provide the title under which this link will be available"
+  "socialTitleDesc": "Provide the title under which this link will be available",
+  "expPositionTitleLabel": "Experience position title",
+  "expPositionTitlePlaceholder": "Provide the title of the position",
+  "expPositionTitleDesc": "It should be your official position name",
+  "expPositionDescLabel": "Experience position description",
+  "expPositionDescPlaceholder": "Provide the description of the position",
+  "expPositionDescDesc": "Describe what you had/have been doing working on this position",
+  "expPositionStartDateLabel": "Experience position start date",
+  "expPositionStartDatePlaceholder": "Provide the experience position start date",
+  "expPositionStartDateDesc": "Provide the date when you started on this position",
+  "expPositionEndDateLabel": "Experience position end date",
+  "expPositionEndDatePlaceholder": "Provide the experience position end date",
+  "expPositionEndDateDesc": "Provide the date when you finished on this position. Leave blank if you are still working there"
 }

@@ -9,6 +9,9 @@ import { CreateExperiencePayload } from '@payloads/create-experience.interface';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
 import { GlobalMessageService } from '@shared/global-message.service';
+import { ExperiencePositionInterface } from '@interfaces/experience-position.interface';
+import { ValidationService } from '@services/validation.service';
+import { CreateExperiencePositionPayload } from '@payloads/create-experience-position.interface';
 
 @Component({
   selector: 'page-create-experience',
@@ -31,6 +34,12 @@ export class CreateExperienceComponent implements OnInit {
   experienceObtainedSkills: Array<string> = [];
   authorId: string;
   authorSearchQuery: string;
+  experiencePositions: Array<ExperiencePositionInterface> = [];
+  experiencePositionTitle: string;
+  experiencePositionDescription: string;
+  experiencePositionStartDate: string;
+  experiencePositionEndDate: string;
+  addingExperiencePosition = false;
 
   userInfo: UserInfoResponse;
   authors: Array<ListAuthor> = [];
@@ -39,6 +48,7 @@ export class CreateExperienceComponent implements OnInit {
     private readonly router: Router,
     private readonly authorsService: AuthorsService,
     private readonly experienceService: ExperienceService,
+    private readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -63,11 +73,36 @@ export class CreateExperienceComponent implements OnInit {
     return this.experienceService
       .createExperience({ ...payload })
       .subscribe({
-        next: async ({ experienceId }) =>
+        next: async ({ experienceId }) => {
+          this.handleExperiencePositionsCreation(experienceId);
           await this.handleRedirect(
             `account/experience/${experienceId}`
-          )
+          );
+        }
       });
+  }
+
+  handleExperiencePositionsCreation(experienceId: string) {
+    if (this.experiencePositions.length === 0) return;
+
+    for (const experiencePosition of this.experiencePositions) {
+      const experiencePositionPayload: CreateExperiencePositionPayload =
+        {
+          experienceId,
+          positionTitle: experiencePosition.positionTitle,
+          positionDescription: experiencePosition.positionDescription,
+          positionStartDate: new Date(
+            experiencePosition.positionStartDate
+          ),
+          positionEndDate: new Date(
+            experiencePosition.positionEndDate
+          )
+        };
+
+      this.experienceService
+        .createExperiencePosition({ ...experiencePositionPayload })
+        .subscribe();
+    }
   }
 
   listAuthors() {
@@ -96,6 +131,52 @@ export class CreateExperienceComponent implements OnInit {
     this.authorId = author.id;
     this.authorSearchQuery = `${author.firstName} ${author.lastName}`;
     this.authors = [];
+  }
+
+  async addExperiencePosition() {
+    const isExperienceTitlePresent = this.experiencePositions.find(
+      ({ positionTitle }) =>
+        this.experiencePositionTitle === positionTitle
+    );
+
+    if (isExperienceTitlePresent) {
+      return await this.globalMessageService.handleWarning({
+        message: 'is-already-on-the-list'
+      });
+    }
+
+    this.experiencePositions.push({
+      positionTitle: this.experiencePositionTitle,
+      positionDescription: this.experiencePositionDescription,
+      positionStartDate: this.experiencePositionStartDate,
+      positionEndDate: this.experiencePositionEndDate
+    });
+
+    this.experiencePositionTitle = '';
+    this.experiencePositionDescription = '';
+    this.experiencePositionStartDate = '';
+    this.experiencePositionEndDate = '';
+    this.addingExperiencePosition = false;
+  }
+
+  deleteExperiencePosition(
+    experiencePosition: ExperiencePositionInterface
+  ) {
+    this.experiencePositions =
+      this.validationService.deleteObjectFromArray(
+        this.experiencePositions,
+        'positionTitle',
+        experiencePosition.positionTitle
+      );
+  }
+
+  addingExperiencePositionDisabled() {
+    return (
+      !this.experiencePositionTitle ||
+      !this.experiencePositionDescription ||
+      !this.experiencePositionStartDate ||
+      !this.experiencePositionEndDate
+    );
   }
 
   async fetchUserInfo() {

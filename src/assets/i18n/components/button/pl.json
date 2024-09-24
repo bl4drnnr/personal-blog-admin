@@ -79,5 +79,8 @@
   "addSocial": "Dodaj social",
   "addNewSocial": "Dodaj nowy social",
   "deleteSocial": "Usuń social",
-  "editSocial": "Edytuj social"
+  "editSocial": "Edytuj social",
+  "addExperiencePosition": "Dodaj stanowisko doświadczenia",
+  "addNewExperiencePosition": "Dodaj nowe stanowisko doświadczenia",
+  "deleteExperiencePosition": "Usuń pozycję doświadczenia"
 }
