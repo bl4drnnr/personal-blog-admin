@@ -1,27 +1,5 @@
 @import 'variables';
 
-.preview-wrapper {
-  background-color: #1a1a1a;
-}
-
-.hero-section {
-  display: flex;
-  overflow: hidden;
-  height: 35vh;
-  min-height: 35vh;
-  padding: 5vw 5vw 2.5vw;
-  justify-content: flex-start;
-  align-items: flex-end;
-
-  @media screen and (max-width: 991px) {
-    height: 70vh;
-  }
-
-  @media screen and (max-width: 479px) {
-    padding-bottom: 5vw;
-  }
-}
-
 .blog-post-header-wrapper {
   flex-direction: column;
   align-items: flex-start;

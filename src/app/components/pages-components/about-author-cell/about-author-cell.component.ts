@@ -5,7 +5,7 @@ import { EnvService } from '@shared/env.service';
 @Component({
   selector: 'component-about-author-cell',
   templateUrl: './about-author-cell.component.html',
-  styleUrl: '../shared/preview.styles.scss'
+  styleUrls: ['../shared/preview.styles.scss', '../shared/preview-about.styles.scss']
 })
 export class AboutAuthorCellComponent {
   @Input() image: string;

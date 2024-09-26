@@ -2,17 +2,17 @@
   [src]="authorsStaticStorage + image"
   [alt]="image"
   loading="lazy"
-  class="image-cover"
+  class="preview-image-cover"
 >
-<div class="about-block-info">
-  <p class="paragraph eyebrow">
-    <strong class="bold-text-6">
-      <em class="italic-text-2">{{ title }}</em>
+<div class="preview-about-block-info">
+  <p class="preview-paragraph preview-eyebrow">
+    <strong class="preview-bold-text-6">
+      <em class="preview-italic-text-2">{{ title }}</em>
     </strong>
   </p>
-  <h2 class="about-cell-name-two">{{ firstName }} {{ lastName }}</h2>
-  <p class="paragraph intro-paragraph inhouse about-cell-desc">{{ description }}</p>
-  <div class="about-cell-social-link-cell">
+  <h2 class="preview-h2 preview-about-cell-name-two">{{ firstName }} {{ lastName }}</h2>
+  <p class="preview-paragraph preview-intro-paragraph inhouse preview-about-cell-desc">{{ description }}</p>
+  <div class="preview-about-cell-social-link-cell">
     <basic-social-link
       *ngFor="let socialLink of socialLinks"
       [link]="socialLink.link"

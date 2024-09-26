@@ -5,7 +5,7 @@ import { EnvService } from '@shared/env.service';
 @Component({
   selector: 'page-component-preview-article',
   templateUrl: './preview-article.component.html',
-  styleUrl: './preview-article.component.scss'
+  styleUrls: ['./preview-article.component.scss', '../shared/preview.styles.scss']
 })
 export class PreviewArticleComponent {
   @Input() articleCategory: string;

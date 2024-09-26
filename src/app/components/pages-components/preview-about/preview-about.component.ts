@@ -8,7 +8,7 @@ import { GetSelectedAuthorResponse } from '@responses/get-selected-author.interf
 @Component({
   selector: 'page-component-preview-about',
   templateUrl: './preview-about.component.html',
-  styleUrl: '../shared/preview.styles.scss'
+  styleUrls: ['../shared/preview-about.styles.scss', '../shared/preview.styles.scss']
 })
 export class PreviewAboutComponent implements OnInit {
   @Input() getMembers: boolean = false;
