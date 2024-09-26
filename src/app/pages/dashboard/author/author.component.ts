@@ -13,7 +13,7 @@ import { Titles } from '@interfaces/titles.enum';
 import { EditAuthorPayload } from '@payloads/edit-author.interface';
 import { ValidationService } from '@services/validation.service';
 import { SocialsService } from '@services/socials.service';
-import { SocialResponse } from '@interfaces/social-response.interface';
+import { SocialInterface } from '@interfaces/social.interface';
 
 @Component({
   selector: 'page-author',
@@ -27,10 +27,11 @@ export class AuthorComponent implements OnInit {
 
   authorFirstName: string;
   authorLastName: string;
+  authorTitle: string;
   authorDescription: string;
   selectedFiles?: FileList;
   authorImage: string;
-  authorSocials: Array<SocialResponse> = [];
+  authorSocials: Array<SocialInterface> = [];
   authorNewImage: string | ArrayBuffer | null = '';
   isSelected: boolean;
   authorCreatedAt: Date;
@@ -49,7 +50,7 @@ export class AuthorComponent implements OnInit {
     private readonly envService: EnvService,
     private readonly authorsService: AuthorsService,
     private readonly socialsService: SocialsService,
-    private readonly validationService: ValidationService,
+    protected readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -73,6 +74,7 @@ export class AuthorComponent implements OnInit {
           }));
           this.authorFirstName = author.firstName;
           this.authorLastName = author.lastName;
+          this.authorTitle = author.title;
           this.authorDescription = author.description;
           this.authorImage = author.profilePicture;
           this.isSelected = author.isSelected;
@@ -94,6 +96,8 @@ export class AuthorComponent implements OnInit {
       authorPayload.lastName = this.authorLastName;
     if (this.author.description !== this.authorDescription)
       authorPayload.description = this.authorDescription;
+    if (this.author.title !== this.authorTitle)
+      authorPayload.title = this.authorTitle;
     if (this.authorNewImage)
       authorPayload.profilePicture = this.authorNewImage as string;
 
@@ -230,7 +234,7 @@ export class AuthorComponent implements OnInit {
     this.addingSocial = false;
   }
 
-  deleteSocial(social: SocialResponse) {
+  deleteSocial(social: SocialInterface) {
     if (social.hasOwnProperty('id')) {
       this.socialsService
         .deleteSocial({
@@ -271,6 +275,7 @@ export class AuthorComponent implements OnInit {
     return (
       this.author.firstName !== this.authorFirstName ||
       this.author.lastName !== this.authorLastName ||
+      this.author.title !== this.authorTitle ||
       this.author.description !== this.authorDescription ||
       this.authorNewImage ||
       !areAuthorSocialsEqual

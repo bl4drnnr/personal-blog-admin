@@ -16,12 +16,21 @@ import { DeleteAuthorPayload } from '@payloads/delete-author.interface';
 import { AuthorDeletedResponse } from '@responses/author-deleted.interface';
 import { EditAuthorPayload } from '@payloads/edit-author.interface';
 import { AuthorUpdatedResponse } from '@responses/author-updated.interface';
+import { GetSelectedAuthorResponse } from '@responses/get-selected-author.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorsService {
   constructor(private readonly apiService: ApiService) {}
+
+  getSelectedAuthor(): Observable<GetSelectedAuthorResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.ABOUT_BLOG,
+      action: AuthorsEndpoint.GET_SELECTED_AUTHOR
+    });
+  }
 
   getAuthorById(params: GetAuthorByIdPayload): Observable<GetAuthorByIdResponse> {
     return this.apiService.apiProxyRequest({
@@ -74,7 +83,7 @@ export class AuthorsService {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.ABOUT_BLOG,
-      action: AuthorsEndpoint.UPDATED_AUTHOR,
+      action: AuthorsEndpoint.UPDATE_AUTHOR,
       payload
     });
   }

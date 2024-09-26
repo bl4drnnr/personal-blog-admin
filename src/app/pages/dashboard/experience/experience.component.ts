@@ -15,7 +15,7 @@ import { GetAuthorByIdResponse } from '@responses/get-author-by-id.interface';
 import { EditExperiencePayload } from '@payloads/edit-experience.interface';
 import { MessagesTranslation } from '@translations/messages.enum';
 import { ValidationService } from '@services/validation.service';
-import { ExperiencePositionResponse } from '@interfaces/experience-position-response.interface';
+import { ExperiencePositionInterface } from '@interfaces/experience-position.interface';
 
 @Component({
   selector: 'page-experience',
@@ -42,7 +42,7 @@ export class ExperienceComponent implements OnInit {
   experienceEndDate: string;
   experienceEditMode = false;
 
-  experiencePositions: Array<ExperiencePositionResponse> = [];
+  experiencePositions: Array<ExperiencePositionInterface> = [];
   experiencePositionTitle: string;
   experiencePositionDescription: string;
   experiencePositionStartDate: string;
@@ -59,7 +59,7 @@ export class ExperienceComponent implements OnInit {
     private readonly envService: EnvService,
     private readonly authorsService: AuthorsService,
     private readonly experienceService: ExperienceService,
-    private readonly validationService: ValidationService,
+    protected readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -191,7 +191,7 @@ export class ExperienceComponent implements OnInit {
     this.addingExperiencePosition = false;
   }
 
-  deleteExperiencePosition(experiencePosition: ExperiencePositionResponse) {
+  deleteExperiencePosition(experiencePosition: ExperiencePositionInterface) {
     if (experiencePosition.hasOwnProperty('id')) {
       this.experienceService
         .deleteExperiencePosition({
@@ -220,7 +220,7 @@ export class ExperienceComponent implements OnInit {
   }
 
   changeExperiencePositionDate(
-    experiencePosition: ExperiencePositionResponse,
+    experiencePosition: ExperiencePositionInterface,
     positionDate: 'start' | 'end',
     updatedDate: string
   ) {

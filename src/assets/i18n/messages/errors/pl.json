@@ -91,7 +91,9 @@
     "wrong-position-desc-length": "Nieprawidłowa długość opisu stanowiska",
     "wrong-social-title-format": "Nieprawidłowy format tytułu społecznościowego",
     "wrong-social-title-length": "Nieprawidłowa długość tytułu społecznościowego",
-    "wrong-social-id-format": "Nieprawidłowy format identyfikatora społecznościowego"
+    "wrong-social-id-format": "Nieprawidłowy format identyfikatora społecznościowego",
+    "wrong-author-title-format": "Nieprawidłowy format tytułu autora",
+    "wrong-author-title-length": "Nieprawidłowa długość tytułu autora"
   },
   "wrong-timeframe": "Niewłaściwy przedział czasowy",
   "invalid-recovery-keys": "Nieprawidłowe klucze odzyskiwania",

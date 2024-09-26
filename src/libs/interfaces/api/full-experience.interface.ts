@@ -1,6 +1,6 @@
 import { ExperiencePositionInterface } from '@interfaces/experience-position.interface';
 
-export interface GetExperienceByIdResponse {
+export interface FullExperience {
   id: string;
   companyName: string;
   companyDescription: string;
@@ -10,8 +10,6 @@ export interface GetExperienceByIdResponse {
   startDate: Date;
   endDate: Date;
   isSelected: boolean;
-  obtainedSkills: Array<string>;
-  authorId: string;
   createdAt: Date;
   updatedAt: Date;
   experiencePositions: Array<ExperiencePositionInterface>;

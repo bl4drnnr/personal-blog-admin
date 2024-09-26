@@ -89,6 +89,9 @@
   "authorLastNameLabel": "Nazwisko autora",
   "authorLastNamePlaceholder": "Podaj nazwisko autora",
   "authorLastNameDesc": "Nazwisko będzie wyświetlane na stronie O mnie i pod artykułami",
+  "authorTitleLabel": "Tytuł autora",
+  "authorTitlePlaceholder": "Podaj tytuł autora",
+  "authorTitleDesc": "Tytuł powinien zawierać wszystko, co może opisać stanowisko",
   "authorDescLabel": "Opis autora",
   "authorDescPlaceholder": "Podaj opis autora",
   "authorDescDesc": "Opis autora to kilka zdań o autorze, które będą wyświetlane tylko na stronie O mnie",
@@ -154,5 +157,6 @@
   "expPositionStartDateDesc": "Podaj datę rozpoczęcia pracy na tym stanowisku",
   "expPositionEndDateLabel": "Data zakończenia pracy na stanowisku z doświadczeniem",
   "expPositionEndDatePlaceholder": "Podaj datę zakończenia pracy na tym stanowisku",
-  "expPositionEndDateDesc": "Podaj datę zakończenia pracy na tym stanowisku. Pozostaw puste, jeśli nadal tam pracujesz"
+  "expPositionEndDateDesc": "Podaj datę zakończenia pracy na tym stanowisku. Pozostaw puste, jeśli nadal tam pracujesz",
+  "wrongFQDN": "Niewłaściwa w pełni kwalifikowana nazwa domeny (URL)"
 }

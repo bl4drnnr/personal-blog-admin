@@ -23,6 +23,8 @@
         [label]="t('input.experienceCompanyLinkLabel')"
         [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
         [inputDescription]="t('input.experienceCompanyLinkDesc')"
+        [showError]="!validationService.isFQDN(companyLink)"
+        [errorMessage]="t('input.wrongFQDN')"
         [value]="companyLink"
         (valueChange)="companyLink = $event"
       />
@@ -126,16 +128,16 @@
             [label]="t('input.expPositionStartDateLabel')"
             [placeholder]="t('input.expPositionStartDatePlaceholder')"
             [inputDescription]="t('input.expPositionStartDateDesc')"
-            [value]="experiencePositionStartDate"
-            (valueChange)="experiencePositionStartDate = $event"
+            [value]="dayjs(experiencePositionStartDate).format('YYYY-MM-DD')"
+            (valueChange)="changeExperiencePositionStartDate($event)"
           />
           <basic-input
             type="date"
             [label]="t('input.expPositionEndDateLabel')"
             [placeholder]="t('input.expPositionEndDatePlaceholder')"
             [inputDescription]="t('input.expPositionEndDateDesc')"
-            [value]="experiencePositionEndDate"
-            (valueChange)="experiencePositionEndDate = $event"
+            [value]="dayjs(experiencePositionEndDate).format('YYYY-MM-DD')"
+            (valueChange)="changeExperiencePositionEndDate($event)"
           />
         </div>
       </div>
@@ -169,8 +171,8 @@
               [label]="t('input.expPositionStartDateLabel')"
               [placeholder]="t('input.expPositionStartDatePlaceholder')"
               [inputDescription]="t('input.expPositionStartDateDesc')"
-              [value]="experiencePosition.positionStartDate"
-              (valueChange)="experiencePosition.positionStartDate = $event"
+              [value]="dayjs(experiencePosition.positionStartDate).format('YYYY-MM-DD')"
+              (valueChange)="changeExperiencePositionDate(experiencePosition, 'start', $event)"
             />
           </div>
           <div class="create-experience-inputs-block">
@@ -179,8 +181,8 @@
               [label]="t('input.expPositionEndDateLabel')"
               [placeholder]="t('input.expPositionEndDatePlaceholder')"
               [inputDescription]="t('input.expPositionEndDateDesc')"
-              [value]="experiencePosition.positionEndDate"
-              (valueChange)="experiencePosition.positionEndDate = $event"
+              [value]="dayjs(experiencePosition.positionEndDate).format('YYYY-MM-DD')"
+              (valueChange)="changeExperiencePositionDate(experiencePosition, 'end', $event)"
             />
           </div>
           <div class="create-experience-inputs-block margin-left button">

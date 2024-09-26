@@ -9,7 +9,7 @@ import { PreviewArticleComponent } from '@components/preview-article/preview-art
 import { PreviewAboutComponent } from '@components/preview-about/preview-about.component';
 import { AboutCertsCellComponent } from '@components/about-certs-cell/about-certs-cell.component';
 import { AboutExperienceCellComponent } from '@components/about-experience-cell/about-experience-cell.component';
-import { AboutTeamCellComponent } from '@components/about-team-cell/about-team-cell.component';
+import { AboutAuthorCellComponent } from '@components/about-author-cell/about-author-cell.component';
 
 const components = [
   RecoveryKeysComponent,
@@ -19,7 +19,7 @@ const components = [
   PreviewAboutComponent,
   AboutCertsCellComponent,
   AboutExperienceCellComponent,
-  AboutTeamCellComponent
+  AboutAuthorCellComponent
 ];
 
 @NgModule({

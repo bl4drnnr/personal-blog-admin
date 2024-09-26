@@ -41,6 +41,7 @@
         <img
           [src]="staticStorage + author.profilePicture"
           alt="author-picture"
+          class="author-pic-wrapper"
         >
       </div>
 
@@ -58,6 +59,13 @@
           [inputDescription]="t('input.authorLastNameDesc')"
           [value]="authorLastName"
           (valueChange)="authorLastName = $event"
+        />
+        <basic-input
+          [label]="t('input.authorTitleLabel')"
+          [placeholder]="t('input.authorTitlePlaceholder')"
+          [inputDescription]="t('input.authorTitleDesc')"
+          [value]="authorTitle"
+          (valueChange)="authorTitle = $event"
         />
         <basic-input
           [label]="t('input.authorDescLabel')"
@@ -85,6 +93,8 @@
             [label]="t('input.socialLinkLabel')"
             [placeholder]="t('input.socialLinkPlaceholder')"
             [inputDescription]="t('input.socialLinkDesc')"
+            [showError]="!validationService.isFQDN(socialLink)"
+            [errorMessage]="t('input.wrongFQDN')"
             [value]="socialLink"
             (valueChange)="socialLink = $event"
           />
@@ -107,6 +117,8 @@
                 [label]="t('input.socialLinkLabel')"
                 [placeholder]="t('input.socialLinkPlaceholder')"
                 [inputDescription]="t('input.socialLinkDesc')"
+                [showError]="!validationService.isFQDN(social.link)"
+                [errorMessage]="t('input.wrongFQDN')"
                 [value]="social.link"
                 (valueChange)="social.link = $event"
               />
@@ -176,8 +188,8 @@
     <div *ngIf="!authorEditMode">
       <page-component-preview-about
         [getMembers]="true"
-        [getExperience]="true"
-        [getCertifications]="true"
+        [getExperience]="false"
+        [getCertifications]="false"
       />
     </div>
   </ng-container>

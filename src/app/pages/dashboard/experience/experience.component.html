@@ -50,6 +50,8 @@
           [label]="t('input.experienceCompanyLinkLabel')"
           [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
           [inputDescription]="t('input.experienceCompanyLinkDesc')"
+          [showError]="!validationService.isFQDN(experienceCompanyLink)"
+          [errorMessage]="t('input.wrongFQDN')"
           [value]="experienceCompanyLink"
           (valueChange)="experienceCompanyLink = $event"
         />

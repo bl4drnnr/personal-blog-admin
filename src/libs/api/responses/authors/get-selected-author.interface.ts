@@ -1,8 +1,8 @@
-import { ListCertification } from '@interfaces/list-certification.interface';
-import { ListExperience } from '@interfaces/list-experience.interface';
 import { SocialInterface } from '@interfaces/social.interface';
+import { ListCertification } from '@interfaces/list-certification.interface';
+import { FullExperience } from '@interfaces/full-experience.interface';
 
-export interface GetAuthorByIdResponse {
+export interface GetSelectedAuthorResponse {
   id: string;
   firstName: string;
   lastName: string;
@@ -15,5 +15,5 @@ export interface GetAuthorByIdResponse {
   updatedAt: Date;
   socials: Array<SocialInterface>;
   certs: Array<ListCertification>;
-  experiences: Array<ListExperience>;
+  experiences: Array<FullExperience>;
 }

@@ -1,6 +1,9 @@
 export interface ExperiencePositionInterface {
+  id?: string;
   positionTitle: string;
   positionDescription: string;
-  positionStartDate: string;
-  positionEndDate: string;
+  positionStartDate: Date;
+  positionEndDate: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

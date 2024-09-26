@@ -20,6 +20,13 @@
         (valueChange)="lastName = $event"
       />
       <basic-input
+        [label]="t('input.authorTitleLabel')"
+        [placeholder]="t('input.authorTitlePlaceholder')"
+        [inputDescription]="t('input.authorTitleDesc')"
+        [value]="title"
+        (valueChange)="title = $event"
+      />
+      <basic-input
         [label]="t('input.authorDescLabel')"
         [placeholder]="t('input.authorDescPlaceholder')"
         [inputDescription]="t('input.authorDescDesc')"
@@ -45,6 +52,8 @@
           [label]="t('input.socialLinkLabel')"
           [placeholder]="t('input.socialLinkPlaceholder')"
           [inputDescription]="t('input.socialLinkDesc')"
+          [showError]="!validationService.isFQDN(socialLink)"
+          [errorMessage]="t('input.wrongFQDN')"
           [value]="socialLink"
           (valueChange)="socialLink = $event"
         />
@@ -67,6 +76,8 @@
               [label]="t('input.socialLinkLabel')"
               [placeholder]="t('input.socialLinkPlaceholder')"
               [inputDescription]="t('input.socialLinkDesc')"
+              [showError]="!validationService.isFQDN(social.link)"
+              [errorMessage]="t('input.wrongFQDN')"
               [value]="social.link"
               (valueChange)="social.link = $event"
             />

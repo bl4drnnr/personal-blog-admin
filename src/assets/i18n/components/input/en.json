@@ -89,6 +89,9 @@
   "authorLastNameLabel": "Author last name",
   "authorLastNamePlaceholder": "Provide author's last name",
   "authorLastNameDesc": "Last name name will be displayed on the About page and under the articles",
+  "authorTitleLabel": "Author title",
+  "authorTitlePlaceholder": "Provide author's title",
+  "authorTitleDesc": "Title should include anything that can describe the position",
   "authorDescLabel": "Author's description",
   "authorDescPlaceholder": "Provide author's description",
   "authorDescDesc": "Author's description is the couple of sentences about the author that is going to be displayed only on the About page",
@@ -154,5 +157,6 @@
   "expPositionStartDateDesc": "Provide the date when you started on this position",
   "expPositionEndDateLabel": "Experience position end date",
   "expPositionEndDatePlaceholder": "Provide the experience position end date",
-  "expPositionEndDateDesc": "Provide the date when you finished on this position. Leave blank if you are still working there"
+  "expPositionEndDateDesc": "Provide the date when you finished on this position. Leave blank if you are still working there",
+  "wrongFQDN": "Wrong fully qualified domain name (URL)"
 }

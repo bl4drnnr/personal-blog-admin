@@ -12,6 +12,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { ExperiencePositionInterface } from '@interfaces/experience-position.interface';
 import { ValidationService } from '@services/validation.service';
 import { CreateExperiencePositionPayload } from '@payloads/create-experience-position.interface';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'page-create-experience',
@@ -38,8 +39,8 @@ export class CreateExperienceComponent implements OnInit {
   experiencePositions: Array<ExperiencePositionInterface> = [];
   experiencePositionTitle: string;
   experiencePositionDescription: string;
-  experiencePositionStartDate: string;
-  experiencePositionEndDate: string;
+  experiencePositionStartDate: Date | null;
+  experiencePositionEndDate: Date | null;
   addingExperiencePosition = false;
 
   userInfo: UserInfoResponse;
@@ -49,7 +50,7 @@ export class CreateExperienceComponent implements OnInit {
     private readonly router: Router,
     private readonly authorsService: AuthorsService,
     private readonly experienceService: ExperienceService,
-    private readonly validationService: ValidationService,
+    protected readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -137,14 +138,14 @@ export class CreateExperienceComponent implements OnInit {
     this.experiencePositions.push({
       positionTitle: this.experiencePositionTitle,
       positionDescription: this.experiencePositionDescription,
-      positionStartDate: this.experiencePositionStartDate,
-      positionEndDate: this.experiencePositionEndDate
+      positionStartDate: this.experiencePositionStartDate as Date,
+      positionEndDate: this.experiencePositionEndDate as Date
     });
 
     this.experiencePositionTitle = '';
     this.experiencePositionDescription = '';
-    this.experiencePositionStartDate = '';
-    this.experiencePositionEndDate = '';
+    this.experiencePositionStartDate = null;
+    this.experiencePositionEndDate = null;
     this.addingExperiencePosition = false;
   }
 
@@ -163,6 +164,29 @@ export class CreateExperienceComponent implements OnInit {
       !this.experiencePositionStartDate ||
       !this.experiencePositionEndDate
     );
+  }
+
+  changeExperiencePositionStartDate(startDate: string) {
+    this.experiencePositionStartDate = new Date(startDate);
+  }
+
+  changeExperiencePositionEndDate(endDate: string) {
+    this.experiencePositionEndDate = new Date(endDate);
+  }
+
+  changeExperiencePositionDate(
+    experiencePosition: ExperiencePositionInterface,
+    positionDate: 'start' | 'end',
+    updatedDate: string
+  ) {
+    switch (positionDate) {
+      case 'start':
+        experiencePosition.positionStartDate = new Date(updatedDate);
+        break;
+      case 'end':
+        experiencePosition.positionEndDate = new Date(updatedDate);
+        break;
+    }
   }
 
   async fetchUserInfo() {
@@ -244,4 +268,6 @@ export class CreateExperienceComponent implements OnInit {
 
     await this.fetchUserInfo();
   }
+
+  protected readonly dayjs = dayjs;
 }

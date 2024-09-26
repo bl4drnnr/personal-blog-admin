@@ -19,6 +19,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 export class CreateAuthorComponent implements OnInit {
   firstName: string;
   lastName: string;
+  title: string;
   description: string;
   selectedFiles?: FileList;
   profilePicture: string;
@@ -33,7 +34,7 @@ export class CreateAuthorComponent implements OnInit {
     private readonly router: Router,
     private readonly socialsService: SocialsService,
     private readonly authorsService: AuthorsService,
-    private readonly validationService: ValidationService,
+    protected readonly validationService: ValidationService,
     private readonly translationService: TranslationService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly globalMessageService: GlobalMessageService
@@ -43,6 +44,7 @@ export class CreateAuthorComponent implements OnInit {
     const payload = {
       firstName: this.firstName,
       lastName: this.lastName,
+      title: this.title,
       description: this.description,
       profilePicture: this.profilePicture
     };
@@ -138,7 +140,11 @@ export class CreateAuthorComponent implements OnInit {
 
   disableCreateAuthorButton() {
     return (
-      !this.firstName || !this.lastName || !this.description || !this.profilePicture
+      !this.firstName ||
+      !this.lastName ||
+      !this.description ||
+      !this.profilePicture ||
+      !this.title
     );
   }
 

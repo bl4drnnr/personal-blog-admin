@@ -322,4 +322,7 @@ h1, h2, h3, h4, h5, p, span, ul, li, ol {
   --loader-background: #{rgba($color-white, 1) 0 0 no-repeat padding-box};
   --transparent-background: #{rgba($color-black, .5) 0 0 no-repeat padding-box};
   --standard-subheading: .75rem;
+  --secondary-font: "Roboto Mono", sans-serif;
+  --standard-heading: 1rem;
+  --lines: #727272;
 }

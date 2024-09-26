@@ -1,4 +1,7 @@
 export interface SocialInterface {
-  title: string;
+  id?: string;
   link: string;
+  title: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -91,7 +91,9 @@
     "wrong-position-desc-length": "Неправильная длина описания позиции",
     "wrong-social-title-format": "Неверный формат социального заголовка",
     "wrong-social-title-length": "Неверная длина социального заголовка",
-    "wrong-social-id-format": "Неверный формат социального идентификатора"
+    "wrong-social-id-format": "Неверный формат социального идентификатора",
+    "wrong-author-title-format": "Неправильный формат названия автора",
+    "wrong-author-title-length": "Неправильная длина названия автора"
   },
   "wrong-timeframe": "Неверный таймфрейм",
   "invalid-recovery-keys": "Недействительные ключи восстановления",
