@@ -27,17 +27,16 @@
 
 .certification-preview-mode {
   margin-top: 20px;
-  display: flex;
-}
-
-.cert-preview-mode-text {
-  width: 50%;
 }
 
 .cert-preview-mode-content {
-  width: 50%;
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
 }
 
 .cert-preview-mode-pic {
+  cursor: pointer;
+  object-fit: cover;
   max-width: 500px;
 }

@@ -1,5 +1,5 @@
 <div class="preview-about-body">
-  <div class="preview-wrapper">
+  <div class="preview-wrapper" *ngIf="author">
     <div class="preview-hero-section">
       <div class="preview-about-hero-content-wrapper">
         <div class="preview-about-left-hero-section">
@@ -19,27 +19,27 @@
         </div>
 
         <div class="preview-about-container">
-          <div class="preview-about-author-cell" *ngIf="selectedAuthor">
+          <div class="preview-about-author-cell">
             <component-about-author-cell
-              [title]="selectedAuthor.title"
-              [firstName]="selectedAuthor.firstName"
-              [lastName]="selectedAuthor.lastName"
-              [description]="selectedAuthor.description"
-              [image]="selectedAuthor.profilePicture"
-              [socialLinks]="selectedAuthor.socials"
+              [title]="author.title"
+              [firstName]="author.firstName"
+              [lastName]="author.lastName"
+              [description]="author.description"
+              [image]="author.profilePicture"
+              [socialLinks]="author.socials"
             />
           </div>
 
           <div class="preview-about-author-cell">
-<!--            <component-about-experience-cell-->
-<!--              [experiences]="aboutExperience"-->
-<!--            />-->
+            <component-about-experience-cell
+              [experiences]="author.experiences"
+            />
           </div>
 
           <div class="preview-about-author-cell full-width">
-            <!--        <component-about-certs-cell-->
-            <!--          [certs]="aboutCerts"-->
-            <!--        />-->
+            <component-about-certs-cell
+              [certs]="author.certs"
+            />
           </div>
         </div>
       </div>

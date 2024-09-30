@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 .preview-about-body {
-  background-color: var(--background);
+  background-color: var(--preview-background);
   color: #333;
   font-size: .75vw;
   line-height: 20px;
@@ -132,10 +132,6 @@
   display: flex;
   width: 100%;
 
-  .full-width {
-    grid-column: span 2;
-  }
-
   @media screen and (max-width: 991px) {
     width: 100%;
     margin: 0 !important;
@@ -150,4 +146,8 @@
     width: 100%;
     margin: 0 !important;
   }
+}
+
+.full-width {
+  grid-column: span 2;
 }

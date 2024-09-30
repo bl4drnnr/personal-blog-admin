@@ -61,15 +61,20 @@
 }
 
 .preview-paragraph {
-  font-family: var(--secondary-font), sans-serif;
+  font-family: var(--preview-secondary-font), sans-serif;
   color: #cacaca;
   margin-bottom: 10px;
   font-size: .75rem;
   line-height: 1.5;
 }
 
+.preview-span {
+  font-family: var(--preview-secondary-font), sans-serif;
+  color: #cacaca !important;
+}
+
 .preview-a {
-  border-bottom: 1px solid var(--lines);
+  border-bottom: 1px solid var(--preview-lines);
   color: #fff;
   font-family: Roboto Mono, sans-serif;
   font-size: 1rem;
@@ -118,7 +123,7 @@
 }
 
 .preview-span-link {
-  font-size: var(--standard-subheading);
+  font-size: var(--preview-standard-subheading);
   cursor: pointer;
 }
 
@@ -147,7 +152,7 @@
 }
 
 .preview-italic-text-2 {
-  font-size: var(--standard-heading);
+  font-size: var(--preview-standard-heading);
 }
 
 .preview-wrapper {
@@ -162,7 +167,7 @@
 }
 
 .preview-intro-paragraph {
-  font-size: var(--standard-subheading);
+  font-size: var(--preview-standard-subheading);
   margin: 0;
   padding-left: 0;
   padding-right: 0;
@@ -208,7 +213,7 @@
 .preview-about-cell-name-two {
   color: #fff;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   font-size: 2rem;
   font-weight: 700;
 }
@@ -220,4 +225,34 @@
 .preview-about-cell-social-link-cell {
   text-align: right;
   width: 100%;
+}
+
+.preview-btn-container {
+  width: 100%;
+  position: relative;
+}
+
+.preview-btn {
+  width: 100%;
+  background-color: var(--preview-button);
+  color: var(--preview-background) !important;
+  font-family: Roboto Mono, sans-serif;
+  font-size: var(--preview-standard-heading);
+  cursor: pointer;
+  transition: all .45s;
+
+  &:hover {
+    background-color: #fff;
+  }
+}
+
+.w-button {
+  display: inline-block;
+  padding: 9px 15px;
+  color: white;
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
 }

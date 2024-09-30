@@ -1,14 +1,19 @@
 import dayjs from 'dayjs';
 import { Component, Input } from '@angular/core';
 import { EnvService } from '@shared/env.service';
+import { ListCertification } from '@interfaces/list-certification.interface';
 
 @Component({
   selector: 'component-about-certs-cell',
   templateUrl: './about-certs-cell.component.html',
-  styleUrl: './about-certs-cell.component.scss'
+  styleUrls: [
+    './about-certs-cell.component.scss',
+    '../shared/preview.styles.scss',
+    '../shared/preview-about.styles.scss'
+  ]
 })
 export class AboutCertsCellComponent {
-  @Input() certs: Array<string>;
+  @Input() certs: Array<ListCertification>;
 
   constructor(private readonly envService: EnvService) {}
 

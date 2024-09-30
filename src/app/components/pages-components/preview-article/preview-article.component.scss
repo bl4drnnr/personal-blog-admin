@@ -41,7 +41,7 @@
 
 .blog-additional-info {
   font-family: Roboto Mono, sans-serif;
-  font-size: var(--standard-subheading);
+  font-size: var(--preview-standard-subheading);
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 300;
@@ -72,7 +72,7 @@
 }
 
 .rich-text-block {
-  font-size: var(--standard-subheading);
+  font-size: var(--preview-standard-subheading);
   width: 50vw;
 
   @media screen and (max-width: 991px) {
