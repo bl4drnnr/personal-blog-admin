@@ -61,7 +61,7 @@
     "wrong-category-id-format": "Неверный формат идентификатора категории",
     "wrong-article-id-format": "Неверный формат идентификатора статьи",
     "wrong-categories-length": "Неверная длина категорий",
-    "wrong-article-length": "Неверная длина статьи",
+    "wrong-articles-length": "Неверная длина статьи",
     "wrong-link-format": "Неправильный формат ссылки",
     "wrong-date-format": "Неправильный формат даты",
     "wrong-author-first-format": "Неправильный формат имени автора",
@@ -93,7 +93,8 @@
     "wrong-social-title-length": "Неверная длина социального заголовка",
     "wrong-social-id-format": "Неверный формат социального идентификатора",
     "wrong-author-title-format": "Неправильный формат названия автора",
-    "wrong-author-title-length": "Неправильная длина названия автора"
+    "wrong-author-title-length": "Неправильная длина названия автора",
+    "wrong-authors-length": "Неправильная длина автора"
   },
   "wrong-timeframe": "Неверный таймфрейм",
   "invalid-recovery-keys": "Недействительные ключи восстановления",

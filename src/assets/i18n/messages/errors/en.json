@@ -93,7 +93,8 @@
     "wrong-social-title-length": "Wrong social title length",
     "wrong-social-id-format": "Wrong social ID format",
     "wrong-author-title-format": "Wrong author title format",
-    "wrong-author-title-length": "Wrong author title length"
+    "wrong-author-title-length": "Wrong author title length",
+    "wrong-authors-length": "Wrong authors length"
   },
   "wrong-timeframe": "Wrong timeframe",
   "invalid-recovery-keys": "Invalid recovery keys",

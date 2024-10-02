@@ -17,4 +17,8 @@
   &.no-header {
     padding-top: 20px;
   }
+
+  &.with-preview {
+    padding-bottom: 0 !important;
+  }
 }
