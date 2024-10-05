@@ -10,6 +10,8 @@ export interface GetAuthorByIdResponse {
   description: string;
   profilePicture: string;
   isSelected: boolean;
+  authorLanguage: string;
+  authorCommonId: string;
   userId: string;
   createdAt: Date;
   updatedAt: Date;

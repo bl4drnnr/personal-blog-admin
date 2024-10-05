@@ -18,7 +18,7 @@
       >
         <div class="experience-info-container">
           <div class="experience-info-text-fields">
-            <h2 class="experience-info-title">{{ exp.companyName }}</h2>
+            <h2 class="experience-info-title">{{ exp.companyName }} ({{ exp.experienceLanguage.toUpperCase() }})</h2>
             <p>{{ exp.companyDescription }}</p>
             <basic-link
               [label]="exp.companyLinkTitle"
@@ -48,7 +48,7 @@
             <basic-button
               [label]="t('button.changeExpSelection')"
               [fillButton]="exp.isSelected"
-              (buttonClick)="changeExperienceSelectionStatus(exp.id)"
+              (buttonClick)="changeExperienceSelectionStatus(exp.experienceCommonId)"
             />
           </div>
           <div class="experience-control-button-wrapper">

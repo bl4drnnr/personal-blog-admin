@@ -226,9 +226,9 @@ export class CertificationComponent implements OnInit {
     this.certificationNewDocs = null;
   }
 
-  changeCertificationSelectionStatus(certificationId: string) {
+  changeCertificationSelectionStatus(certCommonId: string) {
     this.certificationsService
-      .changeCertificationSelectionStatus({ certificationId })
+      .changeCertificationSelectionStatus({ certCommonId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage = await this.translationService.translateText(
@@ -278,7 +278,7 @@ export class CertificationComponent implements OnInit {
     this.certificationNewDocs = null;
   }
 
-  selectFile(event: any) {
+  selectCertificationNewPicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

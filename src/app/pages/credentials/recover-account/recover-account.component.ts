@@ -55,7 +55,7 @@ export class RecoverAccountComponent implements OnInit {
       });
   }
 
-  selectFile(event: any) {
+  selectRecoveryKeys(event: any) {
     const file = event.target.files[0];
 
     const fileReader = new FileReader();

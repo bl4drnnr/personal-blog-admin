@@ -1,3 +1,3 @@
 export interface ChangeAuthorSelectionStatusPayload {
-  authorId: string;
+  authorCommonId: string;
 }

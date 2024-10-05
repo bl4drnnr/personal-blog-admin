@@ -9,6 +9,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { MessagesTranslation } from '@translations/messages.enum';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
+import { CreateCertInterface } from '@interfaces/create-cert.interface';
 
 @Component({
   selector: 'page-create-certification',
@@ -19,12 +20,52 @@ import { ListAuthor } from '@interfaces/list-author.interface';
   ]
 })
 export class CreateCertificationComponent implements OnInit {
+  certifications: Array<CreateCertInterface> = [
+    {
+      certName: '',
+      certDescription: '',
+      certPicture: '',
+      certDocs: '',
+      obtainingDate: new Date(),
+      expirationDate: new Date(),
+      obtainedSkills: [],
+      certLanguage: 'EN',
+      authorId: '',
+      authorName: ''
+    },
+    {
+      certName: '',
+      certDescription: '',
+      certPicture: '',
+      certDocs: '',
+      obtainingDate: new Date(),
+      expirationDate: new Date(),
+      obtainedSkills: [],
+      certLanguage: 'PL',
+      authorId: '',
+      authorName: ''
+    },
+    {
+      certName: '',
+      certDescription: '',
+      certPicture: '',
+      certDocs: '',
+      obtainingDate: new Date(),
+      expirationDate: new Date(),
+      obtainedSkills: [],
+      certLanguage: 'RU',
+      authorId: '',
+      authorName: ''
+    }
+  ];
+
   certName: string;
   certDescription: string;
   selectedFiles?: FileList;
   certPicture: string;
   certDocs: string;
   certDocsFileInfo: File | null;
+  certLanguage: string = 'EN';
   pdfSrc: string;
   certificationDocument: FormData | null;
   obtainingDate: string;
@@ -47,39 +88,31 @@ export class CreateCertificationComponent implements OnInit {
   ) {}
 
   createCertification() {
-    const obtainingDate = new Date(this.obtainingDate);
-    const expirationDate = new Date(this.expirationDate);
-
-    const payload = {
-      certName: this.certName,
-      certDescription: this.certDescription,
-      certPicture: this.certPicture,
-      certDocs: '',
-      obtainedSkills: this.certObtainedSkills,
-      authorId: this.authorId,
-      obtainingDate,
-      expirationDate
-    };
-
     this.certificationsService
       .certificationFileUpload(this.certificationDocument as FormData)
       .subscribe({
         next: async ({ message, certificationFileName }) => {
-          const translationMessage = await this.translationService.translateText(
-            message,
-            MessagesTranslation.RESPONSES
-          );
-          this.globalMessageService.handle({
-            message: translationMessage
-          });
+          await this.showResponseMessage(message);
 
-          payload.certDocs = certificationFileName;
+          const certifications = this.certifications.map((cert) => ({
+            certName: cert.certName,
+            certDescription: cert.certDescription,
+            certPicture: cert.certPicture,
+            certDocs: certificationFileName,
+            obtainingDate: cert.obtainingDate,
+            expirationDate: cert.expirationDate,
+            obtainedSkills: cert.obtainedSkills,
+            certLanguage: cert.certLanguage,
+            authorId: cert.authorId
+          }));
 
-          this.certificationsService.createCertification({ ...payload }).subscribe({
-            next: async ({ certificationId }) => {
-              await this.handleRedirect(`account/certification/${certificationId}`);
-            }
-          });
+          this.certificationsService
+            .createCertification({ certifications })
+            .subscribe({
+              next: async () => {
+                await this.handleRedirect('account/certifications');
+              }
+            });
         }
       });
   }
@@ -106,14 +139,30 @@ export class CreateCertificationComponent implements OnInit {
 
   selectAuthor(author: ListAuthor) {
     this.authorId = author.id;
-    this.authorSearchQuery = `${author.firstName} ${author.lastName}`;
+    const cert = this.getCertByLanguage();
+
+    cert.authorId = author.id;
+    cert.authorName = `${author.firstName} ${author.lastName}`;
+
     this.authors = [];
+  }
+
+  getCertSkills() {
+    const cert = this.getCertByLanguage();
+    return cert.obtainedSkills;
+  }
+
+  getAuthorName() {
+    const cert = this.getCertByLanguage();
+    return cert.authorName!;
   }
 
   async addObtainedSkills() {
     if (this.certObtainedSkill === ' ') return;
 
-    const isSkillPresent = this.certObtainedSkills.includes(
+    const cert = this.getCertByLanguage();
+
+    const isSkillPresent = cert.obtainedSkills.includes(
       this.certObtainedSkill.trim()
     );
 
@@ -122,21 +171,21 @@ export class CreateCertificationComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.certObtainedSkills.push(this.certObtainedSkill.trim());
+      cert.obtainedSkills.push(this.certObtainedSkill.trim());
     }
 
     this.certObtainedSkill = '';
   }
 
   deleteObtainedSkill(obtainedSkill: string) {
-    this.certObtainedSkills.splice(
-      this.certObtainedSkills.indexOf(obtainedSkill),
-      1
-    );
+    const cert = this.getCertByLanguage();
+
+    cert.obtainedSkills.splice(cert.obtainedSkills.indexOf(obtainedSkill), 1);
   }
 
   clearCertPicture() {
     this.certPicture = '';
+    this.certifications.map((cert) => (cert.certPicture = ''));
   }
 
   clearCertDocument() {
@@ -155,6 +204,9 @@ export class CreateCertificationComponent implements OnInit {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
+      this.certifications.map(
+        (cert) => (cert.certPicture = reader.result as string)
+      );
       this.certPicture = reader.result as string;
     };
   }
@@ -165,7 +217,9 @@ export class CreateCertificationComponent implements OnInit {
     if (fileList.length < 0) return;
 
     const file: File = fileList[0];
+
     this.certDocs = file.name;
+    this.certifications.map((cert) => (cert.certDocs = file.name));
     this.certDocsFileInfo = file;
 
     this.certificationDocument = new FormData();
@@ -184,6 +238,41 @@ export class CreateCertificationComponent implements OnInit {
     }
   }
 
+  modifyCertName(certName: string) {
+    this.certName = certName;
+    const cert = this.getCertByLanguage();
+    cert.certName = certName;
+  }
+
+  modifyCertDescription(certDescription: string) {
+    this.certDescription = certDescription;
+    const cert = this.getCertByLanguage();
+    cert.certDescription = certDescription;
+  }
+
+  modifyCertObtainingDate(certObtainingDate: string) {
+    this.obtainingDate = certObtainingDate;
+    const cert = this.getCertByLanguage();
+    cert.obtainingDate = new Date(certObtainingDate);
+  }
+
+  modifyCertExpirationDate(certExpirationDate: string) {
+    this.expirationDate = certExpirationDate;
+    const cert = this.getCertByLanguage();
+    cert.expirationDate = new Date(certExpirationDate);
+  }
+
+  changeCertLanguage(certLanguage: string) {
+    this.certLanguage = certLanguage;
+
+    const cert = this.getCertByLanguage();
+
+    this.certName = cert.certName;
+    this.certDescription = cert.certDescription;
+    this.certObtainedSkills = cert.obtainedSkills;
+    this.authorId = cert.authorId;
+  }
+
   disableCreateCertButton() {
     return (
       !this.certName ||
@@ -198,6 +287,12 @@ export class CreateCertificationComponent implements OnInit {
     );
   }
 
+  getCertByLanguage() {
+    return this.certifications.find(
+      (cert) => cert.certLanguage === this.certLanguage
+    )!;
+  }
+
   async fetchUserInfo() {
     const userInfoRequest = await this.refreshTokensService.refreshTokens();
     if (userInfoRequest) {
@@ -209,6 +304,16 @@ export class CreateCertificationComponent implements OnInit {
         }
       });
     }
+  }
+
+  async showResponseMessage(message: string) {
+    const translationMessage = await this.translationService.translateText(
+      message,
+      MessagesTranslation.RESPONSES
+    );
+    this.globalMessageService.handle({
+      message: translationMessage
+    });
   }
 
   async handleRedirect(path: string) {

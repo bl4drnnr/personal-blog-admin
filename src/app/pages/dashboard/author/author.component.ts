@@ -123,8 +123,8 @@ export class AuthorComponent implements OnInit {
       });
   }
 
-  changeAuthorSelectionStatus(authorId: string) {
-    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+  changeAuthorSelectionStatus(authorCommonId: string) {
+    this.authorsService.changeAuthorSelectionStatus({ authorCommonId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,
@@ -139,18 +139,20 @@ export class AuthorComponent implements OnInit {
   }
 
   deleteAuthor() {
-    this.authorsService.deleteAuthor({ authorId: this.authorId }).subscribe({
-      next: async ({ message }) => {
-        const translationMessage = await this.translationService.translateText(
-          message,
-          MessagesTranslation.RESPONSES
-        );
-        this.globalMessageService.handle({
-          message: translationMessage
-        });
-        await this.handleRedirect('account/authors');
-      }
-    });
+    this.authorsService
+      .deleteAuthor({ authorCommonId: this.author.authorCommonId })
+      .subscribe({
+        next: async ({ message }) => {
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
+          await this.handleRedirect('account/authors');
+        }
+      });
   }
 
   handleSocialsChanges() {
@@ -195,7 +197,7 @@ export class AuthorComponent implements OnInit {
     }
   }
 
-  selectFile(event: any) {
+  selectAuthorNewImage(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

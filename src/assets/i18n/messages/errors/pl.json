@@ -94,7 +94,8 @@
     "wrong-social-id-format": "Nieprawidłowy format identyfikatora społecznościowego",
     "wrong-author-title-format": "Nieprawidłowy format tytułu autora",
     "wrong-author-title-length": "Nieprawidłowa długość tytułu autora",
-    "wrong-authors-length": "Nieprawidłowa długość autora"
+    "wrong-authors-length": "Nieprawidłowa długość autora",
+    "wrong-certifications-length": "Nieprawidłowa długość certyfikatów"
   },
   "wrong-timeframe": "Niewłaściwy przedział czasowy",
   "invalid-recovery-keys": "Nieprawidłowe klucze odzyskiwania",

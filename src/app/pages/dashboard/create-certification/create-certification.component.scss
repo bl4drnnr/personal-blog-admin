@@ -8,3 +8,16 @@
 .create-button-wrapper {
   margin-top: 20px;
 }
+
+.language-selection-buttons {
+  display: flex;
+}
+
+.language-selection-button {
+  width: 100%;
+
+  &.margin {
+    margin: 0 5px
+  }
+}
+

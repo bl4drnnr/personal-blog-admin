@@ -18,7 +18,7 @@
       >
         <div class="author-info-container">
           <div class="author-info-text-fields">
-            <h2>{{ author.firstName }} {{ author.lastName }}</h2>
+            <h2>{{ author.firstName }} {{ author.lastName }} ({{ author.authorLanguage.toUpperCase() }})</h2>
             <p>{{ author.description }}</p>
             <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(author.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
             <p class="author-date">{{ t('authors.authorUpdatedAt', { authorUpdatedAt: dayjs(author.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
@@ -42,14 +42,14 @@
             <basic-button
               [label]="t('button.changeAuthorSelection')"
               [fillButton]="author.isSelected"
-              (buttonClick)="changeAuthorSelectionStatus(author.id)"
+              (buttonClick)="changeAuthorSelectionStatus(author.authorCommonId)"
             />
           </div>
           <div class="author-control-button-wrapper">
             <basic-button
               [label]="t('button.deleteAuthor')"
               [danger]="true"
-              (buttonClick)="deleteAuthor(author.id)"
+              (buttonClick)="deleteAuthor(author.authorCommonId)"
             />
           </div>
         </div>

@@ -1,7 +1,5 @@
+import { CreateAuthorInterface } from '@interfaces/create-author.interface';
+
 export interface CreateAuthorPayload {
-  firstName: string;
-  lastName: string;
-  title: string;
-  description: string;
-  profilePicture: string;
+  authors: Array<CreateAuthorInterface>;
 }

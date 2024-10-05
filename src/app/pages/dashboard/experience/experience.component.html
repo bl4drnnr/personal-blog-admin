@@ -17,7 +17,7 @@
             <basic-button
               [label]="t('button.changeExpSelection')"
               [fillButton]="experience.isSelected"
-              (buttonClick)="changeExperienceSelectionStatus(experience.id)"
+              (buttonClick)="changeExperienceSelectionStatus(experience.experienceCommonId)"
             />
           </div>
           <div class="experience-mgmt-button left">
@@ -52,7 +52,6 @@
             [label]="t('input.experienceCompanyLinkLabel')"
             [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
             [inputDescription]="t('input.experienceCompanyLinkDesc')"
-            [showError]="!validationService.isFQDN(experienceCompanyLink)"
             [errorMessage]="t('input.wrongFQDN')"
             [value]="experienceCompanyLink"
             (valueChange)="experienceCompanyLink = $event"
@@ -249,7 +248,7 @@
             <input
               type="file"
               accept="image/*"
-              (change)="selectFile($event)"
+              (change)="selectExperienceNewPicture($event)"
               #fileInput
               hidden
             />

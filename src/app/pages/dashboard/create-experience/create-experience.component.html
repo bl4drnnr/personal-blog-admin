@@ -23,7 +23,6 @@
         [label]="t('input.experienceCompanyLinkLabel')"
         [placeholder]="t('input.experienceCompanyLinkPlaceholder')"
         [inputDescription]="t('input.experienceCompanyLinkDesc')"
-        [showError]="!validationService.isFQDN(companyLink)"
         [errorMessage]="t('input.wrongFQDN')"
         [value]="companyLink"
         (valueChange)="companyLink = $event"
@@ -215,7 +214,7 @@
       <input
         type="file"
         accept="image/*"
-        (change)="selectFile($event)"
+        (change)="selectCompanyPicture($event)"
         #fileInput
         hidden
       />

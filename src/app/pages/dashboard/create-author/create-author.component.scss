@@ -9,3 +9,15 @@
   cursor: pointer;
   object-fit: cover;
 }
+
+.language-selection-buttons {
+  display: flex;
+}
+
+.language-selection-button {
+  width: 100%;
+
+  &.margin {
+    margin: 0 5px
+  }
+}

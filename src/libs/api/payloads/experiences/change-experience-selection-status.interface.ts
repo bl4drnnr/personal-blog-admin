@@ -1,3 +1,3 @@
 export interface ChangeExperienceSelectionStatusPayload {
-  experienceId: string;
+  experienceCommonId: string;
 }

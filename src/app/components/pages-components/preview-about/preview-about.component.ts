@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthorsService } from '@services/authors.service';
 import { GetSelectedAuthorResponse } from '@responses/get-selected-author.interface';
 
@@ -8,12 +8,14 @@ import { GetSelectedAuthorResponse } from '@responses/get-selected-author.interf
   styleUrls: ['../shared/preview-about.styles.scss', '../shared/preview.styles.scss']
 })
 export class PreviewAboutComponent implements OnInit {
+  @Input() selectedAuthorLanguage: string;
+
   author: GetSelectedAuthorResponse;
 
   constructor(private readonly authorsService: AuthorsService) {}
 
   getSelectedAuthor() {
-    this.authorsService.getSelectedAuthor().subscribe({
+    this.authorsService.getSelectedAuthor(this.selectedAuthorLanguage).subscribe({
       next: (author) => (this.author = author)
     });
   }

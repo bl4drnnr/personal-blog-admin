@@ -8,6 +8,8 @@ export interface ListExperience {
   startDate: Date;
   endDate: Date;
   isSelected: boolean;
+  experienceLanguage: string;
+  experienceCommonId: string;
   createdAt: Date;
   updatedAt: Date;
 }

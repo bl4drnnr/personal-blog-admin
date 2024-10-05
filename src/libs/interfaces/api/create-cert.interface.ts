@@ -1,5 +1,4 @@
-export interface GetCertificationByIdResponse {
-  id: string;
+export interface CreateCertInterface {
   certName: string;
   certDescription: string;
   certPicture: string;
@@ -7,10 +6,7 @@ export interface GetCertificationByIdResponse {
   obtainingDate: Date;
   expirationDate: Date;
   obtainedSkills: Array<string>;
-  isSelected: boolean;
   certLanguage: string;
-  certCommonId: string;
   authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  authorName?: string;
 }

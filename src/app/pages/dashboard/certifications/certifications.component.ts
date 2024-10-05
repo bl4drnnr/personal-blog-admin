@@ -60,9 +60,9 @@ export class CertificationsComponent implements OnInit {
       });
   }
 
-  changeCertificationSelectionStatus(certificationId: string) {
+  changeCertificationSelectionStatus(certCommonId: string) {
     this.certificationsService
-      .changeCertificationSelectionStatus({ certificationId })
+      .changeCertificationSelectionStatus({ certCommonId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage = await this.translationService.translateText(

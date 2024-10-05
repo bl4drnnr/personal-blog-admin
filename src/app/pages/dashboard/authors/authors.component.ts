@@ -55,8 +55,8 @@ export class AuthorsComponent implements OnInit {
     });
   }
 
-  changeAuthorSelectionStatus(authorId: string) {
-    this.authorsService.changeAuthorSelectionStatus({ authorId }).subscribe({
+  changeAuthorSelectionStatus(authorCommonId: string) {
+    this.authorsService.changeAuthorSelectionStatus({ authorCommonId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,
@@ -70,8 +70,8 @@ export class AuthorsComponent implements OnInit {
     });
   }
 
-  deleteAuthor(authorId: string) {
-    this.authorsService.deleteAuthor({ authorId }).subscribe({
+  deleteAuthor(authorCommonId: string) {
+    this.authorsService.deleteAuthor({ authorCommonId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,

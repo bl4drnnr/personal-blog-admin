@@ -97,9 +97,9 @@ export class ExperienceComponent implements OnInit {
       });
   }
 
-  changeExperienceSelectionStatus(experienceId: string) {
+  changeExperienceSelectionStatus(experienceCommonId: string) {
     this.experienceService
-      .changeExperienceSelectionStatus({ experienceId })
+      .changeExperienceSelectionStatus({ experienceCommonId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage = await this.translationService.translateText(
@@ -393,7 +393,7 @@ export class ExperienceComponent implements OnInit {
     );
   }
 
-  selectFile(event: any) {
+  selectExperienceNewPicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

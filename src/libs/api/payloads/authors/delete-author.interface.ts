@@ -1,3 +1,3 @@
 export interface DeleteAuthorPayload {
-  authorId: string;
+  authorCommonId: string;
 }

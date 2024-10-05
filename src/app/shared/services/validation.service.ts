@@ -88,15 +88,6 @@ export class ValidationService {
     return !corruptedKey;
   }
 
-  isFQDN(domain: string) {
-    if (domain) {
-      const regex = new RegExp(
-        /^(?!.*?_.*?)(?!(?:[\w]+?\.)?\-[\w\.\-]*?)(?![\w]+?\-\.(?:[\w\.\-]+?))(?=[\w])(?=[\w\.\-]*?\.+[\w\.\-]*?)(?![\w\.\-]{254})(?!(?:\.?[\w\-\.]*?[\w\-]{64,}\.)+?)[\w\.\-]+?(?<![\w\-\.]*?\.[\d]+?)(?<=[\w\-]{2,})(?<![\w\-]{25})$/
-      );
-      return regex.test(domain);
-    } else return domain === '' || domain === undefined || domain === null;
-  }
-
   areArraysEqual(arr1: any[], arr2: any[]): boolean {
     if (arr1.length !== arr2.length) {
       return false;

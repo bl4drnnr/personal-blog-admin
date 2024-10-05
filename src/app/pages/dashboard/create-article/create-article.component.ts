@@ -95,17 +95,15 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
   ) {}
 
   createArticle() {
-    const articles = this.articles.map((article) => {
-      return {
-        articleName: article.articleName,
-        articleDescription: article.articleDescription,
-        articleContent: article.articleContent,
-        articleTags: article.articleTags.map((tag) => tag.replace(/\s+/g, '')),
-        articlePicture: article.articlePicture,
-        categoryId: article.articleCategory.key,
-        articleLanguage: article.articleLanguage.toLowerCase()
-      };
-    });
+    const articles = this.articles.map((article) => ({
+      articleName: article.articleName,
+      articleDescription: article.articleDescription,
+      articleContent: article.articleContent,
+      articleTags: article.articleTags.map((tag) => tag.replace(/\s+/g, '')),
+      articlePicture: article.articlePicture,
+      categoryId: article.articleCategory.key,
+      articleLanguage: article.articleLanguage.toLowerCase()
+    }));
 
     this.articlesService.createArticle({ articles }).subscribe({
       next: async ({ message }) => {
@@ -197,7 +195,7 @@ export class CreateArticleComponent implements OnInit, OnDestroy {
     return article.articleTags;
   }
 
-  selectFile(event: any) {
+  selectArticlePicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

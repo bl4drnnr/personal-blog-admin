@@ -1,3 +1,4 @@
 export interface AuthorCreatedResponse {
-  authorId: string;
+  message: string;
+  authorsIds: Array<string>;
 }

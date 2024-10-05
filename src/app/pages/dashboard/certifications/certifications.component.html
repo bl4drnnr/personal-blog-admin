@@ -18,7 +18,7 @@
       >
         <div class="certification-info-container">
           <div class="certification-info-text-fields">
-            <h2 class="certification-info-title">{{ cert.certName }}</h2>
+            <h2 class="certification-info-title">{{ cert.certName }} ({{ cert.certLanguage.toUpperCase() }})</h2>
             <p>{{ cert.certDescription }}</p>
             <p class="cert-date">{{ t('certs.certObtainingDate', { certObtainingDate: dayjs(cert.obtainingDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
             <p class="cert-date">{{ t('certs.certExpirationDate', { certExpirationDate: dayjs(cert.expirationDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
@@ -44,7 +44,7 @@
             <basic-button
               [label]="t('button.changeCertSelection')"
               [fillButton]="cert.isSelected"
-              (buttonClick)="changeCertificationSelectionStatus(cert.id)"
+              (buttonClick)="changeCertificationSelectionStatus(cert.certCommonId)"
             />
           </div>
           <div class="certification-control-button-wrapper">

@@ -142,7 +142,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.articleCategory = { key, value };
   }
 
-  selectFile(event: any) {
+  selectArticlePicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

@@ -8,6 +8,8 @@ export interface ListCertification {
   expirationDate: Date;
   obtainedSkills: Array<string>;
   isSelected: boolean;
+  certLanguage: string;
+  certCommonId: string;
   createdAt: Date;
   updatedAt: Date;
 }

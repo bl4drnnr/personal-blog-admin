@@ -5,33 +5,57 @@
     <div class="create-author-wrapper">
       <h1>{{ t('authors.createAuthorTitle') }}</h1>
 
+      <div class="language-selection-buttons">
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'PL'"
+            [fillButton]="authorLanguage === 'PL'"
+            (buttonClick)="changeAuthorLanguage('PL')"
+          />
+        </div>
+        <div class="language-selection-button margin">
+          <basic-button
+            [label]="'EN'"
+            [fillButton]="authorLanguage === 'EN'"
+            (buttonClick)="changeAuthorLanguage('EN')"
+          />
+        </div>
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'RU'"
+            [fillButton]="authorLanguage === 'RU'"
+            (buttonClick)="changeAuthorLanguage('RU')"
+          />
+        </div>
+      </div>
+
       <basic-input
         [label]="t('input.authorFirstNameLabel')"
         [placeholder]="t('input.authorFirstNamePlaceholder')"
         [inputDescription]="t('input.authorFirstNameDesc')"
         [value]="firstName"
-        (valueChange)="firstName = $event"
+        (valueChange)="modifyAuthorFirstName($event)"
       />
       <basic-input
         [label]="t('input.authorLastNameLabel')"
         [placeholder]="t('input.authorLastNamePlaceholder')"
         [inputDescription]="t('input.authorLastNameDesc')"
         [value]="lastName"
-        (valueChange)="lastName = $event"
+        (valueChange)="modifyAuthorLastName($event)"
       />
       <basic-input
         [label]="t('input.authorTitleLabel')"
         [placeholder]="t('input.authorTitlePlaceholder')"
         [inputDescription]="t('input.authorTitleDesc')"
         [value]="title"
-        (valueChange)="title = $event"
+        (valueChange)="modifyAuthorTitle($event)"
       />
       <basic-input
         [label]="t('input.authorDescLabel')"
         [placeholder]="t('input.authorDescPlaceholder')"
         [inputDescription]="t('input.authorDescDesc')"
         [value]="description"
-        (valueChange)="description = $event"
+        (valueChange)="modifyAuthorDesc($event)"
       />
 
       <basic-button
@@ -52,7 +76,6 @@
           [label]="t('input.socialLinkLabel')"
           [placeholder]="t('input.socialLinkPlaceholder')"
           [inputDescription]="t('input.socialLinkDesc')"
-          [showError]="!validationService.isFQDN(socialLink)"
           [errorMessage]="t('input.wrongFQDN')"
           [value]="socialLink"
           (valueChange)="socialLink = $event"
@@ -76,7 +99,6 @@
               [label]="t('input.socialLinkLabel')"
               [placeholder]="t('input.socialLinkPlaceholder')"
               [inputDescription]="t('input.socialLinkDesc')"
-              [showError]="!validationService.isFQDN(social.link)"
               [errorMessage]="t('input.wrongFQDN')"
               [value]="social.link"
               (valueChange)="social.link = $event"
@@ -123,7 +145,7 @@
       <input
         type="file"
         accept="image/*"
-        (change)="selectFile($event)"
+        (change)="selectAuthorProfilePicture($event)"
         #fileInput
         hidden
       />

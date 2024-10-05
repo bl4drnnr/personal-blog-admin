@@ -10,6 +10,8 @@ import { SocialsService } from '@services/socials.service';
 import { CreateSocialPayload } from '@payloads/create-social.interface';
 import { ValidationService } from '@services/validation.service';
 import { GlobalMessageService } from '@shared/global-message.service';
+import { CreateAuthorInterface } from '@interfaces/create-author.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
 
 @Component({
   selector: 'page-create-author',
@@ -17,10 +19,38 @@ import { GlobalMessageService } from '@shared/global-message.service';
   styleUrls: ['./create-author.component.scss', '../shared/author.styles.scss']
 })
 export class CreateAuthorComponent implements OnInit {
+  authors: Array<CreateAuthorInterface> = [
+    {
+      firstName: '',
+      lastName: '',
+      title: '',
+      description: '',
+      profilePicture: '',
+      authorLanguage: 'PL'
+    },
+    {
+      firstName: '',
+      lastName: '',
+      title: '',
+      description: '',
+      profilePicture: '',
+      authorLanguage: 'EN'
+    },
+    {
+      firstName: '',
+      lastName: '',
+      title: '',
+      description: '',
+      profilePicture: '',
+      authorLanguage: 'RU'
+    }
+  ];
+
   firstName: string;
   lastName: string;
   title: string;
   description: string;
+  authorLanguage: string = 'EN';
   selectedFiles?: FileList;
   profilePicture: string;
   socials: Array<SocialInterface> = [];
@@ -41,32 +71,43 @@ export class CreateAuthorComponent implements OnInit {
   ) {}
 
   createAuthor() {
-    const payload = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      title: this.title,
-      description: this.description,
-      profilePicture: this.profilePicture
-    };
+    const authors = this.authors.map((author) => ({
+      firstName: author.firstName,
+      lastName: author.lastName,
+      title: author.title,
+      description: author.description,
+      profilePicture: author.profilePicture,
+      authorLanguage: author.authorLanguage.toLowerCase()
+    }));
 
-    this.authorsService.createAuthor({ ...payload }).subscribe({
-      next: async ({ authorId }) => {
-        this.handleSocialsCreation(authorId);
-        await this.handleRedirect(`account/author/${authorId}`);
+    this.authorsService.createAuthor({ authors }).subscribe({
+      next: async ({ message, authorsIds }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+
+        this.handleSocialsCreation(authorsIds);
+        await this.handleRedirect(`account/authors`);
       }
     });
   }
 
-  handleSocialsCreation(authorId: string) {
+  handleSocialsCreation(authorsIds: Array<string>) {
     if (this.socials.length === 0) return;
 
-    for (const social of this.socials) {
-      const socialPayload: CreateSocialPayload = {
-        authorId,
-        ...social
-      };
+    for (const authorId of authorsIds) {
+      for (const social of this.socials) {
+        const socialPayload: CreateSocialPayload = {
+          authorId,
+          ...social
+        };
 
-      this.socialsService.createSocial({ ...socialPayload }).subscribe();
+        this.socialsService.createSocial({ ...socialPayload }).subscribe();
+      }
     }
   }
 
@@ -120,10 +161,12 @@ export class CreateAuthorComponent implements OnInit {
   }
 
   clearProfilePicture() {
+    const author = this.getAuthorByLanguage();
     this.profilePicture = '';
+    author.profilePicture = '';
   }
 
-  selectFile(event: any) {
+  selectAuthorProfilePicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;
@@ -134,18 +177,63 @@ export class CreateAuthorComponent implements OnInit {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
+      this.authors.map(
+        (author) => (author.profilePicture = reader.result as string)
+      );
       this.profilePicture = reader.result as string;
     };
   }
 
+  modifyAuthorFirstName(authorFirstName: string) {
+    this.firstName = authorFirstName;
+    const author = this.getAuthorByLanguage();
+    author.firstName = authorFirstName;
+  }
+
+  modifyAuthorLastName(authorLastName: string) {
+    this.lastName = authorLastName;
+    const author = this.getAuthorByLanguage();
+    author.lastName = authorLastName;
+  }
+
+  modifyAuthorTitle(authorTitle: string) {
+    this.title = authorTitle;
+    const author = this.getAuthorByLanguage();
+    author.title = authorTitle;
+  }
+
+  modifyAuthorDesc(authorDesc: string) {
+    this.description = authorDesc;
+    const author = this.getAuthorByLanguage();
+    author.description = authorDesc;
+  }
+
+  changeAuthorLanguage(authorLanguage: string) {
+    this.authorLanguage = authorLanguage;
+
+    const author = this.getAuthorByLanguage();
+
+    this.firstName = author.firstName;
+    this.lastName = author.lastName;
+    this.title = author.title;
+    this.description = author.description;
+  }
+
   disableCreateAuthorButton() {
-    return (
-      !this.firstName ||
-      !this.lastName ||
-      !this.description ||
-      !this.profilePicture ||
-      !this.title
+    return this.authors.some(
+      (author) =>
+        !author.firstName ||
+        !author.lastName ||
+        !author.description ||
+        !author.profilePicture ||
+        !author.title
     );
+  }
+
+  getAuthorByLanguage() {
+    return this.authors.find(
+      (author) => author.authorLanguage === this.authorLanguage
+    )!;
   }
 
   async handleRedirect(path: string) {

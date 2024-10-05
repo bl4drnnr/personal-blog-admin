@@ -25,5 +25,7 @@
   "experience-status-updated": "Status doświadczenia został pomyślnie zaktualizowany",
   "social-created": "Link społecznościowy został pomyślnie utworzony",
   "social-updated": "Link społecznościowy został pomyślnie zaktualizowany",
-  "social-deleted": "Link społecznościowy został pomyślnie usunięty"
+  "social-deleted": "Link społecznościowy został pomyślnie usunięty",
+  "author-created": "Autor został pomyślnie utworzony",
+  "certification-created": "Certyfikacja została pomyślnie utworzona"
 }

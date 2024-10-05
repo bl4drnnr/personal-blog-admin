@@ -10,6 +10,8 @@ export interface GetExperienceByIdResponse {
   startDate: Date;
   endDate: Date;
   isSelected: boolean;
+  experienceLanguage: string;
+  experienceCommonId: string;
   obtainedSkills: Array<string>;
   authorId: string;
   createdAt: Date;

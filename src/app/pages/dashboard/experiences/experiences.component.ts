@@ -57,9 +57,9 @@ export class ExperiencesComponent implements OnInit {
       });
   }
 
-  changeExperienceSelectionStatus(experienceId: string) {
+  changeExperienceSelectionStatus(experienceCommonId: string) {
     this.experiencesService
-      .changeExperienceSelectionStatus({ experienceId })
+      .changeExperienceSelectionStatus({ experienceCommonId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage = await this.translationService.translateText(

@@ -244,7 +244,7 @@ export class CreateExperienceComponent implements OnInit {
     this.companyPicture = '';
   }
 
-  selectFile(event: any) {
+  selectCompanyPicture(event: any) {
     this.selectedFiles = event.target.files;
 
     if (!this.selectedFiles) return;

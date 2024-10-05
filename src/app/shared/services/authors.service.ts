@@ -24,11 +24,12 @@ import { GetSelectedAuthorResponse } from '@responses/get-selected-author.interf
 export class AuthorsService {
   constructor(private readonly apiService: ApiService) {}
 
-  getSelectedAuthor(): Observable<GetSelectedAuthorResponse> {
+  getSelectedAuthor(authorLanguage: string): Observable<GetSelectedAuthorResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.ABOUT_BLOG,
-      action: AuthorsEndpoint.GET_SELECTED_AUTHOR
+      action: AuthorsEndpoint.GET_SELECTED_AUTHOR,
+      params: { authorLanguage }
     });
   }
 

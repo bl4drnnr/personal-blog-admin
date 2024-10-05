@@ -17,7 +17,7 @@
             <basic-button
               [label]="t('button.changeAuthorSelection')"
               [fillButton]="author.isSelected"
-              (buttonClick)="changeAuthorSelectionStatus(author.id)"
+              (buttonClick)="changeAuthorSelectionStatus(author.authorCommonId)"
             />
           </div>
           <div class="author-mgmt-button left">
@@ -30,7 +30,7 @@
         </div>
 
         <div *ngIf="!authorEditMode">
-          <h1>{{ author.firstName }} {{ author.lastName }}</h1>
+          <h1>{{ author.firstName }} {{ author.lastName }} ({{ author.authorLanguage.toUpperCase() }})</h1>
           <p>{{ author.description }}</p>
           <div *ngFor="let authorSocial of author.socials">
             <basic-link
@@ -96,7 +96,6 @@
               [label]="t('input.socialLinkLabel')"
               [placeholder]="t('input.socialLinkPlaceholder')"
               [inputDescription]="t('input.socialLinkDesc')"
-              [showError]="!validationService.isFQDN(socialLink)"
               [errorMessage]="t('input.wrongFQDN')"
               [value]="socialLink"
               (valueChange)="socialLink = $event"
@@ -120,7 +119,6 @@
                   [label]="t('input.socialLinkLabel')"
                   [placeholder]="t('input.socialLinkPlaceholder')"
                   [inputDescription]="t('input.socialLinkDesc')"
-                  [showError]="!validationService.isFQDN(social.link)"
                   [errorMessage]="t('input.wrongFQDN')"
                   [value]="social.link"
                   (valueChange)="social.link = $event"
@@ -172,7 +170,7 @@
             <input
               type="file"
               accept="image/*"
-              (change)="selectFile($event)"
+              (change)="selectAuthorNewImage($event)"
               #fileInput
               hidden
             />
@@ -189,8 +187,10 @@
         </div>
       </div>
 
-      <div *ngIf="!authorEditMode">
-        <page-component-preview-about/>
+      <div *ngIf="!authorEditMode && author">
+        <page-component-preview-about
+          [selectedAuthorLanguage]="author.authorLanguage"
+        />
       </div>
     </div>
   </ng-container>

@@ -17,7 +17,7 @@
             <basic-button
               [label]="t('button.changeCertSelection')"
               [fillButton]="certification.isSelected"
-              (buttonClick)="changeCertificationSelectionStatus(certification.id)"
+              (buttonClick)="changeCertificationSelectionStatus(certification.certCommonId)"
             />
           </div>
           <div class="certification-mgmt-button left">
@@ -148,7 +148,7 @@
             <input
               type="file"
               accept="image/*"
-              (change)="selectFile($event)"
+              (change)="selectCertificationNewPicture($event)"
               #fileInput
               hidden
             />

@@ -25,5 +25,7 @@
   "experience-status-updated": "Experience status has been successfully updated",
   "social-created": "Social link has been successfully created",
   "social-updated": "Social link has been successfully updated",
-  "social-deleted": "Social link has been successfully deleted"
+  "social-deleted": "Social link has been successfully deleted",
+  "author-created": "Author has been successfully created",
+  "certification-created": "Certification has been successfully created"
 }
