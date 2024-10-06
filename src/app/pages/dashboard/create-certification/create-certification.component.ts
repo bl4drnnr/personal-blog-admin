@@ -99,10 +99,10 @@ export class CreateCertificationComponent implements OnInit {
             certDescription: cert.certDescription,
             certPicture: cert.certPicture,
             certDocs: certificationFileName,
-            obtainingDate: cert.obtainingDate,
-            expirationDate: cert.expirationDate,
+            obtainingDate: new Date(this.obtainingDate),
+            expirationDate: new Date(this.expirationDate),
             obtainedSkills: cert.obtainedSkills,
-            certLanguage: cert.certLanguage,
+            certLanguage: cert.certLanguage.toLowerCase(),
             authorId: cert.authorId
           }));
 
@@ -250,18 +250,6 @@ export class CreateCertificationComponent implements OnInit {
     cert.certDescription = certDescription;
   }
 
-  modifyCertObtainingDate(certObtainingDate: string) {
-    this.obtainingDate = certObtainingDate;
-    const cert = this.getCertByLanguage();
-    cert.obtainingDate = new Date(certObtainingDate);
-  }
-
-  modifyCertExpirationDate(certExpirationDate: string) {
-    this.expirationDate = certExpirationDate;
-    const cert = this.getCertByLanguage();
-    cert.expirationDate = new Date(certExpirationDate);
-  }
-
   changeCertLanguage(certLanguage: string) {
     this.certLanguage = certLanguage;
 
@@ -274,16 +262,17 @@ export class CreateCertificationComponent implements OnInit {
   }
 
   disableCreateCertButton() {
-    return (
-      !this.certName ||
-      !this.certDescription ||
-      !this.certPicture ||
-      !this.certDocs ||
-      !this.certificationDocument ||
-      !this.authorId ||
-      this.certObtainedSkills.length === 0 ||
-      !this.obtainingDate ||
-      !this.obtainingDate
+    return this.certifications.some(
+      (cert) =>
+        !cert.certName ||
+        !cert.certDescription ||
+        !cert.certPicture ||
+        !cert.certDocs ||
+        !this.certificationDocument ||
+        !cert.authorId ||
+        cert.obtainedSkills.length === 0 ||
+        !cert.obtainingDate ||
+        !cert.obtainingDate
     );
   }
 

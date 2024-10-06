@@ -66,7 +66,7 @@
             [placeholder]="t('input.certObtainingDatePlaceholder')"
             [inputDescription]="t('input.certObtainingDateDesc')"
             [value]="obtainingDate"
-            (valueChange)="modifyCertObtainingDate($event)"
+            (valueChange)="obtainingDate = $event"
           />
         </div>
         <div class="margin-left">
@@ -76,7 +76,7 @@
             [placeholder]="t('input.certExpirationDatePlaceholder')"
             [inputDescription]="t('input.certExpirationDateDesc')"
             [value]="expirationDate"
-            (valueChange)="modifyCertExpirationDate($event)"
+            (valueChange)="expirationDate = $event"
           />
         </div>
       </div>

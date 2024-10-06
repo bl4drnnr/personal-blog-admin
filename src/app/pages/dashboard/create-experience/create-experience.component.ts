@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslationService } from '@services/translation.service';
@@ -5,14 +6,15 @@ import { RefreshTokensService } from '@services/refresh-token.service';
 import { Titles } from '@interfaces/titles.enum';
 import { UserInfoResponse } from '@responses/user-info.interface';
 import { ExperienceService } from '@services/experience.service';
-import { CreateExperiencePayload } from '@payloads/create-experience.interface';
 import { AuthorsService } from '@services/authors.service';
 import { ListAuthor } from '@interfaces/list-author.interface';
 import { GlobalMessageService } from '@shared/global-message.service';
 import { ExperiencePositionInterface } from '@interfaces/experience-position.interface';
 import { ValidationService } from '@services/validation.service';
+import { CreateExperienceInterface } from '@interfaces/create-experience.interface';
+import { MessagesTranslation } from '@translations/messages.enum';
+import { CreatedExperiencesInterface } from '@interfaces/created-experiences.interface';
 import { CreateExperiencePositionPayload } from '@payloads/create-experience-position.interface';
-import dayjs from 'dayjs';
 
 @Component({
   selector: 'page-create-experience',
@@ -23,6 +25,51 @@ import dayjs from 'dayjs';
   ]
 })
 export class CreateExperienceComponent implements OnInit {
+  experiences: Array<CreateExperienceInterface> = [
+    {
+      companyName: '',
+      companyDescription: '',
+      companyLink: '',
+      companyLinkTitle: '',
+      companyPicture: '',
+      authorId: '',
+      obtainedSkills: [],
+      experienceLanguage: 'EN',
+      startDate: new Date(),
+      endDate: new Date(),
+      authorName: '',
+      experiencePositions: []
+    },
+    {
+      companyName: '',
+      companyDescription: '',
+      companyLink: '',
+      companyLinkTitle: '',
+      companyPicture: '',
+      authorId: '',
+      obtainedSkills: [],
+      experienceLanguage: 'RU',
+      startDate: new Date(),
+      endDate: new Date(),
+      authorName: '',
+      experiencePositions: []
+    },
+    {
+      companyName: '',
+      companyDescription: '',
+      companyLink: '',
+      companyLinkTitle: '',
+      companyPicture: '',
+      authorId: '',
+      obtainedSkills: [],
+      experienceLanguage: 'PL',
+      startDate: new Date(),
+      endDate: new Date(),
+      authorName: '',
+      experiencePositions: []
+    }
+  ];
+
   companyName: string;
   companyDescription: string;
   companyLink: string;
@@ -32,9 +79,9 @@ export class CreateExperienceComponent implements OnInit {
   startDate: string;
   endDate: string;
   experienceObtainedSkill: string;
-  experienceObtainedSkills: Array<string> = [];
   authorId: string;
   authorSearchQuery: string;
+  experienceLanguage: string = 'EN';
 
   experiencePositions: Array<ExperiencePositionInterface> = [];
   experiencePositionTitle: string;
@@ -57,44 +104,71 @@ export class CreateExperienceComponent implements OnInit {
   ) {}
 
   createExperience() {
-    const startDate = new Date(this.startDate);
+    const experiences = this.experiences.map((experience) => {
+      const payload: CreateExperienceInterface = {
+        companyName: experience.companyName,
+        companyDescription: experience.companyDescription,
+        companyLink: experience.companyLink,
+        companyLinkTitle: experience.companyLinkTitle,
+        companyPicture: experience.companyPicture,
+        authorId: experience.authorId,
+        obtainedSkills: experience.obtainedSkills,
+        experienceLanguage: experience.experienceLanguage.toLowerCase(),
+        startDate: new Date(this.startDate),
+        experiencePositions: experience.experiencePositions
+      };
 
-    const payload: CreateExperiencePayload = {
-      companyName: this.companyName,
-      companyDescription: this.companyDescription,
-      companyLink: this.companyLink,
-      companyLinkTitle: this.companyLinkTitle,
-      companyPicture: this.companyPicture,
-      authorId: this.authorId,
-      obtainedSkills: this.experienceObtainedSkills,
-      startDate
-    };
+      if (this.endDate) payload.endDate = new Date(this.endDate);
 
-    if (this.endDate) payload.endDate = new Date(this.endDate);
+      return payload;
+    });
 
-    return this.experienceService.createExperience({ ...payload }).subscribe({
-      next: async ({ experienceId }) => {
-        this.handleExperiencePositionsCreation(experienceId);
-        await this.handleRedirect(`account/experience/${experienceId}`);
+    this.experienceService.createExperience({ experiences }).subscribe({
+      next: async ({ message, createdExperiences }) => {
+        const translationMessage = await this.translationService.translateText(
+          message,
+          MessagesTranslation.RESPONSES
+        );
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
+
+        this.handleExperiencePositionsCreation(experiences, createdExperiences);
+        await this.handleRedirect('account/experiences');
       }
     });
   }
 
-  handleExperiencePositionsCreation(experienceId: string) {
-    if (this.experiencePositions.length === 0) return;
+  handleExperiencePositionsCreation(
+    experiences: Array<CreateExperienceInterface>,
+    createdExperiences: Array<CreatedExperiencesInterface>
+  ) {
+    for (const createdExperience of createdExperiences) {
+      for (const experience of experiences) {
+        const createdExperienceLanguage = createdExperience.language;
+        const experienceLanguage = experience.experienceLanguage.toLowerCase();
 
-    for (const experiencePosition of this.experiencePositions) {
-      const experiencePositionPayload: CreateExperiencePositionPayload = {
-        experienceId,
-        positionTitle: experiencePosition.positionTitle,
-        positionDescription: experiencePosition.positionDescription,
-        positionStartDate: new Date(experiencePosition.positionStartDate),
-        positionEndDate: new Date(experiencePosition.positionEndDate)
-      };
-
-      this.experienceService
-        .createExperiencePosition({ ...experiencePositionPayload })
-        .subscribe();
+        if (createdExperienceLanguage === experienceLanguage) {
+          // @TODO Continue here
+          // const experiencePositions = experience.experiencePositions!;
+          //
+          // if (experiencePositions.length === 0) continue;
+          //
+          // for (const experiencePosition of this.experiencePositions) {
+          //   const experiencePositionPayload: CreateExperiencePositionPayload = {
+          //     experienceId: createdExperience.id,
+          //     positionTitle: experiencePosition.positionTitle,
+          //     positionDescription: experiencePosition.positionDescription,
+          //     positionStartDate: new Date(experiencePosition.positionStartDate),
+          //     positionEndDate: new Date(experiencePosition.positionEndDate)
+          //   };
+          //
+          //   this.experienceService
+          //     .createExperiencePosition({ ...experiencePositionPayload })
+          //     .subscribe();
+          //   }
+        }
+      }
     }
   }
 
@@ -120,12 +194,18 @@ export class CreateExperienceComponent implements OnInit {
 
   selectAuthor(author: ListAuthor) {
     this.authorId = author.id;
-    this.authorSearchQuery = `${author.firstName} ${author.lastName}`;
+    const experience = this.getExperienceByLanguage();
+
+    experience.authorId = author.id;
+    experience.authorName = `${author.firstName} ${author.lastName}`;
+
     this.authors = [];
   }
 
   async addExperiencePosition() {
-    const isExperienceTitlePresent = this.experiencePositions.find(
+    const experience = this.getExperienceByLanguage();
+
+    const isExperienceTitlePresent = experience.experiencePositions!.find(
       ({ positionTitle }) => this.experiencePositionTitle === positionTitle
     );
 
@@ -135,7 +215,8 @@ export class CreateExperienceComponent implements OnInit {
       });
     }
 
-    this.experiencePositions.push({
+    experience.experiencePositions!.push({
+      experienceId: '',
       positionTitle: this.experiencePositionTitle,
       positionDescription: this.experiencePositionDescription,
       positionStartDate: this.experiencePositionStartDate as Date,
@@ -150,7 +231,9 @@ export class CreateExperienceComponent implements OnInit {
   }
 
   deleteExperiencePosition(experiencePosition: ExperiencePositionInterface) {
-    this.experiencePositions = this.validationService.deleteObjectFromArray(
+    const experience = this.getExperienceByLanguage();
+
+    experience.experiencePositions = this.validationService.deleteObjectFromArray(
       this.experiencePositions,
       'positionTitle',
       experiencePosition.positionTitle
@@ -202,23 +285,71 @@ export class CreateExperienceComponent implements OnInit {
     }
   }
 
+  modifyCompanyName(companyName: string) {
+    this.companyName = companyName;
+    const experience = this.getExperienceByLanguage();
+    experience.companyName = companyName;
+  }
+
+  modifyCompanyDescription(companyDescription: string) {
+    this.companyDescription = companyDescription;
+    const experience = this.getExperienceByLanguage();
+    experience.companyDescription = companyDescription;
+  }
+
+  modifyCompanyLink(companyLink: string) {
+    this.companyLink = companyLink;
+    const experience = this.getExperienceByLanguage();
+    experience.companyLink = companyLink;
+  }
+
+  modifyCompanyLinkTitle(companyLinkTitle: string) {
+    this.companyLinkTitle = companyLinkTitle;
+    const experience = this.getExperienceByLanguage();
+    experience.companyLinkTitle = companyLinkTitle;
+  }
+
+  changeExperienceLanguage(experienceLanguage: string) {
+    this.experienceLanguage = experienceLanguage;
+
+    const experience = this.getExperienceByLanguage();
+
+    this.companyName = experience.companyName;
+    this.companyDescription = experience.companyDescription;
+    this.companyLink = experience.companyLink;
+    this.companyLinkTitle = experience.companyLinkTitle;
+  }
+
   disableCreateExpButton() {
-    return (
-      !this.companyName ||
-      !this.companyDescription ||
-      !this.companyLink ||
-      !this.companyLinkTitle ||
-      !this.companyPicture ||
-      !this.startDate ||
-      this.experienceObtainedSkills.length === 0 ||
-      !this.authorId
+    return this.experiences.some(
+      (experience) =>
+        !experience.companyName ||
+        !experience.companyDescription ||
+        !experience.companyLink ||
+        !experience.companyLinkTitle ||
+        !experience.companyPicture ||
+        !this.startDate ||
+        experience.obtainedSkills.length === 0 ||
+        !experience.authorId
     );
+  }
+
+  getExperienceObtainedSkills() {
+    const experience = this.getExperienceByLanguage();
+    return experience.obtainedSkills;
+  }
+
+  getAuthorName() {
+    const experience = this.getExperienceByLanguage();
+    return experience.authorName!;
   }
 
   async addObtainedSkills() {
     if (this.experienceObtainedSkill === ' ') return;
 
-    const isSkillPresent = this.experienceObtainedSkills.includes(
+    const experience = this.getExperienceByLanguage();
+
+    const isSkillPresent = experience.obtainedSkills.includes(
       this.experienceObtainedSkill.trim()
     );
 
@@ -227,15 +358,17 @@ export class CreateExperienceComponent implements OnInit {
         message: 'tag-is-already-on-the-list'
       });
     } else {
-      this.experienceObtainedSkills.push(this.experienceObtainedSkill.trim());
+      experience.obtainedSkills.push(this.experienceObtainedSkill.trim());
     }
 
     this.experienceObtainedSkill = '';
   }
 
   deleteObtainedSkill(obtainedSkill: string) {
-    this.experienceObtainedSkills.splice(
-      this.experienceObtainedSkills.indexOf(obtainedSkill),
+    const experience = this.getExperienceByLanguage();
+
+    experience.obtainedSkills.splice(
+      experience.obtainedSkills.indexOf(obtainedSkill),
       1
     );
   }
@@ -255,8 +388,17 @@ export class CreateExperienceComponent implements OnInit {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
+      this.experiences.map(
+        (experience) => (experience.companyPicture = reader.result as string)
+      );
       this.companyPicture = reader.result as string;
     };
+  }
+
+  getExperienceByLanguage() {
+    return this.experiences.find(
+      (experience) => experience.experienceLanguage === this.experienceLanguage
+    )!;
   }
 
   async handleRedirect(path: string) {

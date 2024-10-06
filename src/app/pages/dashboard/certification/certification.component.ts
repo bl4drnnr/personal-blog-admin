@@ -245,7 +245,7 @@ export class CertificationComponent implements OnInit {
 
   deleteCertification() {
     this.certificationsService
-      .deleteCertification({ certificationId: this.certificationId })
+      .deleteCertification({ certCommonId: this.certification.certCommonId })
       .subscribe({
         next: async ({ message }) => {
           const translationMessage = await this.translationService.translateText(

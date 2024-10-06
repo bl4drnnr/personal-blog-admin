@@ -95,7 +95,10 @@
     "wrong-author-title-format": "Неправильный формат названия автора",
     "wrong-author-title-length": "Неправильная длина названия автора",
     "wrong-authors-length": "Неправильная длина автора",
-    "wrong-certifications-length": "Неправильная длина сертификатов"
+    "wrong-certifications-length": "Неправильная длина сертификатов",
+    "wrong-obtained-skills-length": "Неправильная длина полученных навыков",
+    "wrong-experiences-length": "Неправильная длина опыта",
+    "wrong-language-format": "Неправильный формат языка"
   },
   "wrong-timeframe": "Неверный таймфрейм",
   "invalid-recovery-keys": "Недействительные ключи восстановления",

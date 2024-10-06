@@ -95,7 +95,10 @@
     "wrong-author-title-format": "Wrong author title format",
     "wrong-author-title-length": "Wrong author title length",
     "wrong-authors-length": "Wrong authors length",
-    "wrong-certifications-length": "Wrong certifications length"
+    "wrong-certifications-length": "Wrong certifications length",
+    "wrong-obtained-skills-length": "Wrong obtained skills length",
+    "wrong-experiences-length": "Wrong experiences length",
+    "wrong-language-format": "Wrong language format"
   },
   "wrong-timeframe": "Wrong timeframe",
   "invalid-recovery-keys": "Invalid recovery keys",

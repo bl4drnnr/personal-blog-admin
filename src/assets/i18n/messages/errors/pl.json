@@ -95,7 +95,10 @@
     "wrong-author-title-format": "Nieprawidłowy format tytułu autora",
     "wrong-author-title-length": "Nieprawidłowa długość tytułu autora",
     "wrong-authors-length": "Nieprawidłowa długość autora",
-    "wrong-certifications-length": "Nieprawidłowa długość certyfikatów"
+    "wrong-certifications-length": "Nieprawidłowa długość certyfikatów",
+    "wrong-obtained-skills-length": "Nieprawidłowo uzyskana długość umiejętności",
+    "wrong-experiences-length": "Nieprawidłowa długość doświadczeń",
+    "wrong-language-format": "Nieprawidłowy format języka"
   },
   "wrong-timeframe": "Niewłaściwy przedział czasowy",
   "invalid-recovery-keys": "Nieprawidłowe klucze odzyskiwania",

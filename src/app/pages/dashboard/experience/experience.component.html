@@ -265,8 +265,10 @@
         </div>
       </div>
 
-      <div *ngIf="!experienceEditMode">
-        <page-component-preview-about/>
+      <div *ngIf="!experienceEditMode && author">
+        <page-component-preview-about
+          [selectedAuthorLanguage]="author.authorLanguage"
+        />
       </div>
     </div>
   </ng-container>

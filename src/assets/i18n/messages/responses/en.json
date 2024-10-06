@@ -27,5 +27,6 @@
   "social-updated": "Social link has been successfully updated",
   "social-deleted": "Social link has been successfully deleted",
   "author-created": "Author has been successfully created",
-  "certification-created": "Certification has been successfully created"
+  "certification-created": "Certification has been successfully created",
+  "experience-created": "Experience has been created"
 }

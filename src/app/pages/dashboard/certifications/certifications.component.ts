@@ -77,8 +77,8 @@ export class CertificationsComponent implements OnInit {
       });
   }
 
-  deleteCertification(certificationId: string) {
-    this.certificationsService.deleteCertification({ certificationId }).subscribe({
+  deleteCertification(certCommonId: string) {
+    this.certificationsService.deleteCertification({ certCommonId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,

@@ -1,3 +1,3 @@
 export interface DeleteCertificationPayload {
-  certificationId: string;
+  certCommonId: string;
 }

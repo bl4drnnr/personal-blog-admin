@@ -74,8 +74,8 @@ export class ExperiencesComponent implements OnInit {
       });
   }
 
-  deleteExperience(experienceId: string) {
-    this.experiencesService.deleteExperience({ experienceId }).subscribe({
+  deleteExperience(experienceCommonId: string) {
+    this.experiencesService.deleteExperience({ experienceCommonId }).subscribe({
       next: async ({ message }) => {
         const translationMessage = await this.translationService.translateText(
           message,

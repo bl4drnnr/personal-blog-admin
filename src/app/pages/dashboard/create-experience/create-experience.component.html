@@ -5,19 +5,43 @@
     <div class="create-experience-wrapper">
       <h1>{{ t('exp.createExpTitle') }}</h1>
 
+      <div class="language-selection-buttons">
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'PL'"
+            [fillButton]="experienceLanguage === 'PL'"
+            (buttonClick)="changeExperienceLanguage('PL')"
+          />
+        </div>
+        <div class="language-selection-button margin">
+          <basic-button
+            [label]="'EN'"
+            [fillButton]="experienceLanguage === 'EN'"
+            (buttonClick)="changeExperienceLanguage('EN')"
+          />
+        </div>
+        <div class="language-selection-button">
+          <basic-button
+            [label]="'RU'"
+            [fillButton]="experienceLanguage === 'RU'"
+            (buttonClick)="changeExperienceLanguage('RU')"
+          />
+        </div>
+      </div>
+
       <basic-input
         [label]="t('input.experienceCompanyNameLabel')"
         [placeholder]="t('input.experienceCompanyNamePlaceholder')"
         [inputDescription]="t('input.experienceCompanyNameDesc')"
         [value]="companyName"
-        (valueChange)="companyName = $event"
+        (valueChange)="modifyCompanyName($event)"
       />
       <basic-input
         [label]="t('input.experienceCompanyDescLabel')"
         [placeholder]="t('input.experienceCompanyDescPlaceholder')"
         [inputDescription]="t('input.experienceCompanyDescDesc')"
         [value]="companyDescription"
-        (valueChange)="companyDescription = $event"
+        (valueChange)="modifyCompanyDescription($event)"
       />
       <basic-input
         [label]="t('input.experienceCompanyLinkLabel')"
@@ -25,20 +49,20 @@
         [inputDescription]="t('input.experienceCompanyLinkDesc')"
         [errorMessage]="t('input.wrongFQDN')"
         [value]="companyLink"
-        (valueChange)="companyLink = $event"
+        (valueChange)="modifyCompanyLink($event)"
       />
       <basic-input
         [label]="t('input.experienceCompanyLinkTitleLabel')"
         [placeholder]="t('input.experienceCompanyLinkTitlePlaceholder')"
         [inputDescription]="t('input.experienceCompanyLinkTitleDesc')"
         [value]="companyLinkTitle"
-        (valueChange)="companyLinkTitle = $event"
+        (valueChange)="modifyCompanyLinkTitle($event)"
       />
       <basic-input
         [label]="t('input.authorQueryLabel')"
         [placeholder]="t('input.authorQueryPlaceholder')"
         [inputDescription]="t('input.authorQueryDesc')"
-        [value]="authorSearchQuery"
+        [value]="getAuthorName()"
         (valueChange)="handleAuthorQuery($event)"
       />
 
@@ -59,8 +83,8 @@
         (onSpace)="addObtainedSkills()"
       />
 
-      <div *ngIf="experienceObtainedSkills.length > 0" class="exp-skills-wrapper">
-        <div *ngFor="let skill of experienceObtainedSkills">
+      <div *ngIf="getExperienceObtainedSkills().length > 0" class="exp-skills-wrapper">
+        <div *ngFor="let skill of getExperienceObtainedSkills()">
           <p class="exp-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
         </div>
       </div>
@@ -141,10 +165,10 @@
         </div>
       </div>
 
-      <div *ngIf="experiencePositions.length > 0">
+      <div *ngIf="getExperienceByLanguage().experiencePositions!.length > 0">
         <div
           class="experience-position-box"
-          *ngFor="let experiencePosition of experiencePositions"
+          *ngFor="let experiencePosition of getExperienceByLanguage().experiencePositions"
         >
           <div class="create-experience-inputs-block margin-right">
             <basic-input

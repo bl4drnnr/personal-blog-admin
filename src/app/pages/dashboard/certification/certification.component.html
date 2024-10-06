@@ -212,8 +212,10 @@
         </div>
       </div>
 
-      <div *ngIf="!certificationEditMode">
-        <page-component-preview-about/>
+      <div *ngIf="!certificationEditMode && author">
+        <page-component-preview-about
+          [selectedAuthorLanguage]="author.authorLanguage"
+        />
       </div>
     </div>
   </ng-container>
