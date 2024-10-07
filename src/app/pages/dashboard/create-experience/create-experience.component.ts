@@ -134,7 +134,7 @@ export class CreateExperienceComponent implements OnInit {
         });
 
         this.handleExperiencePositionsCreation(experiences, createdExperiences);
-        await this.handleRedirect('account/experiences');
+        // await this.handleRedirect('account/experiences');
       }
     });
   }
@@ -149,24 +149,24 @@ export class CreateExperienceComponent implements OnInit {
         const experienceLanguage = experience.experienceLanguage.toLowerCase();
 
         if (createdExperienceLanguage === experienceLanguage) {
-          // @TODO Continue here
-          // const experiencePositions = experience.experiencePositions!;
-          //
-          // if (experiencePositions.length === 0) continue;
-          //
-          // for (const experiencePosition of this.experiencePositions) {
-          //   const experiencePositionPayload: CreateExperiencePositionPayload = {
-          //     experienceId: createdExperience.id,
-          //     positionTitle: experiencePosition.positionTitle,
-          //     positionDescription: experiencePosition.positionDescription,
-          //     positionStartDate: new Date(experiencePosition.positionStartDate),
-          //     positionEndDate: new Date(experiencePosition.positionEndDate)
-          //   };
-          //
-          //   this.experienceService
-          //     .createExperiencePosition({ ...experiencePositionPayload })
-          //     .subscribe();
-          //   }
+          const experiencePositions = experience.experiencePositions!;
+
+          if (experiencePositions.length !== 0) {
+            for (const experiencePosition of experiencePositions) {
+              const experiencePositionPayload: CreateExperiencePositionPayload = {
+                experienceId: createdExperience.id,
+                positionTitle: experiencePosition.positionTitle,
+                positionDescription: experiencePosition.positionDescription,
+                positionStartDate: new Date(experiencePosition.positionStartDate),
+                positionEndDate: new Date(experiencePosition.positionEndDate),
+                positionLanguage: experiencePosition.positionLanguage
+              };
+
+              this.experienceService
+                .createExperiencePosition({ ...experiencePositionPayload })
+                .subscribe();
+            }
+          }
         }
       }
     }
@@ -220,7 +220,8 @@ export class CreateExperienceComponent implements OnInit {
       positionTitle: this.experiencePositionTitle,
       positionDescription: this.experiencePositionDescription,
       positionStartDate: this.experiencePositionStartDate as Date,
-      positionEndDate: this.experiencePositionEndDate as Date
+      positionEndDate: this.experiencePositionEndDate as Date,
+      positionLanguage: experience.experienceLanguage.toLowerCase()
     });
 
     this.experiencePositionTitle = '';

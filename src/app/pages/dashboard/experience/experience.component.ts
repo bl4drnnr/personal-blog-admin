@@ -335,7 +335,8 @@ export class ExperienceComponent implements OnInit {
             positionTitle: experiencePosition.positionTitle,
             positionDescription: experiencePosition.positionDescription,
             positionStartDate: experiencePosition.positionStartDate,
-            positionEndDate: experiencePosition.positionEndDate
+            positionEndDate: experiencePosition.positionEndDate,
+            positionLanguage: this.experience.experienceLanguage
           })
           .subscribe();
       }

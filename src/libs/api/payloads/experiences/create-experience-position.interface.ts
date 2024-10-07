@@ -4,4 +4,5 @@ export interface CreateExperiencePositionPayload {
   positionDescription: string;
   positionStartDate: Date;
   positionEndDate: Date;
+  positionLanguage: string;
 }
