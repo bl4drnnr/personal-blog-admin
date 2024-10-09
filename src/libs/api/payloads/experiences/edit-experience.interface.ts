@@ -8,4 +8,5 @@ export interface EditExperiencePayload {
   obtainedSkills?: Array<string>;
   startDate?: Date;
   endDate?: Date;
+  authorId?: string;
 }

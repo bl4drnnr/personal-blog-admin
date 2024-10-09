@@ -30,7 +30,28 @@
         </div>
 
         <div class="experience-preview-mode" *ngIf="!experienceEditMode">
-
+          <h1>{{ experience.companyName }}</h1>
+          <p class="exp-date">{{ dayjs(experience.startDate).format('MMMM D, YYYY') }} - {{ dayjs(experience.endDate).format('MMMM D, YYYY') }}</p>
+          <p class="exp-date">{{ t('exp.experienceCreatedAt', { experienceCreatedAt: dayjs(experience.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p class="exp-date">{{ t('exp.experienceUpdatedAt', { experienceUpdatedAt: dayjs(experience.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p>{{ experience.companyDescription }}</p>
+          <div *ngIf="experience.obtainedSkills.length > 0" class="cert-skills-wrapper">
+            <div *ngFor="let skill of experience.obtainedSkills">
+              <p class="cert-skill" >{{ skill }}</p>
+            </div>
+          </div>
+          <img
+            [src]="staticStorage + experience.companyPicture"
+            class="cert-preview-mode-pic"
+            alt=""
+          >
+          <div *ngIf="experience.experiencePositions.length > 0">
+            <div class="experience-position-block" *ngFor="let experiencePosition of experience.experiencePositions">
+              <h2 class="experience-position-title">{{ experiencePosition.positionTitle }}</h2>
+              <p>{{ experiencePosition.positionDescription }}</p>
+              <p class="exp-date">{{ dayjs(experiencePosition.positionStartDate).format('MMMM D, YYYY') }} - {{ dayjs(experiencePosition.positionEndDate).format('MMMM D, YYYY') }}</p>
+            </div>
+          </div>
         </div>
 
         <div *ngIf="experienceEditMode">

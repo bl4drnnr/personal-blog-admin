@@ -286,6 +286,8 @@ export class ExperienceComponent implements OnInit {
       editExperiencePayload.endDate = new Date(this.experienceEndDate);
     if (!areExperienceSkillsEqual)
       editExperiencePayload.obtainedSkills = this.experienceObtainedSkills;
+    if (this.authorId !== this.experience.authorId)
+      editExperiencePayload.authorId = this.authorId;
 
     return this.experienceService
       .editExperience({
@@ -355,6 +357,7 @@ export class ExperienceComponent implements OnInit {
     );
 
     return (
+      this.authorId !== this.experience.authorId ||
       this.experienceCompanyName !== this.experience.companyName ||
       this.experienceCompanyDescription !== this.experience.companyDescription ||
       this.experienceCompanyLink !== this.experience.companyLink ||

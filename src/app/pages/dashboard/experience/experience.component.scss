@@ -26,3 +26,32 @@
   margin: 20px 0;
 }
 
+.cert-skills-wrapper {
+  display: flex;
+  margin: 10px 0;
+}
+
+.cert-skill {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.cert-preview-mode-pic {
+  cursor: pointer;
+  object-fit: cover;
+  max-width: 500px;
+}
+
+.experience-position-block {
+  margin-top: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.experience-position-title {
+  margin: 0;
+}

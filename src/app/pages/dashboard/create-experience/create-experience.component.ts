@@ -134,7 +134,7 @@ export class CreateExperienceComponent implements OnInit {
         });
 
         this.handleExperiencePositionsCreation(experiences, createdExperiences);
-        // await this.handleRedirect('account/experiences');
+        await this.handleRedirect('account/experiences');
       }
     });
   }
