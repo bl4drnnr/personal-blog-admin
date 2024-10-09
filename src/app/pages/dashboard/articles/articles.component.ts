@@ -12,9 +12,9 @@ import { MessagesTranslation } from '@translations/messages.enum';
 import { EnvService } from '@shared/env.service';
 
 @Component({
-  selector: 'app-articles',
+  selector: 'page-articles',
   templateUrl: './articles.component.html',
-  styleUrl: './articles.component.scss'
+  styleUrls: ['./articles.component.scss', '../shared/article.styles.scss']
 })
 export class ArticlesComponent implements OnInit {
   page: string = '0';
@@ -81,7 +81,9 @@ export class ArticlesComponent implements OnInit {
           message,
           MessagesTranslation.RESPONSES
         );
-        this.globalMessageService.handle({ message: translationMessage });
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
         this.listArticles();
       }
     });
@@ -94,7 +96,9 @@ export class ArticlesComponent implements OnInit {
           message,
           MessagesTranslation.RESPONSES
         );
-        this.globalMessageService.handle({ message: translationMessage });
+        this.globalMessageService.handle({
+          message: translationMessage
+        });
         this.listArticles();
       }
     });

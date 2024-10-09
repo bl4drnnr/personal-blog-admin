@@ -37,11 +37,7 @@ export class TranslationService {
     scope: TranslationType,
     params?: { [key: string]: string | number }
   ): Promise<string> {
-    const translatedText = this.translocoService.selectTranslate(
-      key,
-      params,
-      scope
-    );
+    const translatedText = this.translocoService.selectTranslate(key, params, scope);
 
     return await new Promise((resolve) => {
       translatedText.subscribe({

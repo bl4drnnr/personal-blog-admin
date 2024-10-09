@@ -4,5 +4,10 @@
   "sidebarUserFullName": "Полное имя",
   "sidebarUserEmail": "Электронная почта",
   "sidebarUserId": "ID пользователя",
-  "companySettingsSidebarTitle": "Ваша компания"
+  "sidebarArticlesTitle": "Статьи",
+  "sidebarCategoriesTitle": "Категории",
+  "sidebarAuthorsTitle": "Авторы",
+  "sidebarCertsTitle": "Сертификации",
+  "sidebarExperienceTitle": "Опыт",
+  "sidebarProjectsTitle": "Проекты"
 }

@@ -32,9 +32,7 @@ export class DropdownComponent {
   constructor(private elementRef: ElementRef) {}
 
   onSelect(optionKey: string) {
-    const selectedOption = this.options.find(
-      (option) => option.key === optionKey
-    );
+    const selectedOption = this.options.find((option) => option.key === optionKey);
     this.selectedOption.emit(selectedOption);
     this.currentOption = selectedOption!.value;
     this.toggleDropdown();
@@ -46,8 +44,7 @@ export class DropdownComponent {
 
   @HostListener('document:click', ['$event.target'])
   onClickOutside(target: any) {
-    const clickedInsideDropdown =
-      this.elementRef.nativeElement.contains(target);
+    const clickedInsideDropdown = this.elementRef.nativeElement.contains(target);
     if (!clickedInsideDropdown) {
       this.isDropdownOpen = false;
     }

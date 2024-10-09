@@ -16,6 +16,7 @@ import { ArrowComponent } from '@components/arrow/arrow.component';
 import { TextareaComponent } from '@components/textarea/textarea.component';
 import { ChangeLanguageComponent } from '@components/change-language/change-language.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SocialLinkComponent } from '@components/social-link/social-link.component';
 
 const components: any = [
   ButtonComponent,
@@ -31,7 +32,8 @@ const components: any = [
   QrMfaComponent,
   ArrowComponent,
   TextareaComponent,
-  ChangeLanguageComponent
+  ChangeLanguageComponent,
+  SocialLinkComponent
 ];
 
 @NgModule({

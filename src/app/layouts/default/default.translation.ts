@@ -54,6 +54,18 @@ export const DefaultTranslation = {
     {
       scope: PageTranslation.CATEGORIES,
       alias: PageTranslation.CATEGORIES_ALIAS
+    },
+    {
+      scope: PageTranslation.AUTHORS,
+      alias: PageTranslation.AUTHORS_ALIAS
+    },
+    {
+      scope: PageTranslation.CERTIFICATION,
+      alias: PageTranslation.CERTIFICATION_ALIAS
+    },
+    {
+      scope: PageTranslation.EXPERIENCES,
+      alias: PageTranslation.EXPERIENCES_ALIAS
     }
   ]
 };

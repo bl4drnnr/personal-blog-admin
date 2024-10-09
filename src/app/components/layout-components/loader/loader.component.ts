@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { LoaderService } from '@shared/loader.service';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'layout-loader',

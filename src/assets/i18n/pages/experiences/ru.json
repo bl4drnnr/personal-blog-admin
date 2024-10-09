@@ -1,0 +1,9 @@
+{
+  "createExpTitle": "Создать опыт",
+  "allExperiences": "Все опыты",
+  "noExps": "Опыта не найдено",
+  "experienceStartDate": "Дата начала опыта: {{ experienceStartDate }}",
+  "experienceEndDate": "Дата окончания опыта: {{ experienceEndDate }}",
+  "experienceCreatedAt": "Опыт создан: {{ experienceCreatedAt }}",
+  "experienceUpdatedAt": "Опыт обновлен: {{ experienceUpdatedAt }}"
+}

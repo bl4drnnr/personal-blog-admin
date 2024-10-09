@@ -1,0 +1,59 @@
+@import 'variables';
+
+.experiences-wrapper {
+  width: 60%;
+  margin: 30px auto 150px auto;
+}
+
+.experience-wrapper {
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  h1, h3 {
+    margin: 0;
+  }
+}
+
+.pagination-container {
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.experience-info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.experience-info-text-fields {
+  padding-right: 10px;
+}
+
+.exp-picture-preview {
+  max-width: 150px;
+  border-radius: 5px;
+}
+
+.experience-control-buttons {
+  display: flex;
+}
+
+.experience-control-button-wrapper {
+  width: 100%;
+
+  &.margin {
+    margin: 0 10px;
+  }
+}
+
+.exp-date {
+  font-size: 12px;
+  opacity: .5;
+  margin: 3px 0;
+}
+
+.experience-info-title {
+  margin: 0;
+}

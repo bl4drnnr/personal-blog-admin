@@ -15,6 +15,7 @@ export class DefaultLayout {
 
   @Input() showFooter = true;
   @Input() showSideBar = true;
+  @Input() withPreview = false;
 
   isSidebarOpen = false;
 }

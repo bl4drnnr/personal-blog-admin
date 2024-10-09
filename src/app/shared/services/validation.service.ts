@@ -87,4 +87,41 @@ export class ValidationService {
 
     return !corruptedKey;
   }
+
+  areArraysEqual(arr1: any[], arr2: any[]): boolean {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    const sortedArr1 = arr1
+      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .sort();
+
+    const sortedArr2 = arr2
+      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
+      .sort();
+
+    return sortedArr1.every((value, index) => value === sortedArr2[index]);
+  }
+
+  areArraysObjectEqual<T>(arr1: T[], arr2: T[]): boolean {
+    const arr1Sorted = arr1.map((obj) => JSON.stringify(obj)).sort();
+    const arr2Sorted = arr2.map((obj) => JSON.stringify(obj)).sort();
+
+    if (arr1Sorted.length !== arr2Sorted.length) {
+      return false;
+    }
+
+    for (let i = 0; i < arr1Sorted.length; i++) {
+      if (arr1Sorted[i] !== arr2Sorted[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  deleteObjectFromArray(arr: Array<any>, key: string, value: any): Array<any> {
+    return arr.filter((item) => item[key] !== value);
+  }
 }

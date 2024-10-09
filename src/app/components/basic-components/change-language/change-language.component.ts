@@ -48,9 +48,7 @@ export class ChangeLanguageComponent implements OnInit {
         ChangeLanguageModel.EN
       ].includes(currentLang as ChangeLanguageModel)
     ) {
-      this.currentLanguage = this.languages.find(
-        (l) => l.name === currentLang
-      )!;
+      this.currentLanguage = this.languages.find((l) => l.name === currentLang)!;
     } else {
       this.currentLanguage = {
         name: ChangeLanguageModel.EN,

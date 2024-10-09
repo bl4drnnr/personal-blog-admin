@@ -14,7 +14,11 @@
 
   <div
     class="content-wrapper"
-    [ngClass]="{ 'no-footer': !showFooter, 'no-header': !showHeader }"
+    [ngClass]="{
+      'no-footer': !showFooter,
+      'no-header': !showHeader,
+      'with-preview': withPreview
+    }"
   >
     <ng-content />
   </div>

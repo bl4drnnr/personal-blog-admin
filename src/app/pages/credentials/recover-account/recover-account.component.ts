@@ -55,7 +55,7 @@ export class RecoverAccountComponent implements OnInit {
       });
   }
 
-  selectFile(event: any) {
+  selectRecoveryKeys(event: any) {
     const file = event.target.files[0];
 
     const fileReader = new FileReader();
@@ -65,8 +65,7 @@ export class RecoverAccountComponent implements OnInit {
       if (!recoveryKeysStr) return;
 
       const recoveryKeys = (recoveryKeysStr as string).split('\n\n');
-      const areKeyValid =
-        this.validationService.checkRecoveryKeys(recoveryKeys);
+      const areKeyValid = this.validationService.checkRecoveryKeys(recoveryKeys);
 
       if (!areKeyValid) {
         await this.globalMessageService.handleError({

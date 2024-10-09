@@ -1,0 +1,84 @@
+@import 'variables';
+
+.create-certification-dates {
+  display: flex;
+
+  .margin-right {
+    width: 100%;
+    margin-right: 5px;
+  }
+
+  .margin-left {
+    width: 100%;
+    margin-left: 5px;
+  }
+}
+
+.cert-skills-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.cert-skill {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-right: 5px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.select-photo-btn-wrapper {
+  margin: 20px 0;
+}
+
+.cert-main-picture {
+  cursor: pointer;
+  object-fit: cover;
+  max-width: 300px;
+}
+
+.picture-preview {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.cert-doc-preview {
+  display: flex;
+  margin-top: 20px;
+}
+
+.authors-list {
+  margin-bottom: 20px;
+}
+
+.author-item {
+  border: 1px solid var(--border-color);
+  transition: .2s;
+  cursor: pointer;
+  padding: 6px;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.cert-doc-info {
+  padding: 20px
+}
+
+.cert-doc-pdf-preview {
+  width: 400px;
+  height: 500px;
+}
+
+.cert-date {
+  font-size: 12px;
+  opacity: .5;
+  margin: 3px 0;
+}

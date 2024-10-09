@@ -1,0 +1,81 @@
+<layout-default
+  [userInfo]="userInfo"
+>
+  <ng-container *transloco="let t">
+    <div class="experiences-wrapper">
+      <h1>{{ t('exp.allExperiences') }}</h1>
+      <basic-input
+        [label]="t('input.expQueryLabel')"
+        [placeholder]="t('input.expQueryPlaceholder')"
+        [inputDescription]="t('input.expQueryDesc')"
+        [value]="experiencesSearchQuery"
+        (valueChange)="handleExperiencesQuery($event)"
+      />
+
+      <div
+        class="experience-wrapper"
+        *ngFor="let exp of experiences"
+      >
+        <div class="experience-info-container">
+          <div class="experience-info-text-fields">
+            <h2 class="experience-info-title">{{ exp.companyName }} ({{ exp.experienceLanguage.toUpperCase() }})</h2>
+            <p>{{ exp.companyDescription }}</p>
+            <basic-link
+              [label]="exp.companyLinkTitle"
+              [href]="exp.companyLink"
+            />
+            <p class="exp-date">{{ t('exp.experienceStartDate', { experienceStartDate: dayjs(exp.startDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="exp-date" *ngIf="exp.endDate">{{ t('exp.experienceEndDate', { experienceEndDate: dayjs(exp.endDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="exp-date">{{ t('exp.experienceCreatedAt', { experienceCreatedAt: dayjs(exp.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="exp-date">{{ t('exp.experienceUpdatedAt', { experienceUpdatedAt: dayjs(exp.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          </div>
+          <div>
+            <img
+              class="exp-picture-preview"
+              [src]="staticStorage + exp.companyPicture"
+              alt="exp-pic"
+            >
+          </div>
+        </div>
+        <div class="experience-control-buttons">
+          <div class="experience-control-button-wrapper">
+            <basic-button
+              [label]="t('button.editExperience')"
+              (buttonClick)="handleRedirect('/account/experience/' + exp.id)"
+            />
+          </div>
+          <div class="experience-control-button-wrapper margin">
+            <basic-button
+              [label]="t('button.changeExpSelection')"
+              [fillButton]="exp.isSelected"
+              (buttonClick)="changeExperienceSelectionStatus(exp.experienceCommonId)"
+            />
+          </div>
+          <div class="experience-control-button-wrapper">
+            <basic-button
+              [label]="t('button.deleteExp')"
+              [danger]="true"
+              (buttonClick)="deleteExperience(exp.experienceCommonId)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="experiences.length === 0">
+        <h1>{{ t('exp.noExps') }}</h1>
+      </div>
+
+      <div class="pagination-container">
+        <basic-pagination
+          [itemsPerPageLabel]="t('dropdown.experiencesPerPage')"
+          [currentPage]="page"
+          [itemsPerPage]="pageSize"
+          [totalItems]="totalItems"
+          (setCurrentPage)="setCurrentPage($event)"
+          (setItemsPerPage)="setExperiencesPerPage($event)"
+          (fetchItems)="listExperiences()"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

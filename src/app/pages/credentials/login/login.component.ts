@@ -46,10 +46,7 @@ export class LoginComponent implements OnInit {
 
   incorrectCredentials() {
     return (
-      !this.email ||
-      !this.password ||
-      this.incorrectEmail ||
-      this.incorrectPassword
+      !this.email || !this.password || this.incorrectEmail || this.incorrectPassword
     );
   }
 

@@ -66,7 +66,10 @@ export class ForgotPasswordComponent implements OnInit {
       this.resendMessage = await this.translationService.translateText(
         'resendEmailIn',
         ComponentsTranslation.INPUT,
-        { time: this.time, s: this.time !== 1 ? 's' : '' }
+        {
+          time: this.time,
+          s: this.time !== 1 ? 's' : ''
+        }
       );
     }, 1000);
   }

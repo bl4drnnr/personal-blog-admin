@@ -2,6 +2,9 @@
   "mobilePhone": "Mobile phone",
   "authApp": "Authenticator application",
   "selectMfaOption": "Select an MFA option",
-  "articlesPerPage": "Article per page",
-  "articleCategory": "Select article category"
+  "articlesPerPage": "Articles per page",
+  "articleCategory": "Select article category",
+  "authorsPerPage": "Authors per page",
+  "certsPerPage": "Certifications per page",
+  "experiencesPerPage": "Experiences per page"
 }

@@ -1,0 +1,48 @@
+<div class="preview-about-body">
+  <div class="preview-wrapper" *ngIf="author">
+    <div class="preview-hero-section">
+      <div class="preview-about-hero-content-wrapper">
+        <div class="preview-about-left-hero-section">
+          <h1 class="preview-h1 preview-about-heading-xxl">About me and this project.</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-about-story-section">
+      <div class="preview-about-story-wrapper">
+        <div class="preview-about-left-story">
+          <p class="preview-paragraph preview-intro-paragraph">First of all, I'd would like to say thank for you. You are reading this page and you are reading this blog, so I believe that you were able to find something interesting here.</p><br>
+          <p class="preview-paragraph preview-intro-paragraph">My name is Mikhail and this is my blog about cybersecurity and IT. I am really obsessed with what I am doing and I want to share my knowledge with people.</p><br>
+          <p class="preview-paragraph preview-intro-paragraph">The idea behind creating with blog was also quite interesting. I think that the best way to learn something is to start teach other people. Also, for me this blog is the opportunity to just write some code (which I also still like, despite the fact that I am not work as a developer anymore).</p><br>
+          <p class="preview-paragraph preview-intro-paragraph">If you find anything that I am writing about interesting, you would like to talk or you have any other reasons why you want to talk to me, I will always be glad to do so. </p><br>
+          <a class="preview-a preview-span-link">So, let's stay it touch!</a>
+        </div>
+
+        <div class="preview-about-container">
+          <div class="preview-about-author-cell">
+            <component-about-author-cell
+              [title]="author.title"
+              [firstName]="author.firstName"
+              [lastName]="author.lastName"
+              [description]="author.description"
+              [image]="author.profilePicture"
+              [socialLinks]="author.socials"
+            />
+          </div>
+
+          <div class="preview-about-author-cell">
+            <component-about-experience-cell
+              [experiences]="author.experiences"
+            />
+          </div>
+
+          <div class="preview-about-author-cell full-width">
+            <component-about-certs-cell
+              [certs]="author.certs"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

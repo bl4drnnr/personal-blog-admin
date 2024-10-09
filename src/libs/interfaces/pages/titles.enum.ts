@@ -6,7 +6,16 @@ export enum Titles {
   RECOVER_ACCOUNT = 'recoverAccount',
   LOGIN = 'login',
   ARTICLES = 'articles',
+  AUTHOR = 'author',
+  AUTHORS = 'authors',
+  CREATE_AUTHORS = 'createAuthors',
+  CERTIFICATION = 'certification',
+  CERTIFICATIONS = 'certifications',
+  CREATE_CERTIFICATION = 'createCertification',
   CATEGORIES = 'categories',
   CREATE_ARTICLE = 'createArticle',
-  ARTICLE = 'article'
+  ARTICLE = 'article',
+  EXPERIENCE = 'experience',
+  EXPERIENCES = 'experiences',
+  CREATE_EXPERIENCE = 'createExperience'
 }

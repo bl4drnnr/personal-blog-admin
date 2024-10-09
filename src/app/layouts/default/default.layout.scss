@@ -11,10 +11,14 @@
   padding-bottom: 60px;
 
   &.no-footer {
-    padding-bottom: 20px;
+    padding-bottom: 60px;
   }
 
   &.no-header {
     padding-top: 20px;
+  }
+
+  &.with-preview {
+    padding-bottom: 0 !important;
   }
 }

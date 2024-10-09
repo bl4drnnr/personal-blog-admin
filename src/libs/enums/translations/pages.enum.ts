@@ -3,5 +3,11 @@ export enum PageTranslation {
   ARTICLES = 'pages/articles',
   ARTICLES_ALIAS = 'articles',
   CATEGORIES = 'pages/categories',
-  CATEGORIES_ALIAS = 'categories'
+  CATEGORIES_ALIAS = 'categories',
+  AUTHORS = 'pages/authors',
+  AUTHORS_ALIAS = 'authors',
+  CERTIFICATION = 'pages/certifications',
+  CERTIFICATION_ALIAS = 'certs',
+  EXPERIENCES = 'pages/experiences',
+  EXPERIENCES_ALIAS = 'exp'
 }

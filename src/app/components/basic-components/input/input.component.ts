@@ -1,11 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ValidationService } from '@services/validation.service';
 import { LoaderService } from '@shared/loader.service';
 
@@ -78,16 +72,15 @@ export class InputComponent {
     this.valueChange.emit(this.value);
 
     if (this.type === 'email' && this.isValuePresent()) {
-      const isEmailIncorrect = !this.validationService.isEmailCorrect(
-        this.value
-      );
+      const isEmailIncorrect = !this.validationService.isEmailCorrect(this.value);
       this.showError = isEmailIncorrect;
       this.incorrectInput.emit(isEmailIncorrect);
 
       if (isEmailIncorrect) this.showError = true;
     } else if (this.type === 'password' && this.isValuePresent()) {
-      const isPasswordIncorrect =
-        await this.validationService.checkPasswordsRules(this.value);
+      const isPasswordIncorrect = await this.validationService.checkPasswordsRules(
+        this.value
+      );
       const hasError = isPasswordIncorrect.some((rule) => rule.error);
       this.passwordErrors.emit(isPasswordIncorrect);
 

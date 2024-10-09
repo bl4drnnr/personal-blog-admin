@@ -1,4 +1,4 @@
-name: Build and deployment
+name: Admin build and deployment
 
 on:
   push:
@@ -9,4 +9,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Get Github action IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Configure AWS Credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }};
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }};
+          aws configure set region eu-central-1;
+
+      - name: Setting environment variables
+        run: |
+          echo "AWS_DEFAULT_REGION=eu-central-1" >> $GITHUB_ENV
+          echo "AWS_ADMIN_SG_NAME=bahdashych-on-security-admin" >> $GITHUB_ENV
+
+      - name: Get Admin Security Group ID
+        id: get_admin_sg_id
+        run: |
+          ADMIN_SG_ID=$(aws ec2 describe-security-groups --group-names ${{ env.AWS_ADMIN_SG_NAME }} --query 'SecurityGroups[0].GroupId' --output text)
+          echo "::set-output name=admin_security_group_id::$ADMIN_SG_ID"
+
+      - name: Add Github Actions IP to Security group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32;
+          aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol all --cidr 0.0.0.0/0;
+          aws ec2 authorize-security-group-egress --group-id ${{ steps.get_admin_sg_id.outputs.admin_security_group_id }} --protocol all --cidr 0.0.0.0/0;
+
+      - name: Create the .ssh directory
+        run: mkdir ~/.ssh && chmod 700 ~/.ssh
+      - name: Install the deploy key for the proxy
+        run: echo "${{ secrets.ADMIN_DEPLOY_KEY }}" >> ~/.ssh/admin_deploy && chmod 600 ~/.ssh/admin_deploy
+      - name: Create the known hosts file
+        run: echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      - name: Remotely trigger building and deployment script for the proxy
+        run: ssh -i ~/.ssh/admin_deploy deployer@${{ secrets.ADMIN_HOST_IP }}
+
+      - name: Remove Github Actions IP from security group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32;
+          aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol all --cidr 0.0.0.0/0;
+          aws ec2 revoke-security-group-egress --group-id ${{ steps.get_admin_sg_id.outputs.admin_security_group_id }} --protocol all --cidr 0.0.0.0/0;
+        if: always()

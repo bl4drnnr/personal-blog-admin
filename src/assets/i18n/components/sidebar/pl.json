@@ -4,5 +4,10 @@
   "sidebarUserFullName": "Imię i nazwisko",
   "sidebarUserEmail": "Email",
   "sidebarUserId": "Identyfikator ID",
-  "companySettingsSidebarTitle": "Twoja firma"
+  "sidebarArticlesTitle": "Artykuły",
+  "sidebarCategoriesTitle": "Kategorie",
+  "sidebarAuthorsTitle": "Autorzy",
+  "sidebarCertsTitle": "Certyfikaty",
+  "sidebarExperienceTitle": "Doświadczenia",
+  "sidebarProjectsTitle": "Projekty"
 }

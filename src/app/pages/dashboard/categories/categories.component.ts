@@ -79,12 +79,13 @@ export class CategoriesComponent implements OnInit {
             }
           ];
 
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({ message: translationMessage });
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });
@@ -103,12 +104,13 @@ export class CategoriesComponent implements OnInit {
       .subscribe({
         next: async ({ message }) => {
           this.editingCategoryId = '';
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({ message: translationMessage });
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });
@@ -121,12 +123,13 @@ export class CategoriesComponent implements OnInit {
       })
       .subscribe({
         next: async ({ message }) => {
-          const translationMessage =
-            await this.translationService.translateText(
-              message,
-              MessagesTranslation.RESPONSES
-            );
-          this.globalMessageService.handle({ message: translationMessage });
+          const translationMessage = await this.translationService.translateText(
+            message,
+            MessagesTranslation.RESPONSES
+          );
+          this.globalMessageService.handle({
+            message: translationMessage
+          });
           this.getAllCategories();
         }
       });

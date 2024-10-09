@@ -1,0 +1,32 @@
+<div class="preview-about-certs-block">
+  <h2 class="preview-h2 preview-about-cell-name-two">Certifications</h2>
+  <div class="preview-about-certs-container">
+    <div class="preview-cert-item" *ngFor="let cert of certs">
+      <p class="preview-paragraph preview-cert-dates">{{ dayjs(cert.obtainingDate).format('MMM D, YYYY') }}</p>
+      <img
+        class="preview-cert-image"
+        [src]="certsPicsStaticStorageLink + cert.certPicture"
+        [alt]="cert.certName"
+      >
+      <h2 class="preview-h2 preview-cert-name">{{ cert.certName }}</h2>
+      <p class="preview-paragraph preview-cert-dates">
+        {{ dayjs(cert.obtainingDate).format('MM/D/YYYY') }} - {{ dayjs(cert.expirationDate).format('MM/D/YYYY') }}
+      </p>
+      <p class="preview-paragraph">{{ cert.certDescription }}</p>
+
+      <p class="preview-paragraph preview-obtained-skills-title">Obtained skills:</p>
+      <div class="preview-cert-obtained-skills">
+        <p class="preview-paragraph preview-obtained-skill-item" *ngFor="let obtainedSkill of cert.obtainedSkills; let i = index">
+          {{ obtainedSkill }}<span class="preview-span" *ngIf="i !== cert.obtainedSkills.length - 1">,</span>&nbsp;
+        </p>
+      </div>
+
+      <div class="preview-btn-container">
+        <button
+          class="preview-btn w-button"
+          (click)="downloadCert(cert.certDocs)"
+        >Download the certificate</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,8 +54,9 @@ export class CreatePasswordComponent {
   }
 
   async isRepeatPasswordIncorrect() {
-    const isPasswordIncorrect =
-      await this.validationService.checkPasswordsRules(this.passwordRepeat);
+    const isPasswordIncorrect = await this.validationService.checkPasswordsRules(
+      this.passwordRepeat
+    );
     return isPasswordIncorrect.some((rule) => rule.error);
   }
 

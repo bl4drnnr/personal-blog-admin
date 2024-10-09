@@ -1,0 +1,9 @@
+{
+  "createExpTitle": "Create an experience",
+  "allExperiences": "All experiences",
+  "noExps": "No experiences found",
+  "experienceStartDate": "Experience start date: {{ experienceStartDate }}",
+  "experienceEndDate": "Experience end date: {{ experienceEndDate }}",
+  "experienceCreatedAt": "Experience created at: {{ experienceCreatedAt }}",
+  "experienceUpdatedAt": "Experience updated at: {{ experienceUpdatedAt }}"
+}

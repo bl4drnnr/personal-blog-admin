@@ -7,6 +7,10 @@ import { UsersEndpoint } from '@interfaces/users.enum';
 import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
 import { ArticlesEndpoint } from '@interfaces/articles.enum';
 import { CategoriesEndpoint } from '@interfaces/categories.enum';
+import { AuthorsEndpoint } from '@interfaces/authors.enum';
+import { CertificationEndpoint } from '@interfaces/certifications.enum';
+import { ExperienceEndpoint } from '@interfaces/experience.enum';
+import { SocialEndpoint } from '@interfaces/socials.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -15,7 +19,11 @@ type EndpointsType =
   | UsersEndpoint
   | ConfirmationHashEndpoint
   | ArticlesEndpoint
-  | CategoriesEndpoint;
+  | CategoriesEndpoint
+  | AuthorsEndpoint
+  | CertificationEndpoint
+  | ExperienceEndpoint
+  | SocialEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;
@@ -23,4 +31,5 @@ export interface ProxyRequestInterface {
   method: Method;
   payload?: object;
   params?: any;
+  isFileUpload?: boolean;
 }

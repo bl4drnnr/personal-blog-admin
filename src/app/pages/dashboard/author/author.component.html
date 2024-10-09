@@ -1,0 +1,197 @@
+<layout-default
+  [userInfo]="userInfo"
+  [showFooter]="false"
+  [withPreview]="true"
+>
+  <ng-container *transloco="let t">
+    <div *ngIf="author">
+      <div class="author-wrapper">
+        <div class="author-mgmt-buttons">
+          <div class="author-mgmt-button right">
+            <basic-button
+              [label]="authorEditMode ? t('button.closeEditMode') : t('button.editAuthor')"
+              (buttonClick)="authorEditMode = !authorEditMode"
+            />
+          </div>
+          <div class="author-mgmt-button">
+            <basic-button
+              [label]="t('button.changeAuthorSelection')"
+              [fillButton]="author.isSelected"
+              (buttonClick)="changeAuthorSelectionStatus(author.authorCommonId)"
+            />
+          </div>
+          <div class="author-mgmt-button left">
+            <basic-button
+              [label]="t('button.deleteAuthor')"
+              [danger]="true"
+              (buttonClick)="deleteAuthor()"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="!authorEditMode">
+          <h1>{{ author.firstName }} {{ author.lastName }} ({{ author.authorLanguage.toUpperCase() }})</h1>
+          <p>{{ author.description }}</p>
+          <div *ngFor="let authorSocial of author.socials">
+            <basic-link
+              [label]="authorSocial.title"
+              [href]="authorSocial.link"
+            />
+          </div>
+          <p class="author-date">{{ t('authors.authorCreatedAt', { authorCreatedAt: dayjs(authorCreatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+          <p class="author-date">{{ t('authors.authorUpdatedAt', { authorUpdatedAt: dayjs(authorUpdatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+
+          <img
+            [src]="staticStorage + author.profilePicture"
+            alt="author-picture"
+            class="author-pic-wrapper"
+          >
+        </div>
+
+        <div *ngIf="authorEditMode">
+          <basic-input
+            [label]="t('input.authorFirstNameLabel')"
+            [placeholder]="t('input.authorFirstNamePlaceholder')"
+            [inputDescription]="t('input.authorFirstNameDesc')"
+            [value]="authorFirstName"
+            (valueChange)="authorFirstName = $event"
+          />
+          <basic-input
+            [label]="t('input.authorLastNameLabel')"
+            [placeholder]="t('input.authorLastNamePlaceholder')"
+            [inputDescription]="t('input.authorLastNameDesc')"
+            [value]="authorLastName"
+            (valueChange)="authorLastName = $event"
+          />
+          <basic-input
+            [label]="t('input.authorTitleLabel')"
+            [placeholder]="t('input.authorTitlePlaceholder')"
+            [inputDescription]="t('input.authorTitleDesc')"
+            [value]="authorTitle"
+            (valueChange)="authorTitle = $event"
+          />
+          <basic-input
+            [label]="t('input.authorDescLabel')"
+            [placeholder]="t('input.authorDescPlaceholder')"
+            [inputDescription]="t('input.authorDescDesc')"
+            [value]="authorDescription"
+            (valueChange)="authorDescription = $event"
+          />
+
+          <basic-button
+            *ngIf="!addingSocial"
+            [label]="t('button.addNewSocial')"
+            (buttonClick)="addingSocial = true"
+          />
+
+          <basic-button
+            *ngIf="addingSocial"
+            [label]="t('button.addSocial')"
+            [disabled]="addingSocialDisabled()"
+            (buttonClick)="addSocial()"
+          />
+
+          <div *ngIf="addingSocial">
+            <basic-input
+              [label]="t('input.socialLinkLabel')"
+              [placeholder]="t('input.socialLinkPlaceholder')"
+              [inputDescription]="t('input.socialLinkDesc')"
+              [errorMessage]="t('input.wrongFQDN')"
+              [value]="socialLink"
+              (valueChange)="socialLink = $event"
+            />
+            <basic-input
+              [label]="t('input.socialTitleLabel')"
+              [placeholder]="t('input.socialTitlePlaceholder')"
+              [inputDescription]="t('input.socialTitleDesc')"
+              [value]="socialTitle"
+              (valueChange)="socialTitle = $event"
+            />
+          </div>
+
+          <div *ngIf="authorSocials.length > 0">
+            <div
+              class="social-box"
+              *ngFor="let social of authorSocials"
+            >
+              <div class="social-box-item">
+                <basic-input
+                  [label]="t('input.socialLinkLabel')"
+                  [placeholder]="t('input.socialLinkPlaceholder')"
+                  [inputDescription]="t('input.socialLinkDesc')"
+                  [errorMessage]="t('input.wrongFQDN')"
+                  [value]="social.link"
+                  (valueChange)="social.link = $event"
+                />
+              </div>
+              <div class="social-box-item margin">
+                <basic-input
+                  [label]="t('input.socialTitleLabel')"
+                  [placeholder]="t('input.socialTitlePlaceholder')"
+                  [inputDescription]="t('input.socialTitleDesc')"
+                  [value]="social.title"
+                  (valueChange)="social.title = $event"
+                />
+              </div>
+              <div class="social-box-item buttons">
+                <div class="social-box-item">
+                  <basic-button
+                    [label]="t('button.deleteSocial')"
+                    [danger]="true"
+                    (buttonClick)="deleteSocial(social)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="select-photo-btn-wrapper">
+            <basic-button
+              [label]="t('button.selectPhoto')"
+              (click)="fileInput.click()"
+            />
+          </div>
+
+          <div class="picture-preview">
+            <img
+              *ngIf="!authorNewImage"
+              [src]="staticStorage + authorImage"
+              alt="author-picture"
+              class="author-pic-wrapper"
+            />
+            <img
+              *ngIf="authorNewImage"
+              [src]="authorNewImage"
+              (click)="authorNewImage = ''"
+              class="author-main-picture"
+              alt="author-picture"
+            />
+
+            <input
+              type="file"
+              accept="image/*"
+              (change)="selectAuthorNewImage($event)"
+              #fileInput
+              hidden
+            />
+          </div>
+
+          <div class="edit-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.saveChanges')"
+              [disabled]="!authorEdited()"
+              (buttonClick)="editAuthor()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!authorEditMode && author">
+        <page-component-preview-about
+          [selectedAuthorLanguage]="author.authorLanguage"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

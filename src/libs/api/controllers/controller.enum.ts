@@ -5,5 +5,6 @@ export enum Controller {
   USERS = 'users',
   CONFIRMATION_HASH = 'confirmation-hash',
   ARTICLES = 'articles',
-  CATEGORIES = 'categories'
+  CATEGORIES = 'categories',
+  ABOUT_BLOG = 'about-blog'
 }

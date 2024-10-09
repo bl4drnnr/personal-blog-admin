@@ -1,0 +1,222 @@
+<layout-default
+  [userInfo]="userInfo"
+  [showFooter]="false"
+  [withPreview]="true"
+>
+  <ng-container *transloco="let t">
+    <div *ngIf="certification">
+      <div class="certification-wrapper">
+        <div class="certification-mgmt-buttons">
+          <div class="certification-mgmt-button right">
+            <basic-button
+              [label]="certificationEditMode ? t('button.closeEditMode') : t('button.editCert')"
+              (buttonClick)="certificationEditMode = !certificationEditMode"
+            />
+          </div>
+          <div class="certification-mgmt-button">
+            <basic-button
+              [label]="t('button.changeCertSelection')"
+              [fillButton]="certification.isSelected"
+              (buttonClick)="changeCertificationSelectionStatus(certification.certCommonId)"
+            />
+          </div>
+          <div class="certification-mgmt-button left">
+            <basic-button
+              [label]="t('button.deleteCert')"
+              [danger]="true"
+              (buttonClick)="deleteCertification()"
+            />
+          </div>
+        </div>
+
+        <div class="certification-preview-mode" *ngIf="!certificationEditMode">
+          <div>
+            <h1>{{ certification.certName }}</h1>
+            <p>{{ certification.certDescription }}</p>
+            <p class="cert-date">{{ t('certs.certObtainingDate', { certObtainingDate: dayjs(certification.obtainingDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="cert-date">{{ t('certs.certExpirationDate', { certExpirationDate: dayjs(certification.expirationDate).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="cert-date">{{ t('certs.certCreatedAt', { certCreatedAt: dayjs(certification.createdAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p class="cert-date">{{ t('certs.certUpdatedAt', { certUpdatedAt: dayjs(certification.updatedAt).format('YYYY/MM/DD HH:mm:ss') }) }}</p>
+            <p *ngIf="author">{{ t('certs.certOwner', { ownerFullName: author.firstName + ' ' + author.lastName }) }}</p>
+          </div>
+          <div class="cert-preview-mode-content">
+            <img
+              [src]="staticStorageCertPics + certification.certPicture"
+              class="cert-preview-mode-pic"
+              alt="cert-picture"
+            >
+            <pdf-viewer
+              [src]="staticStorageCertFiles + certification.certDocs"
+              [render-text]="true"
+              [original-size]="false"
+              class="cert-doc-pdf-preview"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="certificationEditMode">
+          <basic-input
+            [label]="t('input.certNameLabel')"
+            [placeholder]="t('input.certNamePlaceholder')"
+            [inputDescription]="t('input.certNameDesc')"
+            [value]="certificationName"
+            (valueChange)="certificationName = $event"
+          />
+          <basic-input
+            [label]="t('input.certDescLabel')"
+            [placeholder]="t('input.certDescPlaceholder')"
+            [inputDescription]="t('input.certDescDesc')"
+            [value]="certificationDescription"
+            (valueChange)="certificationDescription = $event"
+          />
+          <basic-input
+            [label]="t('input.certObtainedSkillLabel')"
+            [placeholder]="t('input.certObtainedSkillPlaceholder')"
+            [inputDescription]="t('input.certObtainedSkillDesc')"
+            [value]="certificationObtainedSkill"
+            (valueChange)="certificationObtainedSkill = $event"
+            (onSpace)="addObtainedSkills()"
+          />
+
+          <div *ngIf="certificationObtainedSkills.length > 0" class="cert-skills-wrapper">
+            <div *ngFor="let skill of certificationObtainedSkills">
+              <p class="cert-skill" (click)="deleteObtainedSkill(skill)">{{ skill }}</p>
+            </div>
+          </div>
+
+          <div class="create-certification-dates">
+            <div class="margin-right">
+              <basic-input
+                type="date"
+                [label]="t('input.certObtainingDateLabel')"
+                [placeholder]="t('input.certObtainingDatePlaceholder')"
+                [inputDescription]="t('input.certObtainingDateDesc')"
+                [value]="certificationObtainingDate"
+                (valueChange)="certificationObtainingDate = $event"
+              />
+            </div>
+            <div class="margin-left">
+              <basic-input
+                type="date"
+                [label]="t('input.certExpirationDateLabel')"
+                [placeholder]="t('input.certExpirationDatePlaceholder')"
+                [inputDescription]="t('input.certExpirationDateDesc')"
+                [value]="certificationExpirationDate"
+                (valueChange)="certificationExpirationDate = $event"
+              />
+            </div>
+          </div>
+
+          <basic-input
+            [label]="t('input.authorQueryLabel')"
+            [placeholder]="t('input.authorQueryPlaceholder')"
+            [inputDescription]="t('input.authorQueryDesc')"
+            [value]="authorSearchQuery"
+            (valueChange)="handleAuthorQuery($event)"
+          />
+
+          <div class="authors-list" *ngIf="authors.length > 0">
+            <p
+              class="author-item"
+              *ngFor="let author of authors"
+              (click)="selectAuthor(author)"
+            >{{ author.firstName }} {{ author.lastName }}</p>
+          </div>
+
+          <div class="select-photo-btn-wrapper">
+            <basic-button
+              [label]="t('button.selectPhoto')"
+              (click)="fileInput.click()"
+            />
+          </div>
+
+          <div class="picture-preview">
+            <img
+              *ngIf="!certNewPicture"
+              [src]="staticStorageCertPics + certificationPicture"
+              class="cert-main-picture"
+              alt="cert-picture"
+            >
+            <img
+              *ngIf="certNewPicture"
+              [src]="certNewPicture"
+              (click)="certNewPicture = ''"
+              class="cert-main-picture"
+              alt="cert-picture"
+            >
+
+            <input
+              type="file"
+              accept="image/*"
+              (change)="selectCertificationNewPicture($event)"
+              #fileInput
+              hidden
+            />
+          </div>
+
+          <basic-button
+            [label]="t('button.selectCertificationFile')"
+            (click)="certificatePdf.click()"
+          />
+
+          <div
+            class="cert-doc-preview"
+            *ngIf="certificationDocs && !certificationNewDocs"
+          >
+            <pdf-viewer
+              [src]="staticStorageCertFiles + certificationDocs"
+              [render-text]="true"
+              [original-size]="false"
+              class="cert-doc-pdf-preview"
+            />
+          </div>
+
+          <div
+            class="cert-doc-preview"
+            *ngIf="certificationNewDocs && certNewDocsFileInfo"
+          >
+            <pdf-viewer
+              [src]="pdfSrc"
+              [render-text]="true"
+              [original-size]="false"
+              class="cert-doc-pdf-preview"
+            />
+            <div class="cert-doc-info">
+              <p>{{ t('certs.certificateFileName', { certFileName: certNewDocsFileInfo.name }) }}</p>
+              <p>{{ t('certs.certificateFileSize', { certFileSize: (certNewDocsFileInfo.size / 1024 / 1024).toFixed(2) }) }}</p>
+              <basic-button
+                [label]="t('button.deleteCertFile')"
+                [danger]="true"
+                (buttonClick)="clearCertDocument()"
+              />
+            </div>
+          </div>
+
+          <input
+            id="certificatePdf"
+            type="file"
+            accept=".pdf,.doc,.docx"
+            (change)="selectCertificationDocument($event)"
+            #certificatePdf
+            hidden
+          />
+
+          <div class="edit-button-wrapper">
+            <basic-button
+              [fillButton]="true"
+              [label]="t('button.saveChanges')"
+              [disabled]="!certificationEdited()"
+              (buttonClick)="editCertification()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!certificationEditMode && author">
+        <page-component-preview-about
+          [selectedAuthorLanguage]="author.authorLanguage"
+        />
+      </div>
+    </div>
+  </ng-container>
+</layout-default>

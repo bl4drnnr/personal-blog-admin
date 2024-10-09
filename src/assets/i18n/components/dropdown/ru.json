@@ -3,5 +3,8 @@
   "authApp": "Приложение для аутентификации",
   "selectMfaOption": "Выберите вариант многофакторной идентификации",
   "articlesPerPage": "Статей на странице",
-  "articleCategory": "Выберите категорию статьи"
+  "articleCategory": "Выберите категорию статьи",
+  "authorsPerPage": "Авторов на странице",
+  "certsPerPage": "Сертификатов на страницу",
+  "experiencesPerPage": "Опытов на страницу"
 }

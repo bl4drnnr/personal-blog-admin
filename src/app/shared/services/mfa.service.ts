@@ -50,7 +50,9 @@ export class MfaService {
     hash,
     twoFaToken,
     code
-  }: VerifyTwoFaPayload): Observable<{ message: VerifyTwoFaResponse }> {
+  }: VerifyTwoFaPayload): Observable<{
+    message: VerifyTwoFaResponse;
+  }> {
     return this.apiService.apiProxyRequest({
       method: Method.POST,
       controller: Controller.SECURITY,

@@ -37,9 +37,7 @@ export class CategoriesService {
     });
   }
 
-  editCategory(
-    payload: EditCategoryPayload
-  ): Observable<CategoryEditedResponse> {
+  editCategory(payload: EditCategoryPayload): Observable<CategoryEditedResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.PATCH,
       controller: Controller.CATEGORIES,

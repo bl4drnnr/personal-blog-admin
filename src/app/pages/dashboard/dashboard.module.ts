@@ -11,6 +11,20 @@ import { CategoriesComponent } from '@pages/categories/categories.component';
 import { ArticlesComponent } from '@pages/articles/articles.component';
 import { ArticleComponent } from '@pages/article/article.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { AuthorsComponent } from '@pages/authors/authors.component';
+import { AuthorComponent } from '@pages/author/author.component';
+import { CreateAuthorComponent } from '@pages/create-author/create-author.component';
+import { CertificationComponent } from '@pages/certification/certification.component';
+import { CertificationsComponent } from '@pages/certifications/certifications.component';
+import { CreateCertificationComponent } from '@pages/create-certification/create-certification.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CreateProjectComponent } from '@pages/create-project/create-project.component';
+import { ProjectsComponent } from '@pages/projects/projects.component';
+import { CreateExperienceComponent } from '@pages/create-experience/create-experience.component';
+import { ExperiencesComponent } from '@pages/experiences/experiences.component';
+import { ExperienceComponent } from '@pages/experience/experience.component';
+import { ProjectComponent } from '@pages/project/project.component';
+import { PagesComponentsModule } from '@components/pages-components.module';
 
 const routes: Routes = [
   {
@@ -33,6 +47,54 @@ const routes: Routes = [
   {
     path: 'account/article/:language/:slug',
     component: ArticleComponent
+  },
+  {
+    path: 'account/authors',
+    component: AuthorsComponent
+  },
+  {
+    path: 'account/author/:authorId',
+    component: AuthorComponent
+  },
+  {
+    path: 'account/create-author',
+    component: CreateAuthorComponent
+  },
+  {
+    path: 'account/certifications',
+    component: CertificationsComponent
+  },
+  {
+    path: 'account/certification/:certificationId',
+    component: CertificationComponent
+  },
+  {
+    path: 'account/create-certification',
+    component: CreateCertificationComponent
+  },
+  {
+    path: 'account/create-project',
+    component: CreateProjectComponent
+  },
+  {
+    path: 'account/projects',
+    component: ProjectsComponent
+  },
+  {
+    path: 'account/create-experience',
+    component: CreateExperienceComponent
+  },
+  {
+    path: 'account/experiences',
+    component: ExperiencesComponent
+  },
+  {
+    path: 'account/project/:projectId',
+    component: ProjectComponent
+  },
+  {
+    path: 'account/experience/:experienceId',
+    component: ExperienceComponent
   }
 ];
 
@@ -40,7 +102,19 @@ const components = [
   CreateArticleComponent,
   CategoriesComponent,
   ArticlesComponent,
-  ArticleComponent
+  ArticleComponent,
+  AuthorsComponent,
+  AuthorComponent,
+  CreateAuthorComponent,
+  CertificationComponent,
+  CertificationsComponent,
+  CreateCertificationComponent,
+  CreateProjectComponent,
+  ProjectsComponent,
+  CreateExperienceComponent,
+  ExperiencesComponent,
+  ExperienceComponent,
+  ProjectComponent
 ];
 
 @NgModule({
@@ -86,7 +160,9 @@ const components = [
         enterValidUrl: 'Please enter a valid URL'
       }
     }),
-    TranslocoModule
+    TranslocoModule,
+    PdfViewerModule,
+    PagesComponentsModule
   ],
   exports: [...components]
 })
