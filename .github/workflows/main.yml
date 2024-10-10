@@ -36,7 +36,6 @@ jobs:
         run: |
           aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32;
           aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol all --cidr 0.0.0.0/0;
-          aws ec2 authorize-security-group-egress --group-id ${{ steps.get_admin_sg_id.outputs.admin_security_group_id }} --protocol all --cidr 0.0.0.0/0;
 
       - name: Create the .ssh directory
         run: mkdir ~/.ssh && chmod 700 ~/.ssh
@@ -51,5 +50,4 @@ jobs:
         run: |
           aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32;
           aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_ADMIN_SG_NAME }} --protocol all --cidr 0.0.0.0/0;
-          aws ec2 revoke-security-group-egress --group-id ${{ steps.get_admin_sg_id.outputs.admin_security_group_id }} --protocol all --cidr 0.0.0.0/0;
         if: always()
