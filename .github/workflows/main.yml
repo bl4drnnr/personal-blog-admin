@@ -1,4 +1,4 @@
-name: Admin build and deployment
+name: Admin panel build and deployment
 
 on:
   push:
