@@ -40,11 +40,11 @@ jobs:
 
       - name: Create the .ssh directory
         run: mkdir ~/.ssh && chmod 700 ~/.ssh
-      - name: Install the deploy key for the proxy
+      - name: Install the deploy key for the admin panel
         run: echo "${{ secrets.ADMIN_DEPLOY_KEY }}" >> ~/.ssh/admin_deploy && chmod 600 ~/.ssh/admin_deploy
       - name: Create the known hosts file
         run: echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-      - name: Remotely trigger building and deployment script for the proxy
+      - name: Remotely trigger building and deployment script for the admin panel
         run: ssh -i ~/.ssh/admin_deploy deployer@${{ secrets.ADMIN_HOST_IP }}
 
       - name: Remove Github Actions IP from security group
