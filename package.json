@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prod": "ng serve --prod",
+    "prod": "ng serve --configuration production",
     "admin:build": "ng build --configuration production",
     "admin:restart": "pm2 restart bahdashych-on-security-admin",
-    "admin:process-start": "pm2 start npm --name \"bahdashych-on-security-admin\" -- run start prod",
+    "admin:process-start": "pm2 start npm --name \"bahdashych-on-security-admin\" -- run prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
