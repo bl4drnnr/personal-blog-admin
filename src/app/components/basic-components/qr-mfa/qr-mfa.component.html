@@ -1,44 +1,42 @@
-<ng-container *transloco="let t">
-  <div *ngIf="qrCode && showQr" class="qr-code-wrapper">
-    <img
-      class="qr-code"
-      [src]="qrCode"
-      (click)="showQr = false"
-      width="200"
-      height="200"
-      alt="qr"
-    >
-  </div>
-  <p
-    class="paragraph p-center"
-    [ngClass]="{ 'on-white': onWhite }"
-    *ngIf="qrCode && showQr"
+<div *ngIf="qrCode && showQr" class="qr-code-wrapper">
+  <img
+    class="qr-code"
+    [src]="qrCode"
+    (click)="showQr = false"
+    width="200"
+    height="200"
+    alt="qr"
   >
-    {{ t('mfa.clickQr') }}
-  </p>
+</div>
+<p
+  class="paragraph p-center"
+  [ngClass]="{ 'on-white': onWhite }"
+  *ngIf="qrCode && showQr"
+>
+  Click to hide QR code
+</p>
 
-  <div *ngIf="qrCode && !showQr">
-    <basic-input
-      [label]="t('input.mfaToken')"
-      [value]="twoFaToken"
-      [readOnly]="true"
-      [onWhite]="true"
-      [inputDescription]="t('mfa.pasteQrToken')"
-    />
-  </div>
-  <p
-    class="paragraph p-center pointer"
-    [ngClass]="{ 'on-white': onWhite }"
-    *ngIf="qrCode && !showQr"
-    (click)="showQr = true"
-  >{{ t('mfa.clickQrBack') }}</p>
+<div *ngIf="qrCode && !showQr">
+  <basic-input
+    label="MFA Token"
+    [value]="twoFaToken"
+    [readOnly]="true"
+    [onWhite]="true"
+    inputDescription="Paste this token into your authenticator app"
+  />
+</div>
+<p
+  class="paragraph p-center pointer"
+  [ngClass]="{ 'on-white': onWhite }"
+  *ngIf="qrCode && !showQr"
+  (click)="showQr = true"
+>Click to show QR code</p>
 
-  <div *ngIf="!qrCode" class="spinner-wrapper"><basic-spinner/></div>
+<div *ngIf="!qrCode" class="spinner-wrapper"><basic-spinner/></div>
 
-  <div class="qr-code-input-wrapper">
-    <basic-input-mfa
-      [onWhite]="true"
-      (mfaCode)="code.emit($event)"
-    />
-  </div>
-</ng-container>
+<div class="qr-code-input-wrapper">
+  <basic-input-mfa
+    [onWhite]="true"
+    (mfaCode)="code.emit($event)"
+  />
+</div>

@@ -1,8 +1,0 @@
-{
-  "createCategoryTitle": "Создать новую категорию",
-  "listAllCategories": "Список всех категорий",
-  "noCategories": "Нет категорий...",
-  "categoryCreatedAt": "Создано: {{ createdAt }}",
-  "categoryUpdatedAt": "Обновлено: {{ updatedAt }}",
-  "categoryLanguage": "Язык категории: {{ lang }}"
-}

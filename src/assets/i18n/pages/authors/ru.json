@@ -1,7 +1,0 @@
-{
-  "createAuthorTitle": "Создать нового автора",
-  "allAuthors": "Все авторы",
-  "noAuthors": "Авторы не найдены",
-  "authorCreatedAt": "Автор создан: {{ authorCreatedAt }}",
-  "authorUpdatedAt": "Автор обновлен: {{ authorUpdatedAt }}"
-}

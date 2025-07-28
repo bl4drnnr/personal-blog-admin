@@ -10,12 +10,9 @@ import { ModalComponent } from '@components/modal/modal.component';
 import { PaginationComponent } from '@components/pagination/pagination.component';
 import { SpinnerComponent } from '@components/spinner/spinner.component';
 import { LinkComponent } from '@components/link/link.component';
-import { EmojiComponent } from '@components/emoji/emoji.component';
 import { QrMfaComponent } from '@components/qr-mfa/qr-mfa.component';
 import { ArrowComponent } from '@components/arrow/arrow.component';
 import { TextareaComponent } from '@components/textarea/textarea.component';
-import { ChangeLanguageComponent } from '@components/change-language/change-language.component';
-import { TranslocoModule } from '@ngneat/transloco';
 import { SocialLinkComponent } from '@components/social-link/social-link.component';
 
 const components: any = [
@@ -28,17 +25,15 @@ const components: any = [
   PaginationComponent,
   SpinnerComponent,
   LinkComponent,
-  EmojiComponent,
   QrMfaComponent,
   ArrowComponent,
   TextareaComponent,
-  ChangeLanguageComponent,
   SocialLinkComponent
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, NgOptimizedImage, FormsModule, TranslocoModule],
+  imports: [CommonModule, NgOptimizedImage, FormsModule],
   exports: [...components]
 })
 export class BasicComponentsModule {}

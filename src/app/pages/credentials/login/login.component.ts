@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { LoginResponse } from '@responses/login.enum';
-import { ValidationService } from '@services/validation.service';
-import { AuthenticationService } from '@services/authentication.service';
-import { TranslationService } from '@services/translation.service';
-import { Titles } from '@interfaces/titles.enum';
+import {
+  AuthenticationService,
+  LoginRequest
+} from '@services/authentication.service';
 
 @Component({
   selector: 'page-login',
@@ -22,87 +21,89 @@ import { Titles } from '@interfaces/titles.enum';
   ]
 })
 export class LoginComponent implements OnInit {
-  step = 2;
+  email: string = '';
+  password: string = '';
+  mfaCode: string = '';
 
-  email: string;
-  password: string;
-
-  incorrectEmail: boolean;
-  incorrectPassword: boolean;
-
-  isMfaRequired: boolean;
-
-  mfaCode: string;
-
-  isMfaNotSet = true;
-  isRecoveryKeysNotSet = true;
+  incorrectEmail: boolean = false;
+  incorrectPassword: boolean = false;
+  isMfaRequired: boolean = false;
+  loginError: string = '';
 
   constructor(
     private readonly authenticationService: AuthenticationService,
-    private readonly translationService: TranslationService,
-    private readonly validationService: ValidationService,
     private readonly router: Router
   ) {}
 
-  incorrectCredentials() {
-    return (
-      !this.email || !this.password || this.incorrectEmail || this.incorrectPassword
+  isFormValid(): boolean {
+    return !!(
+      this.email &&
+      this.password &&
+      !this.incorrectEmail &&
+      !this.incorrectPassword
     );
   }
 
-  loginMfaButtonDisabled() {
-    return this.validationService.mfaButtonDisable({
-      isMfaRequired: this.isMfaRequired,
-      mfaCode: this.mfaCode
+  isMfaValid(): boolean {
+    return !this.isMfaRequired || (!!this.mfaCode && this.mfaCode.length === 6);
+  }
+
+  handleLogin() {
+    if (!this.isFormValid() || !this.isMfaValid()) {
+      return;
+    }
+
+    const loginData: LoginRequest = {
+      email: this.email,
+      password: this.password
+    };
+
+    if (this.mfaCode) {
+      loginData.mfaCode = this.mfaCode;
+    }
+
+    this.authenticationService.login(loginData).subscribe({
+      next: (response) => {
+        if (response._at) {
+          localStorage.setItem('_at', response._at);
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        if (error.status === 401) {
+          this.loginError = 'Invalid credentials';
+        } else if (error.error?.message === 'TOKEN_TWO_FA_REQUIRED') {
+          this.isMfaRequired = true;
+          this.loginError = '';
+        } else {
+          this.loginError = 'Login failed. Please try again.';
+        }
+      }
     });
   }
 
-  handleLogIn() {
-    if (this.step === 2 && this.incorrectCredentials()) return;
-    else if (this.step === 3 && this.loginMfaButtonDisabled()) return;
-
-    this.authenticationService
-      .login({
-        email: this.email,
-        password: this.password,
-        mfaCode: this.mfaCode
-      })
-      .subscribe({
-        next: async ({ message, _at }) => {
-          switch (message) {
-            case LoginResponse.MFA_NOT_SET:
-              this.step = 1;
-              this.isMfaNotSet = true;
-              this.isRecoveryKeysNotSet = false;
-              break;
-            case LoginResponse.RECOVERY_KEYS_NOT_SET:
-              this.step = 1;
-              this.isMfaNotSet = false;
-              this.isRecoveryKeysNotSet = true;
-              break;
-            case LoginResponse.TOKEN_TWO_FA_REQUIRED:
-              this.step = 3;
-              this.isMfaRequired = true;
-              break;
-            default:
-              if (_at) {
-                localStorage.setItem('_at', _at);
-                await this.router.navigate(['account/articles']);
-              }
-          }
-        }
-      });
+  onEmailChange(email: string) {
+    this.email = email;
+    this.incorrectEmail = false;
+    this.loginError = '';
   }
 
-  async handleRedirect(path: string) {
-    await this.router.navigate([path]);
+  onPasswordChange(password: string) {
+    this.password = password;
+    this.incorrectPassword = false;
+    this.loginError = '';
   }
 
-  async ngOnInit() {
-    this.translationService.setPageTitle(Titles.LOGIN);
+  onMfaChange(mfaCode: string) {
+    this.mfaCode = mfaCode;
+    this.loginError = '';
+  }
 
+  ngOnInit() {
     const accessToken = localStorage.getItem('_at');
-
-    if (accessToken) await this.handleRedirect('account/articles');
+    if (accessToken) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 }

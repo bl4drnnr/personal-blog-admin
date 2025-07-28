@@ -1,18 +1,18 @@
 {
-  "name": "bahdashych-on-security-admin",
+  "name": "personal-blog-admin",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "prod": "ng serve --configuration production",
     "admin:build": "ng build --configuration production",
-    "admin:restart": "pm2 restart bahdashych-on-security-admin",
-    "admin:process-start": "pm2 start npm --name \"bahdashych-on-security-admin\" -- run prod",
+    "admin:restart": "pm2 restart personal-blog-admin",
+    "admin:process-start": "pm2 start npm --name \"personal-blog-admin\" -- run prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
   },
-  "private": true,
+   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
@@ -22,8 +22,6 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@ngneat/transloco": "^4.3.0",
-    "@ngneat/transloco-persist-lang": "^4.0.0",
     "dayjs": "^1.11.11",
     "file-saver": "^2.0.5",
     "lottie-web": "^5.12.2",

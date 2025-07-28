@@ -1,11 +1,4 @@
 <div class="page-container">
-  <dashboard-sidebar
-    *ngIf="showSideBar"
-    [userInfo]="userInfo"
-    [isSidebarOpen]="isSidebarOpen"
-    (closeSidebar)="isSidebarOpen = false"
-  />
-
   <layout-header
     *ngIf="showHeader"
     [showHeaderBurger]="showHeaderBurger"

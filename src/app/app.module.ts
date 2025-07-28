@@ -11,8 +11,6 @@ import { PagesModule } from '@pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideLottieOptions } from 'ngx-lottie';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { TranslocoRootModule } from './transloco-root.module';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,9 +23,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     HttpClientModule,
     LayoutsModule,
     ComponentsModule,
-    TranslocoRootModule,
-    PagesModule,
-    PdfViewerModule
+    PagesModule
   ],
   providers: [
     {

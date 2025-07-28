@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CheckLengthInterface } from '@interfaces/services/validation/check-length.interface';
 import { MfaButtonDisableInterface } from '@interfaces/services/validation/mfa-button-disable.interface';
-import { TranslationService } from '@services/translation.service';
-import { ComponentsTranslation } from '@translations/components.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidationService {
-  constructor(private readonly translationService: TranslationService) {}
+  constructor() {}
 
   isEmailCorrect(email: string) {
     if (email) {
@@ -24,16 +22,20 @@ export class ValidationService {
   }
 
   async checkPasswordsRules(password: string) {
+    // @TODO: Replace here with strings
     const rules: {
       eightChars: string;
       lower: string;
       spec: string;
       digit: string;
       upper: string;
-    } = await this.translationService.translateObject(
-      'passwordRules',
-      ComponentsTranslation.INPUT
-    );
+    } = {
+      eightChars: '',
+      lower: '',
+      spec: '',
+      digit: '',
+      upper: ''
+    };
 
     const passwordRules = [
       { error: true, text: rules.eightChars },
@@ -77,51 +79,5 @@ export class ValidationService {
     }
 
     return false;
-  }
-
-  checkRecoveryKeys(recoveryKeys: Array<string>) {
-    let corruptedKey = false;
-
-    if (recoveryKeys.length !== 5) return false;
-    else recoveryKeys.forEach((key) => (corruptedKey = key.length !== 1024));
-
-    return !corruptedKey;
-  }
-
-  areArraysEqual(arr1: any[], arr2: any[]): boolean {
-    if (arr1.length !== arr2.length) {
-      return false;
-    }
-
-    const sortedArr1 = arr1
-      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
-      .sort();
-
-    const sortedArr2 = arr2
-      .map((item) => (typeof item === 'string' ? item.toLowerCase() : item))
-      .sort();
-
-    return sortedArr1.every((value, index) => value === sortedArr2[index]);
-  }
-
-  areArraysObjectEqual<T>(arr1: T[], arr2: T[]): boolean {
-    const arr1Sorted = arr1.map((obj) => JSON.stringify(obj)).sort();
-    const arr2Sorted = arr2.map((obj) => JSON.stringify(obj)).sort();
-
-    if (arr1Sorted.length !== arr2Sorted.length) {
-      return false;
-    }
-
-    for (let i = 0; i < arr1Sorted.length; i++) {
-      if (arr1Sorted[i] !== arr2Sorted[i]) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  deleteObjectFromArray(arr: Array<any>, key: string, value: any): Array<any> {
-    return arr.filter((item) => item[key] !== value);
   }
 }

@@ -94,6 +94,7 @@
         "src/libs/api/payloads/projects/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
+      "@guards/*": ["src/app/guards/*"],
       "@modules/*": ["src/app/modules/*"],
       "@translations/*": ["src/libs/enums/translations/*"]
     }

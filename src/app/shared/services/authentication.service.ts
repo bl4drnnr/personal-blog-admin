@@ -1,108 +1,55 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '@shared/api.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Controller } from '@interfaces/controller.enum';
-import { AuthEndpoint } from '@interfaces/auth.enum';
-import { Method } from '@interfaces/methods.enum';
-import { LoginPayload } from '@payloads/login.interface';
-import { LoginResponse } from '@responses/login.enum';
-import { RegistrationPayload } from '@payloads/registration.interface';
-import { RegistrationResponse } from '@responses/registration.enum';
-import { LogoutResponse } from '@responses/logout.enum';
-import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
-import { ConfirmAccountPayload } from '@payloads/confirm-account.interface';
-import { ConfirmAccountResponse } from '@responses/confirm-account.enum';
-import { ForgotPasswordPayload } from '@payloads/forgot-password.interface';
-import { ForgotPasswordResponse } from '@responses/forgot-password.enum';
-import { ResetUserPasswordPayload } from '@payloads/reset-user-password.interface';
-import { ResetUserPasswordResponse } from '@responses/reset-user-password.enum';
+import { EnvService } from '@shared/env.service';
+import { environment } from '@env/environment.development';
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+  mfaCode?: string;
+}
+
+export interface LoginResponse {
+  _at: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private readonly apiService: ApiService) {}
+  private readonly apiUrl: string;
 
-  login(payload: LoginPayload): Observable<{ message: LoginResponse; _at: string }> {
-    return this.apiService.apiProxyRequest({
-      method: Method.POST,
-      controller: Controller.AUTH,
-      action: AuthEndpoint.LOGIN,
-      payload
+  constructor(
+    private readonly http: HttpClient,
+    private readonly envService: EnvService
+  ) {
+    this.apiUrl = this.envService.getApiUrl;
+  }
+
+  login(payload: LoginRequest): Observable<LoginResponse> {
+    const basicAuthCredentials = btoa(
+      `${environment.basicAuth.username}:${environment.basicAuth.password}`
+    );
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${basicAuthCredentials}`
+    });
+
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, payload, {
+      headers,
+      withCredentials: true
     });
   }
 
-  registration(
-    payload: RegistrationPayload
-  ): Observable<{ message: RegistrationResponse }> {
-    const language = localStorage.getItem('translocoLang');
-
-    if (language) payload.language = language;
-
-    return this.apiService.apiProxyRequest({
-      method: Method.POST,
-      controller: Controller.AUTH,
-      action: AuthEndpoint.REGISTRATION,
-      payload
+  logout(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/auth/logout`, {
+      withCredentials: true
     });
   }
 
   refreshTokens(): Observable<{ _at: string }> {
-    return this.apiService.apiProxyRequest({
-      method: Method.GET,
-      controller: Controller.AUTH,
-      action: AuthEndpoint.REFRESH
-    });
-  }
-
-  logout(): Observable<{ message: LogoutResponse }> {
-    return this.apiService.apiProxyRequest({
-      method: Method.GET,
-      controller: Controller.AUTH,
-      action: AuthEndpoint.LOGOUT
-    });
-  }
-
-  confirmAccount(
-    params: ConfirmAccountPayload
-  ): Observable<{ message: ConfirmAccountResponse }> {
-    return this.apiService.apiProxyRequest({
-      method: Method.GET,
-      controller: Controller.CONFIRMATION_HASH,
-      action: ConfirmationHashEndpoint.ACCOUNT_CONFIRMATION,
-      params
-    });
-  }
-
-  forgotPassword(
-    payload: ForgotPasswordPayload
-  ): Observable<{ message: ForgotPasswordResponse }> {
-    const language = localStorage.getItem('translocoLang');
-
-    if (language) payload.language = language;
-
-    return this.apiService.apiProxyRequest({
-      method: Method.POST,
-      controller: Controller.USERS,
-      action: AuthEndpoint.FORGOT_PASSWORD,
-      payload
-    });
-  }
-
-  resetUserPassword(payload: ResetUserPasswordPayload): Observable<{
-    message: ResetUserPasswordResponse;
-  }> {
-    const params = { confirmationHash: payload.hash };
-    const language = localStorage.getItem('translocoLang');
-
-    if (language) payload.language = language;
-
-    return this.apiService.apiProxyRequest({
-      method: Method.POST,
-      controller: Controller.CONFIRMATION_HASH,
-      action: ConfirmationHashEndpoint.RESET_USER_PASSWORD_CONFIRMATION,
-      params,
-      payload
+    return this.http.get<{ _at: string }>(`${this.apiUrl}/auth/refresh`, {
+      withCredentials: true
     });
   }
 }

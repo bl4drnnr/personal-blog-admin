@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalMessageService } from '@shared/global-message.service';
-import { EnvService } from '@shared/env.service';
+import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { EnvService } from '@shared/env.service';
 
 @Component({
   selector: 'layout-global-message',
