@@ -141,8 +141,7 @@ export class ChangelogEntriesComponent extends BaseAdminComponent implements OnI
 
   private createEntry(payload: CreateChangelogEntryPayload): void {
     this.changelogService.createChangelogEntry(payload).subscribe({
-      next: (response) => {
-        console.log('Entry created:', response);
+      next: () => {
         this.loadEntries();
         this.cancelForm();
       },

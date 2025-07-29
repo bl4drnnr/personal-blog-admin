@@ -55,7 +55,7 @@ export class ChangelogService {
       method: Method.DELETE,
       controller: Controller.CHANGELOG,
       action: ChangelogEndpoint.DELETE_ENTRY,
-      payload: { id: entryId }
+      params: { id: entryId }
     });
   }
 

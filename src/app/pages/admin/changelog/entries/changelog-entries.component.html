@@ -67,44 +67,48 @@
               ></basic-textarea>
             </div>
 
-            <div class="form-group">
-              <label>Changes *</label>
-              <div class="changes-container">
-                <div
-                  class="change-item"
-                  *ngFor="let change of changes; let i = index; trackBy: trackByIndex"
-                >
-                  <basic-input
-                    type="text"
-                    placeholder="Describe a change made in this version"
-                    [value]="changes[i]"
-                    (valueChange)="changes[i] = $event"
-                  ></basic-input>
-                  <basic-button
-                    label="Remove"
-                    [danger]="true"
-                    (buttonClick)="removeChange(i)"
-                    *ngIf="changes.length > 1"
-                  ></basic-button>
-                </div>
+            <p class="label-wrapper">Changes *</p>
+            <div class="changes-container">
+              <div
+                class="change-item"
+                *ngFor="let change of changes; let i = index; trackBy: trackByIndex"
+              >
+                <basic-input
+                  type="text"
+                  placeholder="Describe a change made in this version"
+                  [value]="changes[i]"
+                  (valueChange)="changes[i] = $event"
+                ></basic-input>
+                <basic-button
+                  label="Remove"
+                  [danger]="true"
+                  (buttonClick)="removeChange(i)"
+                  *ngIf="changes.length > 1"
+                ></basic-button>
               </div>
-              <basic-button
-                label="Add Change"
-                (buttonClick)="addChange()"
-              ></basic-button>
             </div>
 
-            <div class="form-actions">
-              <basic-button
-                [label]="isEditing ? 'Update Entry' : 'Create Entry'"
-                [fillButton]="true"
-                [disabled]="!isFormValid()"
-                (buttonClick)="saveEntry()"
-              ></basic-button>
-              <basic-button
-                label="Cancel"
-                (buttonClick)="cancelForm()"
-              ></basic-button>
+            <div class="actions-buttons-wrapper">
+              <div class="button-wrapper">
+                <basic-button
+                  label="Add Change"
+                  (buttonClick)="addChange()"
+                ></basic-button>
+              </div>
+              <div class="button-wrapper margin">
+                <basic-button
+                  [label]="isEditing ? 'Update Entry' : 'Create Entry'"
+                  [fillButton]="true"
+                  [disabled]="!isFormValid()"
+                  (buttonClick)="saveEntry()"
+                ></basic-button>
+              </div>
+              <div class="button-wrapper">
+                <basic-button
+                  label="Cancel"
+                  (buttonClick)="cancelForm()"
+                ></basic-button>
+              </div>
             </div>
           </div>
         </div>
