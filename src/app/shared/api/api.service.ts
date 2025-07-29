@@ -59,6 +59,11 @@ export class ApiService {
       case Method.DELETE:
         request$ = this.http.delete<any>(requestUrl, requestOptions);
         break;
+      case Method.PUT:
+        request$ = this.http.put<any>(requestUrl, payload, requestOptions);
+        break;
+      default:
+        request$ = this.http.get<any>(requestUrl);
     }
 
     this.loaderService.start();

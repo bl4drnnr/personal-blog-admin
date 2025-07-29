@@ -33,6 +33,8 @@ import { PrivacySettingsComponent } from '@pages/admin/privacy/settings/privacy-
 // User Management
 import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '@components/components.module';
 
 const adminComponents = [
   // Site Configuration
@@ -62,7 +64,7 @@ const adminComponents = [
 
 @NgModule({
   declarations: [...adminComponents],
-  imports: [CommonModule, LayoutsModule],
+  imports: [CommonModule, LayoutsModule, FormsModule, ComponentsModule],
   exports: [CredentialsModule, DashboardModule, ...adminComponents]
 })
 export class PagesModule {}

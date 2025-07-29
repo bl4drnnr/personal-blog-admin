@@ -22,7 +22,6 @@ export class ValidationService {
   }
 
   async checkPasswordsRules(password: string) {
-    // @TODO: Replace here with strings
     const rules: {
       eightChars: string;
       lower: string;
@@ -30,11 +29,11 @@ export class ValidationService {
       digit: string;
       upper: string;
     } = {
-      eightChars: '',
-      lower: '',
-      spec: '',
-      digit: '',
-      upper: ''
+      eightChars: 'Password must be at least 8 characters',
+      lower: 'Password must contain at least 1 lower case letter',
+      spec: 'Password must contain at least 1 special character',
+      digit: 'Password must contain at least 1 digit',
+      upper: 'Password must contain at least 1 upper case letter'
     };
 
     const passwordRules = [

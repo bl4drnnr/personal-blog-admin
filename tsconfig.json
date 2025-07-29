@@ -76,7 +76,8 @@
         "src/libs/api/responses/certifications/*",
         "src/libs/api/responses/socials/*",
         "src/libs/api/responses/experiences/*",
-        "src/libs/api/responses/projects/*"
+        "src/libs/api/responses/projects/*",
+        "src/libs/api/responses/changelog/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -91,7 +92,8 @@
         "src/libs/api/payloads/certifications/*",
         "src/libs/api/payloads/socials/*",
         "src/libs/api/payloads/experiences/*",
-        "src/libs/api/payloads/projects/*"
+        "src/libs/api/payloads/projects/*",
+        "src/libs/api/payloads/changelog/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@guards/*": ["src/app/guards/*"],

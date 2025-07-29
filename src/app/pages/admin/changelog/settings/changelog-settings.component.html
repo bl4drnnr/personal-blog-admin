@@ -9,23 +9,221 @@
       <div class="card">
         <div class="card-header">
           <h2>Page Configuration</h2>
-          <button class="btn btn-primary">Save Settings</button>
+          <div class="header-actions">
+            <basic-button
+              label="Reset"
+              [disabled]="loading"
+              (buttonClick)="resetForm()"
+            ></basic-button>
+            <basic-button
+              label="Save Settings"
+              [fillButton]="true"
+              [disabled]="loading"
+              (buttonClick)="savePageSettings()"
+            ></basic-button>
+          </div>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>🎨 Page Layout</h3>
-            <p>Configure changelog page header, hero section, and overall layout settings</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>🔍 SEO Settings</h3>
-            <p>Manage meta tags, descriptions, and search engine optimization for the changelog page</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>📝 Content Options</h3>
-            <p>Set default formats, display options, and content structure preferences</p>
+
+        <div class="card-content">
+          <div class="form-container">
+            <!-- Basic Page Content -->
+            <div class="settings-section">
+              <h3>Basic Page Content</h3>
+
+              <div class="form-group">
+                <basic-input
+                  label="Page Title"
+                  type="text"
+                  placeholder="Changelog"
+                  [(value)]="title"
+                ></basic-input>
+              </div>
+
+              <div class="form-group">
+                <basic-textarea
+                  label="Page Content"
+                  placeholder="Main content for the changelog page"
+                  [(value)]="content"
+                ></basic-textarea>
+              </div>
+
+              <div class="form-group">
+                <basic-textarea
+                  label="Footer Text"
+                  placeholder="Text displayed in the page footer"
+                  [(value)]="footerText"
+                ></basic-textarea>
+              </div>
+            </div>
+
+            <!-- Hero Section -->
+            <div class="settings-section">
+              <h3>Hero Section</h3>
+
+              <div class="form-group">
+                <label for="heroTitle">Hero Title</label>
+                <basic-input
+                  label="Hero Title"
+                  type="text"
+                  placeholder="Version History"
+                  [(value)]="heroTitle"
+                ></basic-input>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="heroImageMain">Main Hero Image URL</label>
+                  <basic-input
+                    label="Main Hero Image URL"
+                    type="url"
+                    placeholder="https://example.com/hero-main.jpg"
+                    [(value)]="heroImageMain"
+                  ></basic-input>
+                </div>
+
+                <div class="form-group">
+                  <label for="heroImageMainAlt">Main Image Alt Text</label>
+                  <basic-input
+                    label="Main Image Alt Text"
+                    type="text"
+                    placeholder="Description of main hero image"
+                    [(value)]="heroImageMainAlt"
+                  ></basic-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="heroImageSecondary">Secondary Hero Image URL</label>
+                  <basic-input
+                    label="Secondary Hero Image URL"
+                    type="url"
+                    placeholder="https://example.com/hero-secondary.jpg"
+                    [(value)]="heroImageSecondary"
+                  ></basic-input>
+                </div>
+
+                <div class="form-group">
+                  <label for="heroImageSecondaryAlt">Secondary Image Alt Text</label>
+                  <basic-input
+                    label="Secondary Image Alt Text"
+                    type="text"
+                    placeholder="Description of secondary hero image"
+                    [(value)]="heroImageSecondaryAlt"
+                  ></basic-input>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="settings-section">
+              <h3>Navigation</h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="logoText">Logo Text</label>
+                  <basic-input
+                    label="Logo Text"
+                    type="text"
+                    placeholder="Your Site Name"
+                    [(value)]="logoText"
+                  ></basic-input>
+                </div>
+
+                <div class="form-group">
+                  <label for="breadcrumbText">Breadcrumb Text</label>
+                  <basic-input
+                    label="Breadcrumb Text"
+                    type="text"
+                    placeholder="Changelog"
+                    [(value)]="breadcrumbText"
+                  ></basic-input>
+                </div>
+              </div>
+            </div>
+
+            <!-- SEO Meta Tags -->
+            <div class="settings-section">
+              <h3>SEO Meta Tags</h3>
+
+              <div class="form-group">
+                <label for="metaTitle">Meta Title</label>
+                <basic-input
+                  label="Meta Title"
+                  type="text"
+                  placeholder="Changelog - Version History"
+                  [(value)]="metaTitle"
+                ></basic-input>
+              </div>
+
+              <div class="form-group">
+                <label for="metaDescription">Meta Description</label>
+                <basic-textarea
+                  label="Meta Description"
+                  placeholder="Track our latest updates, new features, and improvements"
+                  [(value)]="metaDescription"
+                ></basic-textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="metaKeywords">Meta Keywords</label>
+                <basic-input
+                  label="Meta Keywords"
+                  type="text"
+                  placeholder="changelog, updates, version history, releases"
+                  [(value)]="metaKeywords"
+                ></basic-input>
+              </div>
+            </div>
+
+            <!-- Open Graph -->
+            <div class="settings-section">
+              <h3>Open Graph (Social Media)</h3>
+
+              <div class="form-group">
+                <label for="ogTitle">OG Title</label>
+                <basic-input
+                  label="OG Title"
+                  type="text"
+                  placeholder="Changelog - Version History"
+                  [(value)]="ogTitle"
+                ></basic-input>
+              </div>
+
+              <div class="form-group">
+                <label for="ogDescription">OG Description</label>
+                <basic-textarea
+                  label="OG Description"
+                  placeholder="Track our latest updates, new features, and improvements"
+                  [(value)]="ogDescription"
+                ></basic-textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="ogImage">OG Image URL</label>
+                <basic-input
+                  label="OG Image URL"
+                  type="url"
+                  placeholder="https://example.com/og-changelog.jpg"
+                  [(value)]="ogImage"
+                ></basic-input>
+              </div>
+            </div>
+
+            <!-- Structured Data -->
+            <div class="settings-section">
+              <h3>Structured Data</h3>
+
+              <div class="form-group">
+                <label for="structuredDataJson">Structured Data (JSON-LD)</label>
+                <basic-textarea
+                  label="Structured Data (JSON-LD)"
+                  placeholder='{\n  "@context": "https://schema.org",\n  "@type": "WebPage",\n  "name": "Changelog",\n  "description": "Version history and updates"\n}'
+                  [(value)]="structuredDataJson"
+                ></basic-textarea>
+                <small class="form-text">Enter valid JSON-LD structured data for search engines</small>
+              </div>
+            </div>
           </div>
         </div>
       </div>

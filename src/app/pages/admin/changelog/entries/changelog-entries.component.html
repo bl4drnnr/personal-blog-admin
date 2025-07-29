@@ -6,27 +6,170 @@
     </div>
 
     <div class="content-section">
+      <!-- Entry Form -->
+      <div class="card" *ngIf="showForm">
+        <div class="card-header">
+          <h2>{{ isEditing ? 'Edit' : 'Create' }} Changelog Entry</h2>
+          <button class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+        </div>
+
+        <div class="card-content">
+          <div class="form-container">
+            <div class="form-row">
+              <div class="form-group">
+                <basic-input
+                  label="Version *"
+                  type="text"
+                  placeholder="e.g., v1.2.0"
+                  [value]="version"
+                  (valueChange)="version = $event"
+                ></basic-input>
+              </div>
+
+              <div class="form-group">
+                <basic-input
+                  label="Date *"
+                  type="date"
+                  [value]="date"
+                  (valueChange)="date = $event"
+                ></basic-input>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <basic-input
+                  label="Title *"
+                  type="text"
+                  placeholder="Release title"
+                  [value]="title"
+                  (valueChange)="title = $event"
+                ></basic-input>
+              </div>
+
+              <div class="form-group">
+                <basic-input
+                  label="Sort Order"
+                  type="number"
+                  placeholder="0"
+                  [value]="sortOrder"
+                  (valueChange)="sortOrder = $event"
+                ></basic-input>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Description *"
+                placeholder="Brief description of this release"
+                [value]="description"
+                (valueChange)="description = $event"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Changes *</label>
+              <div class="changes-container">
+                <div
+                  class="change-item"
+                  *ngFor="let change of changes; let i = index; trackBy: trackByIndex"
+                >
+                  <basic-input
+                    type="text"
+                    placeholder="Describe a change made in this version"
+                    [value]="changes[i]"
+                    (valueChange)="changes[i] = $event"
+                  ></basic-input>
+                  <basic-button
+                    label="Remove"
+                    [danger]="true"
+                    (buttonClick)="removeChange(i)"
+                    *ngIf="changes.length > 1"
+                  ></basic-button>
+                </div>
+              </div>
+              <basic-button
+                label="Add Change"
+                (buttonClick)="addChange()"
+              ></basic-button>
+            </div>
+
+            <div class="form-actions">
+              <basic-button
+                [label]="isEditing ? 'Update Entry' : 'Create Entry'"
+                [fillButton]="true"
+                [disabled]="!isFormValid()"
+                (buttonClick)="saveEntry()"
+              ></basic-button>
+              <basic-button
+                label="Cancel"
+                (buttonClick)="cancelForm()"
+              ></basic-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Entries List -->
       <div class="card">
         <div class="card-header">
           <h2>Version History</h2>
-          <button class="btn btn-primary">Add New Entry</button>
+          <basic-button
+            label="Add New Entry"
+            [fillButton]="true"
+            (buttonClick)="showCreateForm()"
+            *ngIf="!showForm"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>📅 Version Tracking</h3>
-            <p>Create and manage changelog entries with version numbers and release dates</p>
+
+        <div class="card-content">
+          <div class="entries-list" *ngIf="changeLogEntries.length > 0; else noEntries">
+            <div class="entry-card" *ngFor="let entry of changeLogEntries; trackBy: trackByEntryId">
+              <div class="entry-header">
+                <div class="entry-meta">
+                  <span class="version-badge">{{ entry.version }}</span>
+                  <span class="date">{{ entry.date }}</span>
+                  <span class="sort-order" *ngIf="entry.sortOrder !== 0">Order: {{ entry.sortOrder }}</span>
+                </div>
+                <div class="entry-actions">
+                  <basic-button
+                    label="Edit"
+                    (buttonClick)="showEditForm(entry)"
+                  ></basic-button>
+                  <basic-button
+                    label="Delete"
+                    [danger]="true"
+                    (buttonClick)="deleteEntry(entry.id)"
+                  ></basic-button>
+                </div>
+              </div>
+
+              <div class="entry-content">
+                <h3>{{ entry.title }}</h3>
+                <p class="description">{{ entry.description }}</p>
+
+                <div class="changes-list" *ngIf="entry.changes && entry.changes.length > 0">
+                  <h4>Changes:</h4>
+                  <ul>
+                    <li *ngFor="let change of entry.changes">{{ change }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔄 Change Categories</h3>
-            <p>Organize changes by type: features, bug fixes, improvements, and breaking changes</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>📊 Release Notes</h3>
-            <p>Generate detailed release notes and version summaries for users and developers</p>
-          </div>
+
+          <ng-template #noEntries>
+            <div class="empty-state">
+              <div class="empty-icon">📋</div>
+              <h3>No changelog entries yet</h3>
+              <p>Create your first changelog entry to track version history</p>
+              <basic-button
+                label="Create First Entry"
+                [fillButton]="true"
+                (buttonClick)="showCreateForm()"
+              ></basic-button>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
