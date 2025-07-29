@@ -1,20 +1,27 @@
-<div class="page-container">
+<div class="admin-layout">
+  <!-- Header -->
   <layout-header
     *ngIf="showHeader"
-    [showHeaderBurger]="showHeaderBurger"
-    (openSidebar)="isSidebarOpen = true"
+    (toggleSidebar)="toggleSidebar()"
   />
 
-  <div
-    class="content-wrapper"
-    [ngClass]="{
-      'no-footer': !showFooter,
-      'no-header': !showHeader,
-      'with-preview': withPreview
-    }"
-  >
+  <!-- Sidebar -->
+  <layout-sidebar 
+    *ngIf="showSideBar"
+    [isOpen]="isSidebarOpen"
+    [isMobile]="isMobile"
+    (closeSidebar)="closeSidebar()"
+  />
+
+  <!-- Main Content Area -->
+  <div class="main-content" 
+       [class.with-sidebar]="isSidebarOpen && !isMobile"
+       [class.no-header]="!showHeader">
     <ng-content />
   </div>
 
-  <layout-footer *ngIf="showFooter"/>
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" 
+       *ngIf="isMobile && isSidebarOpen"
+       (click)="onOverlayClick()"></div>
 </div>

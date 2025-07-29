@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RefreshTokensService } from '@services/refresh-token.service';
 import { Title } from '@angular/platform-browser';
+import { RefreshTokensService } from '@services/refresh-token.service';
 import { BaseAdminComponent } from '@shared/components/base-admin.component';
 
 @Component({
-  selector: 'page-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'page-articles',
+  templateUrl: './articles.component.html',
+  styleUrls: ['./articles.component.scss']
 })
-export class DashboardComponent extends BaseAdminComponent {
+export class ArticlesComponent extends BaseAdminComponent {
   constructor(
     protected override router: Router,
     protected override refreshTokensService: RefreshTokensService,
@@ -23,6 +23,6 @@ export class DashboardComponent extends BaseAdminComponent {
   }
 
   private getPageTitle(): string {
-    return 'Personal Blog | Dashboard';
+    return 'Personal Blog | Articles';
   }
 }

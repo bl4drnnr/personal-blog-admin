@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<layout-default>
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>Dashboard</h1>
+      <p>Welcome to the Personal Blog Admin Panel</p>
+    </div>
 
-</body>
-</html>
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-content">
+          <h3>Articles</h3>
+          <p>Manage your blog posts</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-content">
+          <h3>Projects</h3>
+          <p>Showcase your work</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📄</div>
+        <div class="stat-content">
+          <h3>Pages</h3>
+          <p>Static content management</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">⚙️</div>
+        <div class="stat-content">
+          <h3>Settings</h3>
+          <p>Site configuration</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="action-buttons">
+        <button class="action-btn primary" routerLink="/admin/posts">
+          <span class="btn-icon">➕</span>
+          Create New Article
+        </button>
+        <button class="action-btn secondary" routerLink="/admin/projects">
+          <span class="btn-icon">🔧</span>
+          Add New Project
+        </button>
+        <button class="action-btn tertiary" routerLink="/admin/site/config">
+          <span class="btn-icon">⚙️</span>
+          Site Settings
+        </button>
+      </div>
+    </div>
+  </div>
+</layout-default>
+

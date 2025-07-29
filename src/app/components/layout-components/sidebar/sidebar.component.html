@@ -1,0 +1,46 @@
+<div class="sidebar" [class.open]="isOpen" [class.mobile]="isMobile">
+  <div class="sidebar-header">
+    <h2>Admin Panel</h2>
+    <button class="sidebar-close-btn" *ngIf="isMobile" (click)="onCloseClick()" title="Close sidebar">
+      <span class="close-icon">✕</span>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li *ngFor="let item of navItems" class="nav-item">
+        <div class="nav-link"
+             [class.has-children]="item.children"
+             [class.expanded]="item.expanded"
+             (click)="item.children ? toggleExpanded(item) : null">
+
+          <a *ngIf="!item.children && item.route"
+             [routerLink]="item.route"
+             routerLinkActive="active"
+             class="nav-anchor"
+             (click)="onLinkClick()">
+            <span class="nav-icon" *ngIf="item.icon">{{ item.icon }}</span>
+            <span class="nav-label">{{ item.label }}</span>
+          </a>
+
+          <div *ngIf="item.children" class="nav-header">
+            <span class="nav-icon" *ngIf="item.icon">{{ item.icon }}</span>
+            <span class="nav-label">{{ item.label }}</span>
+            <span class="nav-arrow">{{ item.expanded ? '▼' : '▶' }}</span>
+          </div>
+        </div>
+
+        <ul *ngIf="item.children && item.expanded" class="nav-sublist">
+          <li *ngFor="let child of item.children" class="nav-subitem">
+            <a [routerLink]="child.route"
+               routerLinkActive="active"
+               class="nav-subanchor"
+               (click)="onLinkClick()">
+              <span class="nav-sublabel">{{ child.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
