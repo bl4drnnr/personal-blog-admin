@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-import {
-  AuthenticationService,
-  LoginRequest
-} from '@services/authentication.service';
+import { LoginResponse } from '@responses/login.enum';
+import { ValidationService } from '@services/validation.service';
+import { AuthenticationService } from '@services/authentication.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-login',
@@ -21,89 +21,87 @@ import {
   ]
 })
 export class LoginComponent implements OnInit {
-  email: string = '';
-  password: string = '';
-  mfaCode: string = '';
+  step = 2;
 
-  incorrectEmail: boolean = false;
-  incorrectPassword: boolean = false;
-  isMfaRequired: boolean = false;
-  loginError: string = '';
+  email: string;
+  password: string;
+
+  incorrectEmail: boolean;
+  incorrectPassword: boolean;
+
+  isMfaRequired: boolean;
+
+  mfaCode: string;
+
+  isMfaNotSet = true;
+  isRecoveryKeysNotSet = true;
 
   constructor(
     private readonly authenticationService: AuthenticationService,
-    private readonly router: Router
+    private readonly validationService: ValidationService,
+    private readonly router: Router,
+    private readonly titleService: Title
   ) {}
 
-  isFormValid(): boolean {
-    return !!(
-      this.email &&
-      this.password &&
-      !this.incorrectEmail &&
-      !this.incorrectPassword
+  incorrectCredentials() {
+    return (
+      !this.email || !this.password || this.incorrectEmail || this.incorrectPassword
     );
   }
 
-  isMfaValid(): boolean {
-    return !this.isMfaRequired || (!!this.mfaCode && this.mfaCode.length === 6);
-  }
-
-  handleLogin() {
-    if (!this.isFormValid() || !this.isMfaValid()) {
-      return;
-    }
-
-    const loginData: LoginRequest = {
-      email: this.email,
-      password: this.password
-    };
-
-    if (this.mfaCode) {
-      loginData.mfaCode = this.mfaCode;
-    }
-
-    this.authenticationService.login(loginData).subscribe({
-      next: (response) => {
-        if (response._at) {
-          localStorage.setItem('_at', response._at);
-          this.router.navigate(['/dashboard']);
-        }
-      },
-      error: (error) => {
-        console.error('Login error:', error);
-        if (error.status === 401) {
-          this.loginError = 'Invalid credentials';
-        } else if (error.error?.message === 'TOKEN_TWO_FA_REQUIRED') {
-          this.isMfaRequired = true;
-          this.loginError = '';
-        } else {
-          this.loginError = 'Login failed. Please try again.';
-        }
-      }
+  loginMfaButtonDisabled() {
+    return this.validationService.mfaButtonDisable({
+      isMfaRequired: this.isMfaRequired,
+      mfaCode: this.mfaCode
     });
   }
 
-  onEmailChange(email: string) {
-    this.email = email;
-    this.incorrectEmail = false;
-    this.loginError = '';
+  handleLogIn() {
+    if (this.step === 2 && this.incorrectCredentials()) return;
+    else if (this.step === 3 && this.loginMfaButtonDisabled()) return;
+
+    this.authenticationService
+      .login({
+        email: this.email,
+        password: this.password,
+        mfaCode: this.mfaCode
+      })
+      .subscribe({
+        next: async ({ message, _at }) => {
+          switch (message) {
+            case LoginResponse.MFA_NOT_SET:
+              this.step = 1;
+              this.isMfaNotSet = true;
+              this.isRecoveryKeysNotSet = false;
+              break;
+            case LoginResponse.RECOVERY_KEYS_NOT_SET:
+              this.step = 1;
+              this.isMfaNotSet = false;
+              this.isRecoveryKeysNotSet = true;
+              break;
+            case LoginResponse.TOKEN_TWO_FA_REQUIRED:
+              this.step = 3;
+              this.isMfaRequired = true;
+              break;
+            default:
+              if (_at) {
+                localStorage.setItem('_at', _at);
+                await this.router.navigate(['dashboard']);
+              }
+          }
+        }
+      });
   }
 
-  onPasswordChange(password: string) {
-    this.password = password;
-    this.incorrectPassword = false;
-    this.loginError = '';
+  async handleRedirect(path: string) {
+    await this.router.navigate([path]);
   }
 
-  onMfaChange(mfaCode: string) {
-    this.mfaCode = mfaCode;
-    this.loginError = '';
-  }
+  async ngOnInit() {
+    this.titleService.setTitle('Personal Blog | Login');
 
-  ngOnInit() {
     const accessToken = localStorage.getItem('_at');
-    if (accessToken) {
-      this.router.navigate(['/dashboard']);
-    }
+
+    if (accessToken) await this.handleRedirect('dashboard');
   }
 }

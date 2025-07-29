@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/authentication.service';
-import { map } from 'rxjs';
+import { switchMap } from 'rxjs';
+import { UsersService } from '@services/users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { map } from 'rxjs';
 export class RefreshTokensService {
   constructor(
     private readonly router: Router,
+    private readonly usersService: UsersService,
     private readonly authenticationService: AuthenticationService
   ) {}
 
@@ -27,9 +29,9 @@ export class RefreshTokensService {
     if (!accessToken) return this.handleLogout();
 
     return this.authenticationService.refreshTokens().pipe(
-      map(({ _at }) => {
+      switchMap(({ _at }) => {
         localStorage.setItem('_at', _at);
-        return { success: true };
+        return this.usersService.getUserInfo();
       })
     );
   }

@@ -42,7 +42,7 @@
         "src/app/shared/api/*",
         "src/app/shared/global-components-services/*"
       ],
-      "@env/*": ["src/app/environments/*"],
+      "@environments/*": ["src/app/environments/*"],
       "@services/*": [
         "src/app/shared/services/*"
       ],
