@@ -49,6 +49,10 @@ export class SidebarComponent {
         {
           label: 'Pages',
           route: '/admin/pages'
+        },
+        {
+          label: 'Static Assets',
+          route: '/admin/static-assets'
         }
       ]
     },

@@ -1,0 +1,187 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Static Assets Management</h1>
+      <p>Upload files directly to AWS S3. S3 URLs are automatically generated and managed by the API.</p>
+    </div>
+
+    <!-- Upload Form -->
+    <div class="content-section" *ngIf="showUploadForm">
+      <div class="card">
+        <div class="card-header">
+          <h2>Upload New Asset</h2>
+          <basic-button
+            label="Cancel"
+            (buttonClick)="toggleUploadForm()"
+          ></basic-button>
+        </div>
+        
+        <div class="upload-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Upload Method</label>
+              <div class="upload-mode-toggle">
+                <basic-button
+                  label="File Upload"
+                  [fillButton]="uploadMode === 'file'"
+                  (buttonClick)="uploadMode = 'file'"
+                ></basic-button>
+                <basic-button
+                  label="Base64 Image"
+                  [fillButton]="uploadMode === 'base64'"
+                  (buttonClick)="uploadMode = 'base64'"
+                ></basic-button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row" *ngIf="uploadMode === 'file'">
+            <div class="form-group">
+              <label for="file-input">Select File</label>
+              <input 
+                type="file" 
+                id="file-input"
+                (change)="onFileSelected($event)"
+                accept="image/*,video/*,.pdf,.doc,.docx"
+                class="file-input"
+              >
+              <div class="file-preview" *ngIf="previewUrl">
+                <img [src]="previewUrl" alt="Preview" />
+              </div>
+              <div class="file-info" *ngIf="selectedFile">
+                <span class="file-name">{{ selectedFile.name }}</span>
+                <span class="file-size">({{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row" *ngIf="uploadMode === 'base64'">
+            <div class="form-group">
+              <label for="base64-input">Paste Base64 Image Data</label>
+              <textarea 
+                id="base64-input"
+                [(ngModel)]="previewUrl"
+                placeholder="Paste base64 image data here (data:image/...)"
+                class="form-textarea"
+                rows="4"
+              ></textarea>
+              <div class="file-preview" *ngIf="previewUrl && previewUrl.startsWith('data:image')">
+                <img [src]="previewUrl" alt="Base64 Preview" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="asset-name">Asset Name *</label>
+              <input 
+                type="text" 
+                id="asset-name"
+                [(ngModel)]="assetName"
+                placeholder="Enter asset name"
+                class="form-input"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="asset-description">Description</label>
+              <textarea 
+                id="asset-description"
+                [(ngModel)]="assetDescription"
+                placeholder="Optional description"
+                class="form-textarea"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <basic-button 
+              *ngIf="uploadMode === 'file'"
+              [label]="isUploading ? 'Uploading to S3...' : 'Upload File to S3'"
+              [disabled]="isUploading || !selectedFile || !assetName.trim()"
+              [fillButton]="true"
+              (buttonClick)="uploadAsset()"
+            ></basic-button>
+            <basic-button 
+              *ngIf="uploadMode === 'base64'"
+              [label]="isUploading ? 'Uploading to S3...' : 'Upload Image to S3'"
+              [disabled]="isUploading || !previewUrl || !previewUrl.startsWith('data:image') || !assetName.trim()"
+              [fillButton]="true"
+              (buttonClick)="uploadBase64Image()"
+            ></basic-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assets List -->
+    <div class="content-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>S3 Static Assets ({{ assets.length }})</h2>
+          <basic-button
+            label="Upload New Asset"
+            [fillButton]="true"
+            (buttonClick)="toggleUploadForm()"
+            *ngIf="!showUploadForm"
+          ></basic-button>
+        </div>
+        
+        <div class="assets-grid" *ngIf="!isLoading && assets.length > 0">
+          <div class="asset-item" *ngFor="let asset of assets">
+            <div class="asset-preview">
+              <img *ngIf="asset.s3Url.includes('.jpg') || asset.s3Url.includes('.png') || asset.s3Url.includes('.gif') || asset.s3Url.includes('.webp')" 
+                   [src]="asset.s3Url" 
+                   [alt]="asset.name"
+                   class="asset-image" />
+              <div *ngIf="!asset.s3Url.includes('.jpg') && !asset.s3Url.includes('.png') && !asset.s3Url.includes('.gif') && !asset.s3Url.includes('.webp')" 
+                   class="asset-placeholder">
+                <span class="file-icon">📄</span>
+              </div>
+            </div>
+            
+            <div class="asset-info">
+              <h3 class="asset-name">{{ asset.name }}</h3>
+              <p class="asset-description" *ngIf="asset.description">{{ asset.description }}</p>
+              <p class="asset-url">{{ asset.s3Url }}</p>
+              <p class="asset-date">Created: {{ asset.createdAt | date:'short' }}</p>
+            </div>
+            
+            <div class="asset-actions">
+              <basic-button
+                label="Copy URL"
+                (buttonClick)="copyUrl(asset.s3Url)"
+              ></basic-button>
+              <basic-button
+                label="Delete"
+                [danger]="true"
+                (buttonClick)="deleteAsset(asset)"
+              ></basic-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="loading-state" *ngIf="isLoading">
+          <p>Loading assets...</p>
+        </div>
+
+        <div class="empty-state" *ngIf="!isLoading && assets.length === 0">
+          <div class="empty-content">
+            <h3>No assets found</h3>
+            <p>Upload your first static asset to get started.</p>
+            <basic-button
+              label="Upload Asset"
+              [fillButton]="true"
+              (buttonClick)="toggleUploadForm()"
+            ></basic-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</layout-default>

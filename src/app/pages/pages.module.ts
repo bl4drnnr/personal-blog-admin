@@ -30,6 +30,9 @@ import { PrivacySectionsComponent } from '@pages/admin/privacy/sections/privacy-
 import { PrivacyContentItemsComponent } from '@pages/admin/privacy/content-items/privacy-content-items.component';
 import { PrivacySettingsComponent } from '@pages/admin/privacy/settings/privacy-settings.component';
 
+// Static Assets
+import { StaticAssetsComponent } from '@pages/admin/static-assets/static-assets.component';
+
 // User Management
 import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
@@ -57,6 +60,8 @@ const adminComponents = [
   PrivacySectionsComponent,
   PrivacyContentItemsComponent,
   PrivacySettingsComponent,
+  // Static Assets
+  StaticAssetsComponent,
   // User Management
   UserInfoComponent,
   SecuritySettingsComponent

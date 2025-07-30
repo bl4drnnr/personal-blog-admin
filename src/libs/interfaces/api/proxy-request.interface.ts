@@ -12,6 +12,7 @@ import { CertificationEndpoint } from '@interfaces/certifications.enum';
 import { ExperienceEndpoint } from '@interfaces/experience.enum';
 import { SocialEndpoint } from '@interfaces/socials.enum';
 import { ChangelogEndpoint } from '@interfaces/changelog.enum';
+import { StaticAssetsEndpoint } from '@interfaces/static-assets.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -25,7 +26,8 @@ type EndpointsType =
   | CertificationEndpoint
   | ExperienceEndpoint
   | SocialEndpoint
-  | ChangelogEndpoint;
+  | ChangelogEndpoint
+  | StaticAssetsEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

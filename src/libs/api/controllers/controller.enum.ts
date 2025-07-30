@@ -7,5 +7,6 @@ export enum Controller {
   ARTICLES = 'articles',
   CATEGORIES = 'categories',
   ABOUT_BLOG = 'about-blog',
-  CHANGELOG = 'changelog'
+  CHANGELOG = 'changelog',
+  STATIC_ASSETS = 'static-assets'
 }
