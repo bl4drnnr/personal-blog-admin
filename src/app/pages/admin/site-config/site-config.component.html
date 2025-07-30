@@ -5,28 +5,185 @@
       <p>Manage your site settings and configuration</p>
     </div>
 
-    <div class="content-section">
-      <div class="card">
-        <h2>Site Settings</h2>
-        <p>Configure your site's global settings, metadata, and general information.</p>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>Site Name</h3>
-            <p>Configure your site's name and branding</p>
+    <div class="content-section" *ngIf="!loading; else loadingTemplate">
+      <div class="site-config-form">
+
+        <!-- Basic Site Information -->
+        <div class="card">
+          <h2>Basic Site Information</h2>
+
+          <div class="form-row">
+            <basic-input
+              label="Site Name"
+              placeholder="Enter your site name"
+              [(value)]="siteName"
+              [disabled]="isFormDisabled()"
+              [showError]="siteNameError"
+              [errorMessage]="siteNameErrorMessage"
+              [minLength]="1"
+              (valueChange)="onSiteNameChange($event)"
+              (incorrectInput)="onSiteNameError($event)">
+            </basic-input>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>SEO Settings</h3>
-            <p>Manage meta tags, descriptions, and SEO configuration</p>
+
+          <div class="form-row">
+            <basic-textarea
+              label="Site Description"
+              placeholder="Enter a brief description of your site"
+              [(value)]="siteDescription"
+              [disabled]="isFormDisabled()"
+              [showError]="siteDescriptionError"
+              [errorMessage]="siteDescriptionErrorMessage"
+              [minLength]="10"
+              (valueChange)="onSiteDescriptionChange($event)"
+              (incorrectInput)="onSiteDescriptionError($event)">
+            </basic-textarea>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>Social Links</h3>
-            <p>Update social media links and contact information</p>
+
+          <div class="form-row">
+            <basic-input
+              label="Site Author"
+              placeholder="Enter the site author name"
+              [(value)]="siteAuthor"
+              [disabled]="isFormDisabled()"
+              [showError]="siteAuthorError"
+              [errorMessage]="siteAuthorErrorMessage"
+              [minLength]="1"
+              (valueChange)="onSiteAuthorChange($event)"
+              (incorrectInput)="onSiteAuthorError($event)">
+            </basic-input>
           </div>
+
+          <div class="form-row">
+            <basic-input
+              label="Site URL"
+              placeholder="https://example.com"
+              [(value)]="siteUrl"
+              [disabled]="isFormDisabled()"
+              [showError]="siteUrlError"
+              [errorMessage]="siteUrlErrorMessage"
+              type="url"
+              (valueChange)="onSiteUrlChange($event)"
+              (incorrectInput)="onSiteUrlError($event)">
+            </basic-input>
+          </div>
+        </div>
+
+        <!-- SEO & Meta Information -->
+        <div class="card">
+          <h2>SEO & Meta Information</h2>
+
+          <div class="form-row">
+            <asset-selector
+              label="Default Image"
+              placeholder="Select default image for SEO"
+              [disabled]="isFormDisabled()"
+              (assetSelected)="onDefaultImageChange($event?.id || '')">
+            </asset-selector>
+            <div class="field-error" *ngIf="defaultImageError">
+              {{ defaultImageErrorMessage }}
+            </div>
+          </div>
+
+          <div class="form-row">
+            <basic-textarea
+              label="Keywords"
+              placeholder="Enter comma-separated keywords for SEO"
+              [(value)]="keywords"
+              [disabled]="isFormDisabled()"
+              [showError]="keywordsError"
+              [errorMessage]="keywordsErrorMessage"
+              [minLength]="1"
+              (valueChange)="onKeywordsChange($event)"
+              (incorrectInput)="onKeywordsError($event)">
+            </basic-textarea>
+          </div>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="card">
+          <h2>Social Media Links</h2>
+          <p class="card-description">Optional social media profile URLs</p>
+
+          <div class="form-row">
+            <basic-input
+              label="LinkedIn URL"
+              placeholder="https://linkedin.com/in/username"
+              [(value)]="socialMediaLinkedin"
+              [disabled]="isFormDisabled()"
+              type="url"
+              (valueChange)="onSocialMediaLinkedinChange($event)">
+            </basic-input>
+          </div>
+
+          <div class="form-row">
+            <basic-input
+              label="GitHub URL"
+              placeholder="https://github.com/username"
+              [(value)]="socialMediaGithub"
+              [disabled]="isFormDisabled()"
+              type="url"
+              (valueChange)="onSocialMediaGithubChange($event)">
+            </basic-input>
+          </div>
+        </div>
+
+        <!-- Organization Information -->
+        <div class="card">
+          <h2>Organization Information</h2>
+          <p class="card-description">Optional organization details for structured data</p>
+
+          <div class="form-row">
+            <basic-input
+              label="Organization Name"
+              placeholder="Enter organization name"
+              [(value)]="organizationName"
+              [disabled]="isFormDisabled()"
+              (valueChange)="onOrganizationNameChange($event)">
+            </basic-input>
+          </div>
+
+          <div class="form-row">
+            <basic-input
+              label="Organization URL"
+              placeholder="https://organization.com"
+              [(value)]="organizationUrl"
+              [disabled]="isFormDisabled()"
+              [showError]="organizationUrlError"
+              [errorMessage]="organizationUrlErrorMessage"
+              type="url"
+              (valueChange)="onOrganizationUrlChange($event)"
+              (incorrectInput)="onOrganizationUrlError($event)">
+            </basic-input>
+          </div>
+
+          <div class="form-row">
+            <asset-selector
+              label="Organization Logo"
+              placeholder="Select organization logo"
+              [disabled]="isFormDisabled()"
+              (assetSelected)="onOrganizationLogoChange($event?.id || '')">
+            </asset-selector>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <basic-button
+            [label]="saving ? 'Saving...' : 'Save Configuration'"
+            [disabled]="isFormDisabled()"
+            [fillButton]="true"
+            (buttonClick)="onSubmit()">
+          </basic-button>
         </div>
       </div>
     </div>
+
+    <ng-template #loadingTemplate>
+      <div class="loading-container">
+        <basic-spinner></basic-spinner>
+        <p>Loading site configuration...</p>
+      </div>
+    </ng-template>
   </div>
 </layout-default>

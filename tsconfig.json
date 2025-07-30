@@ -78,7 +78,8 @@
         "src/libs/api/responses/experiences/*",
         "src/libs/api/responses/projects/*",
         "src/libs/api/responses/changelog/*",
-        "src/libs/api/responses/static-assets/*"
+        "src/libs/api/responses/static-assets/*",
+        "src/libs/api/responses/site-config/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -95,7 +96,8 @@
         "src/libs/api/payloads/experiences/*",
         "src/libs/api/payloads/projects/*",
         "src/libs/api/payloads/changelog/*",
-        "src/libs/api/payloads/static-assets/*"
+        "src/libs/api/payloads/static-assets/*",
+        "src/libs/api/payloads/site-config/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@guards/*": ["src/app/guards/*"],

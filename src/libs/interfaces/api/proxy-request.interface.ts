@@ -13,6 +13,7 @@ import { ExperienceEndpoint } from '@interfaces/experience.enum';
 import { SocialEndpoint } from '@interfaces/socials.enum';
 import { ChangelogEndpoint } from '@interfaces/changelog.enum';
 import { StaticAssetsEndpoint } from '@interfaces/static-assets.enum';
+import { SiteConfigEndpoint } from '@interfaces/site-config.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -27,7 +28,8 @@ type EndpointsType =
   | ExperienceEndpoint
   | SocialEndpoint
   | ChangelogEndpoint
-  | StaticAssetsEndpoint;
+  | StaticAssetsEndpoint
+  | SiteConfigEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;
