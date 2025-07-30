@@ -4,4 +4,5 @@ export interface SearchAssetsQuery {
   pageSize?: number;
   orderBy?: string;
   order?: 'ASC' | 'DESC';
+  includePicture?: boolean;
 }

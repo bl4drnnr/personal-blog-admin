@@ -24,8 +24,8 @@ export class ChangelogSettingsComponent
 
   // Hero Section
   heroTitle = '';
-  heroImageMain = '';
-  heroImageSecondary = '';
+  heroImageMainId: string | null = null;
+  heroImageSecondaryId: string | null = null;
   heroImageMainAlt = '';
   heroImageSecondaryAlt = '';
 
@@ -41,7 +41,7 @@ export class ChangelogSettingsComponent
   // Open Graph
   ogTitle = '';
   ogDescription = '';
-  ogImage = '';
+  ogImageId: string | null = null;
 
   // Structured Data (JSON)
   structuredDataJson = '';
@@ -97,8 +97,8 @@ export class ChangelogSettingsComponent
       content: this.content || undefined,
       footerText: this.footerText || undefined,
       heroTitle: this.heroTitle || undefined,
-      heroImageMain: this.heroImageMain || undefined,
-      heroImageSecondary: this.heroImageSecondary || undefined,
+      heroImageMainId: this.heroImageMainId || undefined,
+      heroImageSecondaryId: this.heroImageSecondaryId || undefined,
       heroImageMainAlt: this.heroImageMainAlt || undefined,
       heroImageSecondaryAlt: this.heroImageSecondaryAlt || undefined,
       logoText: this.logoText || undefined,
@@ -108,7 +108,7 @@ export class ChangelogSettingsComponent
       metaKeywords: this.metaKeywords || undefined,
       ogTitle: this.ogTitle || undefined,
       ogDescription: this.ogDescription || undefined,
-      ogImage: this.ogImage || undefined,
+      ogImageId: this.ogImageId || undefined,
       structuredData: structuredData
     };
 
@@ -131,8 +131,8 @@ export class ChangelogSettingsComponent
     this.content = '';
     this.footerText = '';
     this.heroTitle = '';
-    this.heroImageMain = '';
-    this.heroImageSecondary = '';
+    this.heroImageMainId = null;
+    this.heroImageSecondaryId = null;
     this.heroImageMainAlt = '';
     this.heroImageSecondaryAlt = '';
     this.logoText = '';
@@ -142,7 +142,7 @@ export class ChangelogSettingsComponent
     this.metaKeywords = '';
     this.ogTitle = '';
     this.ogDescription = '';
-    this.ogImage = '';
+    this.ogImageId = null;
     this.structuredDataJson = '';
     this.loadPageSettings();
   }

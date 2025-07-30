@@ -1,0 +1,230 @@
+@import 'variables';
+
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.input-label {
+  opacity: .9;
+  font-size: 14px;
+  margin: 14px 0;
+}
+
+.input-field {
+  width: 100%;
+  height: 36px;
+  padding: 10px 40px 10px 10px;
+  font-size: 14px;
+  border: 1px solid var(--main-color-border);
+  border-radius: 5px;
+  background-color: var(--bg-color);
+  transition: all 0.3s;
+  color: var(--text-color);
+
+  &::placeholder {
+    color: var(--text-color);
+    opacity: .5;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--input-shadow);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &--selected {
+    border-color: var(--success-color, #10b981);
+    background-color: var(--bg-color);
+  }
+}
+
+.asset-selector {
+  &__input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__actions {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    opacity: 0.6;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+      color: var(--error-color, #ef4444);
+    }
+  }
+
+  &__spinner {
+    display: flex;
+    align-items: center;
+    color: var(--border-color, #3b82f6);
+
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-color);
+    border: 1px solid var(--main-color-border);
+    border-radius: 5px;
+    margin-top: 8px;
+  }
+
+  &__preview-image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--bg-color);
+    border: 1px solid var(--main-color-border);
+  }
+
+  &__preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__preview-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+
+  &__preview-description {
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.7;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--bg-color);
+    border: 1px solid var(--main-color-border);
+    border-radius: 5px;
+    box-shadow: var(--input-shadow);
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  &__dropdown-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  &__loading,
+  &__no-results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-size: 14px;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid var(--main-color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--main-color-border);
+      opacity: 0.8;
+    }
+
+    &--selected {
+      background: var(--border-color, #eff6ff);
+      opacity: 0.9;
+    }
+  }
+
+  &__option-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--bg-color);
+    border: 1px solid var(--main-color-border);
+    flex-shrink: 0;
+  }
+
+  &__option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__option-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__option-description {
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

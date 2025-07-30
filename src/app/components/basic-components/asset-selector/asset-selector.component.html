@@ -1,0 +1,76 @@
+<div class="input-container">
+  <p class="input-label" *ngIf="label">{{ label }}</p>
+  
+  <div class="asset-selector__input-container">
+    <input
+      type="text"
+      class="input-field"
+      [class.input-field--selected]="selectedAsset"
+      [placeholder]="placeholder"
+      [value]="searchTerm"
+      [disabled]="disabled"
+      (input)="onSearchInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      autocomplete="off"
+    />
+    
+    <div class="asset-selector__actions">
+      <button
+        type="button"
+        class="asset-selector__clear"
+        *ngIf="selectedAsset && !disabled"
+        (click)="clearSelection()"
+        aria-label="Clear selection"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      
+      <div class="asset-selector__spinner" *ngIf="loading">
+        <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-opacity="0.25"/>
+          <path d="M12 2v4m0 12v4m10-10h-4M6 12H2" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Selected Asset Preview -->
+  <div class="asset-selector__preview" *ngIf="selectedAsset">
+    <div class="asset-selector__preview-info">
+      <span class="asset-selector__preview-name">{{ selectedAsset.name }}</span>
+      <span class="asset-selector__preview-description" *ngIf="selectedAsset.description">
+        {{ selectedAsset.description }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="asset-selector__dropdown" *ngIf="showDropdown && !disabled">
+    <div class="asset-selector__dropdown-content">
+      <div class="asset-selector__loading" *ngIf="loading">
+        <span>Searching assets...</span>
+      </div>
+      
+      <div class="asset-selector__no-results" *ngIf="!loading && assets.length === 0">
+        <span>No assets found</span>
+      </div>
+      
+      <div 
+        class="asset-selector__option"
+        *ngFor="let asset of assets"
+        [class.asset-selector__option--selected]="selectedAsset?.id === asset.id"
+        (click)="selectAsset(asset)"
+      >
+        <div class="asset-selector__option-info">
+          <span class="asset-selector__option-name">{{ asset.name }}</span>
+          <span class="asset-selector__option-description" *ngIf="asset.description">
+            {{ asset.description }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

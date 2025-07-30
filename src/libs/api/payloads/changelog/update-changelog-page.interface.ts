@@ -2,8 +2,8 @@ export interface UpdateChangelogPagePayload {
   title?: string;
   content?: string;
   footerText?: string;
-  heroImageMain?: string;
-  heroImageSecondary?: string;
+  heroImageMainId?: string;
+  heroImageSecondaryId?: string;
   heroImageMainAlt?: string;
   heroImageSecondaryAlt?: string;
   logoText?: string;
@@ -14,6 +14,6 @@ export interface UpdateChangelogPagePayload {
   metaKeywords?: string;
   ogTitle?: string;
   ogDescription?: string;
-  ogImage?: string;
+  ogImageId?: string;
   structuredData?: object;
 }

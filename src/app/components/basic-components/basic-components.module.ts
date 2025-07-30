@@ -14,6 +14,7 @@ import { QrMfaComponent } from '@components/qr-mfa/qr-mfa.component';
 import { ArrowComponent } from '@components/arrow/arrow.component';
 import { TextareaComponent } from '@components/textarea/textarea.component';
 import { SocialLinkComponent } from '@components/social-link/social-link.component';
+import { AssetSelectorComponent } from '@components/asset-selector/asset-selector.component';
 
 const components: any = [
   ButtonComponent,
@@ -28,7 +29,8 @@ const components: any = [
   QrMfaComponent,
   ArrowComponent,
   TextareaComponent,
-  SocialLinkComponent
+  SocialLinkComponent,
+  AssetSelectorComponent
 ];
 
 @NgModule({

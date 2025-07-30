@@ -72,17 +72,14 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="heroImageMain">Main Hero Image URL</label>
-                  <basic-input
-                    label="Main Hero Image URL"
-                    type="url"
-                    placeholder="https://example.com/hero-main.jpg"
-                    [(value)]="heroImageMain"
-                  ></basic-input>
+                  <asset-selector
+                    label="Main Hero Image"
+                    placeholder="Search for main hero image..."
+                    [(ngModel)]="heroImageMainId"
+                  ></asset-selector>
                 </div>
 
                 <div class="form-group">
-                  <label for="heroImageMainAlt">Main Image Alt Text</label>
                   <basic-input
                     label="Main Image Alt Text"
                     type="text"
@@ -94,17 +91,14 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="heroImageSecondary">Secondary Hero Image URL</label>
-                  <basic-input
-                    label="Secondary Hero Image URL"
-                    type="url"
-                    placeholder="https://example.com/hero-secondary.jpg"
-                    [(value)]="heroImageSecondary"
-                  ></basic-input>
+                  <asset-selector
+                    label="Secondary Hero Image"
+                    placeholder="Search for secondary hero image..."
+                    [(ngModel)]="heroImageSecondaryId"
+                  ></asset-selector>
                 </div>
 
                 <div class="form-group">
-                  <label for="heroImageSecondaryAlt">Secondary Image Alt Text</label>
                   <basic-input
                     label="Secondary Image Alt Text"
                     type="text"
@@ -200,13 +194,11 @@
               </div>
 
               <div class="form-group">
-                <label for="ogImage">OG Image URL</label>
-                <basic-input
-                  label="OG Image URL"
-                  type="url"
-                  placeholder="https://example.com/og-changelog.jpg"
-                  [(value)]="ogImage"
-                ></basic-input>
+                <asset-selector
+                  label="OG Image"
+                  placeholder="Search for Open Graph image..."
+                  [(ngModel)]="ogImageId"
+                ></asset-selector>
               </div>
             </div>
 
