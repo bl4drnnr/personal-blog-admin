@@ -8,7 +8,8 @@ import { UploadFilePayload } from '@payloads/upload-file.interface';
 import { UploadBase64Payload } from '@payloads/upload-base64.interface';
 import { StaticAsset } from '@payloads/static-asset.interface';
 import { StaticAssetDeletedResponse } from '@responses/static-asset-deleted.interface';
-import { ListStaticAssetsResponse } from '@responses/list-static-assets.interface';
+import { PaginatedStaticAssetsResponse } from '@responses/paginated-static-assets.interface';
+import { SearchAssetsQuery } from '@payloads/search-assets.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,14 @@ import { ListStaticAssetsResponse } from '@responses/list-static-assets.interfac
 export class StaticAssetsService {
   constructor(private readonly apiService: ApiService) {}
 
-  getStaticAssets(): Observable<ListStaticAssetsResponse> {
+  getStaticAssets(
+    params: SearchAssetsQuery
+  ): Observable<PaginatedStaticAssetsResponse> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,
       controller: Controller.STATIC_ASSETS,
-      action: StaticAssetsEndpoint.GET_ASSETS
+      action: StaticAssetsEndpoint.GET_ASSETS,
+      params
     });
   }
 

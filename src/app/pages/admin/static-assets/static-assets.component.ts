@@ -8,6 +8,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { StaticAsset } from '@payloads/static-asset.interface';
 import { UploadFilePayload } from '@payloads/upload-file.interface';
 import { UploadBase64Payload } from '@payloads/upload-base64.interface';
+import { SearchAssetsQuery } from '@payloads/search-assets.interface';
 
 @Component({
   selector: 'page-static-assets',
@@ -20,12 +21,26 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
   isUploading = false;
   showUploadForm = false;
 
+  // Pagination properties
+  currentPage = 0;
+  pageSize = 12;
+  totalAssets = 0;
+  totalPages = 0;
+
+  // Search and sort properties
+  searchQuery = '';
+  sortBy = 'createdAt';
+  sortOrder: 'ASC' | 'DESC' = 'DESC';
+
   // Upload form properties
   selectedFile: File | null = null;
   assetName = '';
   assetDescription = '';
   previewUrl: string | null = null;
   uploadMode: 'file' | 'base64' = 'file';
+
+  // Math object for template
+  Math = Math;
 
   constructor(
     protected override router: Router,
@@ -52,9 +67,21 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
 
   loadAssets(): void {
     this.isLoading = true;
-    this.staticAssetsService.getStaticAssets().subscribe({
-      next: (assets) => {
-        this.assets = assets;
+
+    const query: SearchAssetsQuery = {
+      search: this.searchQuery,
+      page: this.currentPage,
+      pageSize: this.pageSize,
+      orderBy: this.sortBy,
+      order: this.sortOrder
+    };
+
+    this.staticAssetsService.getStaticAssets(query).subscribe({
+      next: (response) => {
+        this.assets = response.assets;
+        this.totalAssets = response.total;
+        this.totalPages = response.totalPages;
+        this.currentPage = response.page;
         this.isLoading = false;
       },
       error: () => {
@@ -240,6 +267,48 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
       };
       reader.readAsDataURL(file);
     });
+  }
+
+  performSearch(): void {
+    this.currentPage = 0; // Reset to first page when searching
+    this.loadAssets();
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.currentPage = 0;
+    this.loadAssets();
+  }
+
+  onSortChange(): void {
+    this.currentPage = 0; // Reset to first page when sorting changes
+    this.loadAssets();
+  }
+
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadAssets();
+    }
+  }
+
+  getVisiblePages(): number[] {
+    const visiblePages: number[] = [];
+    const maxVisiblePages = 5;
+
+    let startPage = Math.max(0, this.currentPage - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(this.totalPages - 1, startPage + maxVisiblePages - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(0, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      visiblePages.push(i);
+    }
+
+    return visiblePages;
   }
 
   private resetForm(): void {
