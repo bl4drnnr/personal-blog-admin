@@ -17,9 +17,7 @@ export class ChangelogSettingsComponent
 {
   loading = false;
 
-  // Basic Page Content
-  title = '';
-  content = '';
+  // Footer Configuration
   footerText = '';
 
   // Hero Section
@@ -71,9 +69,38 @@ export class ChangelogSettingsComponent
   }
 
   private loadPageSettings(): void {
-    // This would typically load existing page settings from an API
-    // For now, we'll leave the form empty for new configuration
-    console.log('Loading page settings...');
+    this.loading = true;
+
+    this.changelogService.getChangelogPageSettings().subscribe({
+      next: (response) => {
+        // Populate form fields with existing data
+        this.footerText = response.footerText || '';
+        this.heroTitle = response.heroTitle || '';
+        this.heroImageMainId = response.heroImageMainId || null;
+        this.heroImageSecondaryId = response.heroImageSecondaryId || null;
+        this.heroImageMainAlt = response.heroImageMainAlt || '';
+        this.heroImageSecondaryAlt = response.heroImageSecondaryAlt || '';
+        this.logoText = response.logoText || '';
+        this.breadcrumbText = response.breadcrumbText || '';
+        this.metaTitle = response.metaTitle || '';
+        this.metaDescription = response.metaDescription || '';
+        this.metaKeywords = response.metaKeywords || '';
+        this.ogTitle = response.ogTitle || '';
+        this.ogDescription = response.ogDescription || '';
+        this.ogImageId = response.ogImageId || null;
+        this.structuredDataJson = response.structuredData
+          ? JSON.stringify(response.structuredData, null, 2)
+          : '';
+
+        this.loading = false;
+        console.log('Page settings loaded successfully');
+      },
+      error: (error) => {
+        console.error('Error loading page settings:', error);
+        this.loading = false;
+        // Keep form empty if page settings don't exist yet
+      }
+    });
   }
 
   savePageSettings(): void {
@@ -93,8 +120,6 @@ export class ChangelogSettingsComponent
     }
 
     const payload: UpdateChangelogPagePayload = {
-      title: this.title || undefined,
-      content: this.content || undefined,
       footerText: this.footerText || undefined,
       heroTitle: this.heroTitle || undefined,
       heroImageMainId: this.heroImageMainId || undefined,
@@ -113,13 +138,11 @@ export class ChangelogSettingsComponent
     };
 
     this.changelogService.updateChangelogPage(payload).subscribe({
-      next: (response) => {
-        console.log('Page settings updated:', response);
+      next: () => {
         alert('Changelog page settings updated successfully!');
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Error updating page settings:', error);
+      error: () => {
         alert('Error updating page settings. Please try again.');
         this.loading = false;
       }
@@ -127,8 +150,6 @@ export class ChangelogSettingsComponent
   }
 
   resetForm(): void {
-    this.title = '';
-    this.content = '';
     this.footerText = '';
     this.heroTitle = '';
     this.heroImageMainId = null;

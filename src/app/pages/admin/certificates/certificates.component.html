@@ -9,27 +9,147 @@
       <div class="card">
         <div class="card-header">
           <h2>Professional Certificates</h2>
-          <button class="btn btn-primary">Add New Certificate</button>
+          <basic-button
+            label="Add New Certificate"
+            [fillButton]="true"
+            (buttonClick)="openCreateModal()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>🏅 Certifications</h3>
-            <p>Add and manage your professional certifications, licenses, and credentials</p>
+
+        <div class="card-content">
+          <div *ngIf="certificates.length === 0" class="empty-state">
+            <h3>No certificates yet</h3>
+            <p>Add your first professional certificate to get started.</p>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>📅 Validity Tracking</h3>
-            <p>Track expiration dates and renewal requirements for time-sensitive certificates</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>🔗 Verification Links</h3>
-            <p>Add links to certificate verification pages and credential repositories</p>
+
+          <div *ngIf="certificates.length > 0" class="certificates-list">
+            <div *ngFor="let certificate of certificates" class="certificate-item">
+              <div class="certificate-content">
+                <h3>{{ certificate.title }}</h3>
+                <p class="issuer">{{ certificate.issuer }}</p>
+                <p *ngIf="certificate.description" class="description">{{ certificate.description }}</p>
+                <div class="certificate-meta">
+                  <span *ngIf="certificate.issuedDate" class="date">
+                    Issued: {{ certificate.issuedDate | date:'mediumDate' }}
+                  </span>
+                  <span *ngIf="certificate.expiryDate" class="date">
+                    Expires: {{ certificate.expiryDate | date:'mediumDate' }}
+                  </span>
+                  <span *ngIf="certificate.credentialId" class="credential">
+                    ID: {{ certificate.credentialId }}
+                  </span>
+                </div>
+                <div *ngIf="certificate.credentialUrl" class="certificate-link">
+                  <a [href]="certificate.credentialUrl" target="_blank">View Certificate</a>
+                </div>
+              </div>
+              <div class="certificate-actions">
+                <basic-button
+                  label="Edit"
+                  (buttonClick)="openEditModal(certificate)"
+                ></basic-button>
+                <basic-button
+                  label="Delete"
+                  [danger]="true"
+                  (buttonClick)="deleteCertificate(certificate)"
+                ></basic-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Certificate Modal -->
+    <basic-modal
+      *ngIf="showModal"
+      [title]="modalMode === 'create' ? 'Add New Certificate' : 'Edit Certificate'"
+      (closeModal)="closeModal()"
+    >
+      <div class="certificate-form">
+        <div class="form-group">
+          <basic-input
+            label="Certificate Title"
+            type="text"
+            placeholder="e.g., AWS Certified Solutions Architect"
+            [(value)]="title"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Issuer"
+            type="text"
+            placeholder="e.g., Amazon Web Services"
+            [(value)]="issuer"
+          ></basic-input>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <basic-input
+              label="Issued Date"
+              type="date"
+              [(value)]="issuedDate"
+            ></basic-input>
+          </div>
+
+          <div class="form-group">
+            <basic-input
+              label="Expiry Date"
+              type="date"
+              [(value)]="expiryDate"
+            ></basic-input>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Credential ID"
+            type="text"
+            placeholder="Certificate ID or credential number"
+            [(value)]="credentialId"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Credential URL"
+            type="url"
+            placeholder="https://link-to-certificate-verification"
+            [(value)]="credentialUrl"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-textarea
+            label="Description"
+            placeholder="Brief description of the certificate and skills covered"
+            [(value)]="description"
+          ></basic-textarea>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Display Order"
+            type="text"
+            placeholder="0"
+            [(value)]="orderStr"
+          ></basic-input>
+        </div>
+
+        <div class="modal-actions">
+          <basic-button
+            label="Cancel"
+            (buttonClick)="closeModal()"
+          ></basic-button>
+          <basic-button
+            [label]="modalMode === 'create' ? 'Create Certificate' : 'Update Certificate'"
+            [fillButton]="true"
+            (buttonClick)="saveCertificate()"
+          ></basic-button>
+        </div>
+      </div>
+    </basic-modal>
   </div>
 </layout-default>

@@ -1,1 +1,10 @@
 @import '../../../shared/styles/admin-common.scss';
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  
+  basic-button {
+    flex: 1;
+  }
+}

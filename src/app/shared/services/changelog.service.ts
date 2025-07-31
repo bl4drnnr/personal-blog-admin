@@ -59,6 +59,14 @@ export class ChangelogService {
     });
   }
 
+  getChangelogPageSettings(): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.CHANGELOG,
+      action: ChangelogEndpoint.GET_PAGE
+    });
+  }
+
   updateChangelogPage(
     payload: UpdateChangelogPagePayload
   ): Observable<ChangelogPageUpdatedResponse> {

@@ -1,4 +1,7 @@
-export interface UpdateChangelogPagePayload {
+export interface AboutPageData {
+  id?: string;
+  title?: string;
+  content?: string;
   footerText?: string;
   heroImageMainId?: string;
   heroImageSecondaryId?: string;
@@ -13,5 +16,5 @@ export interface UpdateChangelogPagePayload {
   ogTitle?: string;
   ogDescription?: string;
   ogImageId?: string;
-  structuredData?: object;
+  structuredData?: any;
 }

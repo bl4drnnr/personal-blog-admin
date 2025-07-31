@@ -3,5 +3,6 @@ export enum ChangelogEndpoint {
   CREATE_ENTRY = 'admin/changelog/create-entry',
   UPDATE_ENTRY = 'admin/changelog/update-entry',
   DELETE_ENTRY = 'admin/changelog/delete-entry',
-  UPDATE_PAGE = 'admin/changelog/page'
+  GET_PAGE = 'admin/changelog/page',
+  UPDATE_PAGE = 'admin/changelog/update-page'
 }

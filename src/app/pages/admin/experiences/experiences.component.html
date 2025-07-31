@@ -9,26 +9,108 @@
       <div class="card">
         <div class="card-header">
           <h2>Work Experience</h2>
-          <button class="btn btn-primary">Add New Experience</button>
+          <basic-button
+            label="Add New Experience"
+            [fillButton]="true"
+            (buttonClick)="openCreateModal()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>💼 Career Timeline</h3>
-            <p>Create and manage your professional work experience with positions and responsibilities</p>
+
+        <div class="card-content">
+          <div *ngIf="experiences.length === 0" class="empty-state">
+            <h3>No experiences yet</h3>
+            <p>Add your first work experience to get started.</p>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🏢 Company Details</h3>
-            <p>Add company information, logos, and work duration for each position</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>🏆 Achievements</h3>
-            <p>Highlight key accomplishments, projects, and milestones in each role</p>
+
+          <div *ngIf="experiences.length > 0" class="experiences-list">
+            <div *ngFor="let experience of experiences" class="experience-item">
+              <div class="experience-content">
+                <h3>{{ experience.title }}</h3>
+                <p class="company">{{ experience.companyName }}</p>
+                <p *ngIf="experience.description" class="description">{{ experience.description }}</p>
+                <div *ngIf="experience.positions && experience.positions.length > 0" class="positions">
+                  <h4>Positions:</h4>
+                  <div *ngFor="let position of experience.positions" class="position-item">
+                    <strong>{{ position.title }}</strong>
+                    <span class="dates" *ngIf="position.startDate">
+                      {{ position.startDate | date:'mediumDate' }}
+                      <span *ngIf="position.endDate"> - {{ position.endDate | date:'mediumDate' }}</span>
+                      <span *ngIf="!position.endDate"> - Present</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="experience-actions">
+                <basic-button
+                  label="Edit"
+                  (buttonClick)="openEditModal(experience)"
+                ></basic-button>
+                <basic-button
+                  label="Delete"
+                  [danger]="true"
+                  (buttonClick)="deleteExperience(experience)"
+                ></basic-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Experience Modal -->
+    <basic-modal
+      *ngIf="showModal"
+      [title]="modalMode === 'create' ? 'Add New Experience' : 'Edit Experience'"
+      (closeModal)="closeModal()"
+    >
+      <div class="experience-form">
+        <div class="form-group">
+          <basic-input
+            label="Experience Title"
+            type="text"
+            placeholder="e.g., Senior Software Engineer"
+            [(value)]="title"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Company Name"
+            type="text"
+            placeholder="e.g., Tech Company Inc."
+            [(value)]="companyName"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-textarea
+            label="Description"
+            placeholder="Brief description of the role, responsibilities, and achievements"
+            [(value)]="description"
+          ></basic-textarea>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Display Order"
+            type="text"
+            placeholder="0"
+            [(value)]="orderStr"
+          ></basic-input>
+        </div>
+
+        <div class="modal-actions">
+          <basic-button
+            label="Cancel"
+            (buttonClick)="closeModal()"
+          ></basic-button>
+          <basic-button
+            [label]="modalMode === 'create' ? 'Create Experience' : 'Update Experience'"
+            [fillButton]="true"
+            (buttonClick)="saveExperience()"
+          ></basic-button>
+        </div>
+      </div>
+    </basic-modal>
   </div>
 </layout-default>
