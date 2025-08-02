@@ -9,6 +9,7 @@ export enum Controller {
   ABOUT_BLOG = 'about-blog',
   ABOUT = 'about',
   CHANGELOG = 'changelog',
+  LICENSE = 'license',
   STATIC_ASSETS = 'static-assets',
   SITE_CONFIG = 'site-config'
 }

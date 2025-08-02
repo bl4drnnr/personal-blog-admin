@@ -15,6 +15,7 @@ import { ChangelogEndpoint } from '@interfaces/changelog.enum';
 import { StaticAssetsEndpoint } from '@interfaces/static-assets.enum';
 import { SiteConfigEndpoint } from '@interfaces/site-config.enum';
 import { AboutEndpoint } from '@interfaces/about.enum';
+import { LicenseEndpoint } from '@interfaces/license.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -31,7 +32,8 @@ type EndpointsType =
   | ChangelogEndpoint
   | StaticAssetsEndpoint
   | SiteConfigEndpoint
-  | AboutEndpoint;
+  | AboutEndpoint
+  | LicenseEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

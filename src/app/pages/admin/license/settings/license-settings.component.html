@@ -2,32 +2,267 @@
   <div class="admin-page-container">
     <div class="page-header">
       <h1>License Settings</h1>
-      <p>Configure license page layout, content, and SEO settings</p>
+      <p>Manage your license page content, layout, and SEO settings</p>
     </div>
 
-    <div class="content-section">
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading license settings...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="content-section">
+      <!-- Content Settings -->
       <div class="card">
         <div class="card-header">
-          <h2>Page Configuration</h2>
-          <button class="btn btn-primary">Save Settings</button>
+          <h2>License Content</h2>
+          <basic-button
+            label="Save Settings"
+            [fillButton]="true"
+            (buttonClick)="saveLicenseSettings()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>📄 Page Content</h3>
-            <p>Configure main license page content, header text, and introduction</p>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <basic-input
+                label="License Title"
+                type="text"
+                placeholder="e.g., MIT License, Apache License 2.0"
+                [(value)]="title"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="License Date"
+                type="date"
+                [(value)]="licenseDate"
+              ></basic-input>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🎨 Layout Settings</h3>
-            <p>Manage hero images, footer text, and breadcrumb navigation settings</p>
+
+          <div class="form-group">
+            <label class="form-label">License Text Paragraphs</label>
+            <div class="paragraphs-section">
+              <div class="paragraph-input-row">
+                <basic-textarea
+                  placeholder="Enter a paragraph of license text and click Add"
+                  [(value)]="paragraphInput"
+                ></basic-textarea>
+                <basic-button
+                  label="Add Paragraph"
+                  size="small"
+                  (buttonClick)="addParagraph()"
+                ></basic-button>
+              </div>
+              <div *ngIf="paragraphs.length > 0" class="paragraphs-list">
+                <div *ngFor="let paragraph of paragraphs; let i = index" class="paragraph-item">
+                  <p>{{ paragraph }}</p>
+                  <button type="button" class="paragraph-remove" (click)="removeParagraph(i)">×</button>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔍 SEO Configuration</h3>
-            <p>Set meta tags, Open Graph data, and structured data for search engines</p>
+
+          <div class="form-group">
+            <basic-input
+              label="Additional Information Title"
+              type="text"
+              placeholder="e.g., License Usage, Terms and Conditions"
+              [(value)]="additionalInfoTitle"
+            ></basic-input>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Additional Information Paragraphs</label>
+            <div class="paragraphs-section">
+              <div class="paragraph-input-row">
+                <basic-textarea
+                  placeholder="Enter additional information paragraph and click Add"
+                  [(value)]="additionalInfoInput"
+                ></basic-textarea>
+                <basic-button
+                  label="Add Paragraph"
+                  size="small"
+                  (buttonClick)="addAdditionalInfoParagraph()"
+                ></basic-button>
+              </div>
+              <div *ngIf="additionalInfoParagraphs.length > 0" class="paragraphs-list">
+                <div *ngFor="let paragraph of additionalInfoParagraphs; let i = index" class="paragraph-item">
+                  <p>{{ paragraph }}</p>
+                  <button type="button" class="paragraph-remove" (click)="removeAdditionalInfoParagraph(i)">×</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- Layout Settings -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Layout Settings</h2>
+        </div>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <basic-input
+                label="Logo Text"
+                type="text"
+                placeholder="Logo text for the header"
+                [(value)]="logoText"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Breadcrumb Text"
+                type="text"
+                placeholder="Breadcrumb navigation text"
+                [(value)]="breadcrumbText"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Hero Title"
+                type="text"
+                placeholder="Main hero section title"
+                [(value)]="heroTitle"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Footer Text"
+                placeholder="Footer content for the license page"
+                [(value)]="footerText"
+              ></basic-textarea>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <asset-selector
+                label="Hero Main Image"
+                placeholder="Search for hero main image..."
+                [(ngModel)]="heroImageMainId"
+                (assetSelected)="onHeroMainAssetSelected($event)"
+              ></asset-selector>
+              <div class="image-preview" *ngIf="heroImageMainPreview">
+                <img [src]="heroImageMainPreview" alt="Hero main image preview" />
+              </div>
+              <basic-input
+                label="Hero Main Image Alt Text"
+                type="text"
+                placeholder="Alt text for hero main image"
+                [(value)]="heroImageMainAlt"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <asset-selector
+                label="Hero Secondary Image"
+                placeholder="Search for hero secondary image..."
+                [(ngModel)]="heroImageSecondaryId"
+                (assetSelected)="onHeroSecondaryAssetSelected($event)"
+              ></asset-selector>
+              <div class="image-preview" *ngIf="heroImageSecondaryPreview">
+                <img [src]="heroImageSecondaryPreview" alt="Hero secondary image preview" />
+              </div>
+              <basic-input
+                label="Hero Secondary Image Alt Text"
+                type="text"
+                placeholder="Alt text for hero secondary image"
+                [(value)]="heroImageSecondaryAlt"
+              ></basic-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Settings -->
+      <div class="card">
+        <div class="card-header">
+          <h2>SEO Settings</h2>
+        </div>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <basic-input
+                label="Meta Title"
+                type="text"
+                placeholder="SEO meta title"
+                [(value)]="metaTitle"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Meta Description"
+                placeholder="SEO meta description"
+                [(value)]="metaDescription"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Meta Keywords"
+                placeholder="SEO meta keywords (comma-separated)"
+                [(value)]="metaKeywords"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Open Graph Title"
+                type="text"
+                placeholder="Open Graph title for social sharing"
+                [(value)]="ogTitle"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Open Graph Description"
+                placeholder="Open Graph description for social sharing"
+                [(value)]="ogDescription"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <asset-selector
+                label="Open Graph Image"
+                placeholder="Search for Open Graph image..."
+                [(ngModel)]="ogImageId"
+                (assetSelected)="onOgImageAssetSelected($event)"
+              ></asset-selector>
+              <div class="image-preview" *ngIf="ogImagePreview">
+                <img [src]="ogImagePreview" alt="Open Graph image preview" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Structured Data (JSON-LD)</label>
+            <basic-textarea
+              placeholder="Enter JSON-LD structured data"
+              [(value)]="structuredDataStr"
+              rows="10"
+            ></basic-textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="save-section">
+        <basic-button
+          label="Save All Settings"
+          [fillButton]="true"
+          (buttonClick)="saveLicenseSettings()"
+        ></basic-button>
       </div>
     </div>
   </div>

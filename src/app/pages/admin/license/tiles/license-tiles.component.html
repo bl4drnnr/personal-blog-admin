@@ -5,30 +5,144 @@
       <p>Manage license tiles with external links and descriptions</p>
     </div>
 
-    <div class="content-section">
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading license tiles...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="content-section">
       <div class="card">
         <div class="card-header">
           <h2>License Tiles</h2>
-          <button class="btn btn-primary">Add New Tile</button>
+          <basic-button
+            label="Add New Tile"
+            [fillButton]="true"
+            (buttonClick)="openCreateModal()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>🔗 External Links</h3>
-            <p>Create license tiles with links to external resources and legal documents</p>
+
+        <div class="card-content">
+          <div *ngIf="tiles.length === 0" class="empty-state">
+            <h3>No license tiles yet</h3>
+            <p>Add your first license tile to get started.</p>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>📝 Descriptions</h3>
-            <p>Add detailed descriptions and explanations for each license type</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>🎨 Visual Display</h3>
-            <p>Configure tile appearance and organize license information visually</p>
+
+          <div *ngIf="tiles.length > 0" class="tiles-list">
+            <div *ngFor="let tile of tiles" class="tile-item">
+              <div class="tile-content">
+                <h3>{{ tile.title }}</h3>
+                <p class="tile-description">{{ tile.description }}</p>
+                
+                <div *ngIf="tile.links && tile.links.length > 0" class="tile-links">
+                  <h4>Links:</h4>
+                  <div class="links-list">
+                    <a *ngFor="let link of tile.links" 
+                       [href]="link.url" 
+                       target="_blank" 
+                       class="link-item">
+                      {{ link.label }}
+                    </a>
+                  </div>
+                </div>
+
+                <div class="tile-meta">
+                  <span class="sort-order">Sort Order: {{ tile.sortOrder || 0 }}</span>
+                  <span *ngIf="tile.createdAt">Created: {{ tile.createdAt | date:'shortDate' }}</span>
+                </div>
+              </div>
+
+              <div class="tile-actions">
+                <basic-button
+                  label="Edit"
+                  (buttonClick)="openEditModal(tile)"
+                ></basic-button>
+                <basic-button
+                  label="Delete"
+                  [danger]="true"
+                  (buttonClick)="deleteTile(tile)"
+                ></basic-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Tile Modal -->
+    <basic-modal
+      [header]="modalMode === 'create' ? 'Add New License Tile' : 'Edit License Tile'"
+      [showModal]="showModal"
+      (closeModal)="closeModal()"
+    >
+      <div class="tile-form">
+        <div class="form-group">
+          <basic-input
+            label="Title"
+            type="text"
+            placeholder="e.g., MIT License, Apache License 2.0"
+            [(value)]="title"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-textarea
+            label="Description"
+            placeholder="Describe this license and its usage"
+            [(value)]="description"
+          ></basic-textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">External Links</label>
+          <div class="links-section">
+            <div class="link-input-row">
+              <basic-input
+                placeholder="Link label (e.g., Full License Text)"
+                type="text"
+                [(value)]="linkLabel"
+              ></basic-input>
+              <basic-input
+                placeholder="URL (e.g., https://opensource.org/licenses/MIT)"
+                type="url"
+                [(value)]="linkUrl"
+              ></basic-input>
+              <basic-button
+                label="Add"
+                size="small"
+                (buttonClick)="addLink()"
+              ></basic-button>
+            </div>
+            <div *ngIf="links.length > 0" class="links-list">
+              <div *ngFor="let link of links; let i = index" class="link-item">
+                <span class="link-label">{{ link.label }}</span>
+                <span class="link-url">{{ link.url }}</span>
+                <button type="button" class="link-remove" (click)="removeLink(i)">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Sort Order"
+            type="number"
+            placeholder="0"
+            [(value)]="sortOrderStr"
+          ></basic-input>
+        </div>
+
+        <div class="modal-actions">
+          <basic-button
+            label="Cancel"
+            (buttonClick)="closeModal()"
+          ></basic-button>
+          <basic-button
+            [label]="modalMode === 'create' ? 'Create Tile' : 'Update Tile'"
+            [fillButton]="true"
+            (buttonClick)="saveTile()"
+          ></basic-button>
+        </div>
+      </div>
+    </basic-modal>
   </div>
 </layout-default>

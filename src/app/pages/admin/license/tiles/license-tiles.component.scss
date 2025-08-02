@@ -1,1 +1,221 @@
 @import '../../../../shared/styles/admin-common.scss';
+
+.tiles-list {
+  display: grid;
+  gap: 20px;
+}
+
+.tile-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+  }
+
+  .tile-content {
+    flex: 1;
+    min-width: 0;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 0 0 8px 0;
+    }
+
+    .tile-description {
+      font-size: 0.875rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin: 0 0 16px 0;
+    }
+
+    .tile-links {
+      margin-bottom: 16px;
+
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #374151;
+        margin: 0 0 8px 0;
+      }
+
+      .links-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .link-item {
+          background: #3b82f6;
+          color: white;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          text-decoration: none;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background: #2563eb;
+          }
+        }
+      }
+    }
+
+    .tile-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.875rem;
+      color: #64748b;
+
+      .sort-order {
+        background: #e2e8f0;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .tile-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #64748b;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.tile-form {
+  .form-group {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+    }
+  }
+
+  .links-section {
+    .link-input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 8px;
+      margin-bottom: 16px;
+
+      @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .links-list {
+      display: grid;
+      gap: 8px;
+
+      .link-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr 2fr auto;
+        gap: 12px;
+        align-items: center;
+
+        .link-label {
+          font-weight: 600;
+          color: #374151;
+          font-size: 0.875rem;
+        }
+
+        .link-url {
+          color: #3b82f6;
+          font-size: 0.875rem;
+          word-break: break-all;
+        }
+
+        .link-remove {
+          background: #ef4444;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: bold;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background: #dc2626;
+          }
+        }
+
+        @media (max-width: 640px) {
+          grid-template-columns: 1fr;
+          text-align: center;
+
+          .link-remove {
+            justify-self: center;
+          }
+        }
+      }
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+@media (max-width: 768px) {
+  .tile-item {
+    flex-direction: column;
+
+    .tile-actions {
+      flex-direction: row;
+      align-self: stretch;
+    }
+  }
+}
