@@ -1,8 +1,9 @@
 export interface ExperienceResponse {
   id: string;
-  title: string;
-  description: string;
   companyName: string;
+  logoId: string; // For editing forms
+  companyLogo: string; // For display (S3 URL)
+  companyWebsite?: string;
   order: number;
   positions?: PositionResponse[];
   createdAt: Date;

@@ -311,6 +311,25 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
     return visiblePages;
   }
 
+  getFileIcon(url: string): string {
+    if (url.includes('.svg')) {
+      return '🎨';
+    } else if (url.includes('.csv')) {
+      return '📊';
+    } else if (url.includes('.pdf')) {
+      return '📄';
+    } else if (url.includes('.doc') || url.includes('.docx')) {
+      return '📝';
+    } else if (
+      url.includes('.mp4') ||
+      url.includes('.avi') ||
+      url.includes('.mov')
+    ) {
+      return '🎥';
+    }
+    return '📄';
+  }
+
   private resetForm(): void {
     this.selectedFile = null;
     this.assetName = '';

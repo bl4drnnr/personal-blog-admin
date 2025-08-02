@@ -22,8 +22,6 @@ export class ModalComponent implements OnChanges {
 
   constructor(private readonly envService: EnvService) {}
 
-  backArrowModal = 'assets/icons/backarrowmodal.svg';
-
   ngOnChanges(changes: SimpleChanges) {
     document.body.style.overflow =
       changes['showModal'] && changes['showModal'].currentValue === true

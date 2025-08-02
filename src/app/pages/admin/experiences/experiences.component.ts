@@ -5,6 +5,8 @@ import { RefreshTokensService } from '@services/refresh-token.service';
 import { BaseAdminComponent } from '@shared/components/base-admin.component';
 import { AboutService } from '@services/about.service';
 import { ExperienceData } from '@interfaces/about/experience-data.interface';
+import { StaticAssetsService } from '@services/static-assets.service';
+import { StaticAsset } from '@payloads/static-asset.interface';
 
 @Component({
   selector: 'page-experiences',
@@ -18,16 +20,18 @@ export class ExperiencesComponent extends BaseAdminComponent implements OnInit {
   editingExperience: ExperienceData | null = null;
 
   // Form data
-  title = '';
-  description = '';
   companyName = '';
+  companyWebsite = '';
   orderStr = '0';
+  logoAssetId = '';
+  logoPreview = '';
 
   constructor(
     protected override router: Router,
     protected override refreshTokensService: RefreshTokensService,
     private titleService: Title,
-    private aboutService: AboutService
+    private aboutService: AboutService,
+    private staticAssetsService: StaticAssetsService
   ) {
     super(router, refreshTokensService);
   }
@@ -76,29 +80,31 @@ export class ExperiencesComponent extends BaseAdminComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.title = '';
-    this.description = '';
     this.companyName = '';
+    this.companyWebsite = '';
     this.orderStr = '0';
+    this.logoAssetId = '';
+    this.logoPreview = '';
   }
 
   populateForm(experience: ExperienceData): void {
-    this.title = experience.title || '';
-    this.description = experience.description || '';
     this.companyName = experience.companyName || '';
+    this.companyWebsite = experience.companyWebsite || '';
     this.orderStr = (experience.order || 0).toString();
+    this.logoAssetId = experience.logoId || '';
+    this.logoPreview = experience.companyLogo || ''; // Use the resolved S3 URL
   }
 
   saveExperience(): void {
-    if (!this.title || !this.companyName) {
-      alert('Title and Company Name are required');
+    if (!this.companyName) {
+      alert('Company Name is required');
       return;
     }
 
     const payload: ExperienceData = {
-      title: this.title,
-      description: this.description || undefined,
       companyName: this.companyName,
+      companyWebsite: this.companyWebsite || undefined,
+      logoId: this.logoAssetId || undefined,
       order: parseInt(this.orderStr) || 0
     };
 
@@ -129,10 +135,29 @@ export class ExperiencesComponent extends BaseAdminComponent implements OnInit {
     }
   }
 
+  onLogoAssetSelected(asset: StaticAsset | null): void {
+    if (asset) {
+      this.logoAssetId = asset.id;
+      // Fetch the S3 URL for preview
+      this.staticAssetsService.findById(asset.id).subscribe({
+        next: (assetData) => {
+          this.logoPreview = assetData.s3Url;
+        },
+        error: (error) => {
+          console.error('Error loading asset preview:', error);
+          this.logoPreview = '';
+        }
+      });
+    } else {
+      this.logoAssetId = '';
+      this.logoPreview = '';
+    }
+  }
+
   deleteExperience(experience: ExperienceData): void {
     if (
       confirm(
-        `Are you sure you want to delete "${experience.title}" at ${experience.companyName}?`
+        `Are you sure you want to delete experience at "${experience.companyName}"?`
       )
     ) {
       this.aboutService.deleteExperience(experience.id!).subscribe({

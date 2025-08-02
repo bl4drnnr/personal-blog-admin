@@ -1,13 +1,14 @@
 <div class="modal-container" *ngIf="showModal">
   <div class="modal-wrapper">
     <div class="window-header">
-      <img
-        [ngSrc]="backArrowModal"
-        [width]="72"
-        [height]="72"
+      <div 
+        class="close-icon"
         (click)="closeModal.emit()"
-        alt="close"
+        title="Close modal"
       >
+        <span class="close-line close-line-1"></span>
+        <span class="close-line close-line-2"></span>
+      </div>
       <h3 class="modal-title" *ngIf="header">{{ header }}</h3>
     </div>
     <p class="modal-p" *ngIf="description">{{ description }}</p>

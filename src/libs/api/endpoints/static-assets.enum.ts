@@ -1,6 +1,6 @@
 export enum StaticAssetsEndpoint {
   GET_ASSETS = 'admin/assets',
-  GET_ASSET_BY_ID = 'admin/assets/:id',
+  GET_ASSET_BY_ID = 'admin/get-asset-by-id',
   CREATE_ASSET = 'admin/assets/create',
   UPDATE_ASSET = 'admin/assets/:id/update',
   DELETE_ASSET = 'admin/assets/delete',

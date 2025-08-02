@@ -1,11 +1,10 @@
 export interface CertificateResponse {
   id: string;
-  title: string;
-  issuer: string;
+  name: string;
   issuedDate: string;
-  expiryDate: string;
-  credentialId: string;
-  credentialUrl: string;
+  expirationDate: string;
+  logoId: string; // For editing forms
+  logo: string; // For display (S3 URL)
   description: string;
   order: number;
   createdAt: Date;

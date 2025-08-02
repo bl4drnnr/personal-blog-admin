@@ -24,23 +24,20 @@
 
           <div *ngIf="certificates.length > 0" class="certificates-list">
             <div *ngFor="let certificate of certificates" class="certificate-item">
+              <div class="certificate-logo" *ngIf="certificate.logo">
+                <img [src]="certificate.logo" [alt]="certificate.name" />
+              </div>
               <div class="certificate-content">
-                <h3>{{ certificate.title }}</h3>
-                <p class="issuer">{{ certificate.issuer }}</p>
+                <h3>{{ certificate.name }}</h3>
                 <p *ngIf="certificate.description" class="description">{{ certificate.description }}</p>
                 <div class="certificate-meta">
                   <span *ngIf="certificate.issuedDate" class="date">
                     Issued: {{ certificate.issuedDate | date:'mediumDate' }}
                   </span>
-                  <span *ngIf="certificate.expiryDate" class="date">
-                    Expires: {{ certificate.expiryDate | date:'mediumDate' }}
+                  <span *ngIf="certificate.expirationDate" class="date">
+                    Expires: {{ certificate.expirationDate | date:'mediumDate' }}
                   </span>
-                  <span *ngIf="certificate.credentialId" class="credential">
-                    ID: {{ certificate.credentialId }}
-                  </span>
-                </div>
-                <div *ngIf="certificate.credentialUrl" class="certificate-link">
-                  <a [href]="certificate.credentialUrl" target="_blank">View Certificate</a>
+                  <span class="order">Order: {{ certificate.order || 0 }}</span>
                 </div>
               </div>
               <div class="certificate-actions">
@@ -62,26 +59,17 @@
 
     <!-- Certificate Modal -->
     <basic-modal
-      *ngIf="showModal"
-      [title]="modalMode === 'create' ? 'Add New Certificate' : 'Edit Certificate'"
+      [header]="modalMode === 'create' ? 'Add New Certificate' : 'Edit Certificate'"
+      [showModal]="showModal"
       (closeModal)="closeModal()"
     >
       <div class="certificate-form">
         <div class="form-group">
           <basic-input
-            label="Certificate Title"
+            label="Certificate Name"
             type="text"
             placeholder="e.g., AWS Certified Solutions Architect"
-            [(value)]="title"
-          ></basic-input>
-        </div>
-
-        <div class="form-group">
-          <basic-input
-            label="Issuer"
-            type="text"
-            placeholder="e.g., Amazon Web Services"
-            [(value)]="issuer"
+            [(value)]="name"
           ></basic-input>
         </div>
 
@@ -96,29 +84,23 @@
 
           <div class="form-group">
             <basic-input
-              label="Expiry Date"
+              label="Expiration Date"
               type="date"
-              [(value)]="expiryDate"
+              [(value)]="expirationDate"
             ></basic-input>
           </div>
         </div>
 
         <div class="form-group">
-          <basic-input
-            label="Credential ID"
-            type="text"
-            placeholder="Certificate ID or credential number"
-            [(value)]="credentialId"
-          ></basic-input>
-        </div>
-
-        <div class="form-group">
-          <basic-input
-            label="Credential URL"
-            type="url"
-            placeholder="https://link-to-certificate-verification"
-            [(value)]="credentialUrl"
-          ></basic-input>
+          <asset-selector
+            label="Certificate Logo"
+            placeholder="Search for logo assets..."
+            [(ngModel)]="logoAssetId"
+            (assetSelected)="onLogoAssetSelected($event)"
+          ></asset-selector>
+          <div class="logo-preview" *ngIf="logoPreview">
+            <img [src]="logoPreview" alt="Logo preview" />
+          </div>
         </div>
 
         <div class="form-group">
@@ -132,17 +114,19 @@
         <div class="form-group">
           <basic-input
             label="Display Order"
-            type="text"
+            type="number"
             placeholder="0"
             [(value)]="orderStr"
           ></basic-input>
         </div>
 
         <div class="modal-actions">
-          <basic-button
-            label="Cancel"
-            (buttonClick)="closeModal()"
-          ></basic-button>
+          <div class="button-wrapper">
+            <basic-button
+              label="Cancel"
+              (buttonClick)="closeModal()"
+            ></basic-button>
+          </div>
           <basic-button
             [label]="modalMode === 'create' ? 'Create Certificate' : 'Update Certificate'"
             [fillButton]="true"

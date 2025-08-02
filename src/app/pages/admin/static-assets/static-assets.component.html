@@ -42,7 +42,7 @@
                 type="file"
                 id="file-input"
                 (change)="onFileSelected($event)"
-                accept="image/*,video/*,.pdf,.doc,.docx"
+                accept="image/*,video/*,.pdf,.doc,.docx,.csv,.svg"
                 class="file-input"
               >
               <div class="file-preview" *ngIf="previewUrl">
@@ -159,13 +159,13 @@
         <div class="assets-grid" *ngIf="!isLoading && assets.length > 0">
           <div class="asset-item" *ngFor="let asset of assets">
             <div class="asset-preview">
-              <img *ngIf="asset.s3Url.includes('.jpg') || asset.s3Url.includes('.png') || asset.s3Url.includes('.gif') || asset.s3Url.includes('.webp')"
+              <img *ngIf="asset.s3Url.includes('.jpg') || asset.s3Url.includes('.png') || asset.s3Url.includes('.gif') || asset.s3Url.includes('.webp') || asset.s3Url.includes('.svg')"
                    [src]="asset.s3Url"
                    [alt]="asset.name"
                    class="asset-image" />
-              <div *ngIf="!asset.s3Url.includes('.jpg') && !asset.s3Url.includes('.png') && !asset.s3Url.includes('.gif') && !asset.s3Url.includes('.webp')"
+              <div *ngIf="!asset.s3Url.includes('.jpg') && !asset.s3Url.includes('.png') && !asset.s3Url.includes('.gif') && !asset.s3Url.includes('.webp') && !asset.s3Url.includes('.svg')"
                    class="asset-placeholder">
-                <span class="file-icon">📄</span>
+                <span class="file-icon" [innerHTML]="getFileIcon(asset.s3Url)"></span>
               </div>
             </div>
 

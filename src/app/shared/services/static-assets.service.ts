@@ -54,4 +54,13 @@ export class StaticAssetsService {
       payload
     });
   }
+
+  findById(id: string): Observable<StaticAsset> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.STATIC_ASSETS,
+      action: StaticAssetsEndpoint.GET_ASSET_BY_ID,
+      params: { id }
+    });
+  }
 }

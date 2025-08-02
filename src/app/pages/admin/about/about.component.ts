@@ -7,9 +7,7 @@ import { AboutService } from '@services/about.service';
 import { AboutPageData } from '@interfaces/about/about-page-data.interface';
 
 // @TODO HTML EDITOR
-// @TODO FIX THE "heroImageMain: await this.getStaticAsset(homePage.heroImageMainId)". Need to change it from the object to the simple string return
-// @TODO CERTS PAGE
-// @TODO EXPERIENCE PAGE
+// @TODO EXPERIENCE PAGE (POSITIONS)
 @Component({
   selector: 'page-about',
   templateUrl: './about.component.html',
