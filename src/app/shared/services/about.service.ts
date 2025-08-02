@@ -17,6 +17,7 @@ import { CertificateDeletedResponse } from '@responses/certificate-deleted.inter
 import { AboutPageData } from '@interfaces/about/about-page-data.interface';
 import { ExperienceData } from '@interfaces/about/experience-data.interface';
 import { CertificateData } from '@interfaces/about/certificate-data.interface';
+import { PositionData } from '@interfaces/about/position-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -133,6 +134,36 @@ export class AboutService {
       method: Method.DELETE,
       controller: Controller.ABOUT,
       action: AboutEndpoint.DELETE_CERTIFICATE,
+      params: { id }
+    });
+  }
+
+  // Position Methods
+  createPosition(experienceId: string, payload: PositionData): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.POST,
+      controller: Controller.ABOUT,
+      action: AboutEndpoint.CREATE_POSITION,
+      params: { experienceId },
+      payload
+    });
+  }
+
+  updatePosition(id: string, payload: PositionData): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PUT,
+      controller: Controller.ABOUT,
+      action: AboutEndpoint.UPDATE_POSITION,
+      params: { id },
+      payload
+    });
+  }
+
+  deletePosition(id: string): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.DELETE,
+      controller: Controller.ABOUT,
+      action: AboutEndpoint.DELETE_POSITION,
       params: { id }
     });
   }

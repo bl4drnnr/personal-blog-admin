@@ -32,19 +32,51 @@
                 <p *ngIf="experience.companyWebsite" class="website">
                   <a [href]="experience.companyWebsite" target="_blank">{{ experience.companyWebsite }}</a>
                 </p>
-                <div *ngIf="experience.positions && experience.positions.length > 0" class="positions">
-                  <h4>Positions:</h4>
-                  <div *ngFor="let position of experience.positions" class="position-item">
-                    <strong>{{ position.title }}</strong>
-                    <span class="dates" *ngIf="position.startDate">
-                      {{ position.startDate | date:'mediumDate' }}
-                      <span *ngIf="position.endDate"> - {{ position.endDate | date:'mediumDate' }}</span>
-                      <span *ngIf="!position.endDate"> - Present</span>
-                    </span>
+                <div class="positions">
+                  <h4>Positions ({{ (experience.positions || []).length }})</h4>
+                  <div *ngIf="experience.positions && experience.positions.length > 0" class="positions-grid">
+                    <div *ngFor="let position of experience.positions" class="position-item">
+                      <div class="position-header">
+                        <h5 class="position-title">{{ position.title }}</h5>
+                        <span class="position-dates" *ngIf="position.startDate">
+                          {{ position.startDate | date:'MMM yyyy' }}
+                          <span *ngIf="position.endDate"> - {{ position.endDate | date:'MMM yyyy' }}</span>
+                          <span *ngIf="!position.endDate"> - Present</span>
+                        </span>
+                      </div>
+                      <p *ngIf="position.description" class="position-description">{{ position.description }}</p>
+                      <div *ngIf="position.skills && position.skills.length > 0" class="position-skills">
+                        <span *ngFor="let skill of position.skills" class="skill-badge">{{ skill }}</span>
+                      </div>
+                      <div class="position-actions">
+                        <basic-button
+                          label="Edit"
+                          size="small"
+                          (buttonClick)="openEditPositionModal(experience, position)"
+                        ></basic-button>
+                        <basic-button
+                          label="Delete"
+                          size="small"
+                          [danger]="true"
+                          (buttonClick)="deletePosition(experience, position)"
+                        ></basic-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!experience.positions || experience.positions.length === 0" class="no-positions">
+                    <p>No positions added yet</p>
+                  </div>
+                  <div class="add-position-btn">
+                    <basic-button
+                      label="Add Position"
+                      size="small"
+                      (buttonClick)="openAddPositionModal(experience)"
+                    ></basic-button>
                   </div>
                 </div>
                 <div class="experience-meta">
                   <span class="order">Order: {{ experience.order || 0 }}</span>
+                  <span *ngIf="experience.createdAt">Created: {{ experience.createdAt | date:'shortDate' }}</span>
                 </div>
               </div>
               <div class="experience-actions">
@@ -119,6 +151,96 @@
             [label]="modalMode === 'create' ? 'Create Experience' : 'Update Experience'"
             [fillButton]="true"
             (buttonClick)="saveExperience()"
+          ></basic-button>
+        </div>
+      </div>
+    </basic-modal>
+
+    <!-- Position Modal -->
+    <basic-modal
+      [header]="positionModalMode === 'create' ? 'Add New Position' : 'Edit Position'"
+      [showModal]="showPositionModal"
+      (closeModal)="closePositionModal()"
+    >
+      <div class="position-form">
+        <div class="form-group">
+          <basic-input
+            label="Position Title"
+            type="text"
+            placeholder="e.g., Senior Software Engineer"
+            [(value)]="positionTitle"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-textarea
+            label="Position Description"
+            placeholder="Describe the key responsibilities and achievements in this role..."
+            [(value)]="positionDescription"
+          ></basic-textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <basic-input
+              label="Start Date"
+              type="date"
+              [(value)]="positionStartDate"
+            ></basic-input>
+          </div>
+          <div class="form-group">
+            <basic-input
+              label="End Date"
+              type="date"
+              placeholder="Leave empty if current position"
+              [(value)]="positionEndDate"
+            ></basic-input>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Skills</label>
+          <div class="skills-input-section">
+            <div class="skills-input-row">
+              <basic-input
+                placeholder="Enter a skill and press Enter or click Add"
+                type="text"
+                [(value)]="positionSkillsInput"
+                (keypress)="onSkillKeyPress($event)"
+              ></basic-input>
+              <basic-button
+                label="Add"
+                size="small"
+                (buttonClick)="addSkill()"
+              ></basic-button>
+            </div>
+            <div *ngIf="positionSkills.length > 0" class="skills-list">
+              <span *ngFor="let skill of positionSkills; let i = index" class="skill-tag">
+                {{ skill }}
+                <button type="button" class="skill-remove" (click)="removeSkill(i)">×</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Display Order"
+            type="number"
+            placeholder="0"
+            [(value)]="positionOrderStr"
+          ></basic-input>
+        </div>
+
+        <div class="modal-actions">
+          <basic-button
+            label="Cancel"
+            (buttonClick)="closePositionModal()"
+          ></basic-button>
+          <basic-button
+            [label]="positionModalMode === 'create' ? 'Add Position' : 'Update Position'"
+            [fillButton]="true"
+            (buttonClick)="savePosition()"
           ></basic-button>
         </div>
       </div>

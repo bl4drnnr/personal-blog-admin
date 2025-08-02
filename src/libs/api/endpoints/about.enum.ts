@@ -9,5 +9,8 @@ export enum AboutEndpoint {
   GET_CERTIFICATES = 'admin/get-certificates',
   CREATE_CERTIFICATE = 'admin/post-certificates',
   UPDATE_CERTIFICATE = 'admin/put-certificates',
-  DELETE_CERTIFICATE = 'admin/delete-certificates'
+  DELETE_CERTIFICATE = 'admin/delete-certificates',
+  CREATE_POSITION = 'admin/post-positions',
+  UPDATE_POSITION = 'admin/put-positions',
+  DELETE_POSITION = 'admin/delete-positions'
 }
