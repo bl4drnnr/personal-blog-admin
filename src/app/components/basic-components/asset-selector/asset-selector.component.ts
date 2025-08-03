@@ -37,6 +37,7 @@ export class AssetSelectorComponent
   assets: StaticAsset[] = [];
   loading: boolean = false;
   showDropdown: boolean = false;
+  private pendingAssetId: string | null = null;
 
   private destroy$ = new Subject<void>();
   private searchSubject = new Subject<string>();
@@ -72,10 +73,16 @@ export class AssetSelectorComponent
       if (asset) {
         this.selectedAsset = asset;
         this.searchTerm = asset.name;
+        this.pendingAssetId = null;
+      } else {
+        // Asset not found in current list, store ID for later lookup
+        this.pendingAssetId = value;
+        this.loadAssetById(value);
       }
     } else {
       this.selectedAsset = null;
       this.searchTerm = '';
+      this.pendingAssetId = null;
     }
   }
 
@@ -149,6 +156,9 @@ export class AssetSelectorComponent
         next: (response) => {
           this.assets = response.assets;
           this.loading = false;
+
+          // Check if we have a pending asset ID to resolve
+          this.resolvePendingAsset();
         },
         error: (error) => {
           console.error('Error loading assets:', error);
@@ -156,5 +166,35 @@ export class AssetSelectorComponent
           this.loading = false;
         }
       });
+  }
+
+  private loadAssetById(assetId: string): void {
+    this.staticAssetsService
+      .findById(assetId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (asset) => {
+          if (this.pendingAssetId === assetId) {
+            this.selectedAsset = asset;
+            this.searchTerm = asset.name;
+            this.pendingAssetId = null;
+          }
+        },
+        error: (error) => {
+          console.error('Error loading asset by ID:', error);
+          this.pendingAssetId = null;
+        }
+      });
+  }
+
+  private resolvePendingAsset(): void {
+    if (this.pendingAssetId) {
+      const asset = this.assets.find((a) => a.id === this.pendingAssetId);
+      if (asset) {
+        this.selectedAsset = asset;
+        this.searchTerm = asset.name;
+        this.pendingAssetId = null;
+      }
+    }
   }
 }

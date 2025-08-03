@@ -7,7 +7,8 @@ import { AboutService } from '@services/about.service';
 import { AboutPageData } from '@interfaces/about/about-page-data.interface';
 
 // @TODO HTML EDITOR
-// @TODO FIX ASSETS SELECTOR
+// @TODO IMPLEMENT THE PROJECTS PAGE
+// @TODO IMPLEMENT THE ARTICLES PAGE
 @Component({
   selector: 'page-about',
   templateUrl: './about.component.html',
