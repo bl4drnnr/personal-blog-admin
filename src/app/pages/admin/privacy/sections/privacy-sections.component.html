@@ -2,33 +2,111 @@
   <div class="admin-page-container">
     <div class="page-header">
       <h1>Privacy Sections Management</h1>
-      <p>Manage privacy policy sections with hierarchical organization</p>
+      <p>Manage privacy policy sections and organize content structure</p>
     </div>
 
-    <div class="content-section">
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading privacy sections...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="content-section">
       <div class="card">
         <div class="card-header">
-          <h2>Privacy Policy Sections</h2>
-          <button class="btn btn-primary">Add New Section</button>
+          <h2>Privacy Sections</h2>
+          <basic-button
+            label="Add New Section"
+            [fillButton]="true"
+            (buttonClick)="openCreateModal()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>📋 Section Structure</h3>
-            <p>Create and organize privacy policy sections with titles and descriptions</p>
+
+        <div class="card-content">
+          <div *ngIf="sections.length === 0" class="empty-state">
+            <h3>No privacy sections yet</h3>
+            <p>Add your first privacy section to organize your privacy policy content.</p>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🏗️ Hierarchical Organization</h3>
-            <p>Build nested section structure with parent-child relationships</p>
-          </div>
-          
-          <div class="placeholder-item">
-            <h3>📑 Content Management</h3>
-            <p>Add detailed content items to each section with flexible formatting</p>
+
+          <div *ngIf="sections.length > 0" class="sections-list">
+            <div *ngFor="let section of sections" class="section-item">
+              <div class="section-content">
+                <h3>{{ section.title }}</h3>
+                
+                <div class="section-meta">
+                  <span class="sort-order">Sort Order: {{ section.sortOrder || 0 }}</span>
+                  <span *ngIf="section.createdAt">Created: {{ section.createdAt | date:'shortDate' }}</span>
+                </div>
+                
+                <div class="section-preview" *ngIf="section.content">
+                  <div class="content-preview" [innerHTML]="getContentPreview(section.content)"></div>
+                </div>
+              </div>
+
+              <div class="section-actions">
+                <basic-button
+                  label="Edit"
+                  (buttonClick)="openEditModal(section)"
+                ></basic-button>
+                <basic-button
+                  label="Delete"
+                  [danger]="true"
+                  (buttonClick)="deleteSection(section)"
+                ></basic-button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Section Modal -->
+    <basic-modal
+      [header]="modalMode === 'create' ? 'Add New Privacy Section' : 'Edit Privacy Section'"
+      [showModal]="showModal"
+      (closeModal)="closeModal()"
+    >
+      <div class="section-form">
+        <div class="form-group">
+          <basic-input
+            label="Section Title"
+            type="text"
+            placeholder="e.g., Data Collection, User Rights, Cookies"
+            [(value)]="title"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Content</label>
+          <textarea 
+            [(ngModel)]="content" 
+            class="form-textarea"
+            placeholder="Enter the section content (HTML supported)"
+            rows="8"
+          ></textarea>
+          <small class="form-hint">You can use HTML tags for formatting</small>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Sort Order"
+            type="number"
+            placeholder="0"
+            [(value)]="sortOrderStr"
+          ></basic-input>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <basic-button
+          label="Cancel"
+          (buttonClick)="closeModal()"
+        ></basic-button>
+        <basic-button
+          [label]="modalMode === 'create' ? 'Create Section' : 'Update Section'"
+          [fillButton]="true"
+          (buttonClick)="saveSection()"
+        ></basic-button>
+      </div>
+    </basic-modal>
   </div>
 </layout-default>

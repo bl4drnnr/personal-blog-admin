@@ -111,10 +111,6 @@ export class SidebarComponent {
           route: '/admin/privacy/sections'
         },
         {
-          label: 'Privacy Content',
-          route: '/admin/privacy/content-items'
-        },
-        {
           label: 'Privacy Settings',
           route: '/admin/privacy/page'
         }

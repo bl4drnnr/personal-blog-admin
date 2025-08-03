@@ -1,1 +1,49 @@
 @import '../../../../shared/styles/admin-common.scss';
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+  }
+}
+
+.image-preview {
+  margin-top: 12px;
+
+  img {
+    max-width: 200px;
+    max-height: 120px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    object-fit: cover;
+  }
+}
+
+.save-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+}

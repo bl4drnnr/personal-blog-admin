@@ -27,7 +27,6 @@ import { LicenseSettingsComponent } from '@pages/admin/license/settings/license-
 
 // Privacy Policy
 import { PrivacySectionsComponent } from '@pages/admin/privacy/sections/privacy-sections.component';
-import { PrivacyContentItemsComponent } from '@pages/admin/privacy/content-items/privacy-content-items.component';
 import { PrivacySettingsComponent } from '@pages/admin/privacy/settings/privacy-settings.component';
 
 // Static Assets
@@ -58,7 +57,6 @@ const adminComponents = [
   LicenseSettingsComponent,
   // Privacy Policy
   PrivacySectionsComponent,
-  PrivacyContentItemsComponent,
   PrivacySettingsComponent,
   // Static Assets
   StaticAssetsComponent,

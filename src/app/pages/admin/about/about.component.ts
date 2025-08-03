@@ -8,6 +8,8 @@ import { AboutPageData } from '@interfaces/about/about-page-data.interface';
 
 // @TODO HTML EDITOR
 // @TODO FIX ASSETS SELECTOR
+// @TODO PRIVACY POLICY PAGE
+// @TODO SECURITY SETTINGS PAGE
 @Component({
   selector: 'page-about',
   templateUrl: './about.component.html',

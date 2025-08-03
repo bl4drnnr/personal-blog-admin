@@ -26,7 +26,6 @@ import { LicenseSettingsComponent } from '@pages/admin/license/settings/license-
 
 // Privacy Policy
 import { PrivacySectionsComponent } from '@pages/admin/privacy/sections/privacy-sections.component';
-import { PrivacyContentItemsComponent } from '@pages/admin/privacy/content-items/privacy-content-items.component';
 import { PrivacySettingsComponent } from '@pages/admin/privacy/settings/privacy-settings.component';
 
 // Static Assets
@@ -103,10 +102,6 @@ const routes: Routes = [
   {
     path: 'admin/privacy/sections',
     component: PrivacySectionsComponent
-  },
-  {
-    path: 'admin/privacy/content-items',
-    component: PrivacyContentItemsComponent
   },
   {
     path: 'admin/privacy/page',
