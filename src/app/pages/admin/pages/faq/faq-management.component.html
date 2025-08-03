@@ -1,0 +1,201 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>FAQ Management</h1>
+      <p>Manage frequently asked questions and their answers</p>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="card">
+      <div class="card-header">
+        <h2>🔍 Search & Filters</h2>
+      </div>
+      <div class="card-content">
+        <div class="filter-controls">
+          <div class="search-group">
+            <basic-input
+              type="text"
+              [label]="'Search FAQs'"
+              [placeholder]="'Search in questions and answers...'"
+              [value]="searchTerm"
+              (valueChange)="searchTerm = $event">
+            </basic-input>
+            <basic-button
+              [label]="'Search'"
+              (buttonClick)="onSearch()">
+            </basic-button>
+          </div>
+
+          <div class="filter-group">
+            <basic-dropdown
+              [label]="'Status Filter'"
+              [options]="statusFilterOptions"
+              [defaultValue]="selectedStatusFilter"
+              (selectedOption)="onStatusFilterChange($event)">
+            </basic-dropdown>
+
+            <basic-dropdown
+              [label]="'Featured Filter'"
+              [options]="featuredFilterOptions"
+              [defaultValue]="selectedFeaturedFilter"
+              (selectedOption)="onFeaturedFilterChange($event)">
+            </basic-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add FAQ Button -->
+    <div class="action-bar">
+      <basic-button
+        [label]="'Add New FAQ'"
+        [fillButton]="true"
+        (buttonClick)="showAddDialog()">
+      </basic-button>
+    </div>
+
+    <!-- FAQ List -->
+    <div class="card">
+      <div class="card-header">
+        <h2>📋 FAQ List</h2>
+        <span class="item-count">{{ totalItems }} total items</span>
+      </div>
+      <div class="card-content">
+        <div class="faq-list" *ngIf="faqs.length > 0">
+          <div class="faq-item" *ngFor="let faq of faqs; trackBy: trackByFaq">
+            <div class="faq-header">
+              <div class="faq-meta">
+                <span class="sort-order">#{{ faq.sortOrder }}</span>
+                <div class="badges">
+                  <span class="badge" [class]="getStatusBadgeClass(faq)">
+                    {{ faq.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                  <span class="badge" [class]="getFeaturedBadgeClass(faq)" *ngIf="faq.featured">
+                    Featured
+                  </span>
+                </div>
+              </div>
+              <div class="faq-actions">
+                <basic-button
+                  [label]="'Edit'"
+                  (buttonClick)="showEditDialog(faq)">
+                </basic-button>
+                <basic-button
+                  [label]="faq.isActive ? 'Deactivate' : 'Activate'"
+                  (buttonClick)="onToggleActive(faq)">
+                </basic-button>
+                <basic-button
+                  [label]="faq.featured ? 'Unfeature' : 'Feature'"
+                  (buttonClick)="onToggleFeatured(faq)">
+                </basic-button>
+                <basic-button
+                  [label]="'Delete'"
+                  (buttonClick)="onDelete(faq)">
+                </basic-button>
+              </div>
+            </div>
+
+            <div class="faq-content">
+              <h4 class="question">{{ faq.question }}</h4>
+              <div class="answer" [innerHTML]="faq.answer"></div>
+            </div>
+
+            <div class="faq-footer">
+              <small>Created: {{ faq.createdAt | date:'medium' }}</small>
+              <small *ngIf="faq.updatedAt !== faq.createdAt">
+                Updated: {{ faq.updatedAt | date:'medium' }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="faqs.length === 0">
+          <p>No FAQs found. Start by adding your first FAQ!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="totalPages > 1">
+      <basic-pagination
+        [itemsPerPageLabel]="'Items per page'"
+        [currentPage]="currentPage.toString()"
+        [itemsPerPage]="pageSize.toString()"
+        [totalItems]="totalItems"
+        (setItemsPerPage)="onPageSizeChange($event)"
+        (setCurrentPage)="onPageChange($event)"
+        (fetchItems)="loadFaqs()">
+      </basic-pagination>
+    </div>
+
+    <!-- Add/Edit FAQ Modal -->
+    <basic-modal
+      [showModal]="showAddForm"
+      [title]="editingFaq ? 'Edit FAQ' : 'Add New FAQ'"
+      (closeModal)="hideDialog()">
+
+      <div class="modal-content">
+        <div class="form-group">
+          <basic-input
+            type="text"
+            [label]="'Question *'"
+            [placeholder]="'Enter the FAQ question'"
+            [value]="question"
+            (valueChange)="question = $event">
+          </basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-textarea
+            [label]="'Answer *'"
+            [placeholder]="'Enter the detailed answer'"
+            [value]="answer"
+            [maxLength]="5000"
+            (valueChange)="answer = $event">
+          </basic-textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <basic-input
+              type="number"
+              [label]="'Sort Order'"
+              [placeholder]="'Display order'"
+              [value]="sortOrder.toString()"
+              (valueChange)="sortOrder = parseInt($event) || 0">
+            </basic-input>
+          </div>
+
+          <div class="form-group">
+            <label>Active</label>
+            <basic-checkbox
+              [checked]="isActive"
+              (checkedChange)="isActive = $event">
+            </basic-checkbox>
+          </div>
+
+          <div class="form-group">
+            <label>Featured</label>
+            <basic-checkbox
+              [checked]="featured"
+              (checkedChange)="featured = $event">
+            </basic-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <basic-button
+          [label]="'Cancel'"
+          (buttonClick)="hideDialog()">
+        </basic-button>
+        <basic-button
+          [label]="editingFaq ? 'Update FAQ' : 'Create FAQ'"
+          [fillButton]="true"
+          (buttonClick)="onSubmit()"
+          [disabled]="!isFormValid()">
+        </basic-button>
+      </div>
+    </basic-modal>
+  </div>
+</layout-default>

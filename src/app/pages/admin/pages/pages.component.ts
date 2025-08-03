@@ -29,4 +29,8 @@ export class PagesComponent extends BaseAdminComponent {
   navigateToHomePage(): void {
     this.router.navigate(['/admin/pages/home']);
   }
+
+  navigateToFaqPage(): void {
+    this.router.navigate(['/admin/pages/faq']);
+  }
 }

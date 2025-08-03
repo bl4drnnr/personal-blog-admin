@@ -12,6 +12,7 @@ import { ArticlesComponent } from '@pages/admin/articles/articles.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
+import { FaqManagementComponent } from '@pages/admin/pages/faq/faq-management.component';
 
 // About Section
 import { AboutComponent } from '@pages/admin/about/about.component';
@@ -47,6 +48,7 @@ const adminComponents = [
   ProjectsComponent,
   PagesComponent,
   HomePageManagementComponent,
+  FaqManagementComponent,
   // About Section
   AboutComponent,
   ExperiencesComponent,

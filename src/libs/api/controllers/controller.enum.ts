@@ -13,5 +13,6 @@ export enum Controller {
   PRIVACY = 'privacy',
   STATIC_ASSETS = 'static-assets',
   SITE_CONFIG = 'site-config',
-  PAGES = 'pages'
+  PAGES = 'pages',
+  FAQ = 'faq'
 }
