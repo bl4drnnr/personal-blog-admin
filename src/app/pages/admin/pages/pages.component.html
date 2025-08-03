@@ -8,24 +8,87 @@
     <div class="content-section">
       <div class="card">
         <div class="card-header">
-          <h2>Site Pages</h2>
-          <button class="btn btn-primary">Create New Page</button>
+          <h2>Main Site Pages</h2>
         </div>
         
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>📄 Page Editor</h3>
-            <p>Create and edit static pages with rich content management and SEO optimization</p>
+        <div class="pages-grid">
+          <div class="page-card" (click)="navigateToHomePage()">
+            <div class="page-icon">🏠</div>
+            <div class="page-info">
+              <h3>Home Page</h3>
+              <p>Manage home page content, layout, and featured content sections</p>
+            </div>
+            <div class="page-arrow">→</div>
           </div>
           
-          <div class="placeholder-item">
-            <h3>🎨 Layout Templates</h3>
-            <p>Choose from various layout templates and customize page structure</p>
+          <div class="page-card disabled">
+            <div class="page-icon">📝</div>
+            <div class="page-info">
+              <h3>Blog Page</h3>
+              <p>Configure blog listing page layout and settings</p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+            <div class="page-arrow">→</div>
           </div>
           
-          <div class="placeholder-item">
-            <h3>🔍 SEO Settings</h3>
-            <p>Configure meta tags, descriptions, and search engine optimization for each page</p>
+          <div class="page-card disabled">
+            <div class="page-icon">💼</div>
+            <div class="page-info">
+              <h3>Projects Page</h3>
+              <p>Manage projects listing page and portfolio showcase</p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+            <div class="page-arrow">→</div>
+          </div>
+          
+          <div class="page-card disabled">
+            <div class="page-icon">📞</div>
+            <div class="page-info">
+              <h3>Contact Page</h3>
+              <p>Configure contact form and page content</p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+            <div class="page-arrow">→</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Advanced Features</h2>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-info">
+              <h4>Layout Templates</h4>
+              <p>Choose from various layout templates and customize page structure</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🔍</div>
+            <div class="feature-info">
+              <h4>SEO Optimization</h4>
+              <p>Configure meta tags, descriptions, and search engine optimization for each page</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div class="feature-info">
+              <h4>Responsive Design</h4>
+              <p>All pages are automatically optimized for mobile and desktop viewing</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-info">
+              <h4>Fast Loading</h4>
+              <p>Pages are pre-rendered for optimal performance and SEO</p>
+            </div>
           </div>
         </div>
       </div>

@@ -12,5 +12,6 @@ export enum Controller {
   LICENSE = 'license',
   PRIVACY = 'privacy',
   STATIC_ASSETS = 'static-assets',
-  SITE_CONFIG = 'site-config'
+  SITE_CONFIG = 'site-config',
+  PAGES = 'pages'
 }

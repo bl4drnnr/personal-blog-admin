@@ -11,6 +11,7 @@ import { SiteConfigComponent } from '@pages/admin/site-config/site-config.compon
 import { ArticlesComponent } from '@pages/admin/articles/articles.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
+import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
 
 // About Section
 import { AboutComponent } from '@pages/admin/about/about.component';
@@ -45,6 +46,7 @@ const adminComponents = [
   ArticlesComponent,
   ProjectsComponent,
   PagesComponent,
+  HomePageManagementComponent,
   // About Section
   AboutComponent,
   ExperiencesComponent,

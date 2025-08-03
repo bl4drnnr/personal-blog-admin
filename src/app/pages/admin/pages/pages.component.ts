@@ -25,4 +25,8 @@ export class PagesComponent extends BaseAdminComponent {
   private getPageTitle(): string {
     return 'Personal Blog | Pages';
   }
+
+  navigateToHomePage(): void {
+    this.router.navigate(['/admin/pages/home']);
+  }
 }

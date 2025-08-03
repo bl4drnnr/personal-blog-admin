@@ -1,0 +1,345 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Home Page Management</h1>
+      <p>Manage the content, layout, and SEO settings for your home page</p>
+    </div>
+
+    <div class="content-section" *ngIf="homePageData">
+      <!-- Page Content Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📄 Page Content</h2>
+        </div>
+        <div class="card-content">
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Page Title *"
+                type="text"
+                placeholder="Enter the main page title"
+                [(value)]="title"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Subtitle"
+                type="text"
+                placeholder="Enter page subtitle"
+                [(value)]="subtitle"
+                [maxLength]="500">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <basic-textarea
+              label="Description"
+              placeholder="Enter page description"
+              [(value)]="description"
+              [maxLength]="1000">
+            </basic-textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Marquee Left Text"
+                type="text"
+                placeholder="Left side marquee text"
+                [(value)]="marqueeLeftText"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Marquee Right Text"
+                type="text"
+                placeholder="Right side marquee text"
+                [(value)]="marqueeRightText"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout Settings Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🎨 Layout Settings</h2>
+        </div>
+        <div class="card-content">
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Hero Title"
+                type="text"
+                placeholder="Main hero section title"
+                [(value)]="heroTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Logo Text"
+                type="text"
+                placeholder="Logo text"
+                [(value)]="logoText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Breadcrumb Text"
+                type="text"
+                placeholder="Breadcrumb navigation text"
+                [(value)]="breadcrumbText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Footer Text"
+                type="text"
+                placeholder="Footer text"
+                [(value)]="footerText"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <asset-selector
+                label="Hero Main Image"
+                placeholder="Search and select main hero image"
+                [(ngModel)]="heroImageMainId">
+              </asset-selector>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Hero Main Image Alt"
+                type="text"
+                placeholder="Alt text for main hero image"
+                [(value)]="heroImageMainAlt"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <asset-selector
+                label="Hero Secondary Image"
+                placeholder="Search and select secondary hero image"
+                [(ngModel)]="heroImageSecondaryId">
+              </asset-selector>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Hero Secondary Image Alt"
+                type="text"
+                placeholder="Alt text for secondary hero image"
+                [(value)]="heroImageSecondaryAlt"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Titles -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📑 Section Titles</h2>
+        </div>
+        <div class="card-content">
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Latest Projects Title"
+                type="text"
+                placeholder="Title for latest projects section"
+                [(value)]="latestProjectsTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Latest Posts Title"
+                type="text"
+                placeholder="Title for latest posts section"
+                [(value)]="latestPostsTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Why Section Title"
+                type="text"
+                placeholder="Title for 'why choose us' section"
+                [(value)]="whySectionTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="FAQ Section Title"
+                type="text"
+                placeholder="Title for FAQ section"
+                [(value)]="faqSectionTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Settings Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🔍 SEO Settings</h2>
+        </div>
+        <div class="card-content">
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Meta Title"
+                type="text"
+                placeholder="SEO meta title"
+                [(value)]="metaTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Open Graph Title"
+                type="text"
+                placeholder="Open Graph title for social sharing"
+                [(value)]="ogTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <basic-textarea
+              label="Meta Description"
+              placeholder="SEO meta description"
+              [(value)]="metaDescription"
+              [maxLength]="500">
+            </basic-textarea>
+          </div>
+
+          <div class="form-group">
+            <basic-textarea
+              label="Open Graph Description"
+              placeholder="Open Graph description for social sharing"
+              [(value)]="ogDescription"
+              [maxLength]="500">
+            </basic-textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <basic-input
+                label="Meta Keywords"
+                type="text"
+                placeholder="Comma-separated meta keywords"
+                [(value)]="metaKeywords"
+                [maxLength]="500">
+              </basic-input>
+            </div>
+
+            <div class="form-group">
+              <asset-selector
+                label="Open Graph Image"
+                placeholder="Search and select Open Graph image"
+                [(ngModel)]="ogImageId">
+              </asset-selector>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <basic-textarea
+              label="Structured Data (JSON)"
+              placeholder='{"@context": "https://schema.org", "@type": "Website"}'
+              [(value)]="structuredData">
+            </basic-textarea>
+          </div>
+        </div>
+      </div>
+
+        <!-- Current Content Preview -->
+        <div class="card" *ngIf="homePageData">
+          <div class="card-header">
+            <h2>📊 Current Content Overview</h2>
+          </div>
+          <div class="card-content">
+            <div class="content-overview">
+              <div class="overview-item">
+                <h4>Featured Projects</h4>
+                <p>{{ homePageData.projects.length }} projects currently featured</p>
+                <ul class="content-list">
+                  <li *ngFor="let project of homePageData.projects">{{ project.title }}</li>
+                </ul>
+              </div>
+
+              <div class="overview-item">
+                <h4>Featured Posts</h4>
+                <p>{{ homePageData.posts.length }} posts currently featured</p>
+                <ul class="content-list">
+                  <li *ngFor="let post of homePageData.posts">{{ post.title }}</li>
+                </ul>
+              </div>
+
+              <div class="overview-item">
+                <h4>FAQ Questions</h4>
+                <p>{{ homePageData.faqQuestions.length }} FAQ questions active</p>
+                <ul class="content-list">
+                  <li *ngFor="let faq of homePageData.faqQuestions">{{ faq.question }}</li>
+                </ul>
+              </div>
+
+              <div class="overview-item" *ngIf="homePageData.whysSection">
+                <h4>Why Section</h4>
+                <p>{{ homePageData.whysSection.title }}</p>
+                <p>{{ homePageData.whysSection.blocks.length }} blocks configured</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <basic-button
+          label="Reset"
+          (buttonClick)="onReset()">
+        </basic-button>
+        <basic-button
+          label="Save Changes"
+          [fillButton]="true"
+          (buttonClick)="onSubmit()"
+          [disabled]="!isFormValid()">
+        </basic-button>
+      </div>
+    </div>
+  </div>
+</layout-default>

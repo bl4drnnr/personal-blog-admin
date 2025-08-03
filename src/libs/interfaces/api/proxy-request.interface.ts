@@ -17,6 +17,7 @@ import { SiteConfigEndpoint } from '@interfaces/site-config.enum';
 import { AboutEndpoint } from '@interfaces/about.enum';
 import { LicenseEndpoint } from '@interfaces/license.enum';
 import { PrivacyEndpoint } from '@interfaces/privacy.enum';
+import { PagesEndpoint } from '@interfaces/pages.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -35,7 +36,8 @@ type EndpointsType =
   | SiteConfigEndpoint
   | AboutEndpoint
   | LicenseEndpoint
-  | PrivacyEndpoint;
+  | PrivacyEndpoint
+  | PagesEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;
