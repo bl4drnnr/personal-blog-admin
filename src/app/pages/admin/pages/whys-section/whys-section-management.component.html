@@ -1,0 +1,171 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Whys Section Management</h1>
+      <p>Manage whys sections with why blocks and features</p>
+    </div>
+
+    <!-- Add Whys Section Button -->
+    <div class="action-bar">
+      <basic-button
+        [label]="'Add New Whys Section'"
+        (buttonClick)="showAddDialog()">
+      </basic-button>
+    </div>
+
+    <!-- Whys Sections List -->
+    <div class="card">
+      <div class="card-header">
+        <h2>📝 Whys Sections</h2>
+      </div>
+      <div class="card-content">
+        <div *ngIf="whysSections.length === 0" class="empty-state">
+          <p>No whys sections found. Create your first whys section!</p>
+        </div>
+
+        <div *ngIf="whysSections.length > 0" class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Why Blocks</th>
+                <th>Features</th>
+                <th>Featured</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let whysSection of whysSections; trackBy: trackByWhysSection">
+                <td>
+                  <strong>{{ whysSection.title }}</strong>
+                </td>
+                <td>
+                  <span class="count-badge">{{ whysSection.whyBlocks.length }} blocks</span>
+                </td>
+                <td>
+                  <span class="count-badge">{{ whysSection.features.length }} features</span>
+                </td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="getFeaturedBadgeClass(whysSection)"
+                    (click)="onToggleFeatured(whysSection)"
+                    style="cursor: pointer;">
+                    {{ whysSection.featured ? 'Featured' : 'Not Featured' }}
+                  </span>
+                </td>
+                <td>{{ whysSection.createdAt | date:'short' }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <basic-button
+                      [label]="'Edit'"
+                      (buttonClick)="showEditDialog(whysSection)">
+                    </basic-button>
+                    <basic-button
+                      [label]="'Delete'"
+                      (buttonClick)="onDelete(whysSection)">
+                    </basic-button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Dialog -->
+    <basic-modal
+      [showModal]="showAddForm"
+      [header]="editingWhysSection ? 'Edit Whys Section' : 'Add New Whys Section'"
+      [description]="'Manage why blocks and features for the section'"
+      (closeModal)="hideDialog()">
+
+      <div class="form-group">
+        <basic-input
+          type="text"
+          [label]="'Title'"
+          [placeholder]="'Enter section title...'"
+          [value]="title"
+          (valueChange)="title = $event">
+        </basic-input>
+      </div>
+
+      <!-- Why Blocks Section -->
+      <div class="form-group">
+        <label class="form-label">Why Blocks</label>
+        <div class="dynamic-list">
+          <div *ngFor="let block of whyBlocks; let i = index; trackBy: trackByIndex"
+               class="list-item">
+            <span class="item-text">{{ block.text }}</span>
+            <basic-button
+              [label]="'Remove'"
+              (buttonClick)="removeWhyBlock(i)">
+            </basic-button>
+          </div>
+
+          <div class="add-item-form">
+            <basic-input
+              type="text"
+              [placeholder]="'Enter why block text...'"
+              [value]="newWhyBlockText"
+              (valueChange)="newWhyBlockText = $event">
+            </basic-input>
+            <basic-button
+              [label]="'Add Block'"
+              (buttonClick)="addWhyBlock()">
+            </basic-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="form-group">
+        <label class="form-label">Features</label>
+        <div class="dynamic-list">
+          <div *ngFor="let feature of features; let i = index; trackBy: trackByIndex"
+               class="list-item">
+            <span class="item-text">{{ feature.title }}</span>
+            <basic-button
+              [label]="'Remove'"
+              (buttonClick)="removeFeature(i)">
+            </basic-button>
+          </div>
+
+          <div class="add-item-form">
+            <basic-input
+              type="text"
+              [placeholder]="'Enter feature title...'"
+              [value]="newFeatureTitle"
+              (valueChange)="newFeatureTitle = $event">
+            </basic-input>
+            <basic-button
+              [label]="'Add Feature'"
+              (buttonClick)="addFeature()">
+            </basic-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Featured Section</label>
+        <basic-checkbox
+          [checked]="featured"
+          (checkedChange)="featured = $event">
+        </basic-checkbox>
+      </div>
+
+      <div class="modal-actions">
+        <basic-button
+          [label]="'Cancel'"
+          (buttonClick)="hideDialog()">
+        </basic-button>
+        <basic-button
+          [label]="editingWhysSection ? 'Update' : 'Create'"
+          (buttonClick)="onSubmit()">
+        </basic-button>
+      </div>
+    </basic-modal>
+  </div>
+</layout-default>

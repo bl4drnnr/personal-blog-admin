@@ -14,5 +14,6 @@ export enum Controller {
   STATIC_ASSETS = 'static-assets',
   SITE_CONFIG = 'site-config',
   PAGES = 'pages',
-  FAQ = 'faq'
+  FAQ = 'faq',
+  HOME = 'home'
 }

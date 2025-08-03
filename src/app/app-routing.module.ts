@@ -12,6 +12,7 @@ import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
 import { FaqManagementComponent } from '@pages/admin/pages/faq/faq-management.component';
+import { WhysSectionManagementComponent } from '@pages/admin/pages/whys-section/whys-section-management.component';
 
 // About Section
 import { AboutComponent } from '@pages/admin/about/about.component';
@@ -76,6 +77,10 @@ const routes: Routes = [
   {
     path: 'admin/pages/faq',
     component: FaqManagementComponent
+  },
+  {
+    path: 'admin/pages/whys-section',
+    component: WhysSectionManagementComponent
   },
   // About Section
   {

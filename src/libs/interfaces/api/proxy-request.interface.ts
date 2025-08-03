@@ -19,6 +19,7 @@ import { LicenseEndpoint } from '@interfaces/license.enum';
 import { PrivacyEndpoint } from '@interfaces/privacy.enum';
 import { PagesEndpoint } from '@interfaces/pages.enum';
 import { FaqEndpoint } from '@interfaces/faq.enum';
+import { WhysSectionEndpoint } from '@interfaces/whys-section.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -39,7 +40,8 @@ type EndpointsType =
   | LicenseEndpoint
   | PrivacyEndpoint
   | PagesEndpoint
-  | FaqEndpoint;
+  | FaqEndpoint
+  | WhysSectionEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;
