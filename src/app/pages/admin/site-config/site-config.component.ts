@@ -14,7 +14,6 @@ import { GlobalMessageService } from '@shared/global-message.service';
   styleUrls: ['./site-config.component.scss']
 })
 export class SiteConfigComponent extends BaseAdminComponent implements OnInit {
-  loading = false;
   saving = false;
   siteConfig: SiteConfigResponse | null = null;
 
@@ -72,17 +71,14 @@ export class SiteConfigComponent extends BaseAdminComponent implements OnInit {
   }
 
   private loadSiteConfig(): void {
-    this.loading = true;
     this.siteConfigService.getSiteConfig().subscribe({
       next: (config) => {
         this.siteConfig = config;
         this.populateFields(config);
-        this.loading = false;
       },
       error: (error) => {
         this.globalMessageService.handleError('Failed to load site configuration');
         console.error('Failed to load site config:', error);
-        this.loading = false;
       }
     });
   }
@@ -293,6 +289,6 @@ export class SiteConfigComponent extends BaseAdminComponent implements OnInit {
   }
 
   isFormDisabled(): boolean {
-    return this.saving || this.loading;
+    return this.saving;
   }
 }

@@ -15,7 +15,6 @@ import { StaticAsset } from '@payloads/static-asset.interface';
 })
 export class PrivacySettingsComponent extends BaseAdminComponent implements OnInit {
   privacyData: PrivacyPageData = {};
-  isLoading = true;
 
   // Form fields
   title = '';
@@ -72,11 +71,9 @@ export class PrivacySettingsComponent extends BaseAdminComponent implements OnIn
       next: (response) => {
         this.privacyData = response;
         this.populateForm();
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading privacy data:', error);
-        this.isLoading = false;
       }
     });
   }

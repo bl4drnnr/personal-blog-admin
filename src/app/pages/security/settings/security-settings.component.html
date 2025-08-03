@@ -6,26 +6,201 @@
     </div>
 
     <div class="content-section">
+      <!-- Password Management Card -->
       <div class="card">
         <div class="card-header">
-          <h2>Security Configuration</h2>
-          <button class="btn btn-primary">Update Security</button>
+          <div class="header-info">
+            <h2>🔑 Password Management</h2>
+            <p>Manage your account password and security settings</p>
+          </div>
+          <basic-button
+            *ngIf="!showPasswordForm"
+            label="Change Password"
+            [fillButton]="true"
+            (buttonClick)="showPasswordChangeForm()"
+          ></basic-button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>🔐 Two-Factor Authentication</h3>
-            <p>Setup and manage 2FA using TOTP authenticator apps for enhanced security</p>
+
+        <div class="card-content">
+          <div *ngIf="!showPasswordForm" class="password-info">
+            <div class="info-row">
+              <span class="info-label">Last Password Change</span>
+              <span class="info-value">{{ getLastPasswordChangeText() }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Password Strength</span>
+              <span class="security-status active">{{ getCurrentPasswordStrength() }}</span>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔑 Password Management</h3>
-            <p>Change passwords, set password policies, and manage authentication settings</p>
+
+          <div *ngIf="showPasswordForm" class="password-form">
+            <div class="form-group">
+              <basic-input
+                label="Current Password"
+                type="password"
+                placeholder="Enter your current password"
+                [(value)]="currentPassword"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="New Password"
+                type="password"
+                placeholder="Enter your new password"
+                [(value)]="newPassword"
+                (input)="onPasswordChange()"
+              ></basic-input>
+              <div *ngIf="newPassword" class="password-strength">
+                <div class="strength-bar">
+                  <div 
+                    class="strength-fill" 
+                    [class]="getPasswordStrength()"
+                  ></div>
+                </div>
+                <span class="strength-label" [class]="getPasswordStrength()">
+                  {{ getPasswordStrengthLabel() }}
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Confirm New Password"
+                type="password"
+                placeholder="Confirm your new password"
+                [(value)]="confirmPassword"
+              ></basic-input>
+              <div *ngIf="confirmPassword && !passwordsMatch()" class="password-mismatch">
+                Passwords do not match
+              </div>
+            </div>
+
+            <div class="password-requirements">
+              <h4>Password Requirements:</h4>
+              <ul>
+                <li [class.met]="hasMinLength()">At least 8 characters long</li>
+                <li [class.met]="hasLowercase()">Contains lowercase letters</li>
+                <li [class.met]="hasUppercase()">Contains uppercase letters</li>
+                <li [class.met]="hasNumbers()">Contains numbers</li>
+                <li [class.met]="hasSpecialChars()">Contains special characters</li>
+              </ul>
+            </div>
+
+            <div class="form-actions">
+              <basic-button
+                label="Cancel"
+                (buttonClick)="hidePasswordChangeForm()"
+              ></basic-button>
+              <basic-button
+                [label]="isChangingPassword ? 'Changing...' : 'Change Password'"
+                [fillButton]="true"
+                [disabled]="isChangingPassword || !currentPassword || !newPassword || !confirmPassword || !passwordsMatch()"
+                (buttonClick)="changePassword()"
+              ></basic-button>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>📱 Session Management</h3>
-            <p>Monitor active sessions, device management, and security audit logs</p>
+        </div>
+      </div>
+
+      <!-- Two-Factor Authentication Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="header-info">
+            <h2>🔐 Two-Factor Authentication</h2>
+            <p>Add an extra layer of security to your account with 2FA</p>
+          </div>
+          <div class="mfa-status">
+            <span class="security-status" [class.active]="securityInfo?.isMfaEnabled" [class.inactive]="!securityInfo?.isMfaEnabled">
+              {{ securityInfo?.isMfaEnabled ? 'Enabled' : 'Disabled' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="mfa-info">
+            <div class="info-row">
+              <span class="info-label">Status</span>
+              <span class="info-value">
+                <span class="security-status" [class.active]="securityInfo?.isMfaEnabled" [class.inactive]="!securityInfo?.isMfaEnabled">
+                  {{ securityInfo?.isMfaEnabled ? '✓ Two-Factor Authentication is enabled' : '⚠️ Two-Factor Authentication is disabled' }}
+                </span>
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Method</span>
+              <span class="info-value">TOTP Authenticator App</span>
+            </div>
+          </div>
+
+          <div class="mfa-actions">
+            <basic-button
+              *ngIf="!securityInfo?.isMfaEnabled"
+              label="Setup 2FA"
+              [fillButton]="true"
+              (buttonClick)="toggleMfaSetup()"
+            ></basic-button>
+            <basic-button
+              *ngIf="securityInfo?.isMfaEnabled"
+              label="Disable 2FA"
+              [danger]="true"
+              (buttonClick)="toggleMfaSetup()"
+            ></basic-button>
+          </div>
+
+          <div *ngIf="showMfaSetup" class="mfa-setup">
+            <div class="setup-placeholder">
+              <h4>Two-Factor Authentication Setup</h4>
+              <p>🚧 This feature is planned for future implementation. It will include:</p>
+              <ul>
+                <li>QR code generation for authenticator apps</li>
+                <li>Backup codes generation</li>
+                <li>TOTP verification</li>
+                <li>Recovery options</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Management Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="header-info">
+            <h2>📱 Session Management</h2>
+            <p>Monitor and manage your active sessions</p>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="session-info">
+            <div class="current-session">
+              <h4>Current Session</h4>
+              <div class="session-details">
+                <div class="session-item">
+                  <span class="session-label">Device</span>
+                  <span class="session-value">{{ getSessionDevice() }}</span>
+                </div>
+                <div class="session-item">
+                  <span class="session-label">Location</span>
+                  <span class="session-value">{{ getSessionLocation() }}</span>
+                </div>
+                <div class="session-item">
+                  <span class="session-label">Last Activity</span>
+                  <span class="session-value">{{ getSessionLastActivity() }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="session-placeholder">
+              <p>🚧 Enhanced session management features are planned for future implementation:</p>
+              <ul>
+                <li>View all active sessions</li>
+                <li>Device and location tracking</li>
+                <li>Remote session termination</li>
+                <li>Security audit logs</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

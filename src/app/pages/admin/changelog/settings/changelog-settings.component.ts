@@ -15,8 +15,6 @@ export class ChangelogSettingsComponent
   extends BaseAdminComponent
   implements OnInit
 {
-  loading = false;
-
   // Footer Configuration
   footerText = '';
 
@@ -69,8 +67,6 @@ export class ChangelogSettingsComponent
   }
 
   private loadPageSettings(): void {
-    this.loading = true;
-
     this.changelogService.getChangelogPageSettings().subscribe({
       next: (response) => {
         // Populate form fields with existing data
@@ -92,20 +88,16 @@ export class ChangelogSettingsComponent
           ? JSON.stringify(response.structuredData, null, 2)
           : '';
 
-        this.loading = false;
         console.log('Page settings loaded successfully');
       },
       error: (error) => {
         console.error('Error loading page settings:', error);
-        this.loading = false;
         // Keep form empty if page settings don't exist yet
       }
     });
   }
 
   savePageSettings(): void {
-    this.loading = true;
-
     // Parse structured data JSON if provided
     let structuredData = null;
     if (this.structuredDataJson && this.structuredDataJson.trim()) {
@@ -114,7 +106,6 @@ export class ChangelogSettingsComponent
       } catch (error) {
         console.error('Invalid JSON in structured data:', error);
         alert('Invalid JSON format in structured data field');
-        this.loading = false;
         return;
       }
     }
@@ -140,11 +131,9 @@ export class ChangelogSettingsComponent
     this.changelogService.updateChangelogPage(payload).subscribe({
       next: () => {
         alert('Changelog page settings updated successfully!');
-        this.loading = false;
       },
       error: () => {
         alert('Error updating page settings. Please try again.');
-        this.loading = false;
       }
     });
   }

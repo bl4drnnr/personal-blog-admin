@@ -12,13 +12,11 @@
           <div class="header-actions">
             <basic-button
               label="Reset"
-              [disabled]="loading"
               (buttonClick)="resetForm()"
             ></basic-button>
             <basic-button
               label="Save Settings"
               [fillButton]="true"
-              [disabled]="loading"
               (buttonClick)="savePageSettings()"
             ></basic-button>
           </div>

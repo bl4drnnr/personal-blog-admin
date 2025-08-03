@@ -13,7 +13,6 @@ import { PrivacySectionData } from '@interfaces/privacy/privacy-section-data.int
 })
 export class PrivacySectionsComponent extends BaseAdminComponent implements OnInit {
   sections: PrivacySectionData[] = [];
-  isLoading = true;
   showModal = false;
   modalMode: 'create' | 'edit' = 'create';
   editingSection: PrivacySectionData | null = null;
@@ -49,11 +48,9 @@ export class PrivacySectionsComponent extends BaseAdminComponent implements OnIn
     this.privacyService.getPrivacySections().subscribe({
       next: (sections) => {
         this.sections = sections;
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading privacy sections:', error);
-        this.isLoading = false;
       }
     });
   }

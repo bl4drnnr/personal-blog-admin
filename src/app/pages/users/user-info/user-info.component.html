@@ -2,33 +2,125 @@
   <div class="admin-page-container">
     <div class="page-header">
       <h1>User Information</h1>
-      <p>View and manage user profile information and account details</p>
+      <p>View and manage your profile information and account details</p>
     </div>
 
-    <div class="content-section">
+    <div *ngIf="userInfo" class="content-section">
+      <!-- Profile Overview Card -->
+      <div class="card profile-overview">
+        <div class="card-header">
+          <div class="profile-summary">
+            <div class="avatar">
+              {{ getInitials() }}
+            </div>
+            <div class="profile-info">
+              <h2>{{ getFullName() }}</h2>
+              <p class="email">{{ userInfo.email }}</p>
+              <p class="user-id">ID: {{ userInfo.userIdHash }}</p>
+            </div>
+          </div>
+          <basic-button
+            [label]="isEditing ? 'Cancel' : 'Edit Profile'"
+            [fillButton]="!isEditing"
+            [danger]="isEditing"
+            (buttonClick)="isEditing ? cancelEditing() : startEditing()"
+          ></basic-button>
+        </div>
+      </div>
+
+      <!-- Profile Details Card -->
       <div class="card">
         <div class="card-header">
           <h2>Profile Details</h2>
-          <button class="btn btn-primary">Edit Profile</button>
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>👤 Personal Information</h3>
-            <p>View and update user profile details, contact information, and preferences</p>
+
+        <div class="card-content">
+          <div *ngIf="!isEditing" class="profile-details">
+            <div class="detail-row">
+              <label>First Name</label>
+              <span>{{ userInfo.firstName || 'Not provided' }}</span>
+            </div>
+            <div class="detail-row">
+              <label>Last Name</label>
+              <span>{{ userInfo.lastName || 'Not provided' }}</span>
+            </div>
+            <div class="detail-row">
+              <label>Email Address</label>
+              <span>{{ userInfo.email }}</span>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔐 Account Security</h3>
-            <p>Manage account security settings, password changes, and authentication methods</p>
+
+          <div *ngIf="isEditing" class="profile-form">
+            <div class="form-group">
+              <basic-input
+                label="First Name"
+                type="text"
+                placeholder="Enter your first name"
+                [(value)]="firstName"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Last Name"
+                type="text"
+                placeholder="Enter your last name"
+                [(value)]="lastName"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Email Address"
+                type="email"
+                placeholder="Enter your email address"
+                [(value)]="email"
+              ></basic-input>
+            </div>
+
+            <div class="form-actions">
+              <basic-button
+                label="Cancel"
+                (buttonClick)="cancelEditing()"
+              ></basic-button>
+              <basic-button
+                [label]="isSaving ? 'Saving...' : 'Save Changes'"
+                [fillButton]="true"
+                [disabled]="isSaving"
+                (buttonClick)="saveProfile()"
+              ></basic-button>
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>📊 Activity Overview</h3>
-            <p>Track user activity, login history, and account usage statistics</p>
+        </div>
+      </div>
+
+      <!-- Account Information Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Account Information</h2>
+        </div>
+
+        <div class="card-content">
+          <div class="account-details">
+            <div class="detail-row">
+              <label>User ID</label>
+              <span class="monospace">{{ userInfo.userIdHash }}</span>
+            </div>
+            <div class="detail-row">
+              <label>Account Type</label>
+              <span class="badge admin">Administrator</span>
+            </div>
+            <div class="detail-row">
+              <label>Security</label>
+              <span>
+                <span class="security-status active">Active</span>
+                <a routerLink="/security/settings" class="security-link">Manage Security Settings</a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </layout-default>

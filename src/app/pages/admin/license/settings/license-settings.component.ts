@@ -15,7 +15,6 @@ import { StaticAsset } from '@payloads/static-asset.interface';
 })
 export class LicenseSettingsComponent extends BaseAdminComponent implements OnInit {
   licenseData: LicensePageData = {};
-  isLoading = true;
 
   // Form fields
   title = '';
@@ -77,11 +76,9 @@ export class LicenseSettingsComponent extends BaseAdminComponent implements OnIn
         // The admin endpoint returns flat data structure with IDs
         this.licenseData = response;
         this.populateForm();
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading license data:', error);
-        this.isLoading = false;
       }
     });
   }

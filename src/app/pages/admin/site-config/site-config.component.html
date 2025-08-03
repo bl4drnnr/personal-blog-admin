@@ -5,7 +5,7 @@
       <p>Manage your site settings and configuration</p>
     </div>
 
-    <div class="content-section" *ngIf="!loading; else loadingTemplate">
+    <div class="content-section">
       <div class="site-config-form">
 
         <!-- Basic Site Information -->
@@ -179,11 +179,5 @@
       </div>
     </div>
 
-    <ng-template #loadingTemplate>
-      <div class="loading-container">
-        <basic-spinner></basic-spinner>
-        <p>Loading site configuration...</p>
-      </div>
-    </ng-template>
   </div>
 </layout-default>

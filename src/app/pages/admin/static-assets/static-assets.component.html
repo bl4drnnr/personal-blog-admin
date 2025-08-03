@@ -156,7 +156,7 @@
           </div>
         </div>
 
-        <div class="assets-grid" *ngIf="!isLoading && assets.length > 0">
+        <div class="assets-grid" *ngIf="assets.length > 0">
           <div class="asset-item" *ngFor="let asset of assets">
             <div class="asset-preview">
               <img *ngIf="asset.s3Url.includes('.jpg') || asset.s3Url.includes('.png') || asset.s3Url.includes('.gif') || asset.s3Url.includes('.webp') || asset.s3Url.includes('.svg')"
@@ -190,12 +190,9 @@
           </div>
         </div>
 
-        <div class="loading-state" *ngIf="isLoading">
-          <p>Loading assets...</p>
-        </div>
 
         <!-- Pagination -->
-        <div class="pagination-section" *ngIf="!isLoading && totalPages > 1">
+        <div class="pagination-section" *ngIf="totalPages > 1">
           <div class="pagination-info">
             <span>Showing {{ (currentPage * pageSize) + 1 }} - {{ Math.min((currentPage + 1) * pageSize, totalAssets) }} of {{ totalAssets }} assets</span>
           </div>
@@ -225,7 +222,7 @@
           </div>
         </div>
 
-        <div class="empty-state" *ngIf="!isLoading && assets.length === 0">
+        <div class="empty-state" *ngIf="assets.length === 0">
           <div class="empty-content">
             <h3>{{ searchQuery ? 'No assets found for your search' : 'No assets found' }}</h3>
             <p>{{ searchQuery ? 'Try adjusting your search terms.' : 'Upload your first static asset to get started.' }}</p>

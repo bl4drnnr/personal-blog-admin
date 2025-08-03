@@ -13,7 +13,6 @@ import { LicenseTileData } from '@interfaces/license/license-tile-data.interface
 })
 export class LicenseTilesComponent extends BaseAdminComponent implements OnInit {
   tiles: LicenseTileData[] = [];
-  isLoading = true;
   showModal = false;
   modalMode: 'create' | 'edit' = 'create';
   editingTile: LicenseTileData | null = null;
@@ -52,11 +51,9 @@ export class LicenseTilesComponent extends BaseAdminComponent implements OnInit 
     this.licenseService.getLicenseTiles().subscribe({
       next: (tiles) => {
         this.tiles = tiles;
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading license tiles:', error);
-        this.isLoading = false;
       }
     });
   }
