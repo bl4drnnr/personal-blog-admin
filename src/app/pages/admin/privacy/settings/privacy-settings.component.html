@@ -101,9 +101,6 @@
                 [(ngModel)]="heroImageMainId"
                 (assetSelected)="onHeroMainAssetSelected($event)"
               ></asset-selector>
-              <div class="image-preview" *ngIf="heroImageMainPreview">
-                <img [src]="heroImageMainPreview" alt="Hero main image preview" />
-              </div>
               <basic-input
                 label="Hero Main Image Alt Text"
                 type="text"
@@ -119,9 +116,6 @@
                 [(ngModel)]="heroImageSecondaryId"
                 (assetSelected)="onHeroSecondaryAssetSelected($event)"
               ></asset-selector>
-              <div class="image-preview" *ngIf="heroImageSecondaryPreview">
-                <img [src]="heroImageSecondaryPreview" alt="Hero secondary image preview" />
-              </div>
               <basic-input
                 label="Hero Secondary Image Alt Text"
                 type="text"
@@ -190,9 +184,6 @@
                 [(ngModel)]="ogImageId"
                 (assetSelected)="onOgImageAssetSelected($event)"
               ></asset-selector>
-              <div class="image-preview" *ngIf="ogImagePreview">
-                <img [src]="ogImagePreview" alt="Open Graph image preview" />
-              </div>
             </div>
           </div>
 
