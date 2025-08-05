@@ -15,5 +15,6 @@ export enum Controller {
   SITE_CONFIG = 'site-config',
   PAGES = 'pages',
   FAQ = 'faq',
-  HOME = 'home'
+  HOME = 'home',
+  CONTACT = 'contact'
 }

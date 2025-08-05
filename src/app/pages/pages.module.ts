@@ -14,6 +14,7 @@ import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
 import { FaqManagementComponent } from '@pages/admin/pages/faq/faq-management.component';
 import { WhysSectionManagementComponent } from '@pages/admin/pages/whys-section/whys-section-management.component';
+import { ContactPageManagementComponent } from '@pages/admin/pages/contact/contact-page-management.component';
 
 // About Section
 import { AboutComponent } from '@pages/admin/about/about.component';
@@ -51,6 +52,7 @@ const adminComponents = [
   HomePageManagementComponent,
   FaqManagementComponent,
   WhysSectionManagementComponent,
+  ContactPageManagementComponent,
   // About Section
   AboutComponent,
   ExperiencesComponent,

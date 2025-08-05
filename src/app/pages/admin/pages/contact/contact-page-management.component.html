@@ -1,0 +1,475 @@
+<layout-default>
+  <div class="contact-page-management">
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1 class="page-title">Contact Page Management</h1>
+          <p class="page-description">
+            Manage the content, layout, and SEO settings for your contact page
+          </p>
+        </div>
+        <div class="header-badge">
+          <span class="status-badge">Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="!contactPageData">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading contact page data...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-container" *ngIf="contactPageData">
+      <!-- Page Content Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">📄</div>
+          <div class="header-text">
+            <h2 class="card-title">Page Content</h2>
+            <p class="card-subtitle">Main content and hero section settings</p>
+          </div>
+        </header>
+        
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Page Title *"
+                type="text"
+                placeholder="Enter the main page title"
+                [(value)]="title"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Subtitle"
+                type="text"
+                placeholder="Enter page subtitle"
+                [(value)]="subtitle"
+                [maxLength]="500">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Description"
+              placeholder="Enter page description"
+              [(value)]="description"
+              [maxLength]="1000">
+            </basic-textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Hero Title"
+                type="text"
+                placeholder="Main hero section title"
+                [(value)]="heroTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-textarea
+                label="Hero Description"
+                placeholder="Hero section description"
+                [(value)]="heroDesc"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-input
+              label="Carousel Words"
+              type="text"
+              placeholder="Comma-separated words for carousel (e.g., Design, Development, Innovation)"
+              [(value)]="carouselWords"
+              [maxLength]="500">
+            </basic-input>
+            <small class="field-hint">
+              Enter words separated by commas. These will animate in the carousel display.
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Settings Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">📝</div>
+          <div class="header-text">
+            <h2 class="card-title">Form Settings</h2>
+            <p class="card-subtitle">Contact form configuration and messaging</p>
+          </div>
+        </header>
+        
+        <div class="card-body">
+          <div class="form-field">
+            <basic-input
+              label="Submit Button Text"
+              type="text"
+              placeholder="Text for the submit button"
+              [(value)]="submitButtonText"
+              [maxLength]="100">
+            </basic-input>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-textarea
+                label="Success Message"
+                placeholder="Message shown when form is submitted successfully"
+                [(value)]="successMessage"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+
+            <div class="form-field">
+              <basic-textarea
+                label="Error Message"
+                placeholder="Message shown when form submission fails"
+                [(value)]="errorMessage"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layout Settings Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">🎨</div>
+          <div class="header-text">
+            <h2 class="card-title">Layout Settings</h2>
+            <p class="card-subtitle">Visual elements and branding configuration</p>
+          </div>
+        </header>
+        
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Logo Text"
+                type="text"
+                placeholder="Logo text"
+                [(value)]="logoText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Breadcrumb Text"
+                type="text"
+                placeholder="Breadcrumb navigation text"
+                [(value)]="breadcrumbText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-input
+              label="Footer Text"
+              type="text"
+              placeholder="Footer text"
+              [(value)]="footerText"
+              [maxLength]="255">
+            </basic-input>
+          </div>
+
+          <!-- Hero Images Section -->
+          <div class="image-section">
+            <h3 class="section-title">Hero Images</h3>
+            
+            <div class="form-grid">
+              <div class="form-field">
+                <asset-selector
+                  label="Hero Main Image"
+                  placeholder="Search and select main hero image"
+                  [(ngModel)]="heroImageMainId">
+                </asset-selector>
+              </div>
+
+              <div class="form-field">
+                <basic-input
+                  label="Hero Main Image Alt"
+                  type="text"
+                  placeholder="Alt text for main hero image"
+                  [(value)]="heroImageMainAlt"
+                  [maxLength]="255">
+                </basic-input>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <asset-selector
+                  label="Hero Secondary Image"
+                  placeholder="Search and select secondary hero image"
+                  [(ngModel)]="heroImageSecondaryId">
+                </asset-selector>
+              </div>
+
+              <div class="form-field">
+                <basic-input
+                  label="Hero Secondary Image Alt"
+                  type="text"
+                  placeholder="Alt text for secondary hero image"
+                  [(value)]="heroImageSecondaryAlt"
+                  [maxLength]="255">
+                </basic-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Settings Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">🔍</div>
+          <div class="header-text">
+            <h2 class="card-title">SEO Settings</h2>
+            <p class="card-subtitle">Search engine optimization and social sharing</p>
+          </div>
+        </header>
+        
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Meta Title"
+                type="text"
+                placeholder="SEO meta title"
+                [(value)]="metaTitle"
+                [maxLength]="255">
+              </basic-input>
+              <small class="field-hint">Recommended: 50-60 characters</small>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Open Graph Title"
+                type="text"
+                placeholder="Open Graph title for social sharing"
+                [(value)]="ogTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Meta Description"
+              placeholder="SEO meta description"
+              [(value)]="metaDescription"
+              [maxLength]="500">
+            </basic-textarea>
+            <small class="field-hint">Recommended: 150-160 characters</small>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Open Graph Description"
+              placeholder="Open Graph description for social sharing"
+              [(value)]="ogDescription"
+              [maxLength]="500">
+            </basic-textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Meta Keywords"
+                type="text"
+                placeholder="Comma-separated meta keywords"
+                [(value)]="metaKeywords"
+                [maxLength]="500">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <asset-selector
+                label="Open Graph Image"
+                placeholder="Search and select Open Graph image"
+                [(ngModel)]="ogImageId">
+              </asset-selector>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Structured Data (JSON)"
+              placeholder='{"@context": "https://schema.org", "@type": "ContactPage"}'
+              [(value)]="structuredData">
+            </basic-textarea>
+            <small class="field-hint">
+              Valid JSON-LD structured data for enhanced search engine understanding
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Tiles Management Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">📱</div>
+          <div class="header-text">
+            <h2 class="card-title">Contact Tiles</h2>
+            <p class="card-subtitle">Manage contact information tiles displayed on the contact page</p>
+          </div>
+          <div class="header-actions">
+            <basic-button
+              label="Add Tile"
+              [fillButton]="true"
+              (buttonClick)="startAddTile()">
+            </basic-button>
+          </div>
+        </header>
+        
+        <div class="card-body">
+          <!-- Existing Tiles -->
+          <div class="tiles-list" *ngIf="contactTiles.length > 0">
+            <div class="tile-item" *ngFor="let tile of contactTiles; let i = index">
+              <div class="tile-preview">
+                <div class="tile-icon">
+                  <img *ngIf="tile.iconUrl" [src]="tile.iconUrl" [alt]="tile.title" class="icon-image">
+                  <div *ngIf="!tile.iconUrl" class="icon-placeholder">📱</div>
+                </div>
+                <div class="tile-content">
+                  <h4 class="tile-title">{{ tile.title }}</h4>
+                  <p class="tile-description">{{ tile.content }}</p>
+                  <a class="tile-link" [href]="tile.link" target="_blank">{{ tile.link }}</a>
+                </div>
+              </div>
+              
+              <div class="tile-actions">
+                <button class="action-btn move-btn" 
+                        (click)="moveTileUp(i)"
+                        [disabled]="i === 0"
+                        title="Move Up">
+                  ↑
+                </button>
+                <button class="action-btn move-btn" 
+                        (click)="moveTileDown(i)"
+                        [disabled]="i === contactTiles.length - 1"
+                        title="Move Down">
+                  ↓
+                </button>
+                <button class="action-btn edit-btn" 
+                        (click)="startEditTile(tile)"
+                        title="Edit">
+                  ✏️
+                </button>
+                <button class="action-btn delete-btn" 
+                        (click)="deleteTile(tile.id!)"
+                        title="Delete">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="contactTiles.length === 0">
+            <div class="empty-icon">📱</div>
+            <h3>No contact tiles yet</h3>
+            <p>Create your first contact tile to display contact information on your contact page.</p>
+            <basic-button
+              label="Add First Tile"
+              [fillButton]="true"
+              (buttonClick)="startAddTile()">
+            </basic-button>
+          </div>
+
+          <!-- Add/Edit Tile Form -->
+          <div class="tile-form" *ngIf="isAddingTile || editingTileId">
+            <div class="form-header">
+              <h3>{{ isAddingTile ? 'Add New Tile' : 'Edit Tile' }}</h3>
+              <button class="close-btn" (click)="cancelTileForm()">✕</button>
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-field">
+                <basic-input
+                  label="Title *"
+                  type="text"
+                  placeholder="e.g., Phone Number"
+                  [(value)]="tileForm.title"
+                  [maxLength]="100">
+                </basic-input>
+              </div>
+
+              <div class="form-field">
+                <asset-selector
+                  label="Icon Image *"
+                  placeholder="Search and select an icon image"
+                  [(ngModel)]="tileForm.iconAssetId">
+                </asset-selector>
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <basic-textarea
+                label="Content *"
+                placeholder="e.g., +1 (555) 123-4567"
+                [(value)]="tileForm.content"
+                [maxLength]="200">
+              </basic-textarea>
+            </div>
+
+            <div class="form-field full-width">
+              <basic-input
+                label="Link *"
+                type="text"
+                placeholder="e.g., tel:+15551234567 or mailto:contact@example.com"
+                [(value)]="tileForm.link"
+                [maxLength]="255">
+              </basic-input>
+              <small class="field-hint">
+                Use appropriate protocols like tel:, mailto:, or https:// for different contact methods
+              </small>
+            </div>
+
+            <div class="form-actions">
+              <basic-button
+                label="Cancel"
+                (buttonClick)="cancelTileForm()">
+              </basic-button>
+              <basic-button
+                [label]="isAddingTile ? 'Create Tile' : 'Update Tile'"
+                [fillButton]="true"
+                (buttonClick)="saveTile()"
+                [disabled]="!isTileFormValid()">
+              </basic-button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Actions -->
+      <footer class="form-actions">
+        <basic-button
+          label="Reset Changes"
+          (buttonClick)="onReset()">
+        </basic-button>
+        <basic-button
+          label="Save Changes"
+          [fillButton]="true"
+          (buttonClick)="onSubmit()"
+          [disabled]="!isFormValid()">
+        </basic-button>
+      </footer>
+    </main>
+  </div>
+</layout-default>

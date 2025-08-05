@@ -37,4 +37,8 @@ export class PagesComponent extends BaseAdminComponent {
   navigateToWhysSectionPage(): void {
     this.router.navigate(['/admin/pages/whys-section']);
   }
+
+  navigateToContactPage(): void {
+    this.router.navigate(['/admin/pages/contact']);
+  }
 }
