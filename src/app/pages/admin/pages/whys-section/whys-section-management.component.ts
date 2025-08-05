@@ -14,7 +14,7 @@ import {
 import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
 
 @Component({
-  selector: 'app-whys-section-management',
+  selector: 'page-whys-section-management',
   templateUrl: './whys-section-management.component.html',
   styleUrls: ['./whys-section-management.component.scss']
 })

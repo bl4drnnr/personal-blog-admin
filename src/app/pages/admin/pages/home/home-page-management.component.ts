@@ -9,7 +9,7 @@ import { UpdateHomePageData } from '@interfaces/pages/update-home-page-data.inte
 import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
 
 @Component({
-  selector: 'app-home-page-management',
+  selector: 'page-home-page-management',
   templateUrl: './home-page-management.component.html',
   styleUrls: ['./home-page-management.component.scss']
 })

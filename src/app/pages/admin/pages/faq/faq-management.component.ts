@@ -14,7 +14,7 @@ import { GlobalMessageService } from '@shared/global-components-services/global-
 import { DropdownInterface } from '@interfaces/components/dropdown.interface';
 
 @Component({
-  selector: 'app-faq-management',
+  selector: 'page-faq-management',
   templateUrl: './faq-management.component.html',
   styleUrls: ['./faq-management.component.scss']
 })

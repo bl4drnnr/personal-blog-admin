@@ -11,7 +11,7 @@ import {
 } from '@interfaces/pages/contact-page-data.interface';
 
 @Component({
-  selector: 'app-contact-page-management',
+  selector: 'page-contact-page-management',
   templateUrl: './contact-page-management.component.html',
   styleUrls: ['./contact-page-management.component.scss']
 })
