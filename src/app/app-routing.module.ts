@@ -11,6 +11,8 @@ import { ArticlesComponent } from '@pages/admin/articles/articles.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
+import { BlogPageManagementComponent } from '@pages/admin/pages/blog/blog-page-management.component';
+import { ProjectsPageManagementComponent } from '@pages/admin/pages/projects/projects-page-management.component';
 import { FaqManagementComponent } from '@pages/admin/pages/faq/faq-management.component';
 import { WhysSectionManagementComponent } from '@pages/admin/pages/whys-section/whys-section-management.component';
 import { ContactPageManagementComponent } from '@pages/admin/pages/contact/contact-page-management.component';
@@ -75,6 +77,14 @@ const routes: Routes = [
   {
     path: 'admin/pages/home',
     component: HomePageManagementComponent
+  },
+  {
+    path: 'admin/pages/blog',
+    component: BlogPageManagementComponent
+  },
+  {
+    path: 'admin/pages/projects',
+    component: ProjectsPageManagementComponent
   },
   {
     path: 'admin/pages/faq',
