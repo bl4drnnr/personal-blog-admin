@@ -284,7 +284,7 @@ export class ContactPageManagementComponent
     if (!this.editingTileId) return;
 
     this.pagesService
-      .updateContactTile(this.editingTileId, this.tileForm)
+      .updateContactTile({ ...this.tileForm, id: this.editingTileId })
       .subscribe({
         next: () => {
           this.globalMessageService.handle({

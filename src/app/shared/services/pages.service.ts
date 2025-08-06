@@ -61,15 +61,11 @@ export class PagesService {
     });
   }
 
-  updateContactTile(
-    tileId: string,
-    payload: Partial<ContactTileData>
-  ): Observable<ContactTileData> {
+  updateContactTile(payload: Partial<ContactTileData>): Observable<ContactTileData> {
     return this.apiService.apiProxyRequest({
       controller: Controller.CONTACT,
       action: PagesEndpoint.UPDATE_TILES,
       method: Method.PUT,
-      params: { tileId },
       payload
     });
   }
@@ -88,7 +84,7 @@ export class PagesService {
       controller: Controller.CONTACT,
       action: PagesEndpoint.REORDER_TILES,
       method: Method.PUT,
-      payload: tileIds
+      payload: { tileIds }
     });
   }
 }
