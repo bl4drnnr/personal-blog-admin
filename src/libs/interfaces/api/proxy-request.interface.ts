@@ -20,6 +20,7 @@ import { PrivacyEndpoint } from '@interfaces/privacy.enum';
 import { PagesEndpoint } from '@interfaces/pages.enum';
 import { FaqEndpoint } from '@interfaces/faq.enum';
 import { WhysSectionEndpoint } from '@interfaces/whys-section.enum';
+import { NewslettersEndpoint } from '@interfaces/newsletters.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -41,7 +42,8 @@ type EndpointsType =
   | PrivacyEndpoint
   | PagesEndpoint
   | FaqEndpoint
-  | WhysSectionEndpoint;
+  | WhysSectionEndpoint
+  | NewslettersEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

@@ -41,4 +41,8 @@ export class PagesComponent extends BaseAdminComponent {
   navigateToContactPage(): void {
     this.router.navigate(['/admin/pages/contact']);
   }
+
+  navigateToSubscribePage(): void {
+    this.router.navigate(['/admin/pages/subscribe']);
+  }
 }

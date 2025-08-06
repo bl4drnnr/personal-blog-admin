@@ -1,0 +1,360 @@
+<layout-default>
+  <div class="subscribe-page-management">
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1 class="page-title">Subscribe Page Management</h1>
+          <p class="page-description">
+            Manage the content, layout, and SEO settings for your newsletter subscription page
+          </p>
+        </div>
+        <div class="header-badge">
+          <span class="status-badge">Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="!subscribePageData">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading subscribe page data...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-container" *ngIf="subscribePageData">
+      <!-- Page Content Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">📧</div>
+          <div class="header-text">
+            <h2 class="card-title">Page Content</h2>
+            <p class="card-subtitle">Main content and subscription form settings</p>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Page Title *"
+                type="text"
+                placeholder="Enter the main page title"
+                [(value)]="title"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Subtitle"
+                type="text"
+                placeholder="Enter a subtitle for the page"
+                [(value)]="subtitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Description"
+              placeholder="Enter a description for the subscription page"
+              [(value)]="description"
+              [maxLength]="1000">
+            </basic-textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero Section -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">🎨</div>
+          <div class="header-text">
+            <h2 class="card-title">Hero Section</h2>
+            <p class="card-subtitle">Hero images, titles, and banner content</p>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Hero Title"
+                type="text"
+                placeholder="Enter the hero section title"
+                [(value)]="heroTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-textarea
+                label="Hero Description"
+                placeholder="Enter the hero section description"
+                [(value)]="heroDesc"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+          </div>
+
+          <!-- Hero Images Section -->
+          <div class="image-section">
+            <h3 class="section-title">Hero Images</h3>
+            
+            <div class="form-grid">
+              <div class="form-field">
+                <asset-selector
+                  label="Hero Main Image"
+                  placeholder="Search and select main hero image"
+                  [(ngModel)]="heroImageMainId">
+                </asset-selector>
+              </div>
+
+              <div class="form-field">
+                <basic-input
+                  label="Hero Main Image Alt Text"
+                  type="text"
+                  placeholder="Alt text for the main hero image"
+                  [(value)]="heroImageMainAlt"
+                  [maxLength]="255">
+                </basic-input>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <asset-selector
+                  label="Hero Secondary Image"
+                  placeholder="Search and select secondary hero image"
+                  [(ngModel)]="heroImageSecondaryId">
+                </asset-selector>
+              </div>
+
+              <div class="form-field">
+                <basic-input
+                  label="Hero Secondary Image Alt Text"
+                  type="text"
+                  placeholder="Alt text for the secondary hero image"
+                  [(value)]="heroImageSecondaryAlt"
+                  [maxLength]="255">
+                </basic-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Subscription Form Settings -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">✉️</div>
+          <div class="header-text">
+            <h2 class="card-title">Subscription Form</h2>
+            <p class="card-subtitle">Form labels, buttons, and messages</p>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Email Placeholder"
+                type="text"
+                placeholder="Placeholder text for email input"
+                [(value)]="emailPlaceholder"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Submit Button Text"
+                type="text"
+                placeholder="Text for the subscribe button"
+                [(value)]="submitButtonText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-textarea
+                label="Success Message"
+                placeholder="Message shown after successful subscription"
+                [(value)]="successMessage"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+
+            <div class="form-field">
+              <basic-textarea
+                label="Error Message"
+                placeholder="Message shown when subscription fails"
+                [(value)]="errorMessage"
+                [maxLength]="500">
+              </basic-textarea>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Privacy Text"
+              placeholder="Privacy policy text below the form"
+              [(value)]="privacyText"
+              [maxLength]="1000">
+            </basic-textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layout Settings -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">🎯</div>
+          <div class="header-text">
+            <h2 class="card-title">Layout Settings</h2>
+            <p class="card-subtitle">Navigation, footer, and layout elements</p>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Logo Text"
+                type="text"
+                placeholder="Text for the site logo"
+                [(value)]="logoText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Breadcrumb Text"
+                type="text"
+                placeholder="Text for the breadcrumb navigation"
+                [(value)]="breadcrumbText"
+                [maxLength]="100">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-input
+              label="Footer Text"
+              type="text"
+              placeholder="Footer text content"
+              [(value)]="footerText"
+              [maxLength]="1000">
+            </basic-input>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Settings -->
+      <section class="management-card">
+        <header class="card-header">
+          <div class="header-icon">🔍</div>
+          <div class="header-text">
+            <h2 class="card-title">SEO Settings</h2>
+            <p class="card-subtitle">Meta tags, Open Graph, and structured data</p>
+          </div>
+        </header>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Meta Title"
+                type="text"
+                placeholder="SEO title for search engines"
+                [(value)]="metaTitle"
+                [maxLength]="255">
+              </basic-input>
+              <small class="field-hint">Recommended: 50-60 characters</small>
+            </div>
+
+            <div class="form-field">
+              <basic-input
+                label="Open Graph Title"
+                type="text"
+                placeholder="Title for social media sharing"
+                [(value)]="ogTitle"
+                [maxLength]="255">
+              </basic-input>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Meta Description"
+              placeholder="SEO description for search engines"
+              [(value)]="metaDescription"
+              [maxLength]="500">
+            </basic-textarea>
+            <small class="field-hint">Recommended: 150-160 characters</small>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Open Graph Description"
+              placeholder="Description for social media sharing"
+              [(value)]="ogDescription"
+              [maxLength]="500">
+            </basic-textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <basic-input
+                label="Meta Keywords"
+                type="text"
+                placeholder="Comma-separated SEO keywords"
+                [(value)]="metaKeywords"
+                [maxLength]="500">
+              </basic-input>
+            </div>
+
+            <div class="form-field">
+              <asset-selector
+                label="Open Graph Image"
+                placeholder="Search and select Open Graph image"
+                [(ngModel)]="ogImageId">
+              </asset-selector>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <basic-textarea
+              label="Structured Data (JSON-LD)"
+              placeholder='{"@context": "https://schema.org", "@type": "WebPage"}'
+              [(value)]="structuredData"
+              [maxLength]="5000">
+            </basic-textarea>
+            <small class="field-hint">
+              Valid JSON-LD structured data for enhanced search engine understanding
+            </small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Actions -->
+      <footer class="form-actions">
+        <basic-button
+          label="Reset Changes"
+          (buttonClick)="onReset()">
+        </basic-button>
+        <basic-button
+          label="Save Changes"
+          [fillButton]="true"
+          (buttonClick)="onSubmit()"
+          [disabled]="!isFormValid()">
+        </basic-button>
+      </footer>
+    </main>
+  </div>
+</layout-default>
