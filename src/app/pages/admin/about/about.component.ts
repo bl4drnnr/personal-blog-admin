@@ -6,10 +6,6 @@ import { BaseAdminComponent } from '@shared/components/base-admin.component';
 import { AboutService } from '@services/about.service';
 import { AboutPageData } from '@interfaces/about/about-page-data.interface';
 
-// @TODO HTML EDITOR
-// @TODO IMPLEMENT THE PROJECTS PAGE
-// @TODO IMPLEMENT THE ARTICLES PAGE
-// @TODO IMPLEMENT THE SUBSCRIBE PAGE
 @Component({
   selector: 'page-about',
   templateUrl: './about.component.html',

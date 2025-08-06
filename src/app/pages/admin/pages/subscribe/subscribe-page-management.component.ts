@@ -31,6 +31,7 @@ export class SubscribePageManagementComponent
   breadcrumbText = '';
   heroTitle = '';
   heroDesc = '';
+  carouselWords = '';
   submitButtonText = '';
   successMessage = '';
   errorMessage = '';
@@ -93,6 +94,7 @@ export class SubscribePageManagementComponent
     this.breadcrumbText = data.breadcrumbText || '';
     this.heroTitle = data.heroTitle || '';
     this.heroDesc = data.heroDesc || '';
+    this.carouselWords = data.carouselWords || '';
     this.submitButtonText = data.submitButtonText || '';
     this.successMessage = data.successMessage || '';
     this.errorMessage = data.errorMessage || '';
@@ -132,6 +134,7 @@ export class SubscribePageManagementComponent
         breadcrumbText: this.breadcrumbText,
         heroTitle: this.heroTitle,
         heroDesc: this.heroDesc,
+        carouselWords: this.carouselWords,
         submitButtonText: this.submitButtonText,
         successMessage: this.successMessage,
         errorMessage: this.errorMessage,

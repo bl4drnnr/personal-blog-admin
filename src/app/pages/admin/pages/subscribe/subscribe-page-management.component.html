@@ -99,6 +99,19 @@
             </div>
           </div>
 
+          <div class="form-field full-width">
+            <basic-input
+              label="Carousel Words"
+              type="text"
+              placeholder="Comma-separated words for carousel (e.g., Newsletter, Updates, Community)"
+              [(value)]="carouselWords"
+              [maxLength]="500">
+            </basic-input>
+            <small class="field-hint">
+              Enter words separated by commas. These will animate in the carousel display.
+            </small>
+          </div>
+
           <!-- Hero Images Section -->
           <div class="image-section">
             <h3 class="section-title">Hero Images</h3>

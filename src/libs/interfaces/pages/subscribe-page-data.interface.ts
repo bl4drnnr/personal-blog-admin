@@ -12,6 +12,7 @@ export interface SubscribePageData {
   breadcrumbText: string;
   heroTitle: string;
   heroDesc: string;
+  carouselWords: string;
   submitButtonText: string;
   successMessage: string;
   errorMessage: string;
