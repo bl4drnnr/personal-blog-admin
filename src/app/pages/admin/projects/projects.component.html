@@ -8,25 +8,162 @@
     <div class="content-section">
       <div class="card">
         <div class="card-header">
-          <h2>Portfolio Projects</h2>
-          <button class="btn btn-primary">Add New Project</button>
+          <h2>Portfolio Projects ({{ totalProjects }})</h2>
+          <basic-button
+            label="Create New Project"
+            [fillButton]="true"
+            [onWhite]="false"
+          />
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>🚀 Project Showcase</h3>
-            <p>Create and manage your portfolio projects with images, descriptions, and links</p>
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+          <div class="search-container">
+            <basic-input
+              type="text"
+              label="Search projects"
+              placeholder="Search by title, description, or tags..."
+              [value]="searchQuery"
+              (valueChange)="searchQuery = $event; onSearchChange()"
+            />
+            <basic-button
+              *ngIf="searchQuery"
+              label="Clear"
+              [onWhite]="true"
+              (buttonClick)="clearSearch()"
+            />
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🛠️ Technology Stack</h3>
-            <p>Tag projects with technologies, frameworks, and tools used</p>
+
+          <div class="filter-row">
+            <div class="filter-group">
+              <basic-dropdown
+                label="Status"
+                [options]="statusOptions"
+                [defaultValue]="getSelectedStatusOption()"
+                (selectedOption)="onStatusChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Sort by"
+                [options]="sortOptions"
+                [defaultValue]="getSelectedSortOption()"
+                (selectedOption)="onSortByChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Order"
+                [options]="orderOptions"
+                [defaultValue]="getSelectedOrderOption()"
+                (selectedOption)="onSortOrderChange($event)"
+              />
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔗 External Links</h3>
-            <p>Add links to live demos, GitHub repositories, and project documentation</p>
+        </div>
+
+        <!-- Projects Table -->
+        <div *ngIf="projects.length > 0" class="projects-table-container">
+          <table class="projects-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let project of projects" class="project-row">
+                <td class="project-title-cell">
+                  <div class="project-title">
+                    <h4>{{ project.projectName }}</h4>
+                    <p class="project-description">{{ project.projectDescription }}</p>
+                    <div class="project-tags" *ngIf="project.projectTags && project.projectTags.length > 0">
+                      <span *ngFor="let tag of project.projectTags" class="tag">
+                        {{ tag }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.published]="project.projectPosted"
+                    [class.draft]="!project.projectPosted"
+                  >
+                    {{ project.projectPosted ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="date">{{ project.createdAt | date:'short' }}</span>
+                </td>
+                <td>
+                  <span class="date">{{ project.updatedAt | date:'short' }}</span>
+                </td>
+                <td>
+                  <div class="actions-cell">
+                    <basic-button
+                      [label]="project.projectPosted ? 'Deactivate' : 'Activate'"
+                      [fillButton]="project.projectPosted"
+                      [onWhite]="!project.projectPosted"
+                      (buttonClick)="toggleActiveStatus(project)"
+                    />
+                    <basic-button
+                      label="Edit"
+                      [onWhite]="true"
+                    />
+                    <basic-button
+                      label="Delete"
+                      [onWhite]="true"
+                      (buttonClick)="deleteProject(project)"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="projects.length === 0" class="empty-state">
+          <div class="empty-state-content">
+            <h3>🚀 No Projects Found</h3>
+            <p *ngIf="searchQuery || selectedStatus">
+              No projects match your current filters. Try adjusting your search criteria.
+            </p>
+            <p *ngIf="!searchQuery && !selectedStatus">
+              You haven't created any projects yet. Click "Create New Project" to get started.
+            </p>
+            <div class="empty-state-actions">
+              <basic-button
+                *ngIf="searchQuery || selectedStatus"
+                label="Clear Filters"
+                [onWhite]="true"
+                (buttonClick)="clearSearch(); selectedStatus = ''"
+              />
+              <basic-button
+                label="Create First Project"
+                [fillButton]="true"
+              />
+            </div>
           </div>
+        </div>
+
+        <!-- Pagination -->
+        <div *ngIf="projects.length > 0" class="pagination-container-wrapper">
+          <basic-pagination
+            itemsPerPageLabel="Projects per page"
+            [currentPage]="currentPage"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="totalProjects"
+            (setCurrentPage)="setCurrentPage($event)"
+            (setItemsPerPage)="setItemsPerPage($event)"
+            (fetchItems)="loadProjects()"
+          />
         </div>
       </div>
     </div>

@@ -8,28 +8,164 @@
     <div class="content-section">
       <div class="card">
         <div class="card-header">
-          <h2>Blog Articles</h2>
-          <button class="btn btn-primary">Create New Article</button>
+          <h2>Blog Articles ({{ totalArticles }})</h2>
+          <basic-button
+            label="Create New Article"
+            [fillButton]="true"
+            [onWhite]="false"
+          />
         </div>
-        
-        <div class="placeholder-content">
-          <div class="placeholder-item">
-            <h3>📝 Article Management</h3>
-            <p>Create, edit, publish, and manage your blog articles with rich text editor</p>
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+          <div class="search-container">
+            <basic-input
+              type="text"
+              label="Search articles"
+              placeholder="Search by title, description, or tags..."
+              [value]="searchQuery"
+              (valueChange)="searchQuery = $event; onSearchChange()"
+            />
+            <basic-button
+              *ngIf="searchQuery"
+              label="Clear"
+              [onWhite]="true"
+              (buttonClick)="clearSearch()"
+            />
           </div>
-          
-          <div class="placeholder-item">
-            <h3>📊 Analytics</h3>
-            <p>View article performance, engagement metrics, and reader statistics</p>
+
+          <div class="filter-row">
+            <div class="filter-group">
+              <basic-dropdown
+                label="Status"
+                [options]="statusOptions"
+                [defaultValue]="getSelectedStatusOption()"
+                (selectedOption)="onStatusChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Sort by"
+                [options]="sortOptions"
+                [defaultValue]="getSelectedSortOption()"
+                (selectedOption)="onSortByChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Order"
+                [options]="orderOptions"
+                [defaultValue]="getSelectedOrderOption()"
+                (selectedOption)="onSortOrderChange($event)"
+              />
+            </div>
           </div>
-          
-          <div class="placeholder-item">
-            <h3>🔖 Categories & Tags</h3>
-            <p>Organize articles with categories and tags for better content structure</p>
+        </div>
+
+        <!-- Articles Table -->
+        <div *ngIf="articles.length > 0" class="articles-table-container">
+          <table class="articles-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let article of articles" class="article-row">
+                <td class="article-title-cell">
+                  <div class="article-title">
+                    <h4>{{ article.articleName }}</h4>
+                    <p class="article-description">{{ article.articleDescription }}</p>
+                    <div class="article-tags" *ngIf="article.articleTags.length > 0">
+                      <span *ngFor="let tag of article.articleTags" class="tag">
+                        {{ tag }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.published]="article.articlePosted"
+                    [class.draft]="!article.articlePosted"
+                  >
+                    {{ article.articlePosted ? 'Published' : 'Draft' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="date">{{ article.createdAt | date:'short' }}</span>
+                </td>
+                <td>
+                  <span class="date">{{ article.updatedAt | date:'short' }}</span>
+                </td>
+                <td>
+                  <div class="actions-cell">
+                    <basic-button
+                      [label]="article.articlePosted ? 'Unpublish' : 'Publish'"
+                      [fillButton]="article.articlePosted"
+                      [onWhite]="!article.articlePosted"
+                      (buttonClick)="togglePublishStatus(article)"
+                    />
+                    <basic-button
+                      label="Edit"
+                      [onWhite]="true"
+                    />
+                    <basic-button
+                      label="Delete"
+                      [onWhite]="true"
+                      (buttonClick)="deleteArticle(article)"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="articles.length === 0" class="empty-state">
+          <div class="empty-state-content">
+            <h3>📝 No Articles Found</h3>
+            <p *ngIf="searchQuery || selectedCategory || selectedLanguage || selectedStatus">
+              No articles match your current filters. Try adjusting your search criteria.
+            </p>
+            <p *ngIf="!searchQuery && !selectedCategory && !selectedLanguage && !selectedStatus">
+              You haven't created any articles yet. Click "Create New Article" to get started.
+            </p>
+            <div class="empty-state-actions">
+              <basic-button
+                *ngIf="searchQuery || selectedCategory || selectedLanguage || selectedStatus"
+                label="Clear Filters"
+                [onWhite]="true"
+                (buttonClick)="clearSearch(); selectedCategory = ''; selectedLanguage = ''; selectedStatus = ''"
+              />
+              <basic-button
+                label="Create First Article"
+                [fillButton]="true"
+              />
+            </div>
           </div>
+        </div>
+
+        <!-- Pagination -->
+        <div *ngIf="articles.length > 0" class="pagination-container-wrapper">
+          <basic-pagination
+            itemsPerPageLabel="Articles per page"
+            [currentPage]="currentPage"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="totalArticles"
+            (setCurrentPage)="setCurrentPage($event)"
+            (setItemsPerPage)="setItemsPerPage($event)"
+            (fetchItems)="loadArticles()"
+          />
         </div>
       </div>
     </div>
-
   </div>
 </layout-default>

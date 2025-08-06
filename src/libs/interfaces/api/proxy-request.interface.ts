@@ -6,7 +6,6 @@ import { SecurityEndpoint } from '@interfaces/security.enum';
 import { UsersEndpoint } from '@interfaces/users.enum';
 import { ConfirmationHashEndpoint } from '@interfaces/confirmation-hash.enum';
 import { ArticlesEndpoint } from '@interfaces/articles.enum';
-import { CategoriesEndpoint } from '@interfaces/categories.enum';
 import { AuthorsEndpoint } from '@interfaces/authors.enum';
 import { CertificationEndpoint } from '@interfaces/certifications.enum';
 import { ExperienceEndpoint } from '@interfaces/experience.enum';
@@ -21,6 +20,7 @@ import { PagesEndpoint } from '@interfaces/pages.enum';
 import { FaqEndpoint } from '@interfaces/faq.enum';
 import { WhysSectionEndpoint } from '@interfaces/whys-section.enum';
 import { NewslettersEndpoint } from '@interfaces/newsletters.enum';
+import { ProjectsEndpoint } from '@interfaces/projects.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -29,7 +29,6 @@ type EndpointsType =
   | UsersEndpoint
   | ConfirmationHashEndpoint
   | ArticlesEndpoint
-  | CategoriesEndpoint
   | AuthorsEndpoint
   | CertificationEndpoint
   | ExperienceEndpoint
@@ -43,7 +42,8 @@ type EndpointsType =
   | PagesEndpoint
   | FaqEndpoint
   | WhysSectionEndpoint
-  | NewslettersEndpoint;
+  | NewslettersEndpoint
+  | ProjectsEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

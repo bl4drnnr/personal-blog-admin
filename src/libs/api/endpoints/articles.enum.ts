@@ -1,8 +1,7 @@
 export enum ArticlesEndpoint {
-  CREATE = 'create',
-  GET_BY_SLUG = 'get-by-slug',
-  CHANGE_PUBLISH = 'change-publish',
-  DELETE = 'delete',
-  EDIT = 'edit',
-  LIST = 'list'
+  CREATE = 'admin/create-post',
+  CHANGE_PUBLISH = 'admin/change-post-public-status',
+  DELETE = 'admin/delete-post',
+  EDIT = 'admin/edit-post',
+  LIST = 'admin/list-posts'
 }
