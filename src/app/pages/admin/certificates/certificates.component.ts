@@ -92,17 +92,15 @@ export class CertificatesComponent extends BaseAdminComponent implements OnInit 
   }
 
   populateForm(certificate: CertificateData): void {
-    this.name = certificate.name || '';
-    this.issuedDate = certificate.issuedDate
-      ? certificate.issuedDate.split('T')[0]
-      : '';
+    this.name = certificate.name;
+    this.issuedDate = certificate.issuedDate.split('T')[0];
     this.expirationDate = certificate.expirationDate
       ? certificate.expirationDate.split('T')[0]
       : '';
-    this.description = certificate.description || '';
+    this.description = certificate.description;
     this.orderStr = (certificate.order || 0).toString();
-    this.logoAssetId = certificate.logoId || '';
-    this.logoPreview = certificate.logo || ''; // Use the resolved S3 URL
+    this.logoAssetId = certificate.logoId;
+    this.logoPreview = certificate.logo; // Use the resolved S3 URL
   }
 
   saveCertificate(): void {
@@ -112,11 +110,12 @@ export class CertificatesComponent extends BaseAdminComponent implements OnInit 
     }
 
     const payload: CertificateData = {
+      logo: this.logoPreview,
       name: this.name,
       issuedDate: this.issuedDate,
-      expirationDate: this.expirationDate || undefined,
-      logoId: this.logoAssetId || undefined,
-      description: this.description || undefined,
+      expirationDate: this.expirationDate,
+      logoId: this.logoAssetId,
+      description: this.description,
       order: parseInt(this.orderStr) || 0
     };
 

@@ -155,6 +155,10 @@ export class ArticlesComponent extends BaseAdminComponent {
     });
   }
 
+  async editArticle(article: ListArticleInterface): Promise<void> {
+    await this.router.navigate(['/admin/posts', article.articleSlug]);
+  }
+
   deleteArticle(article: ListArticleInterface): void {
     if (confirm(`Are you sure you want to delete "${article.articleName}"?`)) {
       this.articlesService.deleteArticle(article.id).subscribe({

@@ -8,6 +8,7 @@ import { SiteConfigComponent } from '@pages/admin/site-config/site-config.compon
 
 // Content Management
 import { ArticlesComponent } from '@pages/admin/articles/articles.component';
+import { EditArticleComponent } from '@pages/admin/articles/edit/edit-article.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'admin/posts',
     component: ArticlesComponent
+  },
+  {
+    path: 'admin/posts/:slug',
+    component: EditArticleComponent
   },
   {
     path: 'admin/projects',

@@ -19,8 +19,8 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
 
   // Hero Section
   heroTitle = '';
-  heroImageMainId: string | null = null;
-  heroImageSecondaryId: string | null = null;
+  heroImageMainId: string = '';
+  heroImageSecondaryId: string = '';
   heroImageMainAlt = '';
   heroImageSecondaryAlt = '';
 
@@ -36,13 +36,13 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
   // Open Graph
   ogTitle = '';
   ogDescription = '';
-  ogImageId: string | null = null;
+  ogImageId: string = '';
 
   // Structured Data (JSON)
   structuredDataJson = '';
 
   // About page ID for updates
-  aboutPageId: string | null = null;
+  aboutPageId: string = '';
 
   constructor(
     protected override router: Router,
@@ -70,23 +70,23 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
     this.aboutService.getAboutPageSettings().subscribe({
       next: (response: AboutPageData) => {
         // Populate form fields with existing data - now matches interface directly
-        this.aboutPageId = response.id || null;
-        this.title = response.title || '';
-        this.content = response.content || '';
-        this.footerText = response.footerText || '';
-        this.heroTitle = response.heroTitle || '';
-        this.heroImageMainId = response.heroImageMainId || null;
-        this.heroImageSecondaryId = response.heroImageSecondaryId || null;
-        this.heroImageMainAlt = response.heroImageMainAlt || '';
-        this.heroImageSecondaryAlt = response.heroImageSecondaryAlt || '';
-        this.logoText = response.logoText || '';
-        this.breadcrumbText = response.breadcrumbText || '';
-        this.metaTitle = response.metaTitle || '';
-        this.metaDescription = response.metaDescription || '';
-        this.metaKeywords = response.metaKeywords || '';
-        this.ogTitle = response.ogTitle || '';
-        this.ogDescription = response.ogDescription || '';
-        this.ogImageId = response.ogImageId || null;
+        this.aboutPageId = response.id;
+        this.title = response.title;
+        this.content = response.content;
+        this.footerText = response.footerText;
+        this.heroTitle = response.heroTitle;
+        this.heroImageMainId = response.heroImageMainId;
+        this.heroImageSecondaryId = response.heroImageSecondaryId;
+        this.heroImageMainAlt = response.heroImageMainAlt;
+        this.heroImageSecondaryAlt = response.heroImageSecondaryAlt;
+        this.logoText = response.logoText;
+        this.breadcrumbText = response.breadcrumbText;
+        this.metaTitle = response.metaTitle;
+        this.metaDescription = response.metaDescription;
+        this.metaKeywords = response.metaKeywords;
+        this.ogTitle = response.ogTitle;
+        this.ogDescription = response.ogDescription;
+        this.ogImageId = response.ogImageId;
         this.structuredDataJson = response.structuredData
           ? JSON.stringify(response.structuredData, null, 2)
           : '';
@@ -113,22 +113,23 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
     }
 
     const payload: AboutPageData = {
-      title: this.title || undefined,
-      content: this.content || undefined,
-      footerText: this.footerText || undefined,
-      heroTitle: this.heroTitle || undefined,
-      heroImageMainId: this.heroImageMainId || undefined,
-      heroImageSecondaryId: this.heroImageSecondaryId || undefined,
-      heroImageMainAlt: this.heroImageMainAlt || undefined,
-      heroImageSecondaryAlt: this.heroImageSecondaryAlt || undefined,
-      logoText: this.logoText || undefined,
-      breadcrumbText: this.breadcrumbText || undefined,
-      metaTitle: this.metaTitle || undefined,
-      metaDescription: this.metaDescription || undefined,
-      metaKeywords: this.metaKeywords || undefined,
-      ogTitle: this.ogTitle || undefined,
-      ogDescription: this.ogDescription || undefined,
-      ogImageId: this.ogImageId || undefined,
+      id: this.aboutPageId,
+      title: this.title,
+      content: this.content,
+      footerText: this.footerText,
+      heroTitle: this.heroTitle,
+      heroImageMainId: this.heroImageMainId,
+      heroImageSecondaryId: this.heroImageSecondaryId,
+      heroImageMainAlt: this.heroImageMainAlt,
+      heroImageSecondaryAlt: this.heroImageSecondaryAlt,
+      logoText: this.logoText,
+      breadcrumbText: this.breadcrumbText,
+      metaTitle: this.metaTitle,
+      metaDescription: this.metaDescription,
+      metaKeywords: this.metaKeywords,
+      ogTitle: this.ogTitle,
+      ogDescription: this.ogDescription,
+      ogImageId: this.ogImageId,
       structuredData: structuredData
     };
 
@@ -156,8 +157,8 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
     this.content = '';
     this.footerText = '';
     this.heroTitle = '';
-    this.heroImageMainId = null;
-    this.heroImageSecondaryId = null;
+    this.heroImageMainId = '';
+    this.heroImageSecondaryId = '';
     this.heroImageMainAlt = '';
     this.heroImageSecondaryAlt = '';
     this.logoText = '';
@@ -167,7 +168,7 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
     this.metaKeywords = '';
     this.ogTitle = '';
     this.ogDescription = '';
-    this.ogImageId = null;
+    this.ogImageId = '';
     this.structuredDataJson = '';
     this.loadPageSettings();
   }

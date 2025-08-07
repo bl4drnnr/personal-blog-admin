@@ -1,0 +1,203 @@
+<layout-default>
+  <div class="admin-page-container" *ngIf="article">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-left">
+          <basic-button
+            label="← Back to Articles"
+            [onWhite]="true"
+            (buttonClick)="cancel()"
+          />
+          <h1>Edit Article</h1>
+          <p *ngIf="article">Edit your blog article</p>
+        </div>
+        <div class="header-actions" *ngIf="article">
+          <basic-button
+            label="Save Changes"
+            [fillButton]="true"
+            [onWhite]="false"
+            (buttonClick)="saveArticle()"
+          />
+          <basic-button
+            label="Delete Article"
+            [onWhite]="true"
+            [danger]="true"
+            (buttonClick)="deleteArticle()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div *ngIf="article" class="content-section">
+      <!-- Basic Information -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Basic Information</h2>
+        </div>
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-input
+                type="text"
+                label="Article Title"
+                placeholder="Enter article title"
+                [value]="title"
+                (valueChange)="title = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-textarea
+                label="Description"
+                placeholder="Enter article description for SEO and preview"
+                [value]="description"
+                (valueChange)="description = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-textarea
+                label="Excerpt"
+                placeholder="Enter short excerpt for article previews"
+                [value]="excerpt"
+                (valueChange)="excerpt = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <asset-selector
+                label="Featured Image"
+                placeholder="Search for featured image..."
+                [(ngModel)]="featuredImageId"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Content</h2>
+        </div>
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-textarea
+                label="Article Content"
+                placeholder="Write your article content here..."
+                [value]="content"
+                (valueChange)="content = $event"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags & Status Settings -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Tags & Status Settings</h2>
+        </div>
+        <div class="form-section">
+          <!-- Tags Section -->
+          <div class="tags-input-container">
+            <h4>Tags</h4>
+            <div class="current-tags" *ngIf="tags.length > 0">
+              <span *ngFor="let tag of tags; let i = index" class="tag">
+                {{ tag }}
+                <button type="button" class="tag-remove" (click)="removeTag(i)">×</button>
+              </span>
+            </div>
+            <div class="add-tag-input">
+              <basic-input
+                type="text"
+                label="Add Tag"
+                placeholder="Enter tag and press Enter"
+                [value]="tagInput"
+                (valueChange)="tagInput = $event"
+                (keyup)="onTagInputKeyPress($event)"
+              />
+            </div>
+            <basic-button
+              label="Add Tag"
+              [onWhite]="true"
+              (buttonClick)="addTag()"
+              [disabled]="!tagInput.trim()"
+            />
+          </div>
+
+          <!-- Status Settings Section -->
+          <div class="status-settings-container">
+            <h4>Status Settings</h4>
+            <div class="checkboxes-row">
+              <div class="checkbox-group">
+                <div class="checkbox-field">
+                  <label>Published</label>
+                  <basic-checkbox
+                    [checked]="published"
+                    (checkedChange)="published = $event"
+                  />
+                </div>
+                <small class="field-help">Make this article publicly visible</small>
+              </div>
+              <div class="checkbox-group">
+                <div class="checkbox-field">
+                  <label>Featured</label>
+                  <basic-checkbox
+                    [checked]="featured"
+                    (checkedChange)="featured = $event"
+                  />
+                </div>
+                <small class="field-help">Display this article as featured</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Info -->
+      <div class="card" *ngIf="article">
+        <div class="card-header">
+          <h2>Article Information</h2>
+        </div>
+        <div class="info-section">
+          <div class="info-item">
+            <label>Slug:</label>
+            <span>{{ article.slug }}</span>
+          </div>
+          <div class="info-item">
+            <label>Created:</label>
+            <span>{{ article.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Last Updated:</label>
+            <span>{{ article.updatedAt | date:'medium' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <basic-button
+          label="Save Changes"
+          [fillButton]="true"
+          [onWhite]="false"
+          (buttonClick)="saveArticle()"
+        />
+        <basic-button
+          label="Cancel"
+          [onWhite]="true"
+          (buttonClick)="cancel()"
+        />
+      </div>
+    </div>
+  </div>
+</layout-default>

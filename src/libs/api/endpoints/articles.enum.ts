@@ -3,5 +3,6 @@ export enum ArticlesEndpoint {
   CHANGE_PUBLISH = 'admin/change-post-public-status',
   DELETE = 'admin/delete-post',
   EDIT = 'admin/edit-post',
-  LIST = 'admin/list-posts'
+  LIST = 'admin/list-posts',
+  GET_POST = 'admin/get-post'
 }

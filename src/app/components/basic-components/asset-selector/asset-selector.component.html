@@ -1,6 +1,6 @@
 <div class="input-container">
   <p class="input-label" *ngIf="label">{{ label }}</p>
-  
+
   <div class="asset-selector__input-container">
     <input
       type="text"
@@ -14,7 +14,7 @@
       (blur)="onBlur()"
       autocomplete="off"
     />
-    
+
     <div class="asset-selector__actions">
       <button
         type="button"
@@ -27,7 +27,7 @@
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      
+
       <div class="asset-selector__spinner" *ngIf="loading">
         <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-opacity="0.25"/>
@@ -36,7 +36,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Selected Asset Preview -->
   <div class="asset-selector__preview" *ngIf="selectedAsset">
     <div class="asset-selector__preview-info">
@@ -53,12 +53,12 @@
       <div class="asset-selector__loading" *ngIf="loading">
         <span>Searching assets...</span>
       </div>
-      
+
       <div class="asset-selector__no-results" *ngIf="!loading && assets.length === 0">
         <span>No assets found</span>
       </div>
-      
-      <div 
+
+      <div
         class="asset-selector__option"
         *ngFor="let asset of assets"
         [class.asset-selector__option--selected]="selectedAsset?.id === asset.id"

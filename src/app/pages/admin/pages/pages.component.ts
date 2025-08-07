@@ -26,31 +26,31 @@ export class PagesComponent extends BaseAdminComponent {
     return 'Personal Blog | Pages';
   }
 
-  navigateToHomePage(): void {
-    this.router.navigate(['/admin/pages/home']);
+  async navigateToHomePage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/home']);
   }
 
-  navigateToFaqPage(): void {
-    this.router.navigate(['/admin/pages/faq']);
+  async navigateToFaqPage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/faq']);
   }
 
-  navigateToWhysSectionPage(): void {
-    this.router.navigate(['/admin/pages/whys-section']);
+  async navigateToWhysSectionPage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/whys-section']);
   }
 
-  navigateToContactPage(): void {
-    this.router.navigate(['/admin/pages/contact']);
+  async navigateToContactPage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/contact']);
   }
 
-  navigateToSubscribePage(): void {
-    this.router.navigate(['/admin/pages/subscribe']);
+  async navigateToSubscribePage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/subscribe']);
   }
 
-  navigateToBlogPage(): void {
-    this.router.navigate(['/admin/pages/blog']);
+  async navigateToBlogPage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/blog']);
   }
 
-  navigateToProjectsPage(): void {
-    this.router.navigate(['/admin/pages/projects']);
+  async navigateToProjectsPage(): Promise<void> {
+    await this.router.navigate(['/admin/pages/projects']);
   }
 }
