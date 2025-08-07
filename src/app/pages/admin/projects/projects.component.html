@@ -71,6 +71,7 @@
               <tr>
                 <th>Title</th>
                 <th>Status</th>
+                <th>Featured</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -99,6 +100,15 @@
                   </span>
                 </td>
                 <td>
+                  <span
+                    class="status-badge featured"
+                    [class.active]="project.featured"
+                    [class.inactive]="!project.featured"
+                  >
+                    {{ project.featured ? 'Yes' : 'No' }}
+                  </span>
+                </td>
+                <td>
                   <span class="date">{{ project.createdAt | date:'short' }}</span>
                 </td>
                 <td>
@@ -115,6 +125,7 @@
                     <basic-button
                       label="Edit"
                       [onWhite]="true"
+                      (buttonClick)="editProject(project)"
                     />
                     <basic-button
                       label="Delete"

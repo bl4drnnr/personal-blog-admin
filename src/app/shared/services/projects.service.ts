@@ -39,4 +39,32 @@ export class ProjectsService {
       params: { id }
     });
   }
+
+  changeFeaturedStatus(id: string): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PUT,
+      controller: Controller.PROJECTS,
+      action: ProjectsEndpoint.CHANGE_FEATURED,
+      params: { id }
+    });
+  }
+
+  getProjectBySlug(slug: string): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.PROJECTS,
+      action: ProjectsEndpoint.GET_PROJECT,
+      params: { slug }
+    });
+  }
+
+  updateProject(id: string, projectData: any): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PUT,
+      controller: Controller.PROJECTS,
+      action: ProjectsEndpoint.EDIT,
+      params: { id },
+      payload: projectData
+    });
+  }
 }

@@ -41,6 +41,15 @@ export class ArticlesService {
     });
   }
 
+  changeFeaturedStatus(id: string): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PUT,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.CHANGE_FEATURED,
+      params: { id }
+    });
+  }
+
   getPostBySlug(slug: string): Observable<ArticleDetailInterface> {
     return this.apiService.apiProxyRequest({
       method: Method.GET,

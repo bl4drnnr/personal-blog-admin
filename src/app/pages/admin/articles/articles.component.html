@@ -71,6 +71,7 @@
               <tr>
                 <th>Title</th>
                 <th>Status</th>
+                <th>Featured</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -96,6 +97,15 @@
                     [class.draft]="!article.articlePosted"
                   >
                     {{ article.articlePosted ? 'Published' : 'Draft' }}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="status-badge featured"
+                    [class.active]="article.featured"
+                    [class.inactive]="!article.featured"
+                  >
+                    {{ article.featured ? 'Yes' : 'No' }}
                   </span>
                 </td>
                 <td>

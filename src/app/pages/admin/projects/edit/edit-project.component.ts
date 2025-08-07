@@ -3,39 +3,36 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { BaseAdminComponent } from '@shared/components/base-admin.component';
-import { ArticlesService } from '@services/articles.service';
+import { ProjectsService } from '@services/projects.service';
 import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
-import { ArticleDetailInterface } from '@interfaces/api/article-detail.interface';
+import { ListProjectInterface } from '@interfaces/api/list-project.interface';
 
 @Component({
-  selector: 'page-edit-article',
-  templateUrl: './edit-article.component.html',
+  selector: 'page-edit-project',
+  templateUrl: './edit-project.component.html',
   styleUrls: ['../../../../shared/styles/admin-edit-page.scss']
 })
-export class EditArticleComponent extends BaseAdminComponent implements OnInit {
-  articleSlug: string = '';
-  article: ArticleDetailInterface = {
+export class EditProjectComponent extends BaseAdminComponent implements OnInit {
+  projectSlug: string = '';
+  project: ListProjectInterface = {
     id: '',
-    slug: '',
-    title: '',
-    description: '',
+    projectSlug: '',
+    projectName: '',
+    projectDescription: '',
     content: '',
-    excerpt: '',
-    featuredImageId: '',
-    tags: [],
-    published: false,
+    projectImage: '',
+    projectTags: [],
+    projectPosted: false,
     featured: false,
     createdAt: new Date(),
-    updatedAt: new Date(),
-    userId: ''
+    updatedAt: new Date()
   };
 
   // Form fields
-  title: string = '';
+  projectName: string = '';
   description: string = '';
   content: string = '';
-  excerpt: string = '';
-  featuredImageId: string = '';
+  projectImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
   published: boolean = false;
@@ -46,7 +43,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
     protected override refreshTokensService: RefreshTokensService,
     private route: ActivatedRoute,
     private titleService: Title,
-    private articlesService: ArticlesService,
+    private projectsService: ProjectsService,
     private globalMessageService: GlobalMessageService
   ) {
     super(router, refreshTokensService);
@@ -54,43 +51,54 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
 
   override async ngOnInit(): Promise<void> {
     await super.ngOnInit();
-    this.articleSlug = this.route.snapshot.paramMap.get('slug')!;
+    this.projectSlug = this.route.snapshot.paramMap.get('slug')!;
   }
 
   protected override async onUserInfoLoaded(): Promise<void> {
     this.titleService.setTitle(this.getPageTitle());
-    await this.loadArticle();
+    await this.loadProject();
   }
 
   private getPageTitle(): string {
-    return 'Personal Blog | Edit Article';
+    return 'Personal Blog | Edit Project';
   }
 
-  async loadArticle(): Promise<void> {
-    if (!this.articleSlug) {
-      await this.router.navigate(['/admin/posts']);
+  async loadProject(): Promise<void> {
+    if (!this.projectSlug) {
+      await this.router.navigate(['/admin/projects']);
       return;
     }
 
-    this.articlesService.getPostBySlug(this.articleSlug).subscribe({
+    this.projectsService.getProjectBySlug(this.projectSlug).subscribe({
       next: (response) => {
-        this.article = response;
-        this.title = this.article.title;
-        this.description = this.article.description;
-        this.content = this.article.content;
-        this.excerpt = this.article.excerpt;
-        this.featuredImageId = this.article.featuredImageId;
-        this.tags = this.article.tags;
-        this.published = this.article.published;
-        this.featured = this.article.featured;
+        this.project = {
+          id: response.id,
+          projectSlug: response.slug,
+          projectName: response.title,
+          projectDescription: response.description,
+          content: response.content,
+          projectImage: response.featuredImageId,
+          projectTags: response.tags || [],
+          projectPosted: response.published,
+          featured: response.featured,
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt
+        };
+        this.projectName = response.title;
+        this.description = response.description;
+        this.content = response.content;
+        this.projectImageId = response.featuredImageId;
+        this.tags = response.tags || [];
+        this.published = response.published;
+        this.featured = response.featured;
       },
       error: async (error) => {
-        console.error('Error loading article:', error);
+        console.error('Error loading project:', error);
         this.globalMessageService.handle({
-          message: 'Error loading article',
+          message: 'Error loading project',
           isError: true
         });
-        await this.router.navigate(['/admin/posts']);
+        await this.router.navigate(['/admin/projects']);
       }
     });
   }
@@ -113,52 +121,60 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
     }
   }
 
-  saveArticle(): void {
-    if (!this.title.trim() || !this.content.trim()) {
+  saveProject(): void {
+    if (!this.projectName.trim() || !this.content.trim()) {
       this.globalMessageService.handle({
-        message: 'Title and content are required',
+        message: 'Project name and content are required',
         isError: true
       });
       return;
     }
 
-    const articleData = {
-      title: this.title,
+    const projectData = {
+      title: this.projectName,
       description: this.description,
       content: this.content,
-      excerpt: this.excerpt,
-      featuredImageId: this.featuredImageId,
+      featuredImageId: this.projectImageId,
       tags: this.tags,
       published: this.published,
       featured: this.featured
     };
 
-    // TODO: Implement update article API call
-    console.log('Saving article:', articleData);
-    this.globalMessageService.handle({
-      message: 'Article saved successfully'
+    this.projectsService.updateProject(this.project.id, projectData).subscribe({
+      next: () => {
+        this.globalMessageService.handle({
+          message: 'Project saved successfully'
+        });
+      },
+      error: (error) => {
+        console.error('Error saving project:', error);
+        this.globalMessageService.handle({
+          message: 'Error saving project',
+          isError: true
+        });
+      }
     });
   }
 
   async cancel(): Promise<void> {
-    await this.router.navigate(['/admin/posts']);
+    await this.router.navigate(['/admin/projects']);
   }
 
   quickPublish(): void {
-    if (!this.article.id) {
+    if (!this.project.id) {
       this.globalMessageService.handle({
-        message: 'Article not loaded',
+        message: 'Project not loaded',
         isError: true
       });
       return;
     }
 
     if (!this.published) {
-      this.articlesService.changePublishStatus(this.article.id).subscribe({
+      this.projectsService.changePublishStatus(this.project.id).subscribe({
         next: (response) => {
           this.published = response.published;
           this.globalMessageService.handle({
-            message: `Article ${this.published ? 'published' : 'unpublished'} successfully`
+            message: `Project ${this.published ? 'published' : 'unpublished'} successfully`
           });
         },
         error: (error) => {
@@ -173,20 +189,20 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
   }
 
   quickUnpublish(): void {
-    if (!this.article.id) {
+    if (!this.project.id) {
       this.globalMessageService.handle({
-        message: 'Article not loaded',
+        message: 'Project not loaded',
         isError: true
       });
       return;
     }
 
     if (this.published) {
-      this.articlesService.changePublishStatus(this.article.id).subscribe({
+      this.projectsService.changePublishStatus(this.project.id).subscribe({
         next: (response) => {
           this.published = response.published;
           this.globalMessageService.handle({
-            message: `Article ${this.published ? 'published' : 'unpublished'} successfully`
+            message: `Project ${this.published ? 'published' : 'unpublished'} successfully`
           });
         },
         error: (error) => {
@@ -201,19 +217,19 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
   }
 
   toggleFeatured(): void {
-    if (!this.article.id) {
+    if (!this.project.id) {
       this.globalMessageService.handle({
-        message: 'Article not loaded',
+        message: 'Project not loaded',
         isError: true
       });
       return;
     }
 
-    this.articlesService.changeFeaturedStatus(this.article.id).subscribe({
+    this.projectsService.changeFeaturedStatus(this.project.id).subscribe({
       next: (response) => {
         this.featured = response.featured;
         this.globalMessageService.handle({
-          message: `Article ${this.featured ? 'featured' : 'unfeatured'} successfully`
+          message: `Project ${this.featured ? 'featured' : 'unfeatured'} successfully`
         });
       },
       error: (error) => {
@@ -226,22 +242,22 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
     });
   }
 
-  deleteArticle(): void {
+  deleteProject(): void {
     if (
-      this.article &&
-      confirm(`Are you sure you want to delete "${this.article.title}"?`)
+      this.project &&
+      confirm(`Are you sure you want to delete "${this.project.projectName}"?`)
     ) {
-      this.articlesService.deleteArticle(this.article.id).subscribe({
+      this.projectsService.deleteProject(this.project.id).subscribe({
         next: async () => {
           this.globalMessageService.handle({
-            message: 'Article deleted successfully'
+            message: 'Project deleted successfully'
           });
-          await this.router.navigate(['/admin/posts']);
+          await this.router.navigate(['/admin/projects']);
         },
         error: (error) => {
-          console.error('Error deleting article:', error);
+          console.error('Error deleting project:', error);
           this.globalMessageService.handle({
-            message: 'Error deleting article',
+            message: 'Error deleting project',
             isError: true
           });
         }

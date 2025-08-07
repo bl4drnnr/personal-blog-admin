@@ -1,15 +1,15 @@
 <layout-default>
-  <div class="admin-page-container" *ngIf="article">
+  <div class="admin-page-container" *ngIf="project">
     <div class="page-header">
       <div class="header-content">
         <div class="header-left">
           <basic-button
-            label="← Back to Articles"
+            label="← Back to Projects"
             [onWhite]="true"
             (buttonClick)="cancel()"
           />
           <div class="page-title-section">
-            <h1>Edit Article</h1>
+            <h1>Edit Project</h1>
             <div class="status-badges">
               <span class="status-badge" [class.published]="published" [class.draft]="!published">
                 {{ published ? 'Published' : 'Draft' }}
@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <div class="header-actions" *ngIf="article">
+        <div class="header-actions" *ngIf="project">
           <div class="quick-actions">
             <basic-button
               *ngIf="!published"
@@ -45,7 +45,7 @@
               label="Save Changes"
               [fillButton]="true"
               [onWhite]="false"
-              (buttonClick)="saveArticle()"
+              (buttonClick)="saveProject()"
             />
           </div>
           <div class="danger-actions">
@@ -53,15 +53,15 @@
               label="Delete"
               [onWhite]="true"
               [danger]="true"
-              (buttonClick)="deleteArticle()"
+              (buttonClick)="deleteProject()"
             />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Article Status Overview ---->
-    <div class="status-overview-section" *ngIf="article">
+    <!-- Project Status Overview -->
+    <div class="status-overview-section" *ngIf="project">
       <div class="status-card">
         <div class="status-info">
           <div class="status-item">
@@ -78,24 +78,24 @@
           </div>
           <div class="status-item">
             <label>Slug:</label>
-            <span class="status-value slug">{{ article.slug }}</span>
+            <span class="status-value slug">{{ project.projectSlug }}</span>
           </div>
         </div>
         <div class="date-info">
           <div class="date-item">
             <label>Created:</label>
-            <span>{{ article.createdAt | date:'medium' }}</span>
+            <span>{{ project.createdAt | date:'medium' }}</span>
           </div>
           <div class="date-item">
             <label>Last Updated:</label>
-            <span>{{ article.updatedAt | date:'medium' }}</span>
+            <span>{{ project.updatedAt | date:'medium' }}</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Edit Form -->
-    <div *ngIf="article" class="content-section">
+    <div *ngIf="project" class="content-section">
       <!-- Basic Information -->
       <div class="card">
         <div class="card-header">
@@ -106,10 +106,10 @@
             <div class="form-group full-width">
               <basic-input
                 type="text"
-                label="Article Title"
-                placeholder="Enter article title"
-                [value]="title"
-                (valueChange)="title = $event"
+                label="Project Name"
+                placeholder="Enter project name"
+                [value]="projectName"
+                (valueChange)="projectName = $event"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@
             <div class="form-group full-width">
               <basic-textarea
                 label="Description"
-                placeholder="Enter article description for SEO and preview"
+                placeholder="Enter project description"
                 [value]="description"
                 (valueChange)="description = $event"
               />
@@ -127,21 +127,10 @@
 
           <div class="form-row">
             <div class="form-group full-width">
-              <basic-textarea
-                label="Excerpt"
-                placeholder="Enter short excerpt for article previews"
-                [value]="excerpt"
-                (valueChange)="excerpt = $event"
-              />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group full-width">
               <asset-selector
-                label="Featured Image"
-                placeholder="Search for featured image..."
-                [(ngModel)]="featuredImageId"
+                label="Project Image"
+                placeholder="Search for project image..."
+                [(ngModel)]="projectImageId"
               />
             </div>
           </div>
@@ -157,8 +146,8 @@
           <div class="form-row">
             <div class="form-group full-width">
               <basic-textarea
-                label="Article Content"
-                placeholder="Write your article content here..."
+                label="Project Content"
+                placeholder="Write your project content here..."
                 [value]="content"
                 (valueChange)="content = $event"
               />
@@ -212,7 +201,7 @@
                     (checkedChange)="published = $event"
                   />
                 </div>
-                <small class="field-help">Make this article publicly visible</small>
+                <small class="field-help">Make this project publicly visible</small>
               </div>
               <div class="checkbox-group">
                 <div class="checkbox-field">
@@ -222,7 +211,7 @@
                     (checkedChange)="featured = $event"
                   />
                 </div>
-                <small class="field-help">Display this article as featured</small>
+                <small class="field-help">Display this project as featured</small>
               </div>
             </div>
           </div>
@@ -235,7 +224,7 @@
           label="Save Changes"
           [fillButton]="true"
           [onWhite]="false"
-          (buttonClick)="saveArticle()"
+          (buttonClick)="saveProject()"
         />
         <basic-button
           label="Cancel"

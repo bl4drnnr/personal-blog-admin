@@ -10,6 +10,7 @@ import { SiteConfigComponent } from '@pages/admin/site-config/site-config.compon
 import { ArticlesComponent } from '@pages/admin/articles/articles.component';
 import { EditArticleComponent } from '@pages/admin/articles/edit/edit-article.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
+import { EditProjectComponent } from '@pages/admin/projects/edit/edit-project.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
 import { BlogPageManagementComponent } from '@pages/admin/pages/blog/blog-page-management.component';
@@ -74,6 +75,10 @@ const routes: Routes = [
   {
     path: 'admin/projects',
     component: ProjectsComponent
+  },
+  {
+    path: 'admin/projects/:slug',
+    component: EditProjectComponent
   },
   {
     path: 'admin/pages',

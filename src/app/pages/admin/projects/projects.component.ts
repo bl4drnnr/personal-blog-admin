@@ -135,6 +135,10 @@ export class ProjectsComponent extends BaseAdminComponent {
   }
 
   // Project actions
+  async editProject(project: Project): Promise<void> {
+    await this.router.navigate(['/admin/projects', project.projectSlug]);
+  }
+
   toggleActiveStatus(project: Project): void {
     this.projectsService.changePublishStatus(project.id).subscribe({
       next: () => {

@@ -90,8 +90,6 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
         this.structuredDataJson = response.structuredData
           ? JSON.stringify(response.structuredData, null, 2)
           : '';
-
-        console.log('About page settings loaded successfully');
       },
       error: (error) => {
         console.error('Error loading about page settings:', error);
