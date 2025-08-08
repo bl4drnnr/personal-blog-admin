@@ -41,7 +41,7 @@ export class TableContentService {
 
   // Convert table data to HTML
   tableToHtml(tableData: TableData): string {
-    let html = `<table class="${tableData.styling.className}">\n`;
+    let html = `<table>\n`;
 
     // Add header
     if (tableData.headers && tableData.headers.length > 0) {

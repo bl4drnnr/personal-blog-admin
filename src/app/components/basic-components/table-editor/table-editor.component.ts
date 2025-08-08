@@ -4,9 +4,6 @@ export interface TableData {
   id: string;
   rows: string[][];
   headers?: string[];
-  styling: {
-    className: string;
-  };
 }
 
 @Component({
@@ -86,10 +83,7 @@ export class TableEditorComponent implements OnInit {
     const tableData: TableData = {
       id: this.isEditMode ? this.tableData!.id : `table_${Date.now()}`,
       rows: this.rows.map((row) => [...row]),
-      headers: [...this.headers],
-      styling: {
-        className: 'table table-bordered'
-      }
+      headers: [...this.headers]
     };
 
     this.tableCreated.emit(tableData);

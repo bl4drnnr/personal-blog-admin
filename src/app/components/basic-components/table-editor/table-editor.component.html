@@ -11,21 +11,21 @@
         <div class="config-row">
           <div class="config-group">
             <label>Rows:</label>
-            <input 
-              type="number" 
-              [(ngModel)]="numRows" 
+            <input
+              type="number"
+              [(ngModel)]="numRows"
               (change)="updateDimensions()"
-              min="1" 
+              min="1"
               max="20"
             />
           </div>
           <div class="config-group">
             <label>Columns:</label>
-            <input 
-              type="number" 
-              [(ngModel)]="numCols" 
+            <input
+              type="number"
+              [(ngModel)]="numCols"
               (change)="updateDimensions()"
-              min="1" 
+              min="1"
               max="10"
             />
           </div>
@@ -37,16 +37,16 @@
       <div class="table-preview-section">
         <h4>Table Preview:</h4>
         <div class="table-container">
-          <table class="table table-bordered">
+          <table>
             <thead>
               <tr>
-                <th 
+                <th
                   *ngFor="let header of headers; trackBy: trackByIndex; let i = index"
                   class="editable-cell"
                 >
-                  <input 
-                    type="text" 
-                    [(ngModel)]="headers[i]" 
+                  <input
+                    type="text"
+                    [(ngModel)]="headers[i]"
                     placeholder="Header {{i + 1}}"
                     class="cell-input header-input"
                   />
@@ -55,13 +55,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let row of rows; trackBy: trackByIndex; let r = index">
-                <td 
+                <td
                   *ngFor="let cell of row; trackBy: trackByIndex; let c = index"
                   class="editable-cell"
                 >
-                  <input 
-                    type="text" 
-                    [(ngModel)]="rows[r][c]" 
+                  <input
+                    type="text"
+                    [(ngModel)]="rows[r][c]"
                     placeholder="Cell {{r + 1}}-{{c + 1}}"
                     class="cell-input"
                   />
