@@ -30,6 +30,7 @@ export class HtmlEditorComponent implements OnInit, OnChanges, OnDestroy {
   showHtmlSource = false;
   showTableEditor = false;
   editingTable: TableData | null = null;
+  private hasBeenParsed = false;
   toolbar: Toolbar = [
     // default value
     ['bold', 'italic'],
@@ -55,10 +56,14 @@ export class HtmlEditorComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     // Editor is initialized with value through template binding
+    this.hasBeenParsed = false; // Reset flag on init
   }
 
   ngOnChanges() {
-    // Value changes are handled through template binding
+    // Parse content when value changes (from backend)
+    if (this.value && this.value.includes('<!-- [TABLE_') && !this.hasBeenParsed) {
+      this.parseBackendContent();
+    }
   }
 
   ngOnDestroy(): void {
@@ -80,10 +85,6 @@ export class HtmlEditorComponent implements OnInit, OnChanges, OnDestroy {
     this.processedContentForSave.emit(processedContent);
   }
 
-  toggleView(): void {
-    this.showHtmlSource = !this.showHtmlSource;
-  }
-
   getSafeHtml(): SafeHtml {
     const processedContent = this.tableContentService.processContent(
       this.value || ''
@@ -100,16 +101,23 @@ export class HtmlEditorComponent implements OnInit, OnChanges, OnDestroy {
     // Store the table
     this.tableContentService.storeTable(tableData);
 
-    // Insert placeholder at cursor position in the editor
+    // Check if this is an edit or new table
     const placeholder = this.tableContentService.generateTablePlaceholder(
       tableData.id
     );
-
-    // For now, append to the content - in a real implementation, we'd insert at cursor position
     const currentValue = this.value || '';
-    const newValue = currentValue + '\n\n' + placeholder + '\n\n';
-    this.valueChange.emit(newValue);
-    this.emitProcessedContent(newValue);
+
+    // If editing (table already exists in content), just update the stored data
+    // The content doesn't need to change since the placeholder is already there
+    if (this.editingTable && currentValue.includes(placeholder)) {
+      // Just update the processed content since table data changed
+      this.emitProcessedContent(currentValue);
+    } else {
+      // New table - append placeholder to content
+      const newValue = currentValue + '\n\n' + placeholder + '\n\n';
+      this.valueChange.emit(newValue);
+      this.emitProcessedContent(newValue);
+    }
   }
 
   getTables(): TableData[] {
@@ -145,8 +153,21 @@ export class HtmlEditorComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getProcessedContentForSave(): string {
-    return this.tableContentService.processContentForSave(this.value || '');
+  private parseBackendContent(): void {
+    if (this.value && !this.hasBeenParsed) {
+      const parsedContent = this.tableContentService.parseContentFromBackend(
+        this.value
+      );
+
+      // Only emit if content actually changed
+      if (parsedContent !== this.value) {
+        this.hasBeenParsed = true;
+        // Use setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
+        setTimeout(() => {
+          this.valueChange.emit(parsedContent);
+        }, 0);
+      }
+    }
   }
 
   private escapeRegExp(string: string): string {

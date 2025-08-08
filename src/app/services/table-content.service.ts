@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TableData } from '../components/basic-components/table-editor/table-editor.component';
+import { TableData } from '@components/table-editor/table-editor.component';
 
 @Injectable({
   providedIn: 'root'
@@ -88,9 +88,30 @@ export class TableContentService {
     return processedContent;
   }
 
-  // Convert content for saving (replace tokens with final HTML)
+  // Convert content for saving (replace tokens with HTML + metadata comments)
   processContentForSave(content: string): string {
-    return this.processContent(content);
+    let processedContent = content;
+
+    // Find all table placeholders
+    const placeholderRegex = /\[TABLE_([^\]]+)\]/g;
+    let match;
+
+    while ((match = placeholderRegex.exec(content)) !== null) {
+      const tableId = match[1];
+      const placeholder = match[0];
+      const tableData = this.getTable(tableId);
+
+      if (tableData) {
+        const tableHtml = this.tableToHtml(tableData);
+        const tableMetadata = this.encodeTableMetadata(tableData);
+
+        // Wrap HTML with comment markers containing metadata
+        const wrappedTable = `<!-- [TABLE_${tableId}:${tableMetadata}] -->\n${tableHtml}\n<!-- [/TABLE_${tableId}] -->`;
+        processedContent = processedContent.replace(placeholder, wrappedTable);
+      }
+    }
+
+    return processedContent;
   }
 
   // Extract table placeholders from content
@@ -106,44 +127,63 @@ export class TableContentService {
     return tableIds;
   }
 
-  // Load tables from existing content (reverse process - extract tokens and recreate table data)
-  loadFromContent(content: string, existingTables: TableData[] = []): void {
-    this.clearTables();
-
-    // Store any provided table data
-    existingTables.forEach((table) => {
-      this.storeTable(table);
-    });
-
-    // Extract table IDs that are referenced in content
-    const referencedIds = this.extractTableIds(content);
-
-    // Remove any unreferenced tables
-    const currentTables = this.getAllTables();
-    currentTables.forEach((table) => {
-      if (!referencedIds.includes(table.id)) {
-        this.removeTable(table.id);
-      }
-    });
-  }
-
-  // Load tables from content (for editing existing content)
-  loadTablesFromContent(content: string, tables: TableData[]): void {
-    this.clearTables();
-    tables.forEach((table) => {
-      this.storeTable(table);
-    });
-  }
-
-  // Get content with table placeholders (for saving)
-  getContentWithPlaceholders(content: string): {
-    content: string;
-    tables: TableData[];
-  } {
-    return {
-      content: content,
-      tables: this.getAllTables()
+  // Encode table metadata for storage in HTML comments
+  private encodeTableMetadata(tableData: TableData): string {
+    const metadata = {
+      headers: tableData.headers || [],
+      rows: tableData.rows
     };
+    return btoa(JSON.stringify(metadata)); // Base64 encode to avoid HTML issues
+  }
+
+  // Decode table metadata from HTML comments
+  private decodeTableMetadata(encodedData: string): {
+    headers: string[];
+    rows: string[][];
+  } {
+    try {
+      return JSON.parse(atob(encodedData));
+    } catch (error) {
+      console.error('Error decoding table metadata:', error);
+      return { headers: [], rows: [] };
+    }
+  }
+
+  // Parse content loaded from backend and restore table data + tokens
+  parseContentFromBackend(content: string): string {
+    this.clearTables();
+
+    let parsedContent = content;
+
+    // Find all table comment blocks
+    const tableBlockRegex =
+      /<!-- \[TABLE_([^:]+):([^\]]+)\] -->\s*<table[^>]*>[\s\S]*?<\/table>\s*<!-- \[\/TABLE_\1\] -->/g;
+    let match;
+
+    while ((match = tableBlockRegex.exec(content)) !== null) {
+      const tableId = match[1];
+      const encodedMetadata = match[2];
+      const fullBlock = match[0];
+
+      // Decode table data
+      const metadata = this.decodeTableMetadata(encodedMetadata);
+
+      // Recreate table data
+      const tableData: TableData = {
+        id: tableId,
+        headers: metadata.headers,
+        rows: metadata.rows
+      };
+
+      // Store in service
+      this.storeTable(tableData);
+
+      // Replace HTML block with token
+      const token = `[TABLE_${tableId}]`;
+      parsedContent = parsedContent.replace(fullBlock, token);
+    }
+
+    return parsedContent;
   }
 
   private escapeHtml(text: string): string {
