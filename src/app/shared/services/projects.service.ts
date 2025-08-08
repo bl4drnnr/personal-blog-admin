@@ -58,12 +58,11 @@ export class ProjectsService {
     });
   }
 
-  updateProject(id: string, projectData: any): Observable<any> {
+  updateProject(projectData: any): Observable<any> {
     return this.apiService.apiProxyRequest({
       method: Method.PUT,
       controller: Controller.PROJECTS,
       action: ProjectsEndpoint.EDIT,
-      params: { id },
       payload: projectData
     });
   }

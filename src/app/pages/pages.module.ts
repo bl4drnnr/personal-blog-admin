@@ -47,6 +47,9 @@ import { SecuritySettingsComponent } from '@pages/security/settings/security-set
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '@components/components.module';
 
+// Pipes
+import { DayjsPipe } from '@shared/pipes/dayjs.pipe';
+
 const adminComponents = [
   // Site Configuration
   SiteConfigComponent,
@@ -84,7 +87,7 @@ const adminComponents = [
 ];
 
 @NgModule({
-  declarations: [...adminComponents],
+  declarations: [...adminComponents, DayjsPipe],
   imports: [CommonModule, LayoutsModule, FormsModule, ComponentsModule],
   exports: [CredentialsModule, DashboardModule, ...adminComponents]
 })

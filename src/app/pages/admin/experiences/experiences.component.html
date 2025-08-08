@@ -39,24 +39,22 @@
                       <div class="position-header">
                         <h5 class="position-title">{{ position.title }}</h5>
                         <span class="position-dates" *ngIf="position.startDate">
-                          {{ position.startDate | date:'MMM yyyy' }}
-                          <span *ngIf="position.endDate"> - {{ position.endDate | date:'MMM yyyy' }}</span>
+                          {{ position.startDate | dayjs:'MMM YYYY' }}
+                          <span *ngIf="position.endDate"> - {{ position.endDate | dayjs:'MMM YYYY' }}</span>
                           <span *ngIf="!position.endDate"> - Present</span>
                         </span>
                       </div>
-                      <p *ngIf="position.description" class="position-description">{{ position.description }}</p>
+                      <p *ngIf="position.description" class="position-description" [innerHTML]="position.description"></p>
                       <div *ngIf="position.skills && position.skills.length > 0" class="position-skills">
                         <span *ngFor="let skill of position.skills" class="skill-badge">{{ skill }}</span>
                       </div>
                       <div class="position-actions">
                         <basic-button
                           label="Edit"
-                          size="small"
                           (buttonClick)="openEditPositionModal(experience, position)"
                         ></basic-button>
                         <basic-button
                           label="Delete"
-                          size="small"
                           [danger]="true"
                           (buttonClick)="deletePosition(experience, position)"
                         ></basic-button>
@@ -76,7 +74,7 @@
                 </div>
                 <div class="experience-meta">
                   <span class="order">Order: {{ experience.order || 0 }}</span>
-                  <span *ngIf="experience.createdAt">Created: {{ experience.createdAt | date:'shortDate' }}</span>
+                  <span *ngIf="experience.createdAt">Created: {{ experience.createdAt | dayjs:'MM/DD/YYYY' }}</span>
                 </div>
               </div>
               <div class="experience-actions">
@@ -173,11 +171,11 @@
         </div>
 
         <div class="form-group">
-          <basic-textarea
+          <basic-html-editor
             label="Position Description"
-            placeholder="Describe the key responsibilities and achievements in this role..."
             [(value)]="positionDescription"
-          ></basic-textarea>
+            [showPreview]="true"
+          ></basic-html-editor>
         </div>
 
         <div class="form-row">

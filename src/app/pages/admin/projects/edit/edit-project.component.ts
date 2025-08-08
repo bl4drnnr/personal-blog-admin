@@ -130,17 +130,19 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
+    // TODO: FIX TABLES
+    // TODO: ALLOW MORE STYLES LIKE TEXT ALIGN
+    // TODO: PICTURE TITLES
     const projectData = {
-      title: this.projectName,
-      description: this.description,
-      content: this.content,
-      featuredImageId: this.projectImageId,
-      tags: this.tags,
-      published: this.published,
-      featured: this.featured
+      projectId: this.project.id,
+      projectTitle: this.projectName,
+      projectDescription: this.description,
+      projectContent: this.content,
+      projectFeaturedImageId: this.projectImageId,
+      projectTags: this.tags
     };
 
-    this.projectsService.updateProject(this.project.id, projectData).subscribe({
+    this.projectsService.updateProject(projectData).subscribe({
       next: () => {
         this.globalMessageService.handle({
           message: 'Project saved successfully'
@@ -160,7 +162,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
     await this.router.navigate(['/admin/projects']);
   }
 
-  quickPublish(): void {
+  changePublishStatus(): void {
     if (!this.project.id) {
       this.globalMessageService.handle({
         message: 'Project not loaded',
@@ -169,51 +171,21 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
-    if (!this.published) {
-      this.projectsService.changePublishStatus(this.project.id).subscribe({
-        next: (response) => {
-          this.published = response.published;
-          this.globalMessageService.handle({
-            message: `Project ${this.published ? 'published' : 'unpublished'} successfully`
-          });
-        },
-        error: (error) => {
-          console.error('Error changing publish status:', error);
-          this.globalMessageService.handle({
-            message: 'Error changing publish status',
-            isError: true
-          });
-        }
-      });
-    }
-  }
-
-  quickUnpublish(): void {
-    if (!this.project.id) {
-      this.globalMessageService.handle({
-        message: 'Project not loaded',
-        isError: true
-      });
-      return;
-    }
-
-    if (this.published) {
-      this.projectsService.changePublishStatus(this.project.id).subscribe({
-        next: (response) => {
-          this.published = response.published;
-          this.globalMessageService.handle({
-            message: `Project ${this.published ? 'published' : 'unpublished'} successfully`
-          });
-        },
-        error: (error) => {
-          console.error('Error changing publish status:', error);
-          this.globalMessageService.handle({
-            message: 'Error changing publish status',
-            isError: true
-          });
-        }
-      });
-    }
+    this.projectsService.changePublishStatus(this.project.id).subscribe({
+      next: (response) => {
+        this.published = response.published;
+        this.globalMessageService.handle({
+          message: `Project ${this.published ? 'published' : 'unpublished'} successfully`
+        });
+      },
+      error: (error) => {
+        console.error('Error changing publish status:', error);
+        this.globalMessageService.handle({
+          message: 'Error changing publish status',
+          isError: true
+        });
+      }
+    });
   }
 
   toggleFeatured(): void {

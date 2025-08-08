@@ -60,9 +60,6 @@ export class SiteConfigComponent extends BaseAdminComponent implements OnInit {
 
   override async ngOnInit(): Promise<void> {
     this.loadSiteConfig();
-  }
-
-  protected override onUserInfoLoaded(): void {
     this.titleService.setTitle(this.getPageTitle());
   }
 

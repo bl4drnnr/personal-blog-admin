@@ -27,13 +27,13 @@
               label="Publish"
               [fillButton]="true"
               [onWhite]="false"
-              (buttonClick)="quickPublish()"
+              (buttonClick)="changePublishStatus()"
             />
             <basic-button
               *ngIf="published"
               label="Unpublish"
               [onWhite]="true"
-              (buttonClick)="quickUnpublish()"
+              (buttonClick)="changePublishStatus()"
             />
             <basic-button
               [label]="featured ? 'Unfeature' : 'Feature'"
@@ -145,11 +145,11 @@
         <div class="form-section">
           <div class="form-row">
             <div class="form-group full-width">
-              <basic-textarea
+              <basic-html-editor
                 label="Project Content"
-                placeholder="Write your project content here..."
                 [value]="content"
                 (valueChange)="content = $event"
+                [showPreview]="true"
               />
             </div>
           </div>
@@ -159,7 +159,7 @@
       <!-- Tags & Status Settings -->
       <div class="card">
         <div class="card-header">
-          <h2>Tags & Status Settings</h2>
+          <h2>Tags Settings</h2>
         </div>
         <div class="form-section">
           <!-- Tags Section -->
@@ -187,33 +187,6 @@
               (buttonClick)="addTag()"
               [disabled]="!tagInput.trim()"
             />
-          </div>
-
-          <!-- Status Settings Section -->
-          <div class="status-settings-container">
-            <h4>Status Settings</h4>
-            <div class="checkboxes-row">
-              <div class="checkbox-group">
-                <div class="checkbox-field">
-                  <label>Published</label>
-                  <basic-checkbox
-                    [checked]="published"
-                    (checkedChange)="published = $event"
-                  />
-                </div>
-                <small class="field-help">Make this project publicly visible</small>
-              </div>
-              <div class="checkbox-group">
-                <div class="checkbox-field">
-                  <label>Featured</label>
-                  <basic-checkbox
-                    [checked]="featured"
-                    (checkedChange)="featured = $event"
-                  />
-                </div>
-                <small class="field-help">Display this project as featured</small>
-              </div>
-            </div>
           </div>
         </div>
       </div>

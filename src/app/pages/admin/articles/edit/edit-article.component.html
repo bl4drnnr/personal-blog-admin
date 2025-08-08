@@ -27,13 +27,13 @@
               label="Publish"
               [fillButton]="true"
               [onWhite]="false"
-              (buttonClick)="quickPublish()"
+              (buttonClick)="changePublishStatus()"
             />
             <basic-button
               *ngIf="published"
               label="Unpublish"
               [onWhite]="true"
-              (buttonClick)="quickUnpublish()"
+              (buttonClick)="changePublishStatus()"
             />
             <basic-button
               [label]="featured ? 'Unfeature' : 'Feature'"
@@ -84,11 +84,11 @@
         <div class="date-info">
           <div class="date-item">
             <label>Created:</label>
-            <span>{{ article.createdAt | date:'medium' }}</span>
+            <span>{{ article.createdAt | dayjs:'MMM DD, YYYY [at] h:mm A' }}</span>
           </div>
           <div class="date-item">
             <label>Last Updated:</label>
-            <span>{{ article.updatedAt | date:'medium' }}</span>
+            <span>{{ article.updatedAt | dayjs:'MMM DD, YYYY [at] h:mm A' }}</span>
           </div>
         </div>
       </div>
@@ -156,11 +156,10 @@
         <div class="form-section">
           <div class="form-row">
             <div class="form-group full-width">
-              <basic-textarea
+              <basic-html-editor
                 label="Article Content"
-                placeholder="Write your article content here..."
-                [value]="content"
-                (valueChange)="content = $event"
+                [(value)]="content"
+                [showPreview]="true"
               />
             </div>
           </div>
@@ -170,7 +169,7 @@
       <!-- Tags & Status Settings -->
       <div class="card">
         <div class="card-header">
-          <h2>Tags & Status Settings</h2>
+          <h2>Tags Settings</h2>
         </div>
         <div class="form-section">
           <!-- Tags Section -->
@@ -198,33 +197,6 @@
               (buttonClick)="addTag()"
               [disabled]="!tagInput.trim()"
             />
-          </div>
-
-          <!-- Status Settings Section -->
-          <div class="status-settings-container">
-            <h4>Status Settings</h4>
-            <div class="checkboxes-row">
-              <div class="checkbox-group">
-                <div class="checkbox-field">
-                  <label>Published</label>
-                  <basic-checkbox
-                    [checked]="published"
-                    (checkedChange)="published = $event"
-                  />
-                </div>
-                <small class="field-help">Make this article publicly visible</small>
-              </div>
-              <div class="checkbox-group">
-                <div class="checkbox-field">
-                  <label>Featured</label>
-                  <basic-checkbox
-                    [checked]="featured"
-                    (checkedChange)="featured = $event"
-                  />
-                </div>
-                <small class="field-help">Display this article as featured</small>
-              </div>
-            </div>
           </div>
         </div>
       </div>

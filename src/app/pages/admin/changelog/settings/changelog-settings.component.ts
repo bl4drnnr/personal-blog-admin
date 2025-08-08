@@ -87,8 +87,6 @@ export class ChangelogSettingsComponent
         this.structuredDataJson = response.structuredData
           ? JSON.stringify(response.structuredData, null, 2)
           : '';
-
-        console.log('Page settings loaded successfully');
       },
       error: (error) => {
         console.error('Error loading page settings:', error);

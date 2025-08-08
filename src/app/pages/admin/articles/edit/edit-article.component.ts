@@ -6,6 +6,7 @@ import { BaseAdminComponent } from '@shared/components/base-admin.component';
 import { ArticlesService } from '@services/articles.service';
 import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
 import { ArticleDetailInterface } from '@interfaces/api/article-detail.interface';
+import { EditArticlePayload } from '@payloads/edit-article.interface';
 
 @Component({
   selector: 'page-edit-article',
@@ -122,21 +123,37 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
-    const articleData = {
-      title: this.title,
-      description: this.description,
-      content: this.content,
-      excerpt: this.excerpt,
-      featuredImageId: this.featuredImageId,
-      tags: this.tags,
-      published: this.published,
-      featured: this.featured
+    if (!this.article.id) {
+      this.globalMessageService.handle({
+        message: 'Article not loaded',
+        isError: true
+      });
+      return;
+    }
+
+    const payload: EditArticlePayload = {
+      articleId: this.article.id,
+      articleName: this.title,
+      articleDescription: this.description,
+      articleContent: this.content,
+      articleTags: this.tags,
+      articlePictureId: this.featuredImageId
     };
 
-    // TODO: Implement update article API call
-    console.log('Saving article:', articleData);
-    this.globalMessageService.handle({
-      message: 'Article saved successfully'
+    this.articlesService.updateArticle(payload).subscribe({
+      next: (updatedArticle) => {
+        this.article = updatedArticle;
+        this.globalMessageService.handle({
+          message: 'Article saved successfully'
+        });
+      },
+      error: (error) => {
+        console.error('Error saving article:', error);
+        this.globalMessageService.handle({
+          message: 'Error saving article',
+          isError: true
+        });
+      }
     });
   }
 
@@ -144,7 +161,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
     await this.router.navigate(['/admin/posts']);
   }
 
-  quickPublish(): void {
+  changePublishStatus(): void {
     if (!this.article.id) {
       this.globalMessageService.handle({
         message: 'Article not loaded',
@@ -153,51 +170,21 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
-    if (!this.published) {
-      this.articlesService.changePublishStatus(this.article.id).subscribe({
-        next: (response) => {
-          this.published = response.published;
-          this.globalMessageService.handle({
-            message: `Article ${this.published ? 'published' : 'unpublished'} successfully`
-          });
-        },
-        error: (error) => {
-          console.error('Error changing publish status:', error);
-          this.globalMessageService.handle({
-            message: 'Error changing publish status',
-            isError: true
-          });
-        }
-      });
-    }
-  }
-
-  quickUnpublish(): void {
-    if (!this.article.id) {
-      this.globalMessageService.handle({
-        message: 'Article not loaded',
-        isError: true
-      });
-      return;
-    }
-
-    if (this.published) {
-      this.articlesService.changePublishStatus(this.article.id).subscribe({
-        next: (response) => {
-          this.published = response.published;
-          this.globalMessageService.handle({
-            message: `Article ${this.published ? 'published' : 'unpublished'} successfully`
-          });
-        },
-        error: (error) => {
-          console.error('Error changing publish status:', error);
-          this.globalMessageService.handle({
-            message: 'Error changing publish status',
-            isError: true
-          });
-        }
-      });
-    }
+    this.articlesService.changePublishStatus(this.article.id).subscribe({
+      next: (response) => {
+        this.published = response.published;
+        this.globalMessageService.handle({
+          message: `Article ${this.published ? 'published' : 'unpublished'} successfully`
+        });
+      },
+      error: (error) => {
+        console.error('Error changing publish status:', error);
+        this.globalMessageService.handle({
+          message: 'Error changing publish status',
+          isError: true
+        });
+      }
+    });
   }
 
   toggleFeatured(): void {

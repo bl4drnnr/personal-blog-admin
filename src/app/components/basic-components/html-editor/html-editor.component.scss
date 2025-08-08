@@ -1,0 +1,338 @@
+.html-editor-container {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+  .editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+
+    .editor-label {
+      font-weight: 500;
+      color: #333;
+      margin: 0;
+    }
+
+    .editor-controls {
+      display: flex;
+      gap: 4px;
+
+      .view-toggle-btn {
+        padding: 6px 12px;
+        border: 1px solid #d0d7de;
+        background-color: #fff;
+        color: #656d76;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #f3f4f6;
+          border-color: #b0b7c0;
+        }
+
+        &.active {
+          background-color: #0969da;
+          border-color: #0969da;
+          color: #fff;
+        }
+
+        &:first-child {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-right: none;
+        }
+
+        &:last-child {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+  }
+
+  .editor-content {
+    display: flex;
+    min-height: 300px;
+
+    &.split-view {
+      .editor-panel {
+        width: 50%;
+        border-right: 1px solid #e0e0e0;
+      }
+
+      .preview-panel {
+        width: 50%;
+      }
+    }
+
+    &:not(.split-view) {
+      .editor-panel {
+        width: 100%;
+      }
+    }
+
+    .editor-panel {
+      display: flex;
+      flex-direction: column;
+
+      .ngx-editor-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        ::ng-deep .NgxEditor {
+          border: none;
+          border-radius: 0;
+
+          .NgxEditor__Wrapper {
+            border: none;
+
+            .NgxEditor__Content {
+              min-height: 250px;
+              padding: 16px;
+              border: none;
+              outline: none;
+              font-size: 14px;
+              line-height: 1.5;
+
+              &:focus {
+                box-shadow: none;
+              }
+            }
+          }
+        }
+
+        ::ng-deep .NgxEditor__MenuBar {
+          border-bottom: 1px solid #e0e0e0;
+          background-color: #fff;
+          padding: 8px 12px;
+
+          .NgxEditor__MenuItem {
+            border-radius: 4px;
+            margin: 2px;
+
+            &:hover {
+              background-color: #f3f4f6;
+            }
+
+            &.NgxEditor__MenuItem--Active {
+              background-color: #e3f2fd;
+              color: #1976d2;
+            }
+          }
+        }
+      }
+
+      .html-source-textarea {
+        width: 100%;
+        height: 300px;
+        border: none;
+        outline: none;
+        padding: 16px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 13px;
+        line-height: 1.4;
+        background-color: #fafbfc;
+        color: #24292f;
+        resize: vertical;
+
+        &:focus {
+          background-color: #fff;
+        }
+
+        &::placeholder {
+          color: #656d76;
+        }
+      }
+    }
+
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      min-height: 0;
+
+      .preview-header {
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+
+        .preview-label {
+          font-weight: 500;
+          color: #333;
+          margin: 0;
+          font-size: 14px;
+        }
+      }
+
+      .preview-content {
+        padding: 16px;
+        flex: 1;
+        overflow: visible;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #24292f;
+
+        // Style the rendered HTML content
+        ::ng-deep {
+          h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+          }
+
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          h3 { font-size: 1.25em; }
+          h4 { font-size: 1em; }
+          h5 { font-size: 0.875em; }
+          h6 { font-size: 0.85em; }
+
+          p {
+            margin-bottom: 16px;
+          }
+
+          ul, ol {
+            margin-bottom: 16px;
+            padding-left: 2em;
+          }
+
+          li {
+            margin-bottom: 4px;
+          }
+
+          blockquote {
+            padding: 0 1em;
+            color: #656d76;
+            border-left: 4px solid #d0d7de;
+            margin: 0 0 16px 0;
+          }
+
+          code {
+            padding: 0.2em 0.4em;
+            background-color: rgba(175, 184, 193, 0.2);
+            border-radius: 6px;
+            font-size: 85%;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+          }
+
+          pre {
+            padding: 16px;
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+
+            code {
+              padding: 0;
+              background-color: transparent;
+            }
+          }
+
+          a {
+            color: #0969da;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+          }
+
+          table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+
+            th, td {
+              border: 1px solid #d0d7de;
+              padding: 8px 12px;
+              text-align: left;
+            }
+
+            th {
+              background-color: #f6f8fa;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support (if needed)
+@media (prefers-color-scheme: light) {
+  .html-editor-container {
+    border-color: #30363d;
+
+    .editor-header {
+      background-color: #21262d;
+      border-color: #30363d;
+
+      .editor-label {
+        color: #f0f6fc;
+      }
+
+      .view-toggle-btn {
+        background-color: #21262d;
+        border-color: #30363d;
+        color: #e6edf3;
+
+        &:hover {
+          background-color: #30363d;
+        }
+
+        &.active {
+          background-color: #1f6feb;
+          border-color: #1f6feb;
+        }
+      }
+    }
+
+    .editor-content {
+      .editor-panel {
+        .html-source-textarea {
+          background-color: #0d1117;
+          color: #e6edf3;
+
+          &:focus {
+            background-color: #161b22;
+          }
+        }
+      }
+
+      .preview-panel {
+        background-color: #0d1117;
+
+        .preview-header {
+          background-color: #21262d;
+          border-color: #30363d;
+
+          .preview-label {
+            color: #f0f6fc;
+          }
+        }
+
+        .preview-content {
+          color: #e6edf3;
+        }
+      }
+    }
+  }
+}

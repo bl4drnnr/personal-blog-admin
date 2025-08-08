@@ -29,7 +29,7 @@
                 
                 <div class="section-meta">
                   <span class="sort-order">Sort Order: {{ section.sortOrder || 0 }}</span>
-                  <span *ngIf="section.createdAt">Created: {{ section.createdAt | date:'shortDate' }}</span>
+                  <span *ngIf="section.createdAt">Created: {{ section.createdAt | dayjs:'MM/DD/YYYY' }}</span>
                 </div>
                 
                 <div class="section-preview" *ngIf="section.content">
@@ -71,14 +71,11 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">Content</label>
-          <textarea 
-            [(ngModel)]="content" 
-            class="form-textarea"
-            placeholder="Enter the section content (HTML supported)"
-            rows="8"
-          ></textarea>
-          <small class="form-hint">You can use HTML tags for formatting</small>
+          <basic-html-editor
+            label="Content"
+            [(value)]="content"
+            [showPreview]="true"
+          ></basic-html-editor>
         </div>
 
         <div class="form-group">

@@ -1,0 +1,58 @@
+<div class="html-editor-container">
+  <div class="editor-header">
+    <label class="editor-label">{{ label }}</label>
+    <div class="editor-controls">
+      <button
+        type="button"
+        class="view-toggle-btn"
+        [class.active]="!showHtmlSource"
+        (click)="showHtmlSource = false"
+      >
+        Visual
+      </button>
+      <button
+        type="button"
+        class="view-toggle-btn"
+        [class.active]="showHtmlSource"
+        (click)="showHtmlSource = true"
+      >
+        HTML
+      </button>
+    </div>
+  </div>
+
+  <div class="editor-content" [class.split-view]="showPreview && !showHtmlSource">
+    <!-- Visual Editor -->
+    <div class="editor-panel" *ngIf="!showHtmlSource">
+      <div class="ngx-editor-wrapper">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+        <ngx-editor
+          [editor]="editor"
+          [ngModel]="value"
+          (ngModelChange)="onHtmlChange($event)"
+          [disabled]="disabled"
+          placeholder="Enter your content here..."
+        ></ngx-editor>
+      </div>
+    </div>
+
+    <!-- HTML Source Editor -->
+    <div class="editor-panel" *ngIf="showHtmlSource">
+      <textarea
+        class="html-source-textarea"
+        [ngModel]="value"
+        (ngModelChange)="onSourceChange($event)"
+        [disabled]="disabled"
+        placeholder="Enter HTML source code..."
+      ></textarea>
+    </div>
+
+    <!-- Preview Panel -->
+    <div class="preview-panel" *ngIf="showPreview && !showHtmlSource">
+      <div class="preview-header">
+        <label class="preview-label">Live Preview</label>
+      </div>
+      <div class="preview-content" [innerHTML]="getSafeHtml()"></div>
+    </div>
+  </div>
+</div>
