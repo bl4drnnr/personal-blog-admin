@@ -8,6 +8,7 @@ import { ListArticlesResponse } from '@responses/list-articles.interface';
 import { ListArticlesPayload } from '@payloads/list-articles.interface';
 import { ArticleDetailInterface } from '@interfaces/api/article-detail.interface';
 import { EditArticlePayload } from '@payloads/edit-article.interface';
+import { CreateArticlePayload } from '@payloads/create-article.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,15 @@ export class ArticlesService {
       method: Method.PUT,
       controller: Controller.ARTICLES,
       action: ArticlesEndpoint.EDIT,
+      payload
+    });
+  }
+
+  createArticle(payload: CreateArticlePayload): Observable<ArticleDetailInterface> {
+    return this.apiService.apiProxyRequest({
+      method: Method.POST,
+      controller: Controller.ARTICLES,
+      action: ArticlesEndpoint.CREATE,
       payload
     });
   }

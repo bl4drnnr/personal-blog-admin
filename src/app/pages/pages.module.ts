@@ -10,6 +10,7 @@ import { SiteConfigComponent } from '@pages/admin/site-config/site-config.compon
 // Content Management
 import { ArticlesComponent } from '@pages/admin/articles/articles.component';
 import { EditArticleComponent } from '@pages/admin/articles/edit/edit-article.component';
+import { CreateArticleComponent } from '@pages/admin/articles/create/create-article.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { EditProjectComponent } from '@pages/admin/projects/edit/edit-project.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
@@ -56,6 +57,7 @@ const adminComponents = [
   // Content Management
   ArticlesComponent,
   EditArticleComponent,
+  CreateArticleComponent,
   ProjectsComponent,
   EditProjectComponent,
   PagesComponent,

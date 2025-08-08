@@ -1,5 +1,9 @@
-import { ArticleInterface } from '@payloads/article.interface';
-
 export interface CreateArticlePayload {
-  articles: Array<ArticleInterface>;
+  articleName: string;
+  articleDescription: string;
+  articleContent: string;
+  articleTags: Array<string>;
+  articlePictureId: string;
+  articleExcerpt: string;
+  articlePublished: boolean;
 }

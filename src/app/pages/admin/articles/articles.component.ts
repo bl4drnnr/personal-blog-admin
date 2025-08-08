@@ -156,7 +156,11 @@ export class ArticlesComponent extends BaseAdminComponent {
   }
 
   async editArticle(article: ListArticleInterface): Promise<void> {
-    await this.router.navigate(['/admin/posts', article.articleSlug]);
+    await this.router.navigate(['/admin/posts/edit', article.articleSlug]);
+  }
+
+  async createNewArticle(): Promise<void> {
+    await this.router.navigate(['/admin/posts/create']);
   }
 
   deleteArticle(article: ListArticleInterface): void {

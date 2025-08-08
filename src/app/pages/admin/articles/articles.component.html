@@ -13,6 +13,7 @@
             label="Create New Article"
             [fillButton]="true"
             [onWhite]="false"
+            (buttonClick)="createNewArticle()"
           />
         </div>
 
@@ -159,6 +160,7 @@
               <basic-button
                 label="Create First Article"
                 [fillButton]="true"
+                (buttonClick)="createNewArticle()"
               />
             </div>
           </div>
