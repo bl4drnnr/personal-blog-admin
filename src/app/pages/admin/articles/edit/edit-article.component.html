@@ -158,7 +158,8 @@
             <div class="form-group full-width">
               <basic-html-editor
                 label="Article Content"
-                [(value)]="content"
+                [value]="content"
+                (valueChange)="content = $event"
                 (processedContentForSave)="processedContent = $event"
                 [showPreview]="true"
               />
