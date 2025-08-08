@@ -32,6 +32,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
   projectName: string = '';
   description: string = '';
   content: string = '';
+  processedContent: string = '';
   projectImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
@@ -87,6 +88,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
         this.projectName = response.title;
         this.description = response.description;
         this.content = response.content;
+        this.processedContent = response.content; // Initialize with same content
         this.projectImageId = response.featuredImageId;
         this.tags = response.tags || [];
         this.published = response.published;
@@ -130,14 +132,14 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
-    // TODO: FIX TABLES
-    // TODO: ALLOW MORE STYLES LIKE TEXT ALIGN
-    // TODO: PICTURE TITLES
+    // Use processed content (with tables converted to HTML) for saving
+    const contentToSave = this.processedContent || this.content;
+
     const projectData = {
       projectId: this.project.id,
       projectTitle: this.projectName,
       projectDescription: this.description,
-      projectContent: this.content,
+      projectContent: contentToSave,
       projectFeaturedImageId: this.projectImageId,
       projectTags: this.tags
     };

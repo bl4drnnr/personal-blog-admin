@@ -159,6 +159,7 @@
               <basic-html-editor
                 label="Article Content"
                 [(value)]="content"
+                (processedContentForSave)="processedContent = $event"
                 [showPreview]="true"
               />
             </div>

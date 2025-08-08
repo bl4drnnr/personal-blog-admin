@@ -130,6 +130,157 @@
             }
           }
         }
+
+        .custom-toolbar {
+          padding: 8px 12px;
+          border-bottom: 1px solid #e0e0e0;
+          background-color: #f8f9fa;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          .table-btn {
+            padding: 6px 12px;
+            border: 1px solid #d0d7de;
+            background-color: #fff;
+            color: #24292f;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &:hover:not(:disabled) {
+              background-color: #f3f4f6;
+              border-color: #b0b7c0;
+            }
+
+            &:disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+            }
+          }
+        }
+
+        .table-history-panel {
+          border-bottom: 1px solid #e0e0e0;
+          background-color: #f8f9fa;
+
+          details {
+            summary {
+              padding: 8px 12px;
+              cursor: pointer;
+              font-size: 12px;
+              font-weight: 500;
+              color: #24292f;
+              list-style: none;
+              user-select: none;
+
+              &::-webkit-details-marker {
+                display: none;
+              }
+
+              &:before {
+                content: '▶';
+                display: inline-block;
+                margin-right: 6px;
+                transform: rotate(0deg);
+                transition: transform 0.2s ease;
+              }
+
+              &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+              }
+            }
+
+            &[open] summary:before {
+              transform: rotate(90deg);
+            }
+
+            .tables-list {
+              max-height: 200px;
+              overflow-y: auto;
+              border-top: 1px solid #e0e0e0;
+
+              .table-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 12px;
+                border-bottom: 1px solid #e0e0e0;
+                background-color: #fff;
+
+                &:hover {
+                  background-color: #f8f9fa;
+                }
+
+                &:last-child {
+                  border-bottom: none;
+                }
+
+                .table-info {
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  flex: 1;
+
+                  .table-name {
+                    font-weight: 500;
+                    color: #24292f;
+                    font-size: 13px;
+                  }
+
+                  .table-details {
+                    font-size: 11px;
+                    color: #656d76;
+                    background-color: #f3f4f6;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                  }
+
+                  .table-token {
+                    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                    font-size: 10px;
+                    color: #7c3aed;
+                    background-color: rgba(124, 58, 237, 0.1);
+                    padding: 2px 4px;
+                    border-radius: 3px;
+                  }
+                }
+
+                .table-actions {
+                  display: flex;
+                  gap: 4px;
+
+                  button {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 4px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    transition: background-color 0.2s ease;
+
+                    &:hover {
+                      background-color: #e0e0e0;
+                    }
+
+                    &.edit-btn:hover {
+                      background-color: #e3f2fd;
+                    }
+
+                    &.delete-btn:hover {
+                      background-color: #ffebee;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
 
       .html-source-textarea {

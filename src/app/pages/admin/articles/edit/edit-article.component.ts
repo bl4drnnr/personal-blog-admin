@@ -35,6 +35,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
   title: string = '';
   description: string = '';
   content: string = '';
+  processedContent: string = '';
   excerpt: string = '';
   featuredImageId: string = '';
   tags: string[] = [];
@@ -79,6 +80,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
         this.title = this.article.title;
         this.description = this.article.description;
         this.content = this.article.content;
+        this.processedContent = this.article.content; // Initialize with same content
         this.excerpt = this.article.excerpt;
         this.featuredImageId = this.article.featuredImageId;
         this.tags = this.article.tags;
@@ -131,11 +133,14 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
       return;
     }
 
+    // Use processed content (with tables converted to HTML) for saving
+    const contentToSave = this.processedContent || this.content;
+
     const payload: EditArticlePayload = {
       articleId: this.article.id,
       articleName: this.title,
       articleDescription: this.description,
-      articleContent: this.content,
+      articleContent: contentToSave,
       articleTags: this.tags,
       articlePictureId: this.featuredImageId
     };

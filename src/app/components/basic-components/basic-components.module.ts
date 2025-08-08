@@ -17,6 +17,7 @@ import { TextareaComponent } from '@components/textarea/textarea.component';
 import { SocialLinkComponent } from '@components/social-link/social-link.component';
 import { AssetSelectorComponent } from '@components/asset-selector/asset-selector.component';
 import { HtmlEditorComponent } from '@components/html-editor/html-editor.component';
+import { TableEditorComponent } from '@components/table-editor/table-editor.component';
 
 const components: any = [
   ButtonComponent,
@@ -33,7 +34,8 @@ const components: any = [
   TextareaComponent,
   SocialLinkComponent,
   AssetSelectorComponent,
-  HtmlEditorComponent
+  HtmlEditorComponent,
+  TableEditorComponent
 ];
 
 @NgModule({

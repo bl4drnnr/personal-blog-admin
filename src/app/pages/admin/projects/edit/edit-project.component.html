@@ -149,6 +149,7 @@
                 label="Project Content"
                 [value]="content"
                 (valueChange)="content = $event"
+                (processedContentForSave)="processedContent = $event"
                 [showPreview]="true"
               />
             </div>

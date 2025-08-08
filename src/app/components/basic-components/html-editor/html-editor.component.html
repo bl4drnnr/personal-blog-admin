@@ -26,6 +26,54 @@
     <div class="editor-panel" *ngIf="!showHtmlSource">
       <div class="ngx-editor-wrapper">
         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+        <div class="custom-toolbar">
+          <button 
+            type="button" 
+            class="table-btn"
+            (click)="openTableEditor()"
+            [disabled]="disabled"
+            title="Insert Table"
+          >
+            📊 Insert Table
+          </button>
+        </div>
+        
+        <!-- Table History Panel -->
+        <div class="table-history-panel" *ngIf="getTables().length > 0">
+          <details>
+            <summary>📋 Manage Tables ({{ getTables().length }})</summary>
+            <div class="tables-list">
+              <div 
+                *ngFor="let table of getTables(); let i = index" 
+                class="table-item"
+              >
+                <div class="table-info">
+                  <span class="table-name">Table {{ i + 1 }}</span>
+                  <span class="table-details">{{ table.rows.length }}×{{ table.headers?.length || 0 }}</span>
+                  <span class="table-token">[TABLE_{{ table.id }}]</span>
+                </div>
+                <div class="table-actions">
+                  <button 
+                    type="button"
+                    class="edit-btn"
+                    (click)="editTable(table)"
+                    title="Edit Table"
+                  >
+                    ✏️
+                  </button>
+                  <button 
+                    type="button"
+                    class="delete-btn"
+                    (click)="deleteTable(table)"
+                    title="Delete Table"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
         <ngx-editor
           [editor]="editor"
           [ngModel]="value"
@@ -55,4 +103,12 @@
       <div class="preview-content" [innerHTML]="getSafeHtml()"></div>
     </div>
   </div>
+
+  <!-- Table Editor Modal -->
+  <basic-table-editor
+    [isOpen]="showTableEditor"
+    [tableData]="editingTable"
+    (tableCreated)="onTableCreated($event)"
+    (modalClosed)="onTableModalClosed()"
+  ></basic-table-editor>
 </div>

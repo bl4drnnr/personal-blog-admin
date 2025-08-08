@@ -1,0 +1,83 @@
+<div class="table-editor-modal" *ngIf="isOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ isEditMode ? 'Edit' : 'Create' }} Table</h3>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Table Configuration -->
+      <div class="config-section">
+        <div class="config-row">
+          <div class="config-group">
+            <label>Rows:</label>
+            <input 
+              type="number" 
+              [(ngModel)]="numRows" 
+              (change)="updateDimensions()"
+              min="1" 
+              max="20"
+            />
+          </div>
+          <div class="config-group">
+            <label>Columns:</label>
+            <input 
+              type="number" 
+              [(ngModel)]="numCols" 
+              (change)="updateDimensions()"
+              min="1" 
+              max="10"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Table Preview & Editor -->
+      <div class="table-preview-section">
+        <h4>Table Preview:</h4>
+        <div class="table-container">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th 
+                  *ngFor="let header of headers; trackBy: trackByIndex; let i = index"
+                  class="editable-cell"
+                >
+                  <input 
+                    type="text" 
+                    [(ngModel)]="headers[i]" 
+                    placeholder="Header {{i + 1}}"
+                    class="cell-input header-input"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of rows; trackBy: trackByIndex; let r = index">
+                <td 
+                  *ngFor="let cell of row; trackBy: trackByIndex; let c = index"
+                  class="editable-cell"
+                >
+                  <input 
+                    type="text" 
+                    [(ngModel)]="rows[r][c]" 
+                    placeholder="Cell {{r + 1}}-{{c + 1}}"
+                    class="cell-input"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="createTable()">
+        {{ isEditMode ? 'Update' : 'Insert' }} Table
+      </button>
+    </div>
+  </div>
+</div>
