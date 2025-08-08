@@ -1,0 +1,161 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-left">
+          <basic-button
+            label="← Back to Projects"
+            [onWhite]="true"
+            (buttonClick)="cancel()"
+          />
+          <div class="page-title-section">
+            <h1>Create New Project</h1>
+            <div class="status-badges">
+              <span class="status-badge draft">
+                Draft
+              </span>
+              <span class="status-badge featured" *ngIf="featured">
+                Featured
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="quick-actions">
+            <basic-button
+              label="Save as Draft"
+              [onWhite]="true"
+              (buttonClick)="createProject()"
+            />
+            <basic-button
+              label="Publish Now"
+              [fillButton]="true"
+              [onWhite]="false"
+              (buttonClick)="publishProject()"
+            />
+            <basic-button
+              [label]="featured ? 'Unfeature' : 'Feature'"
+              [fillButton]="!featured"
+              [onWhite]="featured"
+              (buttonClick)="toggleFeatured()"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="content-section">
+      <!-- Basic Information -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Basic Information</h2>
+        </div>
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-input
+                type="text"
+                label="Project Name"
+                placeholder="Enter project name"
+                [value]="projectName"
+                (valueChange)="projectName = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-textarea
+                label="Description"
+                placeholder="Enter project description"
+                [value]="description"
+                (valueChange)="description = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <asset-selector
+                label="Project Image"
+                placeholder="Search for project image..."
+                [(ngModel)]="projectImageId"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Content</h2>
+        </div>
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <basic-html-editor
+                label="Project Content"
+                [value]="content"
+                (valueChange)="content = $event"
+                (processedContentForSave)="processedContent = $event"
+                [showPreview]="true"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tags & Status Settings -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Tags Settings</h2>
+        </div>
+        <div class="form-section">
+          <!-- Tags Section -->
+          <div class="tags-input-container">
+            <h4>Tags</h4>
+            <div class="current-tags" *ngIf="tags.length > 0">
+              <span *ngFor="let tag of tags; let i = index" class="tag">
+                {{ tag }}
+                <button type="button" class="tag-remove" (click)="removeTag(i)">×</button>
+              </span>
+            </div>
+            <div class="add-tag-input">
+              <basic-input
+                type="text"
+                label="Add Tag"
+                placeholder="Enter tag and press Enter"
+                [value]="tagInput"
+                (valueChange)="tagInput = $event"
+                (keyup)="onTagInputKeyPress($event)"
+              />
+            </div>
+            <basic-button
+              label="Add Tag"
+              [onWhite]="true"
+              (buttonClick)="addTag()"
+              [disabled]="!tagInput.trim()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Actions -->
+      <div class="final-actions">
+        <basic-button
+          label="Create Project"
+          [fillButton]="true"
+          [onWhite]="false"
+          (buttonClick)="createProject()"
+        />
+        <basic-button
+          label="Cancel"
+          [onWhite]="true"
+          (buttonClick)="cancel()"
+        />
+      </div>
+    </div>
+  </div>
+</layout-default>

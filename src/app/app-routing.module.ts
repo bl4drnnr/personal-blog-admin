@@ -12,6 +12,7 @@ import { EditArticleComponent } from '@pages/admin/articles/edit/edit-article.co
 import { CreateArticleComponent } from '@pages/admin/articles/create/create-article.component';
 import { ProjectsComponent } from '@pages/admin/projects/projects.component';
 import { EditProjectComponent } from '@pages/admin/projects/edit/edit-project.component';
+import { CreateProjectComponent } from '@pages/admin/projects/create/create-project.component';
 import { PagesComponent } from '@pages/admin/pages/pages.component';
 import { HomePageManagementComponent } from '@pages/admin/pages/home/home-page-management.component';
 import { BlogPageManagementComponent } from '@pages/admin/pages/blog/blog-page-management.component';
@@ -82,7 +83,11 @@ const routes: Routes = [
     component: ProjectsComponent
   },
   {
-    path: 'admin/projects/:slug',
+    path: 'admin/projects/create',
+    component: CreateProjectComponent
+  },
+  {
+    path: 'admin/projects/edit/:slug',
     component: EditProjectComponent
   },
   {

@@ -3,23 +3,22 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RefreshTokensService } from '@services/refresh-token.service';
 import { BaseAdminComponent } from '@shared/components/base-admin.component';
-import { ArticlesService } from '@services/articles.service';
+import { ProjectsService } from '@services/projects.service';
 import { GlobalMessageService } from '@shared/global-components-services/global-message.service';
-import { CreateArticlePayload } from '@payloads/create-article.interface';
+import { CreateProjectPayload } from '@payloads/create-project.interface';
 
 @Component({
-  selector: 'page-create-article',
-  templateUrl: './create-article.component.html',
+  selector: 'page-create-project',
+  templateUrl: './create-project.component.html',
   styleUrls: ['../../../../shared/styles/admin-edit-page.scss']
 })
-export class CreateArticleComponent extends BaseAdminComponent implements OnInit {
+export class CreateProjectComponent extends BaseAdminComponent implements OnInit {
   // Form fields
-  title: string = '';
+  projectName: string = '';
   description: string = '';
   content: string = '';
   processedContent: string = '';
-  excerpt: string = '';
-  featuredImageId: string = '';
+  projectImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
   published: boolean = false;
@@ -29,7 +28,7 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
     protected override router: Router,
     protected override refreshTokensService: RefreshTokensService,
     private titleService: Title,
-    private articlesService: ArticlesService,
+    private projectsService: ProjectsService,
     private globalMessageService: GlobalMessageService
   ) {
     super(router, refreshTokensService);
@@ -44,7 +43,7 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
   }
 
   private getPageTitle(): string {
-    return 'Personal Blog | Create New Article';
+    return 'Personal Blog | Create New Project';
   }
 
   addTag(): void {
@@ -67,15 +66,14 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
 
   areFieldsCorrect(): boolean {
     if (
-      !this.title.trim() ||
+      !this.projectName.trim() ||
       !this.content.trim() ||
       !this.description.trim() ||
-      !this.excerpt.trim() ||
-      !this.featuredImageId.trim()
+      !this.projectImageId.trim()
     ) {
       this.globalMessageService.handle({
         message:
-          'Title, content, description, excerpt, and featured image are all required',
+          'Project name, content, description, and featured image are all required',
         isError: true
       });
       return false;
@@ -84,35 +82,33 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
     }
   }
 
-  createArticle(): void {
+  createProject(): void {
     if (!this.areFieldsCorrect()) return;
 
     // Use processed content (with tables converted to HTML) for saving
     const contentToSave = this.processedContent || this.content;
 
-    const payload: CreateArticlePayload = {
-      articleName: this.title,
-      articleDescription: this.description,
-      articleContent: contentToSave,
-      articleTags: this.tags,
-      articlePictureId: this.featuredImageId,
-      articleExcerpt: this.excerpt,
-      articlePublished: false
+    const payload: CreateProjectPayload = {
+      projectTitle: this.projectName,
+      projectDescription: this.description,
+      projectContent: contentToSave,
+      projectTags: this.tags,
+      projectFeaturedImageId: this.projectImageId,
+      projectPublished: false
     };
 
-    // TODO FIX THE ISSUE WITH DISPLAY PICTURES ON THE MAIN PAGE
-    this.articlesService.createArticle(payload).subscribe({
-      next: async (createdArticle) => {
+    this.projectsService.createProject(payload).subscribe({
+      next: async (createdProject) => {
         this.globalMessageService.handle({
-          message: 'Article created successfully'
+          message: 'Project created successfully'
         });
-        // Navigate to edit page for the newly created article
-        await this.router.navigate(['/admin/posts/edit', createdArticle.slug]);
+        // Navigate to edit page for the newly created project
+        await this.router.navigate(['/admin/projects/edit', createdProject.slug]);
       },
       error: (error) => {
-        console.error('Error creating article:', error);
+        console.error('Error creating project:', error);
         this.globalMessageService.handle({
-          message: 'Error creating article',
+          message: 'Error creating project',
           isError: true
         });
       }
@@ -120,37 +116,36 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
   }
 
   async cancel(): Promise<void> {
-    await this.router.navigate(['/admin/posts']);
+    await this.router.navigate(['/admin/projects']);
   }
 
-  publishArticle(): void {
+  publishProject(): void {
     if (!this.areFieldsCorrect()) return;
 
     // Use processed content (with tables converted to HTML) for saving
     const contentToSave = this.processedContent || this.content;
 
-    const payload: CreateArticlePayload = {
-      articleName: this.title,
-      articleDescription: this.description,
-      articleContent: contentToSave,
-      articleTags: this.tags,
-      articlePictureId: this.featuredImageId,
-      articleExcerpt: this.excerpt,
-      articlePublished: true
+    const payload: CreateProjectPayload = {
+      projectTitle: this.projectName,
+      projectDescription: this.description,
+      projectContent: contentToSave,
+      projectTags: this.tags,
+      projectFeaturedImageId: this.projectImageId,
+      projectPublished: true
     };
 
-    this.articlesService.createArticle(payload).subscribe({
-      next: async (createdArticle) => {
+    this.projectsService.createProject(payload).subscribe({
+      next: async (createdProject) => {
         this.globalMessageService.handle({
-          message: 'Article published successfully'
+          message: 'Project published successfully'
         });
-        // Navigate to edit page for the newly created article
-        await this.router.navigate(['/admin/posts/edit', createdArticle.slug]);
+        // Navigate to edit page for the newly created project
+        await this.router.navigate(['/admin/projects/edit', createdProject.slug]);
       },
       error: (error) => {
-        console.error('Error publishing article:', error);
+        console.error('Error publishing project:', error);
         this.globalMessageService.handle({
-          message: 'Error publishing article',
+          message: 'Error publishing project',
           isError: true
         });
       }

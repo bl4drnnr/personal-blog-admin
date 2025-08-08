@@ -136,7 +136,11 @@ export class ProjectsComponent extends BaseAdminComponent {
 
   // Project actions
   async editProject(project: Project): Promise<void> {
-    await this.router.navigate(['/admin/projects', project.projectSlug]);
+    await this.router.navigate(['/admin/projects/edit', project.projectSlug]);
+  }
+
+  async createNewProject(): Promise<void> {
+    await this.router.navigate(['/admin/projects/create']);
   }
 
   toggleActiveStatus(project: Project): void {

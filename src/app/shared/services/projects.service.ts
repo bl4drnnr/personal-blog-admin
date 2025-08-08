@@ -6,6 +6,7 @@ import { Method } from '@interfaces/methods.enum';
 import { ListProjectsPayload } from '@payloads/list-projects.interface';
 import { ProjectsEndpoint } from '@interfaces/projects.enum';
 import { ListProjectsResponse } from '@responses/list-projects.interface';
+import { CreateProjectPayload } from '@payloads/create-project.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,15 @@ export class ProjectsService {
       controller: Controller.PROJECTS,
       action: ProjectsEndpoint.EDIT,
       payload: projectData
+    });
+  }
+
+  createProject(payload: CreateProjectPayload): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.POST,
+      controller: Controller.PROJECTS,
+      action: ProjectsEndpoint.CREATE,
+      payload
     });
   }
 }
