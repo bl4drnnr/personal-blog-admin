@@ -6,6 +6,7 @@ import { Controller } from '@interfaces/controller.enum';
 import { StaticAssetsEndpoint } from '@interfaces/static-assets.enum';
 import { UploadFilePayload } from '@payloads/upload-file.interface';
 import { UploadBase64Payload } from '@payloads/upload-base64.interface';
+import { UpdateAssetPayload } from '@payloads/update-asset.interface';
 import { StaticAsset } from '@payloads/static-asset.interface';
 import { StaticAssetDeletedResponse } from '@responses/static-asset-deleted.interface';
 import { PaginatedStaticAssetsResponse } from '@responses/paginated-static-assets.interface';
@@ -61,6 +62,15 @@ export class StaticAssetsService {
       controller: Controller.STATIC_ASSETS,
       action: StaticAssetsEndpoint.GET_ASSET_BY_ID,
       params: { id }
+    });
+  }
+
+  updateAsset(payload: UpdateAssetPayload): Observable<StaticAsset> {
+    return this.apiService.apiProxyRequest({
+      method: Method.PUT,
+      controller: Controller.STATIC_ASSETS,
+      action: StaticAssetsEndpoint.UPDATE_ASSET,
+      payload
     });
   }
 }

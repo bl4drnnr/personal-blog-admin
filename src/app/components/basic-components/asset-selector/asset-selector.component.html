@@ -41,6 +41,11 @@
   <div class="asset-selector__preview" *ngIf="selectedAsset">
     <div class="asset-selector__preview-info">
       <span class="asset-selector__preview-name">{{ selectedAsset.name }}</span>
+      <div class="asset-selector__preview-type">
+        <span class="asset-type-badge" [ngClass]="getAssetTypeClass(selectedAsset.assetType)">
+          {{ getAssetTypeLabel(selectedAsset.assetType) }}
+        </span>
+      </div>
       <span class="asset-selector__preview-description" *ngIf="selectedAsset.description">
         {{ selectedAsset.description }}
       </span>
@@ -66,6 +71,11 @@
       >
         <div class="asset-selector__option-info">
           <span class="asset-selector__option-name">{{ asset.name }}</span>
+          <div class="asset-selector__option-type">
+            <span class="asset-type-badge" [ngClass]="getAssetTypeClass(asset.assetType)">
+              {{ getAssetTypeLabel(asset.assetType) }}
+            </span>
+          </div>
           <span class="asset-selector__option-description" *ngIf="asset.description">
             {{ asset.description }}
           </span>

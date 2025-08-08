@@ -197,4 +197,34 @@ export class AssetSelectorComponent
       }
     }
   }
+
+  getAssetTypeLabel(assetType: string): string {
+    switch (assetType) {
+      case 'icon':
+        return 'Icon';
+      case 'projectPicture':
+        return 'Project Picture';
+      case 'articlePicture':
+        return 'Article Picture';
+      case 'staticAsset':
+        return 'Static Asset';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  getAssetTypeClass(assetType: string): string {
+    switch (assetType) {
+      case 'icon':
+        return 'asset-type-icon';
+      case 'projectPicture':
+        return 'asset-type-project';
+      case 'articlePicture':
+        return 'asset-type-article';
+      case 'staticAsset':
+        return 'asset-type-static';
+      default:
+        return 'asset-type-unknown';
+    }
+  }
 }

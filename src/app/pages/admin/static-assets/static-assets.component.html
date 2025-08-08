@@ -118,6 +118,73 @@
       </div>
     </div>
 
+    <!-- Edit Form ---->
+    <div class="content-section" *ngIf="showEditForm">
+      <div class="card">
+        <div class="card-header">
+          <h2>Edit Asset</h2>
+          <basic-button
+            label="Cancel"
+            (buttonClick)="cancelEdit()"
+          ></basic-button>
+        </div>
+
+        <div class="edit-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-asset-name">Asset Name *</label>
+              <input
+                type="text"
+                id="edit-asset-name"
+                [(ngModel)]="editAssetName"
+                placeholder="Enter asset name"
+                class="form-input"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-asset-type">Asset Type *</label>
+              <select 
+                id="edit-asset-type"
+                [(ngModel)]="editAssetType" 
+                class="form-select"
+                required
+              >
+                <option *ngFor="let option of assetTypeOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-asset-description">Description</label>
+              <textarea
+                id="edit-asset-description"
+                [(ngModel)]="editAssetDescription"
+                placeholder="Optional description"
+                class="form-textarea"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <basic-button
+              [label]="isUpdating ? 'Updating...' : 'Update Asset'"
+              [disabled]="isUpdating || !editAssetName.trim()"
+              [fillButton]="true"
+              (buttonClick)="updateAsset()"
+            ></basic-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Assets List -->
     <div class="content-section">
       <div class="card">
@@ -171,6 +238,11 @@
 
             <div class="asset-info">
               <h3 class="asset-name">{{ asset.name }}</h3>
+              <div class="asset-type-wrapper">
+                <span class="asset-type-badge" [ngClass]="getAssetTypeClass(asset.assetType)">
+                  {{ getAssetTypeLabel(asset.assetType) }}
+                </span>
+              </div>
               <p class="asset-description" *ngIf="asset.description">{{ asset.description }}</p>
               <p class="asset-url">{{ asset.s3Url }}</p>
               <p class="asset-date">Created: {{ asset.createdAt | date:'short' }}</p>
@@ -180,6 +252,10 @@
               <basic-button
                 label="Copy URL"
                 (buttonClick)="copyUrl(asset.s3Url)"
+              ></basic-button>
+              <basic-button
+                label="Edit"
+                (buttonClick)="editAsset(asset)"
               ></basic-button>
               <basic-button
                 label="Delete"

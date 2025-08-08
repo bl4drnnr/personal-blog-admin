@@ -129,6 +129,10 @@
     opacity: 0.7;
   }
 
+  &__preview-type {
+    margin: 4px 0;
+  }
+
   &__dropdown {
     position: absolute;
     top: 100%;
@@ -217,6 +221,52 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &__option-type {
+    margin: 4px 0;
+  }
+}
+
+// Asset Type Badge Styles
+.asset-type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 8px;
+  line-height: 1;
+
+  &.asset-type-icon {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #bbdefb;
+  }
+
+  &.asset-type-project {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+    border: 1px solid #e1bee7;
+  }
+
+  &.asset-type-article {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
+
+  &.asset-type-static {
+    background-color: #fff3e0;
+    color: #ef6c00;
+    border: 1px solid #ffcc02;
+  }
+
+  &.asset-type-unknown {
+    background-color: #f5f5f5;
+    color: #757575;
+    border: 1px solid #e0e0e0;
   }
 }
 

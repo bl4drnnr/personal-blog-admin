@@ -8,6 +8,7 @@ import { GlobalMessageService } from '@shared/global-message.service';
 import { StaticAsset } from '@payloads/static-asset.interface';
 import { UploadFilePayload } from '@payloads/upload-file.interface';
 import { UploadBase64Payload } from '@payloads/upload-base64.interface';
+import { UpdateAssetPayload } from '@payloads/update-asset.interface';
 import { SearchAssetsQuery } from '@payloads/search-assets.interface';
 
 @Component({
@@ -38,6 +39,23 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
   assetDescription = '';
   previewUrl: string | null = null;
   uploadMode: 'file' | 'base64' = 'file';
+
+  // Edit form properties
+  showEditForm = false;
+  editingAsset: StaticAsset | null = null;
+  editAssetName = '';
+  editAssetDescription = '';
+  editAssetType: 'icon' | 'projectPicture' | 'articlePicture' | 'staticAsset' =
+    'staticAsset';
+  isUpdating = false;
+
+  // Asset type options for dropdown
+  assetTypeOptions = [
+    { value: 'icon', label: 'Icon' },
+    { value: 'projectPicture', label: 'Project Picture' },
+    { value: 'articlePicture', label: 'Article Picture' },
+    { value: 'staticAsset', label: 'Static Asset' }
+  ];
 
   // Math object for template
   Math = Math;
@@ -330,11 +348,102 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
     return '📄';
   }
 
+  getAssetTypeLabel(assetType: string): string {
+    switch (assetType) {
+      case 'icon':
+        return 'Icon';
+      case 'projectPicture':
+        return 'Project Picture';
+      case 'articlePicture':
+        return 'Article Picture';
+      case 'staticAsset':
+        return 'Static Asset';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  getAssetTypeClass(assetType: string): string {
+    switch (assetType) {
+      case 'icon':
+        return 'asset-type-icon';
+      case 'projectPicture':
+        return 'asset-type-project';
+      case 'articlePicture':
+        return 'asset-type-article';
+      case 'staticAsset':
+        return 'asset-type-static';
+      default:
+        return 'asset-type-unknown';
+    }
+  }
+
+  editAsset(asset: StaticAsset): void {
+    this.editingAsset = asset;
+    this.editAssetName = asset.name;
+    this.editAssetDescription = asset.description || '';
+    this.editAssetType = asset.assetType;
+    this.showEditForm = true;
+  }
+
+  cancelEdit(): void {
+    this.showEditForm = false;
+    this.resetEditForm();
+  }
+
+  updateAsset(): void {
+    if (!this.editingAsset || !this.editAssetName.trim()) {
+      this.globalMessageService.handle({
+        message: 'Please provide a valid asset name',
+        isError: true
+      });
+      return;
+    }
+
+    this.isUpdating = true;
+
+    const payload: UpdateAssetPayload = {
+      id: this.editingAsset.id,
+      name: this.editAssetName.trim(),
+      description: this.editAssetDescription.trim() || undefined,
+      assetType: this.editAssetType
+    };
+
+    this.staticAssetsService.updateAsset(payload).subscribe({
+      next: () => {
+        this.globalMessageService.handle({
+          message: `Asset "${payload.name}" updated successfully`,
+          isError: false
+        });
+        this.showEditForm = false;
+        this.resetEditForm();
+        this.loadAssets();
+        this.isUpdating = false;
+      },
+      error: (error) => {
+        console.error('Update error:', error);
+        const errorMessage = error?.error?.message || 'Failed to update asset';
+        this.globalMessageService.handle({
+          message: errorMessage,
+          isError: true
+        });
+        this.isUpdating = false;
+      }
+    });
+  }
+
   private resetForm(): void {
     this.selectedFile = null;
     this.assetName = '';
     this.assetDescription = '';
     this.previewUrl = null;
     this.uploadMode = 'file';
+  }
+
+  private resetEditForm(): void {
+    this.editingAsset = null;
+    this.editAssetName = '';
+    this.editAssetDescription = '';
+    this.editAssetType = 'staticAsset';
   }
 }

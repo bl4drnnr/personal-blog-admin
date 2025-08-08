@@ -3,6 +3,7 @@ export interface StaticAsset {
   name: string;
   s3Url: string;
   description?: string;
+  assetType: 'icon' | 'projectPicture' | 'articlePicture' | 'staticAsset';
   createdAt: Date;
   updatedAt: Date;
 }
