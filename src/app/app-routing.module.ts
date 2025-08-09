@@ -21,6 +21,7 @@ import { FaqManagementComponent } from '@pages/admin/pages/faq/faq-management.co
 import { WhysSectionManagementComponent } from '@pages/admin/pages/whys-section/whys-section-management.component';
 import { ContactPageManagementComponent } from '@pages/admin/pages/contact/contact-page-management.component';
 import { SubscribePageManagementComponent } from '@pages/admin/pages/subscribe/subscribe-page-management.component';
+import { ContactMessagesComponent } from '@pages/admin/contact/messages/contact-messages.component';
 
 // About Section
 import { AboutComponent } from '@pages/admin/about/about.component';
@@ -121,6 +122,10 @@ const routes: Routes = [
   {
     path: 'admin/pages/subscribe',
     component: SubscribePageManagementComponent
+  },
+  {
+    path: 'admin/contact/messages',
+    component: ContactMessagesComponent
   },
   // About Section
   {

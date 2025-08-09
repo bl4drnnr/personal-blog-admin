@@ -51,6 +51,10 @@ export class SidebarComponent {
           route: '/admin/pages'
         },
         {
+          label: 'Contact Messages',
+          route: '/admin/contact/messages'
+        },
+        {
           label: 'Static Assets',
           route: '/admin/static-assets'
         }

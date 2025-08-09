@@ -80,7 +80,8 @@
         "src/libs/api/responses/changelog/*",
         "src/libs/api/responses/static-assets/*",
         "src/libs/api/responses/site-config/*",
-        "src/libs/api/responses/about/*"
+        "src/libs/api/responses/about/*",
+        "src/libs/api/responses/contact/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -99,7 +100,8 @@
         "src/libs/api/payloads/changelog/*",
         "src/libs/api/payloads/static-assets/*",
         "src/libs/api/payloads/site-config/*",
-        "src/libs/api/payloads/about/*"
+        "src/libs/api/payloads/about/*",
+        "src/libs/api/payloads/contact/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@guards/*": ["src/app/guards/*"],

@@ -1,0 +1,141 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Contact Messages Management</h1>
+      <p>View and manage incoming contact messages</p>
+    </div>
+
+    <div class="content-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>Contact Messages ({{ totalMessages }})</h2>
+          <div class="stats">
+            <span class="unread-count" [class.highlight]="getUnreadCount() > 0">
+              Unread: {{ getUnreadCount() }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+          <div class="search-container">
+            <basic-input
+              type="text"
+              label="Search messages"
+              placeholder="Search by name, email, or message content..."
+              [value]="searchQuery"
+              (valueChange)="searchQuery = $event; onSearchChange()"
+            />
+            <basic-button
+              *ngIf="searchQuery"
+              label="Clear"
+              [onWhite]="true"
+              (buttonClick)="clearSearch()"
+            />
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-group">
+              <basic-dropdown
+                label="Status"
+                [options]="statusOptions"
+                [defaultValue]="getSelectedStatusOption()"
+                (selectedOption)="onStatusChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Sort by"
+                [options]="sortOptions"
+                [defaultValue]="getSelectedSortOption()"
+                (selectedOption)="onSortByChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Order"
+                [options]="orderOptions"
+                [defaultValue]="getSelectedOrderOption()"
+                (selectedOption)="onOrderChange($event)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages List -->
+        <div class="messages-list" *ngIf="contactMessages.length > 0; else noMessages">
+          <div
+            *ngFor="let message of contactMessages; trackBy: trackByMessageId"
+            class="message-card"
+            [class.unread]="!message.isRead"
+          >
+            <div class="message-header">
+              <div class="sender-info">
+                <h3>{{ message.name }}</h3>
+                <span class="email">{{ message.email }}</span>
+              </div>
+              <div class="message-meta">
+                <span class="date">{{ formatDate(message.createdAt) }}</span>
+                <span class="status" [class.unread]="!message.isRead">
+                  {{ message.isRead ? 'Read' : 'Unread' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="message-content">
+              <p>{{ message.message }}</p>
+            </div>
+
+            <div class="message-actions">
+              <basic-button
+                *ngIf="!message.isRead"
+                label="Mark as Read"
+                [fillButton]="true"
+                [onWhite]="false"
+                (buttonClick)="markAsRead(message.id)"
+              />
+              <basic-button
+                *ngIf="message.isRead"
+                label="Mark as Unread"
+                [fillButton]="false"
+                [onWhite]="true"
+                (buttonClick)="markAsUnread(message.id)"
+              />
+              <basic-button
+                label="Delete"
+                [fillButton]="false"
+                [onWhite]="true"
+                (buttonClick)="deleteMessage(message.id)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noMessages>
+          <div class="no-messages">
+            <p>No contact messages found.</p>
+          </div>
+        </ng-template>
+
+        <!-- Pagination -->
+        <div class="pagination-section" *ngIf="totalMessages > 0">
+          <div class="pagination-info">
+            Showing {{ startIndex }}-{{ endIndex }} of {{ totalMessages }} messages
+          </div>
+
+          <basic-pagination
+            [itemsPerPageLabel]="'Items per page'"
+            [currentPage]="currentPage"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="totalMessages"
+            (setItemsPerPage)="onPageSizeChange($event)"
+            (setCurrentPage)="onPageChange($event)"
+            (fetchItems)="loadContactMessages()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>
