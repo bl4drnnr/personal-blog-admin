@@ -5,6 +5,8 @@ import { SubscribePageData } from '@interfaces/pages/subscribe-page-data.interfa
 import { Controller } from '@interfaces/controller.enum';
 import { NewslettersEndpoint } from '@interfaces/newsletters.enum';
 import { Method } from '@interfaces/methods.enum';
+import { ListSubscriptionsPayload } from '@payloads/list-subscriptions.interface';
+import { ListSubscriptionsResponse } from '@responses/list-subscriptions.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,26 @@ export class NewslettersService {
       action: NewslettersEndpoint.UPDATE_SUBSCRIBE_PAGE,
       method: Method.PUT,
       payload: data
+    });
+  }
+
+  listSubscriptions(
+    params: ListSubscriptionsPayload
+  ): Observable<ListSubscriptionsResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.GET,
+      controller: Controller.NEWSLETTERS,
+      action: NewslettersEndpoint.LIST_SUBSCRIPTIONS,
+      params
+    });
+  }
+
+  deleteSubscription(id: string): Observable<any> {
+    return this.apiService.apiProxyRequest({
+      method: Method.DELETE,
+      controller: Controller.NEWSLETTERS,
+      action: NewslettersEndpoint.DELETE_SUBSCRIPTION,
+      params: { id }
     });
   }
 }

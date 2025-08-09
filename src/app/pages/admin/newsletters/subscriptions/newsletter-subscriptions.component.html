@@ -1,0 +1,136 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Newsletter Subscriptions Management</h1>
+      <p>View and manage newsletter subscriptions</p>
+    </div>
+
+    <div class="content-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>Newsletter Subscriptions ({{ totalSubscriptions }})</h2>
+          <div class="stats">
+            <span class="confirmed-count">
+              Confirmed: {{ getConfirmedCount() }}
+            </span>
+            <span class="unconfirmed-count" [class.highlight]="getUnconfirmedCount() > 0">
+              Unconfirmed: {{ getUnconfirmedCount() }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="filters-section">
+          <div class="search-container">
+            <basic-input
+              type="text"
+              label="Search subscriptions"
+              placeholder="Search by email address..."
+              [value]="searchQuery"
+              (valueChange)="searchQuery = $event; onSearchChange()"
+            />
+            <basic-button
+              *ngIf="searchQuery"
+              label="Clear"
+              [onWhite]="true"
+              (buttonClick)="clearSearch()"
+            />
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-group">
+              <basic-dropdown
+                label="Status"
+                [options]="statusOptions"
+                [defaultValue]="getSelectedStatusOption()"
+                (selectedOption)="onStatusChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Sort by"
+                [options]="sortOptions"
+                [defaultValue]="getSelectedSortOption()"
+                (selectedOption)="onSortByChange($event)"
+              />
+            </div>
+
+            <div class="filter-group">
+              <basic-dropdown
+                label="Order"
+                [options]="orderOptions"
+                [defaultValue]="getSelectedOrderOption()"
+                (selectedOption)="onOrderChange($event)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscriptions List -->
+        <div class="subscriptions-list" *ngIf="subscriptions.length > 0; else noSubscriptions">
+          <div
+            *ngFor="let subscription of subscriptions; trackBy: trackBySubscriptionId"
+            class="subscription-card"
+            [class.unconfirmed]="!subscription.isConfirmed"
+          >
+            <div class="subscription-header">
+              <div class="subscriber-info">
+                <h3>{{ subscription.email }}</h3>
+              </div>
+              <div class="subscription-meta">
+                <span class="date">{{ formatDate(subscription.createdAt) }}</span>
+                <span class="status" [class.unconfirmed]="!subscription.isConfirmed">
+                  {{ subscription.isConfirmed ? 'Confirmed' : 'Unconfirmed' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="subscription-details">
+              <div class="detail-row">
+                <span class="label">Subscribed:</span>
+                <span class="value">{{ formatDate(subscription.createdAt) }}</span>
+              </div>
+              <div class="detail-row" *ngIf="subscription.updatedAt !== subscription.createdAt">
+                <span class="label">Last Updated:</span>
+                <span class="value">{{ formatDate(subscription.updatedAt) }}</span>
+              </div>
+            </div>
+
+            <div class="subscription-actions">
+              <basic-button
+                label="Delete Subscription"
+                [fillButton]="false"
+                [onWhite]="true"
+                (buttonClick)="deleteSubscription(subscription.id)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noSubscriptions>
+          <div class="no-subscriptions">
+            <p>No newsletter subscriptions found.</p>
+          </div>
+        </ng-template>
+
+        <!-- Pagination -->
+        <div class="pagination-section" *ngIf="totalSubscriptions > 0">
+          <div class="pagination-info">
+            Showing {{ startIndex }}-{{ endIndex }} of {{ totalSubscriptions }} subscriptions
+          </div>
+
+          <basic-pagination
+            [itemsPerPageLabel]="'Items per page'"
+            [currentPage]="currentPage"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="totalSubscriptions"
+            (setItemsPerPage)="onPageSizeChange($event)"
+            (setCurrentPage)="onPageChange($event)"
+            (fetchItems)="loadSubscriptions()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>

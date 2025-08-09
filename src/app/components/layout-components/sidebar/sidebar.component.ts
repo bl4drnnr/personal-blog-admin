@@ -57,6 +57,10 @@ export class SidebarComponent {
         {
           label: 'Static Assets',
           route: '/admin/static-assets'
+        },
+        {
+          label: 'Newsletter Subscriptions',
+          route: '/admin/newsletters/subscriptions'
         }
       ]
     },

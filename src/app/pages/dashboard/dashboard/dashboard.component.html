@@ -6,7 +6,7 @@
     </div>
 
     <div class="dashboard-stats">
-      <div class="stat-card">
+      <div class="stat-card" routerLink="/admin/posts">
         <div class="stat-icon">📝</div>
         <div class="stat-content">
           <h3>Articles</h3>
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
+      <div class="stat-card" routerLink="/admin/projects">
         <div class="stat-icon">🚀</div>
         <div class="stat-content">
           <h3>Projects</h3>
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
+      <div class="stat-card" routerLink="/admin/pages">
         <div class="stat-icon">📄</div>
         <div class="stat-content">
           <h3>Pages</h3>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
+      <div class="stat-card" routerLink="/admin/site/config">
         <div class="stat-icon">⚙️</div>
         <div class="stat-content">
           <h3>Settings</h3>
@@ -39,21 +39,142 @@
       </div>
     </div>
 
-    <div class="dashboard-quick-actions">
-      <h2>Quick Actions</h2>
-      <div class="action-buttons">
-        <button class="action-btn primary" routerLink="/admin/posts">
-          <span class="btn-icon">➕</span>
-          Create New Article
-        </button>
-        <button class="action-btn secondary" routerLink="/admin/projects">
-          <span class="btn-icon">🔧</span>
-          Add New Project
-        </button>
-        <button class="action-btn tertiary" routerLink="/admin/site/config">
-          <span class="btn-icon">⚙️</span>
-          Site Settings
-        </button>
+    <div class="dashboard-sections">
+      <!-- Content Management Section -->
+      <div class="dashboard-section">
+        <h2>📝 Content Management</h2>
+        <div class="section-grid">
+          <div class="section-card" routerLink="/admin/posts">
+            <span class="card-icon">📄</span>
+            <h4>Articles</h4>
+            <p>Manage blog posts</p>
+          </div>
+          <div class="section-card" routerLink="/admin/projects">
+            <span class="card-icon">🚀</span>
+            <h4>Projects</h4>
+            <p>Showcase portfolio</p>
+          </div>
+          <div class="section-card" routerLink="/admin/pages">
+            <span class="card-icon">📋</span>
+            <h4>Pages</h4>
+            <p>Static content</p>
+          </div>
+          <div class="section-card" routerLink="/admin/contact/messages">
+            <span class="card-icon">✉️</span>
+            <h4>Contact Messages</h4>
+            <p>User inquiries</p>
+          </div>
+          <div class="section-card" routerLink="/admin/static-assets">
+            <span class="card-icon">🎨</span>
+            <h4>Static Assets</h4>
+            <p>Media management</p>
+          </div>
+          <div class="section-card" routerLink="/admin/newsletters/subscriptions">
+            <span class="card-icon">📧</span>
+            <h4>Newsletter Subscriptions</h4>
+            <p>Email subscribers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section Management -->
+      <div class="dashboard-section">
+        <h2>👤 About Section</h2>
+        <div class="section-grid">
+          <div class="section-card" routerLink="/admin/about">
+            <span class="card-icon">📖</span>
+            <h4>About Page</h4>
+            <p>Personal information</p>
+          </div>
+          <div class="section-card" routerLink="/admin/experiences">
+            <span class="card-icon">💼</span>
+            <h4>Experiences</h4>
+            <p>Work history</p>
+          </div>
+          <div class="section-card" routerLink="/admin/certificates">
+            <span class="card-icon">🏆</span>
+            <h4>Certificates</h4>
+            <p>Achievements</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal Pages -->
+      <div class="dashboard-section">
+        <h2>📋 Legal & Information</h2>
+        <div class="section-grid">
+          <div class="section-card" routerLink="/admin/changelog/entries">
+            <span class="card-icon">📝</span>
+            <h4>Changelog Entries</h4>
+            <p>Version history</p>
+          </div>
+          <div class="section-card" routerLink="/admin/changelog/page">
+            <span class="card-icon">⚙️</span>
+            <h4>Changelog Settings</h4>
+            <p>Page configuration</p>
+          </div>
+          <div class="section-card" routerLink="/admin/license/tiles">
+            <span class="card-icon">⚖️</span>
+            <h4>License Tiles</h4>
+            <p>License information</p>
+          </div>
+          <div class="section-card" routerLink="/admin/license/page">
+            <span class="card-icon">⚙️</span>
+            <h4>License Settings</h4>
+            <p>Page configuration</p>
+          </div>
+          <div class="section-card" routerLink="/admin/privacy/sections">
+            <span class="card-icon">🔒</span>
+            <h4>Privacy Sections</h4>
+            <p>Privacy policy content</p>
+          </div>
+          <div class="section-card" routerLink="/admin/privacy/page">
+            <span class="card-icon">⚙️</span>
+            <h4>Privacy Settings</h4>
+            <p>Page configuration</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Management -->
+      <div class="dashboard-section">
+        <h2>⚙️ System Management</h2>
+        <div class="section-grid">
+          <div class="section-card" routerLink="/admin/site/config">
+            <span class="card-icon">🌐</span>
+            <h4>Site Configuration</h4>
+            <p>Global settings</p>
+          </div>
+          <div class="section-card" routerLink="/users/user-info">
+            <span class="card-icon">👤</span>
+            <h4>User Info</h4>
+            <p>Account details</p>
+          </div>
+          <div class="section-card" routerLink="/security/settings">
+            <span class="card-icon">🔐</span>
+            <h4>Security Settings</h4>
+            <p>2FA & authentication</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="dashboard-section">
+        <h2>⚡ Quick Actions</h2>
+        <div class="action-buttons">
+          <button class="action-btn primary" routerLink="/admin/posts">
+            <span class="btn-icon">➕</span>
+            Create New Article
+          </button>
+          <button class="action-btn secondary" routerLink="/admin/projects">
+            <span class="btn-icon">🔧</span>
+            Add New Project
+          </button>
+          <button class="action-btn tertiary" routerLink="/admin/site/config">
+            <span class="btn-icon">⚙️</span>
+            Site Settings
+          </button>
+        </div>
       </div>
     </div>
   </div>

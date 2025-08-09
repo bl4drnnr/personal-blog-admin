@@ -81,7 +81,8 @@
         "src/libs/api/responses/static-assets/*",
         "src/libs/api/responses/site-config/*",
         "src/libs/api/responses/about/*",
-        "src/libs/api/responses/contact/*"
+        "src/libs/api/responses/contact/*",
+        "src/libs/api/responses/newsletter/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -101,7 +102,8 @@
         "src/libs/api/payloads/static-assets/*",
         "src/libs/api/payloads/site-config/*",
         "src/libs/api/payloads/about/*",
-        "src/libs/api/payloads/contact/*"
+        "src/libs/api/payloads/contact/*",
+        "src/libs/api/payloads/newsletter/*"
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@guards/*": ["src/app/guards/*"],
