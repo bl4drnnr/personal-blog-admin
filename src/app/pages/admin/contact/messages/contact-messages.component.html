@@ -90,10 +90,16 @@
 
             <div class="message-actions">
               <basic-button
-                *ngIf="!message.isRead"
-                label="Mark as Read"
+                label="Reply"
                 [fillButton]="true"
                 [onWhite]="false"
+                (buttonClick)="openReplyModal(message)"
+              />
+              <basic-button
+                *ngIf="!message.isRead"
+                label="Mark as Read"
+                [fillButton]="false"
+                [onWhite]="true"
                 (buttonClick)="markAsRead(message.id)"
               />
               <basic-button
@@ -138,4 +144,61 @@
       </div>
     </div>
   </div>
+
+  <!-- Reply Modal -->
+  <basic-modal
+    [header]="'Reply to ' + (replyingToMessage?.name || '')"
+    [showModal]="showReplyModal"
+    (closeModal)="closeReplyModal()"
+  >
+    <div class="original-message">
+      <h4>Original Message:</h4>
+      <div class="original-content">
+        <div class="original-sender">
+          <strong>From:</strong> {{ replyingToMessage?.name }} ({{ replyingToMessage?.email }})
+        </div>
+        <div class="original-text">
+          <strong>Message:</strong>
+          <p>{{ replyingToMessage?.message }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reply-form">
+      <h4>Your Reply:</h4>
+      <basic-input
+        type="text"
+        label="Subject"
+        placeholder="Enter email subject"
+        [value]="replyForm.subject"
+        (valueChange)="replyForm.subject = $event"
+      />
+      
+      <div class="textarea-container">
+        <label class="textarea-label">Message</label>
+        <textarea
+          class="reply-textarea"
+          placeholder="Type your reply here..."
+          [(ngModel)]="replyForm.message"
+          rows="6"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <basic-button
+        label="Cancel"
+        [fillButton]="false"
+        [onWhite]="true"
+        (buttonClick)="closeReplyModal()"
+      />
+      <basic-button
+        label="Send Reply"
+        [fillButton]="true"
+        [onWhite]="false"
+        [disabled]="!replyForm.subject || !replyForm.message"
+        (buttonClick)="sendReply()"
+      />
+    </div>
+  </basic-modal>
 </layout-default>

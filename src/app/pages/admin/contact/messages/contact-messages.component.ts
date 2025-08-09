@@ -29,6 +29,14 @@ export class ContactMessagesComponent extends BaseAdminComponent implements OnIn
   sortBy: string = 'createdAt';
   sortOrder: string = 'desc';
 
+  // Reply modal
+  showReplyModal: boolean = false;
+  replyingToMessage: ContactMessage | null = null;
+  replyForm = {
+    subject: '',
+    message: ''
+  };
+
   // Dropdown options
   sortOptions: DropdownInterface[] = [
     { key: 'createdAt', value: 'Created Date' },
@@ -234,5 +242,59 @@ export class ContactMessagesComponent extends BaseAdminComponent implements OnIn
 
   trackByMessageId(index: number, message: ContactMessage): string {
     return message.id;
+  }
+
+  // Reply functionality
+  openReplyModal(message: ContactMessage): void {
+    this.replyingToMessage = message;
+    this.replyForm.subject = `Re: Contact Form Message from ${message.name}`;
+    this.replyForm.message = '';
+    this.showReplyModal = true;
+
+    // Mark message as read when opening reply modal
+    if (!message.isRead) {
+      this.markAsRead(message.id);
+    }
+  }
+
+  closeReplyModal(): void {
+    this.showReplyModal = false;
+    this.replyingToMessage = null;
+    this.replyForm = {
+      subject: '',
+      message: ''
+    };
+  }
+
+  sendReply(): void {
+    if (
+      !this.replyingToMessage ||
+      !this.replyForm.subject ||
+      !this.replyForm.message
+    ) {
+      this.globalMessageService.handleError('Please fill in all required fields');
+      return;
+    }
+
+    const replyData = {
+      messageId: this.replyingToMessage.id,
+      subject: this.replyForm.subject,
+      reply: this.replyForm.message
+    };
+
+    this.contactService.replyToMessage(replyData).subscribe({
+      next: () => {
+        this.globalMessageService.handle({
+          message: `Reply sent successfully to ${this.replyingToMessage?.name}`
+        });
+        this.closeReplyModal();
+      },
+      error: (error) => {
+        console.error('Failed to send reply:', error);
+        this.globalMessageService.handleError(
+          'Failed to send reply. Please try again.'
+        );
+      }
+    });
   }
 }

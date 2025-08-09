@@ -6,6 +6,8 @@ import { Controller } from '@interfaces/controller.enum';
 import { ContactEndpoint } from '@interfaces/contact.enum';
 import { ListContactMessagesPayload } from '@payloads/list-contact-messages.interface';
 import { ListContactMessagesResponse } from '@responses/list-contact-messages.interface';
+import { ReplyToMessageResponse } from '@responses/reply-to-message.interface';
+import { ReplyToMessagePayload } from '@payloads/reply-to-message.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +50,17 @@ export class ContactService {
       controller: Controller.CONTACT,
       action: ContactEndpoint.DELETE,
       params: { id }
+    });
+  }
+
+  replyToMessage(
+    replyData: ReplyToMessagePayload
+  ): Observable<ReplyToMessageResponse> {
+    return this.apiService.apiProxyRequest({
+      method: Method.POST,
+      controller: Controller.CONTACT,
+      action: ContactEndpoint.REPLY,
+      payload: replyData
     });
   }
 }
