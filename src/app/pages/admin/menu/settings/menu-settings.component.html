@@ -1,0 +1,156 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Menu Page Settings</h1>
+      <p>Configure menu page layout and settings</p>
+    </div>
+
+    <div class="content-section">
+      <!-- Basic Page Content ---->
+      <div class="card">
+        <div class="card-header">
+          <h2>Basic Page Content</h2>
+          <basic-button
+            label="Save Settings"
+            [fillButton]="true"
+            (buttonClick)="savePageSettings()"
+          ></basic-button>
+        </div>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <basic-input
+                label="Logo Text"
+                type="text"
+                placeholder="Your Site Name"
+                [(value)]="logoText"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Breadcrumb Text"
+                type="text"
+                placeholder="Menu"
+                [(value)]="breadcrumbText"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Footer Text"
+                placeholder="Text displayed in the page footer"
+                [(value)]="footerText"
+              ></basic-textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Section ---->
+      <div class="card">
+        <div class="card-header">
+          <h2>Hero Section</h2>
+        </div>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <asset-selector
+                label="Main Hero Image"
+                placeholder="Search for main hero image..."
+                [(ngModel)]="heroImageMainId"
+              ></asset-selector>
+              <basic-input
+                label="Main Image Alt Text"
+                type="text"
+                placeholder="Description of main hero image"
+                [(value)]="heroImageMainAlt"
+              ></basic-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO Settings ---->
+      <div class="card">
+        <div class="card-header">
+          <h2>SEO Settings</h2>
+        </div>
+
+        <div class="card-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <basic-input
+                label="Meta Title"
+                type="text"
+                placeholder="Menu - Personal Blog"
+                [(value)]="metaTitle"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Meta Description"
+                placeholder="Explore all the features and pages available on our personal blog"
+                [(value)]="metaDescription"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Meta Keywords"
+                placeholder="menu, navigation, sitemap, blog features"
+                [(value)]="metaKeywords"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <basic-input
+                label="Open Graph Title"
+                type="text"
+                placeholder="Menu - Personal Blog"
+                [(value)]="ogTitle"
+              ></basic-input>
+            </div>
+
+            <div class="form-group">
+              <basic-textarea
+                label="Open Graph Description"
+                placeholder="Explore all the features and pages available on our personal blog"
+                [(value)]="ogDescription"
+              ></basic-textarea>
+            </div>
+
+            <div class="form-group">
+              <asset-selector
+                label="Open Graph Image"
+                placeholder="Search for Open Graph image..."
+                [(ngModel)]="ogImageId"
+              ></asset-selector>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Structured Data (JSON-LD)</label>
+            <basic-textarea
+              placeholder='{"@context": "https://schema.org", "@type": "WebPage", "name": "Menu", "description": "Site navigation and features"}'
+              [(value)]="structuredDataJson"
+              rows="10"
+            ></basic-textarea>
+            <small class="form-text">Enter valid JSON-LD structured data for search engines</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="save-section">
+        <basic-button
+          label="Save All Settings"
+          [fillButton]="true"
+          (buttonClick)="savePageSettings()"
+        ></basic-button>
+      </div>
+    </div>
+  </div>
+</layout-default>

@@ -22,6 +22,7 @@ import { WhysSectionEndpoint } from '@interfaces/whys-section.enum';
 import { NewslettersEndpoint } from '@interfaces/newsletters.enum';
 import { ProjectsEndpoint } from '@interfaces/projects.enum';
 import { ContactEndpoint } from '@interfaces/contact.enum';
+import { MenuEndpoint } from '@interfaces/menu.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -45,7 +46,8 @@ type EndpointsType =
   | WhysSectionEndpoint
   | NewslettersEndpoint
   | ProjectsEndpoint
-  | ContactEndpoint;
+  | ContactEndpoint
+  | MenuEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

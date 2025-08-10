@@ -1,0 +1,181 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Menu Tiles Management</h1>
+      <p>Manage menu navigation tiles with icons and images</p>
+    </div>
+
+    <div class="content-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>Menu Tiles</h2>
+          <div class="button-row">
+            <basic-button
+              label="Add New Tile"
+              [fillButton]="true"
+              (buttonClick)="openCreateModal()"
+            ></basic-button>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div *ngIf="tiles.length === 0" class="empty-state">
+            <h3>No menu tiles yet</h3>
+            <p>Add your first menu tile to get started.</p>
+          </div>
+
+          <div *ngIf="tiles.length > 0" class="admin-menu-grid">
+            <div *ngFor="let tile of tiles"
+                 class="admin-tile-wrapper"
+                 [attr.data-sort-order]="tile.sortOrder">
+              <div class="admin-tile-item">
+                <!-- Tile Preview (similar to frontend) -->
+                <div class="tile-preview-section">
+                  <div class="tile-preview">
+                    <div class="preview-background"></div>
+                    <div class="preview-icon-wrapper">
+                      <div class="preview-icon">
+                        <span class="icon-placeholder">🎯</span>
+                      </div>
+                    </div>
+                    <div class="preview-title">
+                      <h4>{{ tile.title }}</h4>
+                    </div>
+                    <div class="preview-link">
+                      <span>{{ tile.link }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tile Details -->
+                <div class="tile-details-section">
+                  <div class="tile-info">
+                    <h3 class="tile-title">{{ tile.title }}</h3>
+                    <p class="tile-link"><strong>Link:</strong> {{ tile.link }}</p>
+
+                    <div class="tile-assets">
+                      <div class="asset-info">
+                        <span class="asset-label">Icon Alt:</span>
+                        <span class="asset-alt">{{ tile.iconAlt }}</span>
+                      </div>
+                      <div class="asset-info">
+                        <span class="asset-label">Image Alt:</span>
+                        <span class="asset-alt">{{ tile.imageAlt }}</span>
+                      </div>
+                    </div>
+
+                    <div class="tile-meta">
+                      <span class="sort-order-badge">Sort: {{ tile.sortOrder || 0 }}</span>
+                    </div>
+                  </div>
+
+                  <div class="tile-actions">
+                    <basic-button
+                      label="Edit"
+                      size="small"
+                      (buttonClick)="openEditModal(tile)"
+                    ></basic-button>
+                    <basic-button
+                      label="Delete"
+                      size="small"
+                      [danger]="true"
+                      (buttonClick)="deleteTile(tile)"
+                    ></basic-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tile Modal -->
+    <basic-modal
+      [header]="modalMode === 'create' ? 'Add New Menu Tile' : 'Edit Menu Tile'"
+      [showModal]="showModal"
+      (closeModal)="closeModal()"
+    >
+      <div class="tile-form">
+        <div class="form-group">
+          <basic-input
+            label="Title"
+            type="text"
+            placeholder="e.g., Home, About, Blog"
+            [(value)]="title"
+          ></basic-input>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Link"
+            type="text"
+            placeholder="e.g., /home, /about, /blog"
+            [(value)]="link"
+          ></basic-input>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <asset-selector
+              label="Icon Asset"
+              placeholder="Search for icon asset..."
+              [(ngModel)]="iconId"
+            ></asset-selector>
+          </div>
+
+          <div class="form-group">
+            <basic-input
+              label="Icon Alt Text"
+              type="text"
+              placeholder="Description of the icon"
+              [(value)]="iconAlt"
+            ></basic-input>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <asset-selector
+              label="Image Asset"
+              placeholder="Search for image asset..."
+              [(ngModel)]="imageId"
+            ></asset-selector>
+          </div>
+
+          <div class="form-group">
+            <basic-input
+              label="Image Alt Text"
+              type="text"
+              placeholder="Description of the image"
+              [(value)]="imageAlt"
+            ></basic-input>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <basic-input
+            label="Sort Order"
+            type="number"
+            placeholder="0"
+            [(value)]="sortOrderStr"
+          ></basic-input>
+        </div>
+
+        <div class="modal-actions">
+          <div class="modal-button-group">
+            <basic-button
+              label="Cancel"
+              (buttonClick)="closeModal()"
+            ></basic-button>
+            <basic-button
+              [label]="modalMode === 'create' ? 'Create Tile' : 'Update Tile'"
+              [fillButton]="true"
+              (buttonClick)="saveTile()"
+            ></basic-button>
+          </div>
+        </div>
+      </div>
+    </basic-modal>
+  </div>
+</layout-default>

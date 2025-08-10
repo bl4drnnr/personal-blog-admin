@@ -41,6 +41,10 @@ import { LicenseSettingsComponent } from '@pages/admin/license/settings/license-
 import { PrivacySectionsComponent } from '@pages/admin/privacy/sections/privacy-sections.component';
 import { PrivacySettingsComponent } from '@pages/admin/privacy/settings/privacy-settings.component';
 
+// Menu
+import { MenuTilesComponent } from '@pages/admin/menu/tiles/menu-tiles.component';
+import { MenuSettingsComponent } from '@pages/admin/menu/settings/menu-settings.component';
+
 // Static Assets
 import { StaticAssetsComponent } from '@pages/admin/static-assets/static-assets.component';
 
@@ -87,6 +91,9 @@ const adminComponents = [
   // Privacy Policy
   PrivacySectionsComponent,
   PrivacySettingsComponent,
+  // Menu
+  MenuTilesComponent,
+  MenuSettingsComponent,
   // Static Assets
   StaticAssetsComponent,
   // User Management

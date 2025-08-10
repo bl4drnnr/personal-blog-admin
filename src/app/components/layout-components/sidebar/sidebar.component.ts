@@ -83,6 +83,20 @@ export class SidebarComponent {
       ]
     },
     {
+      label: 'Menu',
+      icon: '🗂️',
+      children: [
+        {
+          label: 'Menu Tiles',
+          route: '/admin/menu/tiles'
+        },
+        {
+          label: 'Menu Settings',
+          route: '/admin/menu/page'
+        }
+      ]
+    },
+    {
       label: 'Changelog',
       icon: '📋',
       children: [

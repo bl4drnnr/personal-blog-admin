@@ -100,7 +100,9 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
       articlePublished: false
     };
 
-    // TODO FIX THE ISSUE WITH DISPLAY PICTURES ON THE MAIN PAGE
+    // TODO: ADD THE MODIFICATION OF OTHER PAGES (NOT FOUND, CONFIRMATION, ETC.)
+    // TODO: SENDGRID - TEST
+    // TODO: SCRIPT TO TRIGGER THE DEPLOYMENT
     this.articlesService.createArticle(payload).subscribe({
       next: async (createdArticle) => {
         this.globalMessageService.handle({

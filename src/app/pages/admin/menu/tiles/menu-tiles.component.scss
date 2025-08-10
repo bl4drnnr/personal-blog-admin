@@ -1,0 +1,339 @@
+// Enhanced Menu Tiles Admin Styles
+
+// ============================================
+// ADMIN MENU GRID SYSTEM (inspired by frontend)
+// ============================================
+
+.admin-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 1.5rem;
+  padding: 1rem 0;
+  align-items: stretch; // Ensures all items stretch to same height
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
+}
+
+.admin-tile-wrapper {
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease-out forwards;
+
+  // Stagger animation for each tile
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+  &:nth-child(5) { animation-delay: 0.5s; }
+  &:nth-child(6) { animation-delay: 0.6s; }
+  &:nth-child(7) { animation-delay: 0.7s; }
+  &:nth-child(8) { animation-delay: 0.8s; }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-tile-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1), 
+    0 2px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  height: 100%; // Ensures full height within grid item
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.15), 
+      0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: #d1d5db;
+  }
+}
+
+// ============================================
+// TILE PREVIEW SECTION (mini frontend replica)
+// ============================================
+
+.tile-preview-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tile-preview {
+  position: relative;
+  height: 120px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: default;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    transition: left 0.4s ease;
+    z-index: 2;
+  }
+
+  &:hover::before {
+    left: 0;
+  }
+}
+
+.preview-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0.8;
+}
+
+.preview-icon-wrapper {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preview-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon-placeholder {
+    font-size: 12px;
+    filter: grayscale(100%);
+  }
+}
+
+.preview-title {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 3;
+
+  h4 {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+  }
+}
+
+.preview-link {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 3;
+
+  span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// ============================================
+// TILE DETAILS SECTION
+// ============================================
+
+.tile-details-section {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1; // Takes up remaining space to push actions to bottom
+}
+
+.tile-info {
+  flex: 1;
+}
+
+.tile-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.tile-link {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+
+  strong {
+    color: #374151;
+  }
+}
+
+.tile-assets {
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.asset-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .asset-label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 70px;
+  }
+
+  .asset-alt {
+    color: #6b7280;
+    font-style: italic;
+    flex: 1;
+  }
+}
+
+.tile-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sort-order-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+}
+
+// ============================================
+// TILE ACTIONS
+// ============================================
+
+.tile-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+  justify-content: flex-end;
+}
+
+// ============================================
+// HEADER BUTTON SPACING
+// ============================================
+
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+// ============================================
+// MODAL IMPROVEMENTS
+// ============================================
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  
+  .form-group {
+    flex: 1;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.modal-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.modal-button-group {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+
+  @media (max-width: 640px) {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+
+@media (max-width: 1024px) {
+  .admin-menu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tile-preview {
+    height: 100px;
+  }
+
+  .preview-title h4 {
+    font-size: 0.875rem;
+  }
+
+  .tile-details-section {
+    padding: 1rem;
+  }
+
+  .tile-title {
+    font-size: 1.125rem;
+  }
+
+  .tile-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
