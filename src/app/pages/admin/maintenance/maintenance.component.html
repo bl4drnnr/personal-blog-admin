@@ -1,0 +1,175 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Maintenance Mode</h1>
+      <p>Control site maintenance mode and display messages</p>
+    </div>
+
+    <div class="content-section" *ngIf="!loading">
+
+      <!-- Current Status Card -->
+      <div class="card status-card">
+        <div class="status-header">
+          <h2>Current Status</h2>
+          <div class="status-indicator">
+            <span class="status-dot" [class.active]="isActive" [class.inactive]="!isActive"></span>
+            <span class="status-text">{{ isActive ? 'ACTIVE' : 'INACTIVE' }}</span>
+          </div>
+        </div>
+
+        <div class="status-info" *ngIf="maintenanceMode">
+          <div class="info-row">
+            <strong>Message:</strong>
+            <span>{{ maintenanceMode.message }}</span>
+          </div>
+          <div class="info-row">
+            <strong>From:</strong>
+            <span>{{ formatDate(maintenanceMode.fromDate) }}</span>
+          </div>
+          <div class="info-row">
+            <strong>To:</strong>
+            <span>{{ formatDate(maintenanceMode.toDate) }}</span>
+          </div>
+        </div>
+
+        <!-- Quick Toggle -->
+        <div class="quick-actions">
+          <basic-button
+            [label]="isActive ? 'Deactivate Maintenance Mode' : 'Activate Maintenance Mode'"
+            [disabled]="isFormDisabled()"
+            (click)="onToggleMaintenanceMode()">
+          </basic-button>
+        </div>
+      </div>
+
+      <!-- Configuration Settings -->
+      <div class="card">
+        <h2>Maintenance Settings</h2>
+
+        <div class="maintenance-settings">
+
+          <!-- Activation Toggle -->
+          <div class="form-row">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                [(ngModel)]="isActive"
+                [disabled]="isFormDisabled()">
+              <span class="checkbox-text">Enable Maintenance Mode</span>
+            </label>
+          </div>
+
+          <!-- Message -->
+          <div class="form-row">
+            <basic-textarea
+              label="Maintenance Message"
+              placeholder="Enter the message to display to users during maintenance"
+              [(value)]="message"
+              [disabled]="isFormDisabled()"
+              [showError]="messageError"
+              [errorMessage]="messageErrorMessage"
+              [minLength]="1"
+              [maxLength]="500"
+              (valueChange)="onMessageChange($event)"
+              (incorrectInput)="onMessageError($event)">
+            </basic-textarea>
+          </div>
+
+          <!-- From Date -->
+          <div class="form-row">
+            <basic-input
+              label="From Date & Time"
+              type="datetime-local"
+              [(value)]="fromDate"
+              [disabled]="isFormDisabled()"
+              [showError]="fromDateError"
+              [errorMessage]="fromDateErrorMessage"
+              (valueChange)="onFromDateChange($event)"
+              (incorrectInput)="onFromDateError($event)">
+            </basic-input>
+          </div>
+
+          <!-- To Date -->
+          <div class="form-row">
+            <basic-input
+              label="To Date & Time"
+              type="datetime-local"
+              [(value)]="toDate"
+              [disabled]="isFormDisabled()"
+              [showError]="toDateError"
+              [errorMessage]="toDateErrorMessage"
+              (valueChange)="onToDateChange($event)"
+              (incorrectInput)="onToDateError($event)">
+            </basic-input>
+          </div>
+
+          <!-- Hero Image -->
+          <div class="form-row">
+            <asset-selector
+              label="Hero Image"
+              [(ngModel)]="heroImageId">
+            </asset-selector>
+          </div>
+
+          <!-- Hero Title -->
+          <div class="form-row">
+            <basic-input
+              label="Hero Title"
+              placeholder="Enter the hero section title"
+              [(value)]="heroTitle"
+              [disabled]="isFormDisabled()"
+              (valueChange)="onHeroTitleChange($event)">
+            </basic-input>
+          </div>
+
+          <!-- Footer Text -->
+          <div class="form-row">
+            <basic-input
+              label="Footer Text"
+              placeholder="Enter the footer text"
+              [(value)]="footerText"
+              [disabled]="isFormDisabled()"
+              (valueChange)="onFooterTextChange($event)">
+            </basic-input>
+          </div>
+
+          <!-- Page Title -->
+          <div class="form-row">
+            <basic-input
+              label="Page Title"
+              placeholder="Enter the main page title"
+              [(value)]="title"
+              [disabled]="isFormDisabled()"
+              (valueChange)="onTitleChange($event)">
+            </basic-input>
+          </div>
+
+          <!-- Info Note -->
+          <div class="info-note">
+            <p><strong>Note:</strong> The dates above are purely for display purposes to inform users.
+            Maintenance mode will remain active until you manually deactivate it.</p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions">
+            <basic-button
+              label="Save Settings"
+              type="primary"
+              [disabled]="isFormDisabled()"
+              (click)="onSubmit()">
+            </basic-button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+      <div class="loading-spinner">
+        <p>Loading maintenance settings...</p>
+      </div>
+    </div>
+
+  </div>
+</layout-default>

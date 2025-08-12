@@ -31,6 +31,10 @@ export class SidebarComponent {
         {
           label: 'Site Settings',
           route: '/admin/site/config'
+        },
+        {
+          label: 'Maintenance Mode',
+          route: '/admin/maintenance'
         }
       ]
     },

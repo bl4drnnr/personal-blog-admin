@@ -58,7 +58,7 @@
         "src/libs/api/endpoints/*",
         "src/libs/api/methods/*",
         "src/libs/api/errors/*",
-        "src/libs/enums/api/*"
+        "src/libs/enums/api/*",
       ],
       "@responses/*": [
         "src/libs/api/responses/auth/*",
@@ -83,7 +83,8 @@
         "src/libs/api/responses/about/*",
         "src/libs/api/responses/contact/*",
         "src/libs/api/responses/newsletter/*",
-        "src/libs/api/responses/menu/*"
+        "src/libs/api/responses/menu/*",
+        "src/libs/api/responses/maintenance/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",

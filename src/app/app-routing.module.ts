@@ -47,6 +47,9 @@ import { MenuSettingsComponent } from '@pages/admin/menu/settings/menu-settings.
 // Static Assets
 import { StaticAssetsComponent } from '@pages/admin/static-assets/static-assets.component';
 
+// Maintenance Mode
+import { MaintenanceComponent } from '@pages/admin/maintenance/maintenance.component';
+
 // User Management
 import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
@@ -185,6 +188,11 @@ const routes: Routes = [
   {
     path: 'admin/static-assets',
     component: StaticAssetsComponent
+  },
+  // Maintenance Mode
+  {
+    path: 'admin/maintenance',
+    component: MaintenanceComponent
   },
   // User Management
   {

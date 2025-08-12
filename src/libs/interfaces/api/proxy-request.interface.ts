@@ -23,6 +23,7 @@ import { NewslettersEndpoint } from '@interfaces/newsletters.enum';
 import { ProjectsEndpoint } from '@interfaces/projects.enum';
 import { ContactEndpoint } from '@interfaces/contact.enum';
 import { MenuEndpoint } from '@interfaces/menu.enum';
+import { MaintenanceEndpoint } from '@interfaces/maintenance.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -47,7 +48,8 @@ type EndpointsType =
   | NewslettersEndpoint
   | ProjectsEndpoint
   | ContactEndpoint
-  | MenuEndpoint;
+  | MenuEndpoint
+  | MaintenanceEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

@@ -18,5 +18,6 @@ export enum Controller {
   CONTACT = 'contact',
   NEWSLETTERS = 'newsletters',
   PROJECTS = 'projects',
-  MENU = 'menu'
+  MENU = 'menu',
+  MAINTENANCE = 'maintenance'
 }
