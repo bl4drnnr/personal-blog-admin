@@ -5,8 +5,8 @@ import { Method } from '@interfaces/methods.enum';
 import { Controller } from '@interfaces/controller.enum';
 import { MaintenanceResponse } from '@responses/maintenance.interface';
 import { MaintenanceEndpoint } from '@interfaces/maintenance.enum';
-import { UpdateMaintenancePayload } from '../../../libs/api/payloads/maintenance/update-maintenance.interface';
 import { MaintenanceUpdatedResponse } from '@responses/maintenance-updated.interface';
+import { UpdateMaintenancePayload } from '@payloads/update-maintenance.interface';
 
 @Injectable({
   providedIn: 'root'

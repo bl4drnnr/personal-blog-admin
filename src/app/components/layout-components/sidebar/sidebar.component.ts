@@ -35,6 +35,10 @@ export class SidebarComponent {
         {
           label: 'Maintenance Mode',
           route: '/admin/maintenance'
+        },
+        {
+          label: 'Password Protection',
+          route: '/admin/password-protection'
         }
       ]
     },

@@ -50,6 +50,9 @@ import { StaticAssetsComponent } from '@pages/admin/static-assets/static-assets.
 // Maintenance Mode
 import { MaintenanceComponent } from '@pages/admin/maintenance/maintenance.component';
 
+// Password Protection Mode
+import { PasswordProtectionComponent } from '@pages/admin/password-protection/password-protection.component';
+
 // User Management
 import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
@@ -193,6 +196,11 @@ const routes: Routes = [
   {
     path: 'admin/maintenance',
     component: MaintenanceComponent
+  },
+  // Password Protection Mode
+  {
+    path: 'admin/password-protection',
+    component: PasswordProtectionComponent
   },
   // User Management
   {

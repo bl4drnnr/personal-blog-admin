@@ -19,5 +19,6 @@ export enum Controller {
   NEWSLETTERS = 'newsletters',
   PROJECTS = 'projects',
   MENU = 'menu',
-  MAINTENANCE = 'maintenance'
+  MAINTENANCE = 'maintenance',
+  PASSWORD_PROTECTION = 'password-protection'
 }
