@@ -7,4 +7,5 @@ export interface MaintenanceResponse {
   heroTitle: string;
   footerText: string;
   title: string;
+  metaTitle: string;
 }

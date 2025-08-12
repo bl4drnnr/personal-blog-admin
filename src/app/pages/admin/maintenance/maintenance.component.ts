@@ -26,6 +26,7 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
   heroTitle = '';
   footerText = '';
   title = '';
+  metaTitle = '';
 
   // Field error states
   messageError = false;
@@ -80,6 +81,7 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
     this.heroTitle = maintenance.heroTitle;
     this.footerText = maintenance.footerText;
     this.title = maintenance.title;
+    this.metaTitle = maintenance.metaTitle;
 
     // Format dates for input fields (YYYY-MM-DDTHH:MM format for datetime-local)
     if (maintenance.fromDate) {
@@ -141,6 +143,10 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
     this.title = value;
   }
 
+  onMetaTitleChange(value: string): void {
+    this.metaTitle = value;
+  }
+
   private validateRequiredFields(): boolean {
     let isValid = true;
 
@@ -193,7 +199,8 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
       heroImageId: this.heroImageId.trim(),
       heroTitle: this.heroTitle.trim(),
       footerText: this.footerText.trim(),
-      title: this.title.trim()
+      title: this.title.trim(),
+      metaTitle: this.metaTitle.trim()
     };
 
     this.maintenanceService.updateMaintenance(payload).subscribe({

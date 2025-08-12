@@ -5,4 +5,5 @@ export interface PasswordProtectionResponse {
   heroImageId: string;
   heroTitle: string;
   footerText: string;
+  metaTitle: string;
 }

@@ -23,6 +23,10 @@
             <span>{{ maintenanceMode.message }}</span>
           </div>
           <div class="info-row">
+            <strong>Meta Title:</strong>
+            <span>{{ maintenanceMode.metaTitle }}</span>
+          </div>
+          <div class="info-row">
             <strong>From:</strong>
             <span>{{ formatDate(maintenanceMode.fromDate) }}</span>
           </div>
@@ -141,6 +145,17 @@
               [(value)]="title"
               [disabled]="isFormDisabled()"
               (valueChange)="onTitleChange($event)">
+            </basic-input>
+          </div>
+
+          <!-- Meta Title -->
+          <div class="form-row">
+            <basic-input
+              label="Meta Title (Browser Tab)"
+              placeholder="Enter the page title shown in browser tab"
+              [(value)]="metaTitle"
+              [disabled]="isFormDisabled()"
+              (valueChange)="onMetaTitleChange($event)">
             </basic-input>
           </div>
 

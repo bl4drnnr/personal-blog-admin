@@ -24,8 +24,9 @@ export class PasswordProtectionComponent
   durationHours = 24;
   customDuration = 24;
   heroImageId = '';
-  heroTitle = 'Site Protected';
-  footerText = 'Please contact administrator for access';
+  heroTitle = '';
+  footerText = '';
+  metaTitle = '';
 
   // UI state
   loading = true;
@@ -143,6 +144,10 @@ export class PasswordProtectionComponent
     this.heroTitle = value;
   }
 
+  onMetaTitleChange(value: string) {
+    this.metaTitle = value;
+  }
+
   onFooterTextChange(value: string) {
     this.footerText = value;
   }
@@ -161,15 +166,16 @@ export class PasswordProtectionComponent
       durationHours: finalDurationHours,
       heroImageId: this.heroImageId,
       heroTitle: this.heroTitle,
-      footerText: this.footerText
+      footerText: this.footerText,
+      metaTitle: this.metaTitle
     };
 
     this.passwordProtectionService.updatePasswordProtectionMode(payload).subscribe({
-      next: async () => {
+      next: () => {
         this.globalMessageService.handle({
           message: 'Password protection settings updated successfully'
         });
-        await this.loadPasswordProtectionSettings();
+        this.loadPasswordProtectionSettings();
         this.password = '';
       },
       error: (error) => {
