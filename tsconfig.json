@@ -85,7 +85,8 @@
         "src/libs/api/responses/newsletter/*",
         "src/libs/api/responses/menu/*",
         "src/libs/api/responses/maintenance/*",
-        "src/libs/api/responses/password-protection/*"
+        "src/libs/api/responses/password-protection/*",
+        "src/libs/api/responses/deployment/*"
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",

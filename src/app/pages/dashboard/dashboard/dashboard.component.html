@@ -40,6 +40,30 @@
     </div>
 
     <div class="dashboard-sections">
+      <div class="dashboard-section">
+        <h2>⚡ Quick Actions</h2>
+        <div class="action-buttons">
+          <button class="action-btn primary" routerLink="/admin/posts">
+            <span class="btn-icon">➕</span>
+            Create New Article
+          </button>
+          <button class="action-btn secondary" routerLink="/admin/projects">
+            <span class="btn-icon">🔧</span>
+            Add New Project
+          </button>
+          <button class="action-btn tertiary" routerLink="/admin/site/config">
+            <span class="btn-icon">⚙️</span>
+            Site Settings
+          </button>
+          <button 
+            class="action-btn deployment" 
+            (click)="triggerDeployment()"
+            [disabled]="deploymentInProgress">
+            <span class="btn-icon">🚀</span>
+            {{ deploymentInProgress ? 'Deploying...' : 'Trigger Deployment' }}
+          </button>
+        </div>
+      </div>
       <!-- Content Management Section -->
       <div class="dashboard-section">
         <h2>📝 Content Management</h2>
@@ -175,25 +199,6 @@
             <h4>Password Protection</h4>
             <p>Temporary site access control</p>
           </div>
-        </div>
-      </div>
-
-      <!-- Quick Actions -->
-      <div class="dashboard-section">
-        <h2>⚡ Quick Actions</h2>
-        <div class="action-buttons">
-          <button class="action-btn primary" routerLink="/admin/posts">
-            <span class="btn-icon">➕</span>
-            Create New Article
-          </button>
-          <button class="action-btn secondary" routerLink="/admin/projects">
-            <span class="btn-icon">🔧</span>
-            Add New Project
-          </button>
-          <button class="action-btn tertiary" routerLink="/admin/site/config">
-            <span class="btn-icon">⚙️</span>
-            Site Settings
-          </button>
         </div>
       </div>
     </div>
