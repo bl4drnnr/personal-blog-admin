@@ -22,6 +22,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
     content: '',
     projectImage: '',
     projectTags: [],
+    metaKeywords: '',
     projectPosted: false,
     featured: false,
     createdAt: new Date(),
@@ -36,6 +37,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
   projectImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
+  metaKeywords: string = '';
   published: boolean = false;
   featured: boolean = false;
 
@@ -80,6 +82,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
           content: response.content,
           projectImage: response.featuredImageId,
           projectTags: response.tags || [],
+          metaKeywords: response.metaKeywords,
           projectPosted: response.published,
           featured: response.featured,
           createdAt: response.createdAt,
@@ -91,6 +94,7 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
         this.processedContent = response.content; // Initialize with same content
         this.projectImageId = response.featuredImageId;
         this.tags = response.tags || [];
+        this.metaKeywords = response.metaKeywords;
         this.published = response.published;
         this.featured = response.featured;
       },
@@ -141,7 +145,8 @@ export class EditProjectComponent extends BaseAdminComponent implements OnInit {
       projectDescription: this.description,
       projectContent: contentToSave,
       projectFeaturedImageId: this.projectImageId,
-      projectTags: this.tags
+      projectTags: this.tags,
+      projectMetaKeywords: this.metaKeywords
     };
 
     this.projectsService.updateProject(projectData).subscribe({

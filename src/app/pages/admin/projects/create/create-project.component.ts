@@ -21,6 +21,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
   projectImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
+  metaKeywords: string = '';
   published: boolean = false;
   featured: boolean = false;
 
@@ -93,6 +94,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
       projectDescription: this.description,
       projectContent: contentToSave,
       projectTags: this.tags,
+      projectMetaKeywords: this.metaKeywords,
       projectFeaturedImageId: this.projectImageId,
       projectPublished: false
     };
@@ -130,6 +132,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
       projectDescription: this.description,
       projectContent: contentToSave,
       projectTags: this.tags,
+      projectMetaKeywords: this.metaKeywords,
       projectFeaturedImageId: this.projectImageId,
       projectPublished: true
     };

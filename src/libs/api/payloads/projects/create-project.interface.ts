@@ -3,6 +3,7 @@ export interface CreateProjectPayload {
   projectDescription: string;
   projectContent: string;
   projectTags: Array<string>;
+  projectMetaKeywords: string;
   projectFeaturedImageId: string;
   projectPublished: boolean;
 }

@@ -77,6 +77,17 @@
 
           <div class="form-row">
             <div class="form-group full-width">
+              <basic-input
+                label="Meta Keywords"
+                placeholder="Enter SEO keywords separated by commas (e.g., react, node.js, full-stack)"
+                [value]="metaKeywords"
+                (valueChange)="metaKeywords = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
               <asset-selector
                 label="Project Image"
                 placeholder="Search for project image..."

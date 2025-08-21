@@ -5,6 +5,7 @@ export interface ListProjectInterface {
   projectName: string;
   projectSlug: string;
   projectTags: Array<string>;
+  metaKeywords: string;
   projectPosted: boolean;
   createdAt: Date;
   updatedAt: Date;
