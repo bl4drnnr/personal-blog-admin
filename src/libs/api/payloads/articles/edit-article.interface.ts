@@ -4,5 +4,6 @@ export interface EditArticlePayload {
   articleDescription?: string;
   articleContent?: string;
   articleTags?: Array<string>;
+  articleMetaKeywords?: string;
   articlePictureId?: string;
 }

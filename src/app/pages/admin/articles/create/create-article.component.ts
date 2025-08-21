@@ -22,6 +22,7 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
   featuredImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
+  metaKeywords: string = '';
   published: boolean = false;
   featured: boolean = false;
 
@@ -95,6 +96,7 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
       articleDescription: this.description,
       articleContent: contentToSave,
       articleTags: this.tags,
+      articleMetaKeywords: this.metaKeywords,
       articlePictureId: this.featuredImageId,
       articleExcerpt: this.excerpt,
       articlePublished: false
@@ -133,6 +135,7 @@ export class CreateArticleComponent extends BaseAdminComponent implements OnInit
       articleDescription: this.description,
       articleContent: contentToSave,
       articleTags: this.tags,
+      articleMetaKeywords: this.metaKeywords,
       articlePictureId: this.featuredImageId,
       articleExcerpt: this.excerpt,
       articlePublished: true

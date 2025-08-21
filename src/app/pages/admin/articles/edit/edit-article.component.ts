@@ -24,6 +24,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
     excerpt: '',
     featuredImageId: '',
     tags: [],
+    metaKeywords: '',
     published: false,
     featured: false,
     createdAt: new Date(),
@@ -40,6 +41,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
   featuredImageId: string = '';
   tags: string[] = [];
   tagInput: string = '';
+  metaKeywords: string = '';
   published: boolean = false;
   featured: boolean = false;
 
@@ -84,6 +86,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
         this.excerpt = this.article.excerpt;
         this.featuredImageId = this.article.featuredImageId;
         this.tags = this.article.tags;
+        this.metaKeywords = this.article.metaKeywords;
         this.published = this.article.published;
         this.featured = this.article.featured;
       },
@@ -142,6 +145,7 @@ export class EditArticleComponent extends BaseAdminComponent implements OnInit {
       articleDescription: this.description,
       articleContent: contentToSave,
       articleTags: this.tags,
+      articleMetaKeywords: this.metaKeywords,
       articlePictureId: this.featuredImageId
     };
 

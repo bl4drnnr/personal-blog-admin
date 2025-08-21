@@ -7,6 +7,7 @@ export interface ArticleDetailInterface {
   excerpt: string;
   featuredImageId: string;
   tags: string[];
+  metaKeywords: string;
   published: boolean;
   featured: boolean;
   createdAt: Date;
