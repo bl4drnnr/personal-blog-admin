@@ -53,6 +53,9 @@ import { MaintenanceComponent } from '@pages/admin/maintenance/maintenance.compo
 // Password Protection Mode
 import { PasswordProtectionComponent } from '@pages/admin/password-protection/password-protection.component';
 
+// Not Found Page
+import { NotFoundSettingsComponent } from '@pages/admin/not-found/not-found.component';
+
 // User Management
 import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
@@ -201,6 +204,11 @@ const routes: Routes = [
   {
     path: 'admin/password-protection',
     component: PasswordProtectionComponent
+  },
+  // Not Found Page
+  {
+    path: 'admin/not-found',
+    component: NotFoundSettingsComponent
   },
   // User Management
   {

@@ -39,7 +39,7 @@ const components: any = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, InputComponent],
   imports: [CommonModule, NgOptimizedImage, FormsModule, NgxEditorModule],
   exports: [...components]
 })

@@ -26,6 +26,7 @@ import { MenuEndpoint } from '@interfaces/menu.enum';
 import { MaintenanceEndpoint } from '@interfaces/maintenance.enum';
 import { PasswordProtectionEndpoint } from '@interfaces/password-protection.enum';
 import { ControlEndpoint } from '@interfaces/control.enum';
+import { NotFoundEndpoint } from '@interfaces/not-found.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -53,7 +54,8 @@ type EndpointsType =
   | MenuEndpoint
   | MaintenanceEndpoint
   | PasswordProtectionEndpoint
-  | ControlEndpoint;
+  | ControlEndpoint
+  | NotFoundEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

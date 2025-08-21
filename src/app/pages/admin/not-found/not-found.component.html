@@ -1,0 +1,73 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Not Found Page Settings</h1>
+      <p>Manage your 404 not found page content and hero image</p>
+    </div>
+
+    <div class="content-section">
+      <!-- Content Settings -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Not Found Page Content</h2>
+          <basic-button
+            label="Save Settings"
+            [fillButton]="true"
+            (buttonClick)="saveNotFoundSettings()"
+          ></basic-button>
+        </div>
+
+        <div class="card-content">
+          <div class="form-group">
+            <basic-input
+              label="Page Title"
+              type="text"
+              placeholder="e.g., Page Not Found"
+              [value]="title"
+              (valueChange)="title = $event"
+            ></basic-input>
+          </div>
+
+          <div class="form-group">
+            <basic-textarea
+              label="Page Content"
+              placeholder="Enter the main content text for the not found page"
+              [value]="content"
+              (valueChange)="content = $event"
+            ></basic-textarea>
+          </div>
+
+          <!-- Hero Section -->
+          <div class="section-divider">
+            <h3>Hero Section</h3>
+          </div>
+
+          <div class="form-group">
+            <basic-input
+              label="Hero Title"
+              type="text"
+              placeholder="e.g., 404 - Page Not Found"
+              [value]="heroTitle"
+              (valueChange)="heroTitle = $event"
+            ></basic-input>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hero Image</label>
+            <asset-selector [(ngModel)]="heroImageMainId"></asset-selector>
+          </div>
+
+          <div class="form-group">
+            <basic-input
+              label="Hero Image Alt Text"
+              type="text"
+              placeholder="e.g., Not found illustration"
+              [value]="heroImageMainAlt"
+              (valueChange)="heroImageMainAlt = $event"
+            ></basic-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>

@@ -21,5 +21,6 @@ export enum Controller {
   MENU = 'menu',
   MAINTENANCE = 'maintenance',
   PASSWORD_PROTECTION = 'password-protection',
-  CONTROL = 'control'
+  CONTROL = 'control',
+  NOT_FOUND = 'not-found'
 }
