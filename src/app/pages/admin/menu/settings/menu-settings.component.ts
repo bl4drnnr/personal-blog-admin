@@ -13,7 +13,6 @@ import { MenuPageData } from '@interfaces/menu/menu-page-data.interface';
 })
 export class MenuSettingsComponent extends BaseAdminComponent implements OnInit {
   // Menu Page Content
-  footerText = '';
   logoText = '';
   breadcrumbText = '';
 
@@ -64,7 +63,6 @@ export class MenuSettingsComponent extends BaseAdminComponent implements OnInit 
       next: (response: MenuPageData) => {
         // Populate form fields with existing data
         this.menuPageId = response.id || '';
-        this.footerText = response.footerText;
         this.logoText = response.logoText;
         this.breadcrumbText = response.breadcrumbText;
         this.heroImageMainId = response.heroImageMainId;
@@ -100,7 +98,6 @@ export class MenuSettingsComponent extends BaseAdminComponent implements OnInit 
 
     const payload: MenuPageData = {
       id: this.menuPageId,
-      footerText: this.footerText,
       logoText: this.logoText,
       breadcrumbText: this.breadcrumbText,
       heroImageMainId: this.heroImageMainId,
@@ -134,7 +131,6 @@ export class MenuSettingsComponent extends BaseAdminComponent implements OnInit 
   }
 
   resetForm(): void {
-    this.footerText = '';
     this.logoText = '';
     this.breadcrumbText = '';
     this.heroImageMainId = '';

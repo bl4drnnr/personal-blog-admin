@@ -25,7 +25,6 @@ export class PasswordProtectionComponent
   customDuration = 24;
   heroImageId = '';
   heroTitle = '';
-  footerText = '';
   metaTitle = '';
 
   // UI state
@@ -78,7 +77,6 @@ export class PasswordProtectionComponent
         this.durationHours = settings.durationHours;
         this.heroImageId = settings.heroImageId;
         this.heroTitle = settings.heroTitle;
-        this.footerText = settings.footerText;
 
         // Set custom duration if not in predefined options
         if (!this.durationOptions.find((opt) => opt.value === this.durationHours)) {
@@ -148,10 +146,6 @@ export class PasswordProtectionComponent
     this.metaTitle = value;
   }
 
-  onFooterTextChange(value: string) {
-    this.footerText = value;
-  }
-
   async onSubmit() {
     if (!this.isFormValid() || this.isFormDisabled()) return;
 
@@ -166,7 +160,6 @@ export class PasswordProtectionComponent
       durationHours: finalDurationHours,
       heroImageId: this.heroImageId,
       heroTitle: this.heroTitle,
-      footerText: this.footerText,
       metaTitle: this.metaTitle
     };
 

@@ -61,6 +61,7 @@ import { UserInfoComponent } from '@pages/users/user-info/user-info.component';
 import { SecuritySettingsComponent } from '@pages/security/settings/security-settings.component';
 import { NewsletterSubscriptionsComponent } from '@pages/admin/newsletters/subscriptions/newsletter-subscriptions.component';
 import { SocialLinksComponent } from '@pages/admin/social-links/social-links.component';
+import { CopyrightComponent } from '@pages/admin/copyright/copyright.component';
 
 const routes: Routes = [
   {
@@ -227,6 +228,10 @@ const routes: Routes = [
   {
     path: 'admin/social-links',
     component: SocialLinksComponent
+  },
+  {
+    path: 'admin/copyright',
+    component: CopyrightComponent
   },
   {
     path: '**',

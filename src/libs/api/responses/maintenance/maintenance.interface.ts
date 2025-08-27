@@ -5,7 +5,6 @@ export interface MaintenanceResponse {
   toDate: Date;
   heroImageId: string;
   heroTitle: string;
-  footerText: string;
   title: string;
   metaTitle: string;
 }

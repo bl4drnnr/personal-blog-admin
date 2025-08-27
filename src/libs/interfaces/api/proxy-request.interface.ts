@@ -28,6 +28,7 @@ import { PasswordProtectionEndpoint } from '@interfaces/password-protection.enum
 import { ControlEndpoint } from '@interfaces/control.enum';
 import { NotFoundEndpoint } from '@interfaces/not-found.enum';
 import { SocialLinksEndpoint } from '@interfaces/social-links.enum';
+import { CopyrightEndpoint } from '@interfaces/copyright.enum';
 
 type EndpointsType =
   | AuthEndpoint
@@ -57,7 +58,8 @@ type EndpointsType =
   | PasswordProtectionEndpoint
   | ControlEndpoint
   | NotFoundEndpoint
-  | SocialLinksEndpoint;
+  | SocialLinksEndpoint
+  | CopyrightEndpoint;
 
 export interface ProxyRequestInterface {
   controller: Controller;

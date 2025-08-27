@@ -1,6 +1,5 @@
 export interface MenuPageData {
   id?: string;
-  footerText: string;
   heroImageMainId: string;
   heroImageMainAlt: string;
   logoText: string;

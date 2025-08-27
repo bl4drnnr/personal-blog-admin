@@ -24,7 +24,6 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
   toDate = '';
   heroImageId = '';
   heroTitle = '';
-  footerText = '';
   title = '';
   metaTitle = '';
 
@@ -79,7 +78,6 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
     this.message = maintenance.message;
     this.heroImageId = maintenance.heroImageId;
     this.heroTitle = maintenance.heroTitle;
-    this.footerText = maintenance.footerText;
     this.title = maintenance.title;
     this.metaTitle = maintenance.metaTitle;
 
@@ -133,10 +131,6 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
 
   onHeroTitleChange(value: string): void {
     this.heroTitle = value;
-  }
-
-  onFooterTextChange(value: string): void {
-    this.footerText = value;
   }
 
   onTitleChange(value: string): void {
@@ -198,7 +192,6 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
       toDate: this.toDate,
       heroImageId: this.heroImageId.trim(),
       heroTitle: this.heroTitle.trim(),
-      footerText: this.footerText.trim(),
       title: this.title.trim(),
       metaTitle: this.metaTitle.trim()
     };

@@ -15,9 +15,6 @@ export class ChangelogSettingsComponent
   extends BaseAdminComponent
   implements OnInit
 {
-  // Footer Configuration
-  footerText = '';
-
   // Hero Section
   heroTitle = '';
   heroImageMainId: string = '';
@@ -70,7 +67,6 @@ export class ChangelogSettingsComponent
     this.changelogService.getChangelogPageSettings().subscribe({
       next: (response) => {
         // Populate form fields with existing data
-        this.footerText = response.footerText;
         this.heroTitle = response.heroTitle;
         this.heroImageMainId = response.heroImageMainId;
         this.heroImageSecondaryId = response.heroImageSecondaryId;
@@ -109,7 +105,6 @@ export class ChangelogSettingsComponent
     }
 
     const payload: UpdateChangelogPagePayload = {
-      footerText: this.footerText,
       heroTitle: this.heroTitle,
       heroImageMainId: this.heroImageMainId,
       heroImageSecondaryId: this.heroImageSecondaryId,
@@ -137,7 +132,6 @@ export class ChangelogSettingsComponent
   }
 
   resetForm(): void {
-    this.footerText = '';
     this.heroTitle = '';
     this.heroImageMainId = '';
     this.heroImageSecondaryId = '';

@@ -2,7 +2,6 @@ export interface AboutPageData {
   id: string;
   title: string;
   content: string;
-  footerText: string;
   heroImageMainId: string;
   heroImageSecondaryId: string;
   heroImageMainAlt: string;

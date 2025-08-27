@@ -4,5 +4,4 @@ export interface UpdatePasswordProtectionPayload {
   durationHours?: number;
   heroImageId?: string;
   heroTitle?: string;
-  footerText?: string;
 }

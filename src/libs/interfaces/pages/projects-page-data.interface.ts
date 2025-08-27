@@ -6,7 +6,6 @@ export interface ProjectsPageData {
     description: string;
   };
   layoutData: {
-    footerText: string;
     heroImageMainId: string;
     heroImageSecondaryId: string;
     heroImageMainAlt: string;

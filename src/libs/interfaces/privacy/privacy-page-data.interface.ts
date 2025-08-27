@@ -3,7 +3,6 @@ export interface PrivacyPageData {
   title?: string;
   lastUpdated?: string;
   cookiePolicyTitle?: string;
-  footerText?: string;
   heroImageMainId?: string;
   heroImageSecondaryId?: string;
   heroImageMainAlt?: string;

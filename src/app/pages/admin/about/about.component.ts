@@ -15,7 +15,6 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
   // About Page Content
   title = '';
   content = '';
-  footerText = '';
 
   // Hero Section
   heroTitle = '';
@@ -73,7 +72,6 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
         this.aboutPageId = response.id;
         this.title = response.title;
         this.content = response.content;
-        this.footerText = response.footerText;
         this.heroTitle = response.heroTitle;
         this.heroImageMainId = response.heroImageMainId;
         this.heroImageSecondaryId = response.heroImageSecondaryId;
@@ -114,7 +112,6 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
       id: this.aboutPageId,
       title: this.title,
       content: this.content,
-      footerText: this.footerText,
       heroTitle: this.heroTitle,
       heroImageMainId: this.heroImageMainId,
       heroImageSecondaryId: this.heroImageSecondaryId,
@@ -153,7 +150,6 @@ export class AboutComponent extends BaseAdminComponent implements OnInit {
   resetForm(): void {
     this.title = '';
     this.content = '';
-    this.footerText = '';
     this.heroTitle = '';
     this.heroImageMainId = '';
     this.heroImageSecondaryId = '';

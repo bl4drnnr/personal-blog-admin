@@ -22,7 +22,6 @@ export class SubscribePageManagementComponent
   title = '';
   subtitle = '';
   description = '';
-  footerText = '';
   heroImageMainId = '';
   heroImageSecondaryId = '';
   heroImageMainAlt = '';
@@ -89,7 +88,6 @@ export class SubscribePageManagementComponent
     this.title = data.title || '';
     this.subtitle = data.subtitle || '';
     this.description = data.description || '';
-    this.footerText = data.footerText || '';
     this.logoText = data.logoText || '';
     this.breadcrumbText = data.breadcrumbText || '';
     this.heroTitle = data.heroTitle || '';
@@ -125,7 +123,6 @@ export class SubscribePageManagementComponent
         title: this.title,
         subtitle: this.subtitle,
         description: this.description,
-        footerText: this.footerText,
         heroImageMainId: this.heroImageMainId,
         heroImageSecondaryId: this.heroImageSecondaryId,
         heroImageMainAlt: this.heroImageMainAlt,

@@ -23,5 +23,6 @@ export enum Controller {
   PASSWORD_PROTECTION = 'password-protection',
   CONTROL = 'control',
   NOT_FOUND = 'not-found',
-  SOCIAL_LINKS = 'social-links'
+  SOCIAL_LINKS = 'social-links',
+  COPYRIGHT = 'copyright'
 }
