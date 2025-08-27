@@ -66,6 +66,7 @@ import { ComponentsModule } from '@components/components.module';
 // Pipes
 import { DayjsPipe } from '@shared/pipes/dayjs.pipe';
 import { NewsletterSubscriptionsComponent } from '@pages/admin/newsletters/subscriptions/newsletter-subscriptions.component';
+import { SocialLinksComponent } from '@pages/admin/social-links/social-links.component';
 
 const adminComponents = [
   // Site Configuration
@@ -87,6 +88,7 @@ const adminComponents = [
   SubscribePageManagementComponent,
   ContactMessagesComponent,
   NewsletterSubscriptionsComponent,
+  SocialLinksComponent,
   // About Section
   AboutComponent,
   ExperiencesComponent,

@@ -22,5 +22,6 @@ export enum Controller {
   MAINTENANCE = 'maintenance',
   PASSWORD_PROTECTION = 'password-protection',
   CONTROL = 'control',
-  NOT_FOUND = 'not-found'
+  NOT_FOUND = 'not-found',
+  SOCIAL_LINKS = 'social-links'
 }

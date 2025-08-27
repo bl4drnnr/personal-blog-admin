@@ -86,7 +86,8 @@
         "src/libs/api/responses/menu/*",
         "src/libs/api/responses/maintenance/*",
         "src/libs/api/responses/password-protection/*",
-        "src/libs/api/responses/deployment/*"
+        "src/libs/api/responses/deployment/*",
+        "src/libs/api/responses/social-links/*",
       ],
       "@payloads/*": [
         "src/libs/api/payloads/auth/*",
@@ -110,7 +111,8 @@
         "src/libs/api/payloads/newsletter/*",
         "src/libs/api/payloads/menu/*",
         "src/libs/api/payloads/password-protection/*",
-        "src/libs/api/payloads/maintenance/*"
+        "src/libs/api/payloads/maintenance/*",
+        "src/libs/api/payloads/social-links/*",
       ],
       "@layouts/*": ["src/app/layouts/*"],
       "@guards/*": ["src/app/guards/*"],
