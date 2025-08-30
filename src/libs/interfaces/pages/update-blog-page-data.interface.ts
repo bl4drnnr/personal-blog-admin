@@ -2,7 +2,6 @@ export interface UpdateBlogPageData {
   title?: string;
   subtitle?: string;
   description?: string;
-  footerText?: string;
   heroImageMainId?: string;
   heroImageSecondaryId?: string;
   heroImageMainAlt?: string;

@@ -1,5 +1,4 @@
 export interface UpdateChangelogPagePayload {
-  footerText: string;
   heroImageMainId: string;
   heroImageSecondaryId: string;
   heroImageMainAlt: string;

@@ -5,7 +5,6 @@ export interface LicensePageData {
   paragraphs?: string[];
   additionalInfoTitle?: string;
   additionalInfoParagraphs?: string[];
-  footerText?: string;
   heroImageMainId?: string;
   heroImageSecondaryId?: string;
   heroImageMainAlt?: string;

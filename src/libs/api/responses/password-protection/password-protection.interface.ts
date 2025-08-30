@@ -4,6 +4,5 @@ export interface PasswordProtectionResponse {
   durationHours: number;
   heroImageId: string;
   heroTitle: string;
-  footerText: string;
   metaTitle: string;
 }

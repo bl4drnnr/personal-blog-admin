@@ -5,6 +5,5 @@ export interface UpdateMaintenancePayload {
   toDate?: string;
   heroImageId?: string;
   heroTitle?: string;
-  footerText?: string;
   title?: string;
 }

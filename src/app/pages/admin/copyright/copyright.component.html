@@ -1,0 +1,103 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Copyright Management</h1>
+      <p>Manage copyright information including email, text, and links</p>
+    </div>
+
+    <div class="content-section">
+      <div class="copyright-form">
+
+        <!-- Copyright Information -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Copyright Information</h2>
+          </div>
+
+          <div class="copyright-basic-info">
+            <div class="form-row">
+              <basic-input
+                type="email"
+                label="Copyright Email"
+                placeholder="Enter the copyright email address"
+                [(value)]="copyrightForm.copyrightEmail"
+                (valueChange)="onCopyrightEmailChange($event)"
+                >
+              </basic-input>
+            </div>
+
+            <div class="form-row">
+              <basic-textarea
+                label="Copyright Text"
+                placeholder="Enter the copyright text or notice"
+                [(value)]="copyrightForm.copyrightText"
+                (valueChange)="onCopyrightTextChange($event)"
+              >
+              </basic-textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copyright Links -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Copyright Links</h2>
+            <basic-button
+              label="Add New Link"
+              [fillButton]="false"
+              (buttonClick)="addNewCopyrightLink()">
+            </basic-button>
+          </div>
+
+          <div class="copyright-links-list">
+            <div
+              class="copyright-link-item"
+              *ngFor="let link of copyrightForm.copyrightLinks; let i = index"
+            >
+
+              <div class="copyright-link-header">
+                <h3>Copyright Link {{ i + 1 }}</h3>
+                <basic-button
+                  *ngIf="canRemoveLink()"
+                  label="Remove"
+                  [fillButton]="false"
+                  (buttonClick)="removeCopyrightLink(i)">
+                </basic-button>
+              </div>
+
+              <div class="copyright-link-fields">
+                <div class="form-row">
+                  <basic-input
+                    label="Link Title"
+                    placeholder="Enter the link title or name"
+                    [(value)]="link.title"
+                    [minLength]="1">
+                  </basic-input>
+                </div>
+
+                <div class="form-row">
+                  <basic-input
+                    label="Link URL"
+                    placeholder="https://example.com"
+                    [(value)]="link.link"
+                    type="url"
+                    [minLength]="1">
+                  </basic-input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <basic-button
+            [label]="'Save Copyright Data'"
+            [fillButton]="true"
+            (buttonClick)="onSubmit()">
+          </basic-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>

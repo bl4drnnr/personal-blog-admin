@@ -20,7 +20,6 @@ export class PrivacySettingsComponent extends BaseAdminComponent implements OnIn
   title = '';
   lastUpdated = '';
   cookiePolicyTitle = '';
-  footerText = '';
 
   // Layout fields
   logoText = '';
@@ -82,7 +81,6 @@ export class PrivacySettingsComponent extends BaseAdminComponent implements OnIn
     this.title = this.privacyData.title || '';
     this.lastUpdated = this.privacyData.lastUpdated || '';
     this.cookiePolicyTitle = this.privacyData.cookiePolicyTitle || '';
-    this.footerText = this.privacyData.footerText || '';
 
     // Layout fields
     this.logoText = this.privacyData.logoText || '';
@@ -177,7 +175,6 @@ export class PrivacySettingsComponent extends BaseAdminComponent implements OnIn
       title: this.title || undefined,
       lastUpdated: this.lastUpdated || undefined,
       cookiePolicyTitle: this.cookiePolicyTitle || undefined,
-      footerText: this.footerText || undefined,
       logoText: this.logoText || undefined,
       breadcrumbText: this.breadcrumbText || undefined,
       heroTitle: this.heroTitle || undefined,

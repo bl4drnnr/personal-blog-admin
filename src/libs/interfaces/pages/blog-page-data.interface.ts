@@ -6,7 +6,6 @@ export interface BlogPageData {
     description: string;
   };
   layoutData: {
-    footerText: string;
     heroImageMainId: string;
     heroImageSecondaryId: string;
     heroImageMainAlt: string;

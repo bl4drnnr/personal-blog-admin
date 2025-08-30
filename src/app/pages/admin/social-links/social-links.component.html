@@ -1,0 +1,83 @@
+<layout-default>
+  <div class="admin-page-container">
+    <div class="page-header">
+      <h1>Social Links Management</h1>
+      <p>Manage social media links and their icons</p>
+    </div>
+
+    <div class="content-section">
+      <div class="social-links-form">
+
+        <!-- Social Links List -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Social Links</h2>
+            <basic-button
+              label="Add New Link"
+              [fillButton]="false"
+              (buttonClick)="addNewSocialLink()">
+            </basic-button>
+          </div>
+
+          <div class="social-links-list">
+            <div
+              class="social-link-item"
+              *ngFor="let link of socialLinks; let i = index"
+            >
+
+              <div class="social-link-header">
+                <h3>Social Link {{ i + 1 }}</h3>
+                <basic-button
+                  *ngIf="canRemoveLink()"
+                  label="Remove"
+                  [fillButton]="false"
+                  (buttonClick)="removeSocialLink(i)">
+                </basic-button>
+              </div>
+
+              <div class="social-link-fields">
+                <div class="form-row">
+                  <basic-input
+                    label="URL"
+                    placeholder="https://example.com/profile"
+                    [value]="link.url"
+                    type="url"
+                    [minLength]="1"
+                    (valueChange)="onUrlChange(i, $event)">
+                  </basic-input>
+                </div>
+
+                <div class="form-row">
+                  <basic-input
+                    label="Alt Text"
+                    placeholder="Alternative text for the icon"
+                    [value]="link.alt"
+                    [minLength]="1"
+                    (valueChange)="onAltChange(i, $event)">
+                  </basic-input>
+                </div>
+
+                <div class="form-row">
+                  <asset-selector
+                    label="Icon"
+                    placeholder="Select an icon for this social link"
+                    [(ngModel)]="link.iconId">
+                  </asset-selector>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <basic-button
+            [label]="'Save Social Links'"
+            [fillButton]="true"
+            (buttonClick)="onSubmit()">
+          </basic-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-default>

@@ -24,7 +24,6 @@ export class LicenseSettingsComponent extends BaseAdminComponent implements OnIn
   additionalInfoTitle = '';
   additionalInfoParagraphs: string[] = [];
   additionalInfoInput = '';
-  footerText = '';
 
   // Layout fields
   logoText = '';
@@ -91,7 +90,6 @@ export class LicenseSettingsComponent extends BaseAdminComponent implements OnIn
     this.additionalInfoParagraphs = [
       ...(this.licenseData.additionalInfoParagraphs || [])
     ];
-    this.footerText = this.licenseData.footerText || '';
 
     // Layout fields
     this.logoText = this.licenseData.logoText || '';
@@ -217,7 +215,6 @@ export class LicenseSettingsComponent extends BaseAdminComponent implements OnIn
         this.additionalInfoParagraphs.length > 0
           ? this.additionalInfoParagraphs
           : undefined,
-      footerText: this.footerText || undefined,
       logoText: this.logoText || undefined,
       breadcrumbText: this.breadcrumbText || undefined,
       heroTitle: this.heroTitle || undefined,

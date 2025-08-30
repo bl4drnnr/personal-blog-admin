@@ -23,7 +23,6 @@ export class HomePageManagementComponent
   title = '';
   subtitle = '';
   description = '';
-  footerText = '';
   heroImageMainId = '';
   heroImageSecondaryId = '';
   heroImageMainAlt = '';
@@ -91,7 +90,6 @@ export class HomePageManagementComponent
     this.description = data.pageContent.description || '';
 
     // Layout Data
-    this.footerText = data.layoutData.footerText || '';
     this.heroImageMainId = data.layoutData.heroImageMainId || '';
     this.heroImageSecondaryId = data.layoutData.heroImageSecondaryId || '';
     this.heroImageMainAlt = data.layoutData.heroImageMainAlt || '';
@@ -126,7 +124,6 @@ export class HomePageManagementComponent
         title: this.title,
         subtitle: this.subtitle,
         description: this.description,
-        footerText: this.footerText,
         heroImageMainId: this.heroImageMainId,
         heroImageSecondaryId: this.heroImageSecondaryId,
         heroImageMainAlt: this.heroImageMainAlt,

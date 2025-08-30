@@ -12,7 +12,6 @@ export interface HomePageData {
     faqSectionTitle: string;
   };
   layoutData: {
-    footerText: string;
     heroImageMainId: string;
     heroImageSecondaryId: string;
     heroImageMainAlt: string;
