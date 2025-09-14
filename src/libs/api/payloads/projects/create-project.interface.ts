@@ -4,6 +4,7 @@ export interface CreateProjectPayload {
   projectContent: string;
   projectTags: Array<string>;
   projectMetaKeywords: string;
+  projectType: string;
   projectFeaturedImageId: string;
   projectPublished: boolean;
 }

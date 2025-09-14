@@ -138,6 +138,17 @@
 
           <div class="form-row">
             <div class="form-group full-width">
+              <basic-input
+                label="Project Type"
+                placeholder="Enter project type (e.g., Web Application, Mobile App, API, etc.)"
+                [value]="projectType"
+                (valueChange)="projectType = $event"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
               <asset-selector
                 label="Project Image"
                 placeholder="Search for project image..."
