@@ -3,216 +3,91 @@
     <div class="dashboard-header">
       <h1>Dashboard</h1>
       <p>Welcome to the Personal Blog Admin Panel</p>
+
+      <div class="dashboard-search">
+        <input
+          type="text"
+          placeholder="Search dashboard tiles..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearchChange()"
+          class="search-input">
+        <span class="search-icon">🔍</span>
+      </div>
     </div>
 
-    <div class="dashboard-stats">
-      <div class="stat-card" routerLink="/admin/posts">
-        <div class="stat-icon">📝</div>
+    <div class="dashboard-stats" *ngIf="filteredTiles.quickStats.length > 0">
+      <div *ngFor="let tile of filteredTiles.quickStats" class="stat-card" [routerLink]="tile.route">
+        <div class="stat-icon">{{ tile.icon }}</div>
         <div class="stat-content">
-          <h3>Articles</h3>
-          <p>Manage your blog posts</p>
-        </div>
-      </div>
-
-      <div class="stat-card" routerLink="/admin/projects">
-        <div class="stat-icon">🚀</div>
-        <div class="stat-content">
-          <h3>Projects</h3>
-          <p>Showcase your work</p>
-        </div>
-      </div>
-
-      <div class="stat-card" routerLink="/admin/pages">
-        <div class="stat-icon">📄</div>
-        <div class="stat-content">
-          <h3>Pages</h3>
-          <p>Static content management</p>
-        </div>
-      </div>
-
-      <div class="stat-card" routerLink="/admin/site/config">
-        <div class="stat-icon">⚙️</div>
-        <div class="stat-content">
-          <h3>Settings</h3>
-          <p>Site configuration</p>
+          <h3>{{ tile.title }}</h3>
+          <p>{{ tile.description }}</p>
         </div>
       </div>
     </div>
 
     <div class="dashboard-sections">
-      <div class="dashboard-section">
+      <div class="dashboard-section" *ngIf="filteredTiles.quickActions.length > 0">
         <h2>⚡ Quick Actions</h2>
         <div class="action-buttons">
-          <button class="action-btn primary" routerLink="/admin/posts">
-            <span class="btn-icon">➕</span>
-            Create New Article
-          </button>
-          <button class="action-btn secondary" routerLink="/admin/projects">
-            <span class="btn-icon">🔧</span>
-            Add New Project
-          </button>
-          <button class="action-btn tertiary" routerLink="/admin/site/config">
-            <span class="btn-icon">⚙️</span>
-            Site Settings
-          </button>
-          <button 
-            class="action-btn deployment" 
-            (click)="triggerDeployment()"
-            [disabled]="deploymentInProgress">
-            <span class="btn-icon">🚀</span>
-            {{ deploymentInProgress ? 'Deploying...' : 'Trigger Deployment' }}
-          </button>
+          <ng-container *ngFor="let action of filteredTiles.quickActions">
+            <button *ngIf="action.type === 'link'" [class]="'action-btn ' + action.buttonClass" [routerLink]="action.route">
+              <span class="btn-icon">{{ action.icon }}</span>
+              {{ action.title }}
+            </button>
+            <button *ngIf="action.type === 'deployment'"
+              class="action-btn deployment"
+              (click)="triggerDeployment()"
+              [disabled]="deploymentInProgress">
+              <span class="btn-icon">{{ action.icon }}</span>
+              {{ deploymentInProgress ? 'Deploying...' : action.title }}
+            </button>
+          </ng-container>
         </div>
       </div>
       <!-- Content Management Section -->
-      <div class="dashboard-section">
+      <div class="dashboard-section" *ngIf="filteredTiles.contentManagement.length > 0">
         <h2>📝 Content Management</h2>
         <div class="section-grid">
-          <div class="section-card" routerLink="/admin/posts">
-            <span class="card-icon">📄</span>
-            <h4>Articles</h4>
-            <p>Manage blog posts</p>
-          </div>
-          <div class="section-card" routerLink="/admin/projects">
-            <span class="card-icon">🚀</span>
-            <h4>Projects</h4>
-            <p>Showcase portfolio</p>
-          </div>
-          <div class="section-card" routerLink="/admin/pages">
-            <span class="card-icon">📋</span>
-            <h4>Pages</h4>
-            <p>Static content</p>
-          </div>
-          <div class="section-card" routerLink="/admin/contact/messages">
-            <span class="card-icon">✉️</span>
-            <h4>Contact Messages</h4>
-            <p>User inquiries</p>
-          </div>
-          <div class="section-card" routerLink="/admin/static-assets">
-            <span class="card-icon">🎨</span>
-            <h4>Static Assets</h4>
-            <p>Media management</p>
-          </div>
-          <div class="section-card" routerLink="/admin/newsletters/subscriptions">
-            <span class="card-icon">📧</span>
-            <h4>Newsletter Subscriptions</h4>
-            <p>Email subscribers</p>
-          </div>
-          <div class="section-card" routerLink="/admin/menu/tiles">
-            <span class="card-icon">🗂️</span>
-            <h4>Menu Tiles</h4>
-            <p>Navigation tiles</p>
-          </div>
-          <div class="section-card" routerLink="/admin/menu/page">
-            <span class="card-icon">⚙️</span>
-            <h4>Menu Settings</h4>
-            <p>Page configuration</p>
-          </div>
-          <div class="section-card" routerLink="/admin/social-links">
-            <span class="card-icon">🔗</span>
-            <h4>Social Links</h4>
-            <p>Manage social media links</p>
-          </div>
-          <div class="section-card" routerLink="/admin/copyright">
-            <span class="card-icon">©️</span>
-            <h4>Copyright</h4>
-            <p>Manage copyright information</p>
+          <div *ngFor="let tile of filteredTiles.contentManagement" class="section-card" [routerLink]="tile.route">
+            <span class="card-icon">{{ tile.icon }}</span>
+            <h4>{{ tile.title }}</h4>
+            <p>{{ tile.description }}</p>
           </div>
         </div>
       </div>
 
       <!-- About Section Management -->
-      <div class="dashboard-section">
+      <div class="dashboard-section" *ngIf="filteredTiles.aboutSection.length > 0">
         <h2>👤 About Section</h2>
         <div class="section-grid">
-          <div class="section-card" routerLink="/admin/about">
-            <span class="card-icon">📖</span>
-            <h4>About Page</h4>
-            <p>Personal information</p>
-          </div>
-          <div class="section-card" routerLink="/admin/experiences">
-            <span class="card-icon">💼</span>
-            <h4>Experiences</h4>
-            <p>Work history</p>
-          </div>
-          <div class="section-card" routerLink="/admin/certificates">
-            <span class="card-icon">🏆</span>
-            <h4>Certificates</h4>
-            <p>Achievements</p>
+          <div *ngFor="let tile of filteredTiles.aboutSection" class="section-card" [routerLink]="tile.route">
+            <span class="card-icon">{{ tile.icon }}</span>
+            <h4>{{ tile.title }}</h4>
+            <p>{{ tile.description }}</p>
           </div>
         </div>
       </div>
 
       <!-- Legal Pages -->
-      <div class="dashboard-section">
+      <div class="dashboard-section" *ngIf="filteredTiles.legalInfo.length > 0">
         <h2>📋 Legal & Information</h2>
         <div class="section-grid">
-          <div class="section-card" routerLink="/admin/changelog/entries">
-            <span class="card-icon">📝</span>
-            <h4>Changelog Entries</h4>
-            <p>Version history</p>
-          </div>
-          <div class="section-card" routerLink="/admin/changelog/page">
-            <span class="card-icon">⚙️</span>
-            <h4>Changelog Settings</h4>
-            <p>Page configuration</p>
-          </div>
-          <div class="section-card" routerLink="/admin/license/tiles">
-            <span class="card-icon">⚖️</span>
-            <h4>License Tiles</h4>
-            <p>License information</p>
-          </div>
-          <div class="section-card" routerLink="/admin/license/page">
-            <span class="card-icon">⚙️</span>
-            <h4>License Settings</h4>
-            <p>Page configuration</p>
-          </div>
-          <div class="section-card" routerLink="/admin/privacy/sections">
-            <span class="card-icon">🔒</span>
-            <h4>Privacy Sections</h4>
-            <p>Privacy policy content</p>
-          </div>
-          <div class="section-card" routerLink="/admin/privacy/page">
-            <span class="card-icon">⚙️</span>
-            <h4>Privacy Settings</h4>
-            <p>Page configuration</p>
-          </div>
-          <div class="section-card" routerLink="/admin/not-found">
-            <span class="card-icon">❗</span>
-            <h4>Not Found Page</h4>
-            <p>404 error page content</p>
+          <div *ngFor="let tile of filteredTiles.legalInfo" class="section-card" [routerLink]="tile.route">
+            <span class="card-icon">{{ tile.icon }}</span>
+            <h4>{{ tile.title }}</h4>
+            <p>{{ tile.description }}</p>
           </div>
         </div>
       </div>
 
       <!-- System Management -->
-      <div class="dashboard-section">
+      <div class="dashboard-section" *ngIf="filteredTiles.systemManagement.length > 0">
         <h2>⚙️ System Management</h2>
         <div class="section-grid">
-          <div class="section-card" routerLink="/admin/site/config">
-            <span class="card-icon">🌐</span>
-            <h4>Site Configuration</h4>
-            <p>Global settings</p>
-          </div>
-          <div class="section-card" routerLink="/users/user-info">
-            <span class="card-icon">👤</span>
-            <h4>User Info</h4>
-            <p>Account details</p>
-          </div>
-          <div class="section-card" routerLink="/security/settings">
-            <span class="card-icon">🔐</span>
-            <h4>Security Settings</h4>
-            <p>2FA & authentication</p>
-          </div>
-          <div class="section-card" routerLink="/admin/maintenance">
-            <span class="card-icon">🔧</span>
-            <h4>Maintenance Mode</h4>
-            <p>Site maintenance control</p>
-          </div>
-          <div class="section-card" routerLink="/admin/password-protection">
-            <span class="card-icon">🔐</span>
-            <h4>Password Protection</h4>
-            <p>Temporary site access control</p>
+          <div *ngFor="let tile of filteredTiles.systemManagement" class="section-card" [routerLink]="tile.route">
+            <span class="card-icon">{{ tile.icon }}</span>
+            <h4>{{ tile.title }}</h4>
+            <p>{{ tile.description }}</p>
           </div>
         </div>
       </div>
