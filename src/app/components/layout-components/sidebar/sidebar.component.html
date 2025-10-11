@@ -6,9 +6,19 @@
     </button>
   </div>
 
+  <div class="sidebar-search">
+    <input
+      type="text"
+      placeholder="Search settings..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange()"
+      class="search-input">
+    <span class="search-icon">🔍</span>
+  </div>
+
   <nav class="sidebar-nav">
     <ul class="nav-list">
-      <li *ngFor="let item of navItems" class="nav-item">
+      <li *ngFor="let item of filteredNavItems" class="nav-item">
         <div class="nav-link"
              [class.has-children]="item.children"
              [class.expanded]="item.expanded"

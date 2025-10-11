@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 interface NavItem {
   label: string;
@@ -13,10 +13,13 @@ interface NavItem {
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Input() isOpen = true;
   @Input() isMobile = false;
   @Output() closeSidebar = new EventEmitter<void>();
+
+  searchQuery = '';
+  filteredNavItems: NavItem[] = [];
 
   navItems: NavItem[] = [
     {
@@ -177,4 +180,48 @@ export class SidebarComponent {
   onCloseClick(): void {
     this.closeSidebar.emit();
   }
+
+  ngOnInit(): void {
+    this.filteredNavItems = [...this.navItems];
+  }
+
+  onSearchChange(): void {
+    if (!this.searchQuery.trim()) {
+      this.filteredNavItems = [...this.navItems];
+      return;
+    }
+
+    const query = this.searchQuery.toLowerCase().trim();
+    this.filteredNavItems = this.navItems
+      .map((item) => {
+        if (item.children) {
+          const filteredChildren = item.children.filter(
+            (child) =>
+              child.label.toLowerCase().includes(query) ||
+              (child.route && child.route.toLowerCase().includes(query))
+          );
+
+          const parentMatches = item.label.toLowerCase().includes(query);
+
+          if (parentMatches || filteredChildren.length > 0) {
+            return {
+              ...item,
+              children: parentMatches ? item.children : filteredChildren,
+              expanded: filteredChildren.length > 0 ? true : item.expanded
+            };
+          }
+          return null;
+        } else {
+          if (
+            item.label.toLowerCase().includes(query) ||
+            (item.route && item.route.toLowerCase().includes(query))
+          ) {
+            return item;
+          }
+          return null;
+        }
+      })
+      .filter((item) => item !== null) as NavItem[];
+  }
 }
+// TODO: Fix dashboard

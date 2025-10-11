@@ -22,6 +22,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
   tags: string[] = [];
   tagInput: string = '';
   metaKeywords: string = '';
+  projectType: string = '';
   published: boolean = false;
   featured: boolean = false;
 
@@ -70,11 +71,12 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
       !this.projectName.trim() ||
       !this.content.trim() ||
       !this.description.trim() ||
-      !this.projectImageId.trim()
+      !this.projectImageId.trim() ||
+      !this.projectType.trim()
     ) {
       this.globalMessageService.handle({
         message:
-          'Project name, content, description, and featured image are all required',
+          'Project name, content, description, project type, and featured image are all required',
         isError: true
       });
       return false;
@@ -95,6 +97,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
       projectContent: contentToSave,
       projectTags: this.tags,
       projectMetaKeywords: this.metaKeywords,
+      projectType: this.projectType,
       projectFeaturedImageId: this.projectImageId,
       projectPublished: false
     };
@@ -133,6 +136,7 @@ export class CreateProjectComponent extends BaseAdminComponent implements OnInit
       projectContent: contentToSave,
       projectTags: this.tags,
       projectMetaKeywords: this.metaKeywords,
+      projectType: this.projectType,
       projectFeaturedImageId: this.projectImageId,
       projectPublished: true
     };

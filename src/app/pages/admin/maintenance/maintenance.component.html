@@ -26,13 +26,17 @@
             <strong>Meta Title:</strong>
             <span>{{ maintenanceMode.metaTitle }}</span>
           </div>
-          <div class="info-row">
+          <div class="info-row" *ngIf="!maintenanceMode.isPermanent">
             <strong>From:</strong>
-            <span>{{ formatDate(maintenanceMode.fromDate) }}</span>
+            <span *ngIf="maintenanceMode.fromDate">{{ formatDate(maintenanceMode.fromDate) }}</span>
           </div>
-          <div class="info-row">
+          <div class="info-row" *ngIf="!maintenanceMode.isPermanent">
             <strong>To:</strong>
-            <span>{{ formatDate(maintenanceMode.toDate) }}</span>
+            <span *ngIf="maintenanceMode.toDate">{{ formatDate(maintenanceMode.toDate) }}</span>
+          </div>
+          <div class="info-row" *ngIf="maintenanceMode.isPermanent">
+            <strong>Type:</strong>
+            <span>Permanent Maintenance Mode</span>
           </div>
         </div>
 
@@ -63,6 +67,17 @@
             </label>
           </div>
 
+          <!-- Permanent Mode Toggle -->
+          <div class="form-row">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                [(ngModel)]="isPermanent"
+                [disabled]="isFormDisabled()">
+              <span class="checkbox-text">Permanent Maintenance Mode (no end date)</span>
+            </label>
+          </div>
+
           <!-- Message -->
           <div class="form-row">
             <basic-textarea
@@ -80,7 +95,7 @@
           </div>
 
           <!-- From Date -->
-          <div class="form-row">
+          <div class="form-row" *ngIf="!isPermanent">
             <basic-input
               label="From Date & Time"
               type="datetime-local"
@@ -94,7 +109,7 @@
           </div>
 
           <!-- To Date -->
-          <div class="form-row">
+          <div class="form-row" *ngIf="!isPermanent">
             <basic-input
               label="To Date & Time"
               type="datetime-local"
@@ -151,8 +166,10 @@
 
           <!-- Info Note -->
           <div class="info-note">
-            <p><strong>Note:</strong> The dates above are purely for display purposes to inform users.
+            <p *ngIf="!isPermanent"><strong>Note:</strong> The dates above are purely for display purposes to inform users.
             Maintenance mode will remain active until you manually deactivate it.</p>
+            <p *ngIf="isPermanent"><strong>Note:</strong> Permanent maintenance mode is enabled.
+            No dates will be displayed to users, and the mode will remain active until you manually deactivate it.</p>
           </div>
 
           <!-- Submit Button -->

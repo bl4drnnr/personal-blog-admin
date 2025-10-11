@@ -26,6 +26,7 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
   heroTitle = '';
   title = '';
   metaTitle = '';
+  isPermanent = false;
 
   // Field error states
   messageError = false;
@@ -80,15 +81,20 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
     this.heroTitle = maintenance.heroTitle;
     this.title = maintenance.title;
     this.metaTitle = maintenance.metaTitle;
+    this.isPermanent = maintenance.isPermanent;
 
     // Format dates for input fields (YYYY-MM-DDTHH:MM format for datetime-local)
     if (maintenance.fromDate) {
       const fromDate = new Date(maintenance.fromDate);
       this.fromDate = this.formatDateForInput(fromDate);
+    } else {
+      this.fromDate = '';
     }
     if (maintenance.toDate) {
       const toDate = new Date(maintenance.toDate);
       this.toDate = this.formatDateForInput(toDate);
+    } else {
+      this.toDate = '';
     }
   }
 
@@ -150,19 +156,20 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
       isValid = false;
     }
 
-    if (!this.fromDate.trim()) {
+    if (!this.isPermanent && !this.fromDate.trim()) {
       this.fromDateError = true;
       this.fromDateErrorMessage = 'From date is required';
       isValid = false;
     }
 
-    if (!this.toDate.trim()) {
+    if (!this.isPermanent && !this.toDate.trim()) {
       this.toDateError = true;
       this.toDateErrorMessage = 'To date is required';
       isValid = false;
     }
 
     if (
+      !this.isPermanent &&
       this.fromDate &&
       this.toDate &&
       new Date(this.fromDate) >= new Date(this.toDate)
@@ -185,16 +192,20 @@ export class MaintenanceComponent extends BaseAdminComponent implements OnInit {
 
     this.saving = true;
 
-    const payload = {
+    const payload: any = {
       isActive: this.isActive,
       message: this.message.trim(),
-      fromDate: this.fromDate,
-      toDate: this.toDate,
       heroImageId: this.heroImageId.trim(),
       heroTitle: this.heroTitle.trim(),
       title: this.title.trim(),
-      metaTitle: this.metaTitle.trim()
+      metaTitle: this.metaTitle.trim(),
+      isPermanent: this.isPermanent
     };
+
+    if (!this.isPermanent) {
+      payload.fromDate = this.fromDate;
+      payload.toDate = this.toDate;
+    }
 
     this.maintenanceService.updateMaintenance(payload).subscribe({
       next: () => {
