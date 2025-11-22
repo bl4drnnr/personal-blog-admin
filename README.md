@@ -184,7 +184,7 @@ ng version
 The application uses environment files for configuration management:
 
 - `src/environments/environment.ts` - Development environment
-- `src/environments/environment.prod.ts` - Production environment
+- `src/environments/environment.production.ts` - Production environment
 
 Key configuration items:
 - API base URL
