@@ -31,8 +31,12 @@ export class ApiService {
 
     const headers: { [key: string]: string } = {};
 
-    const username = this.envService.getBasicAuthCredentials.username;
-    const password = this.envService.getBasicAuthCredentials.password;
+    const username =
+      (globalThis as any).BASIC_AUTH_USERNAME ||
+      this.envService.getBasicAuthCredentials.username;
+    const password =
+      (globalThis as any).BASIC_AUTH_PASSWORD ||
+      this.envService.getBasicAuthCredentials.password;
     if (username && password) {
       const credentials = btoa(`${username}:${password}`);
       headers['Authorization'] = `Basic ${credentials}`;
