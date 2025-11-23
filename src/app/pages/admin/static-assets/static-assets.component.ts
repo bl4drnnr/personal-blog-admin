@@ -37,6 +37,7 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
   selectedFile: File | null = null;
   assetName = '';
   assetDescription = '';
+  assetType: 'icon' | 'projectPicture' | 'articlePicture' | 'staticAsset' = 'staticAsset';
   previewUrl: string | null = null;
   uploadMode: 'file' | 'base64' = 'file';
 
@@ -159,7 +160,8 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
         const payload: UploadFilePayload = {
           name: this.assetName.trim(),
           base64File,
-          description: this.assetDescription.trim() || undefined
+          description: this.assetDescription.trim() || undefined,
+          assetType: this.assetType
         };
 
         // Use the updated uploadFile method that sends base64 in JSON body
@@ -247,7 +249,8 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
     const payload: UploadBase64Payload = {
       name: this.assetName.trim(),
       base64Image: this.previewUrl,
-      description: this.assetDescription.trim() || undefined
+      description: this.assetDescription.trim() || undefined,
+      assetType: this.assetType
     };
 
     this.staticAssetsService.uploadBase64Image(payload).subscribe({
@@ -436,6 +439,7 @@ export class StaticAssetsComponent extends BaseAdminComponent implements OnInit 
     this.selectedFile = null;
     this.assetName = '';
     this.assetDescription = '';
+    this.assetType = 'staticAsset';
     this.previewUrl = null;
     this.uploadMode = 'file';
   }

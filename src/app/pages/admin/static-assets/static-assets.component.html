@@ -87,6 +87,22 @@
 
           <div class="form-row">
             <div class="form-group">
+              <label for="asset-type">Asset Type *</label>
+              <select
+                id="asset-type"
+                [(ngModel)]="assetType"
+                class="form-select"
+                required
+              >
+                <option *ngFor="let option of assetTypeOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
               <label for="asset-description">Description</label>
               <textarea
                 id="asset-description"
