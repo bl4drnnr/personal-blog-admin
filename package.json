@@ -12,7 +12,7 @@
     "test": "ng test",
     "format": "prettier --write \"{src,packages}/**/*.ts\" && eslint \"{src,packages}/**/*.ts\" --fix"
   },
-   "private": true,
+  "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
@@ -38,6 +38,7 @@
     "@angular/compiler-cli": "^17.3.0",
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "eslint": "^8.57.0",
