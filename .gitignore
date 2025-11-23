@@ -45,4 +45,6 @@ Thumbs.db
 package-lock.json
 .angular/
 .claude/
-env-config.js
+
+# Environment config
+src/assets/env-config.js
