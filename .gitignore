@@ -46,5 +46,4 @@ package-lock.json
 .angular/
 .claude/
 
-# Environment config
-src/assets/env-config.js
+environment.production.ts
