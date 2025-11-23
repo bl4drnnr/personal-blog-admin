@@ -24,7 +24,7 @@ jobs:
       - name: Setting environment variables
         run: |
           echo "AWS_DEFAULT_REGION=eu-central-1" >> $GITHUB_ENV
-          echo "AWS_ADMIN_SG_NAME=personal-blog-admin" >> $GITHUB_ENV
+          echo "AWS_ADMIN_SG_NAME=bahdashych-on-security-admin" >> $GITHUB_ENV
 
       - name: Get Admin Security Group ID
         id: get_admin_sg_id
