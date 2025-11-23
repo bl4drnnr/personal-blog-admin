@@ -31,6 +31,7 @@ export class ApiService {
 
     const headers: { [key: string]: string } = {};
 
+    console.log((globalThis as any).BASIC_AUTH_USERNAME);
     const username =
       (globalThis as any).BASIC_AUTH_USERNAME ||
       this.envService.getBasicAuthCredentials.username;
