@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 const CARDS = [
   { to: '/posts', title: 'Posts', body: 'Write and manage articles and projects.' },
   { to: '/assets', title: 'Assets', body: 'Upload and manage images.' },
-  { to: '/about', title: 'About / CV', body: 'Edit profile, work history, education, certifications.' },
-  { to: '/settings', title: 'Site settings', body: 'Hero, intro, social links, SEO defaults, footer.' },
+  {
+    to: '/about',
+    title: 'About / CV',
+    body: 'Edit profile, work history, education, certifications.',
+  },
+  {
+    to: '/settings',
+    title: 'Site settings',
+    body: 'Hero, intro, social links, SEO defaults, footer.',
+  },
 ];
 
 export function DashboardPage() {
