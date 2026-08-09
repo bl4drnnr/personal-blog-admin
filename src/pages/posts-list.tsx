@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { listPosts } from '@/api/posts';
 import type { PostType } from '@/api/types';
+import { LoadingBlock } from '@/components/loader';
 
 export function PostsListPage() {
   const [type, setType] = useState<'' | PostType>('');
@@ -49,7 +50,7 @@ export function PostsListPage() {
       </div>
 
       {isLoading ? (
-        <p className="muted">Loading…</p>
+        <LoadingBlock label="Loading posts…" />
       ) : !data || data.items.length === 0 ? (
         <p className="muted">No posts yet.</p>
       ) : (

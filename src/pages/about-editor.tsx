@@ -18,6 +18,7 @@ import { AssetPicker } from '@/components/asset-picker';
 import { LinesInput } from '@/components/lines-input';
 import { TagInput } from '@/components/tag-input';
 import { useToast } from '@/components/toast';
+import { LoadingBlock } from '@/components/loader';
 
 const PROFILE_EMPTY: AboutInput = {
   fullName: '',
@@ -37,7 +38,7 @@ export function AboutEditorPage() {
     return (
       <div className="page">
         <h1 className="page-h1">About / CV</h1>
-        <p className="muted">Loading…</p>
+        <LoadingBlock label="Loading CV…" />
       </div>
     );
   }

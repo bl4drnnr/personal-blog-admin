@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { errorMessage } from '@/api/client';
 import { getSiteConfig, updateSiteConfig, type SiteConfig } from '@/api/site';
+import { LoadingBlock } from '@/components/loader';
 import { useToast } from '@/components/toast';
 
 const EMPTY: SiteConfig = {
@@ -18,7 +19,7 @@ export function SiteSettingsPage() {
   const toast = useToast();
   const [form, setForm] = useState<SiteConfig>(EMPTY);
 
-  const { data } = useQuery({ queryKey: ['config'], queryFn: getSiteConfig });
+  const { data, isLoading } = useQuery({ queryKey: ['config'], queryFn: getSiteConfig });
 
   useEffect(() => {
     if (data) {
@@ -49,6 +50,15 @@ export function SiteSettingsPage() {
   const invalidLinks = form.socialLinks
     .map((link, index) => ({ link, index }))
     .filter(({ link }) => !/^https?:\/\/\S+\.\S+/.test(link.url.trim()));
+
+  if (isLoading) {
+    return (
+      <div className="page">
+        <h1 className="page-h1">Site settings</h1>
+        <LoadingBlock label="Loading settings…" />
+      </div>
+    );
+  }
 
   return (
     <div className="page">
