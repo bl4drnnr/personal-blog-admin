@@ -10,6 +10,24 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Pull the human-readable reason out of an API error.
+ *
+ * Validation failures come back as `{ message: ['slug must be …'] }`, which is
+ * far more useful than a generic "Save failed." — surface it verbatim and fall
+ * back to the caller's wording when the shape is anything else.
+ */
+export function errorMessage(error: unknown, fallback: string): string {
+  if (!(error instanceof ApiError)) {
+    return fallback;
+  }
+  const { message } = (error.body ?? {}) as { message?: unknown };
+  if (Array.isArray(message) && message.every((m) => typeof m === 'string') && message.length > 0) {
+    return message.join('. ');
+  }
+  return typeof message === 'string' && message !== '' ? message : fallback;
+}
+
 interface RequestOptions {
   method?: string;
   body?: unknown;

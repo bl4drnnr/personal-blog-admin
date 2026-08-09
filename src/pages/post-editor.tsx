@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CodeMirror from '@uiw/react-codemirror';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ApiError } from '@/api/client';
+import { ApiError, errorMessage } from '@/api/client';
 import { createPost, deletePost, getPost, updatePost } from '@/api/posts';
 import type { PostInput, PostType } from '@/api/types';
 import { AssetPicker } from '@/components/asset-picker';
@@ -91,7 +91,7 @@ export function PostEditorPage() {
       if (err instanceof ApiError && err.status === 409) {
         toast('That slug is already in use.', 'error');
       } else {
-        toast('Save failed.', 'error');
+        toast(errorMessage(err, 'Save failed.'), 'error');
       }
     },
   });
@@ -106,7 +106,11 @@ export function PostEditorPage() {
     onError: () => toast('Delete failed.', 'error'),
   });
 
-  const canSave = form.title.trim() !== '' && form.slug.trim() !== '';
+  // Mirrors the API's @Matches on CreatePostDto.slug. Without this the button
+  // stays enabled for something like "My Post!", the request 400s, and the only
+  // signal is a toast after the round trip.
+  const slugInvalid = form.slug.trim() !== '' && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(form.slug);
+  const canSave = form.title.trim() !== '' && form.slug.trim() !== '' && !slugInvalid;
 
   return (
     <div className="page editor-page">
@@ -182,11 +186,17 @@ export function PostEditorPage() {
             <span>Slug</span>
             <input
               value={form.slug}
+              aria-invalid={slugInvalid}
               onChange={(e) => {
                 setSlugTouched(true);
                 set('slug', e.target.value);
               }}
             />
+            {slugInvalid && (
+              <span className="field-error">
+                Lowercase letters, numbers and single hyphens only.
+              </span>
+            )}
           </label>
 
           <label className="stacked">
