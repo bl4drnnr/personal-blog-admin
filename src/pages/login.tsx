@@ -8,6 +8,39 @@ type Step =
   | { kind: 'mfa-verify'; tempToken: string }
   | { kind: 'mfa-setup'; tempToken: string; enrollment: MfaEnrollment };
 
+type CopyState = 'idle' | 'copied' | 'failed';
+
+/**
+ * The QR only helps if you are enrolling with a phone camera. A password manager
+ * wants the key as text, so show it too — and make it a one-click copy, because
+ * a mistyped base32 character fails at verification with no clue why.
+ */
+function SetupKey({ secret }: { secret: string }) {
+  const [copy, setCopy] = useState<CopyState>('idle');
+
+  // Absent in insecure contexts, where the property access itself throws.
+  const copySecret = async () => {
+    try {
+      await navigator.clipboard.writeText(secret);
+      setCopy('copied');
+    } catch {
+      setCopy('failed');
+    }
+    window.setTimeout(() => setCopy('idle'), 2000);
+  };
+
+  return (
+    <div className="setup-key">
+      <span className="setup-key-label">Setup key</span>
+      {/* user-select: all — a single click grabs the whole key if copying fails. */}
+      <code>{secret}</code>
+      <button type="button" className="btn ghost small" onClick={copySecret}>
+        {copy === 'copied' ? 'Copied' : copy === 'failed' ? 'Copy failed' : 'Copy'}
+      </button>
+    </div>
+  );
+}
+
 function errorMessage(err: unknown): string {
   if (err instanceof ApiError) {
     if (err.status === 401) {
@@ -107,9 +140,11 @@ export function LoginPage() {
         {step.kind === 'mfa-setup' && (
           <form onSubmit={submitCode} className="login-form">
             <p className="login-hint">
-              Scan this with your authenticator app, then enter the 6-digit code to finish setup.
+              Scan the QR with an authenticator app, or add the setup key to a password manager.
+              Then enter the 6-digit code to finish setup.
             </p>
             <img className="qr" src={step.enrollment.qrDataUrl} alt="MFA QR code" />
+            <SetupKey secret={step.enrollment.secret} />
             <label>
               <span>Authentication code</span>
               <input
