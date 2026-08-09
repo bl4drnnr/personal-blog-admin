@@ -6,6 +6,10 @@
   font-size: 15px;
   line-height: 1.7;
   color: var(--body);
+  /* A bare URL offers no break opportunity, and one of them was enough to make
+     the preview three times its pane. `pre` is unaffected — it does not wrap, so
+     code keeps the horizontal scroll it needs to stay readable as written. */
+  overflow-wrap: break-word;
 }
 
 .prose > * + * {

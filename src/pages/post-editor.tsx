@@ -1,7 +1,7 @@
 import { markdown as cmMarkdown } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import CodeMirror from '@uiw/react-codemirror';
+import CodeMirror, { EditorView } from '@uiw/react-codemirror';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApiError, errorMessage } from '@/api/client';
@@ -72,7 +72,12 @@ export function PostEditorPage() {
     }));
   };
 
-  const extensions = useMemo(() => [cmMarkdown({ codeLanguages: languages })], []);
+  // Soft wrap: prose paragraphs are written as one long line, and without this
+  // the editor sizes itself to the longest one instead of to its pane.
+  const extensions = useMemo(
+    () => [cmMarkdown({ codeLanguages: languages }), EditorView.lineWrapping],
+    [],
+  );
 
   const save = useMutation({
     mutationFn: (publish: boolean) => {

@@ -12,6 +12,8 @@ interface TokenResponse {
 }
 
 export interface MfaEnrollment {
+  /** Base32 TOTP key, for enrolling by paste instead of by camera. */
+  secret: string;
   otpauthUrl: string;
   qrDataUrl: string;
 }

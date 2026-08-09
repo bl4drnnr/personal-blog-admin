@@ -60,19 +60,36 @@ async function rawRequest(path: string, options: RequestOptions): Promise<Respon
   });
 }
 
+/**
+ * Callers that arrive while a refresh is already running wait for that one
+ * instead of starting another. Concurrent refreshes all present the same cookie
+ * and only the first can rotate it, so the rest would be spending requests to
+ * lean on the server's replay grace period. StrictMode alone fires the mount
+ * effect twice, which was enough to trigger it every single load.
+ */
+let inFlight: Promise<boolean> | null = null;
+
 /** Attempts a token refresh via the HttpOnly cookie. Returns true on success. */
 async function tryRefresh(): Promise<boolean> {
-  const res = await fetch(`${API_URL}/api/auth/refresh`, {
-    method: 'POST',
-    credentials: 'include',
-  });
-  if (!res.ok) {
-    setAccessToken(null);
-    return false;
+  if (inFlight) {
+    return inFlight;
   }
-  const data = (await res.json()) as { accessToken: string };
-  setAccessToken(data.accessToken);
-  return true;
+  inFlight = (async () => {
+    const res = await fetch(`${API_URL}/api/auth/refresh`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+    if (!res.ok) {
+      setAccessToken(null);
+      return false;
+    }
+    const data = (await res.json()) as { accessToken: string };
+    setAccessToken(data.accessToken);
+    return true;
+  })().finally(() => {
+    inFlight = null;
+  });
+  return inFlight;
 }
 
 /**

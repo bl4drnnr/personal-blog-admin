@@ -124,6 +124,38 @@ a {
   border-radius: 8px;
 }
 
+.setup-key {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--wash);
+}
+
+.setup-key-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.setup-key code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text);
+  /* The key is one token: never hyphenate it, and select all of it at once. */
+  word-break: break-all;
+  user-select: all;
+}
+
+.setup-key .btn {
+  align-self: flex-start;
+}
+
 /* --- Forms ------------------------------------------------------------------- */
 
 label {
@@ -476,9 +508,16 @@ textarea[aria-invalid='true'] {
  * CodeMirror fill its pane — with flex-grow alone it kept sizing to its content
  * while the preview filled, which is exactly the mismatch this replaced.
  */
+/*
+ * minmax(0, 1fr) on the column, not just min-width: 0 on the pane. The pane can
+ * shrink either way, but its implicit column would still be max-content, so a
+ * long line sized CodeMirror past the pane and painted it over the preview
+ * instead of scrolling inside it.
+ */
 .editor-pane {
   display: grid;
   grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
   min-width: 0;
   height: 100%;
