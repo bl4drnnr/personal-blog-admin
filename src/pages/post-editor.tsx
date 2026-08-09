@@ -4,10 +4,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CodeMirror from '@uiw/react-codemirror';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ApiError } from '@/api/client';
+import { ApiError, errorMessage } from '@/api/client';
 import { createPost, deletePost, getPost, updatePost } from '@/api/posts';
 import type { PostInput, PostType } from '@/api/types';
 import { AssetPicker } from '@/components/asset-picker';
+import { LoadingBlock } from '@/components/loader';
 import { MarkdownPreview } from '@/components/markdown-preview';
 import { TagInput } from '@/components/tag-input';
 import { useToast } from '@/components/toast';
@@ -34,7 +35,7 @@ export function PostEditorPage() {
   const [form, setForm] = useState<PostInput>(EMPTY);
   const [slugTouched, setSlugTouched] = useState(false);
 
-  const { data: existing } = useQuery({
+  const { data: existing, isLoading } = useQuery({
     queryKey: ['post', id],
     queryFn: () => getPost(id as string),
     enabled: !isNew,
@@ -91,7 +92,7 @@ export function PostEditorPage() {
       if (err instanceof ApiError && err.status === 409) {
         toast('That slug is already in use.', 'error');
       } else {
-        toast('Save failed.', 'error');
+        toast(errorMessage(err, 'Save failed.'), 'error');
       }
     },
   });
@@ -106,7 +107,20 @@ export function PostEditorPage() {
     onError: () => toast('Delete failed.', 'error'),
   });
 
-  const canSave = form.title.trim() !== '' && form.slug.trim() !== '';
+  // Mirrors the API's @Matches on CreatePostDto.slug. Without this the button
+  // stays enabled for something like "My Post!", the request 400s, and the only
+  // signal is a toast after the round trip.
+  const slugInvalid = form.slug.trim() !== '' && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(form.slug);
+  const canSave = form.title.trim() !== '' && form.slug.trim() !== '' && !slugInvalid;
+
+  if (isLoading) {
+    return (
+      <div className="page editor-page">
+        <h1 className="page-h1">Edit post</h1>
+        <LoadingBlock label="Loading post…" />
+      </div>
+    );
+  }
 
   return (
     <div className="page editor-page">
@@ -142,119 +156,122 @@ export function PostEditorPage() {
         </div>
       </div>
 
-      <div className="editor-layout">
-        <div className="editor-main">
-          <label className="stacked">
-            <span>Title</span>
-            <input value={form.title} onChange={(e) => onTitleChange(e.target.value)} />
-          </label>
+      <label className="stacked editor-title">
+        <span>Title</span>
+        <input value={form.title} onChange={(e) => onTitleChange(e.target.value)} />
+      </label>
 
-          <div className="editor-split">
-            <div className="editor-pane">
-              <span className="pane-label">Markdown</span>
-              <CodeMirror
-                value={form.contentMd}
-                extensions={extensions}
-                onChange={(value) => set('contentMd', value)}
-                height="520px"
-                basicSetup={{ lineNumbers: true, foldGutter: false }}
-              />
-            </div>
-            <div className="editor-pane">
-              <span className="pane-label">Preview</span>
-              <div className="preview-scroll">
-                <MarkdownPreview markdown={form.contentMd} />
-              </div>
-            </div>
+      {/* Post metadata sits above the panes so the editor and preview get the
+          full page width — this is where the time is actually spent. */}
+      <section className="editor-meta">
+        <label className="stacked">
+          <span>Type</span>
+          <select value={form.type} onChange={(e) => set('type', e.target.value as PostType)}>
+            <option value="article">Article</option>
+            <option value="project">Project</option>
+          </select>
+        </label>
+
+        <label className="stacked">
+          <span>Slug</span>
+          <input
+            value={form.slug}
+            aria-invalid={slugInvalid}
+            onChange={(e) => {
+              setSlugTouched(true);
+              set('slug', e.target.value);
+            }}
+          />
+          {slugInvalid && (
+            <span className="field-error">Lowercase letters, numbers and single hyphens only.</span>
+          )}
+        </label>
+
+        <label className="stacked">
+          <span>Excerpt</span>
+          <input
+            value={form.excerpt}
+            maxLength={500}
+            onChange={(e) => set('excerpt', e.target.value)}
+          />
+        </label>
+
+        <label className="stacked">
+          <span>Tags</span>
+          <TagInput value={form.tags} onChange={(tags) => set('tags', tags)} />
+        </label>
+
+        {form.type === 'project' && (
+          <label className="stacked">
+            <span>Repo URL</span>
+            <input
+              value={form.repoUrl ?? ''}
+              onChange={(e) => set('repoUrl', e.target.value || undefined)}
+            />
+          </label>
+        )}
+
+        <label className="stacked">
+          <span>Hero image</span>
+          <AssetPicker
+            value={form.heroAssetId ?? null}
+            onChange={(assetId) => set('heroAssetId', assetId ?? undefined)}
+          />
+        </label>
+
+        <label className="inline">
+          <input
+            type="checkbox"
+            checked={form.featured}
+            onChange={(e) => set('featured', e.target.checked)}
+          />
+          <span>Featured (shown on the home page)</span>
+        </label>
+
+        <details className="seo-block">
+          <summary>SEO overrides</summary>
+          <label className="stacked">
+            <span>SEO title</span>
+            <input
+              value={form.seoTitle ?? ''}
+              onChange={(e) => set('seoTitle', e.target.value || undefined)}
+            />
+          </label>
+          <label className="stacked">
+            <span>SEO description</span>
+            <textarea
+              rows={2}
+              value={form.seoDescription ?? ''}
+              onChange={(e) => set('seoDescription', e.target.value || undefined)}
+            />
+          </label>
+        </details>
+
+        {existing && (
+          <p className="muted small">
+            {existing.published ? 'Published' : 'Draft'} · ~{existing.readingTimeMin} min read
+          </p>
+        )}
+      </section>
+
+      <div className="editor-split">
+        <div className="editor-pane">
+          <span className="pane-label">Markdown</span>
+          {/* No height prop: .editor-split sizes both panes from one variable,
+              so the editor and the preview can never disagree. */}
+          <CodeMirror
+            value={form.contentMd}
+            extensions={extensions}
+            onChange={(value) => set('contentMd', value)}
+            basicSetup={{ lineNumbers: true, foldGutter: false }}
+          />
+        </div>
+        <div className="editor-pane">
+          <span className="pane-label">Preview</span>
+          <div className="preview-scroll">
+            <MarkdownPreview markdown={form.contentMd} />
           </div>
         </div>
-
-        <aside className="editor-sidebar">
-          <label className="stacked">
-            <span>Type</span>
-            <select value={form.type} onChange={(e) => set('type', e.target.value as PostType)}>
-              <option value="article">Article</option>
-              <option value="project">Project</option>
-            </select>
-          </label>
-
-          <label className="stacked">
-            <span>Slug</span>
-            <input
-              value={form.slug}
-              onChange={(e) => {
-                setSlugTouched(true);
-                set('slug', e.target.value);
-              }}
-            />
-          </label>
-
-          <label className="stacked">
-            <span>Excerpt</span>
-            <textarea
-              rows={3}
-              value={form.excerpt}
-              onChange={(e) => set('excerpt', e.target.value)}
-            />
-          </label>
-
-          <label className="stacked">
-            <span>Tags</span>
-            <TagInput value={form.tags} onChange={(tags) => set('tags', tags)} />
-          </label>
-
-          {form.type === 'project' && (
-            <label className="stacked">
-              <span>Repo URL</span>
-              <input
-                value={form.repoUrl ?? ''}
-                onChange={(e) => set('repoUrl', e.target.value || undefined)}
-              />
-            </label>
-          )}
-
-          <label className="stacked">
-            <span>Hero image</span>
-            <AssetPicker
-              value={form.heroAssetId ?? null}
-              onChange={(assetId) => set('heroAssetId', assetId ?? undefined)}
-            />
-          </label>
-
-          <label className="inline">
-            <input
-              type="checkbox"
-              checked={form.featured}
-              onChange={(e) => set('featured', e.target.checked)}
-            />
-            <span>Featured (shown on the home page)</span>
-          </label>
-
-          <details className="seo-block">
-            <summary>SEO overrides</summary>
-            <label className="stacked">
-              <span>SEO title</span>
-              <input
-                value={form.seoTitle ?? ''}
-                onChange={(e) => set('seoTitle', e.target.value || undefined)}
-              />
-            </label>
-            <label className="stacked">
-              <span>SEO description</span>
-              <textarea
-                rows={2}
-                value={form.seoDescription ?? ''}
-                onChange={(e) => set('seoDescription', e.target.value || undefined)}
-              />
-            </label>
-          </details>
-
-          {existing && (
-            <p className="muted small">
-              {existing.published ? 'Published' : 'Draft'} · ~{existing.readingTimeMin} min read
-            </p>
-          )}
-        </aside>
       </div>
     </div>
   );

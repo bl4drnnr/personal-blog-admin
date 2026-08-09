@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { errorMessage } from '@/api/client';
 import {
   createCvEntry,
   deleteCvEntry,
@@ -17,6 +18,7 @@ import { AssetPicker } from '@/components/asset-picker';
 import { LinesInput } from '@/components/lines-input';
 import { TagInput } from '@/components/tag-input';
 import { useToast } from '@/components/toast';
+import { LoadingBlock } from '@/components/loader';
 
 const PROFILE_EMPTY: AboutInput = {
   fullName: '',
@@ -36,7 +38,7 @@ export function AboutEditorPage() {
     return (
       <div className="page">
         <h1 className="page-h1">About / CV</h1>
-        <p className="muted">Loading…</p>
+        <LoadingBlock label="Loading CV…" />
       </div>
     );
   }
@@ -91,7 +93,7 @@ function ProfileSection({
       onSaved();
       toast('Profile saved');
     },
-    onError: () => toast('Save failed.', 'error'),
+    onError: (err) => toast(errorMessage(err, 'Save failed.'), 'error'),
   });
 
   return (
@@ -132,6 +134,18 @@ function ProfileSection({
   );
 }
 
+/**
+ * A date the API will accept for @IsDateString: an ISO calendar date that also
+ * refers to a real day (2025-02-30 parses as a string but is not a date).
+ */
+function isCalendarDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false;
+  }
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value);
+}
+
 /** Generic add/edit/delete list for a CV entity kind. */
 function CvList<T extends { id: string; sortOrder: number }>({
   title,
@@ -142,6 +156,7 @@ function CvList<T extends { id: string; sortOrder: number }>({
   makeEmpty,
   renderFields,
   summarize,
+  missingRequired,
 }: {
   title: string;
   kind: CvKind;
@@ -151,6 +166,8 @@ function CvList<T extends { id: string; sortOrder: number }>({
   makeEmpty: (sortOrder: number) => Omit<T, 'id'>;
   renderFields: (draft: Omit<T, 'id'>, update: (patch: Partial<T>) => void) => React.ReactNode;
   summarize: (item: T) => string;
+  /** Labels of fields the API requires that this draft has not filled in yet. */
+  missingRequired: (draft: Omit<T, 'id'>) => string[];
 }) {
   const [editing, setEditing] = useState<{ id: string | null; draft: Omit<T, 'id'> } | null>(null);
 
@@ -162,7 +179,7 @@ function CvList<T extends { id: string; sortOrder: number }>({
       setEditing(null);
       toast('Saved');
     },
-    onError: () => toast('Save failed.', 'error'),
+    onError: (err) => toast(errorMessage(err, 'Save failed.'), 'error'),
   });
 
   const remove = useMutation({
@@ -175,6 +192,8 @@ function CvList<T extends { id: string; sortOrder: number }>({
   });
 
   const startNew = () => setEditing({ id: null, draft: makeEmpty(items.length) });
+
+  const missing = editing ? missingRequired(editing.draft) : [];
 
   return (
     <section className="cv-section">
@@ -222,12 +241,15 @@ function CvList<T extends { id: string; sortOrder: number }>({
             setEditing((cur) => (cur ? { ...cur, draft: { ...cur.draft, ...patch } } : cur)),
           )}
           <div className="cv-editor-actions">
+            {missing.length > 0 && (
+              <span className="field-error">Required: {missing.join(', ')}</span>
+            )}
             <button className="btn" onClick={() => setEditing(null)}>
               Cancel
             </button>
             <button
               className="btn primary"
-              disabled={save.isPending}
+              disabled={save.isPending || missing.length > 0}
               onClick={() => save.mutate(editing)}
             >
               Save entry
@@ -256,6 +278,11 @@ function PositionsSection({
       onChanged={onChanged}
       toast={toast}
       summarize={(p) => `${p.title} · ${p.company}`}
+      missingRequired={(p) => [
+        ...(p.title.trim() === '' ? ['role title'] : []),
+        ...(p.company.trim() === '' ? ['company'] : []),
+        ...(isCalendarDate(p.startDate) ? [] : ['start date (YYYY-MM-DD)']),
+      ]}
       makeEmpty={(sortOrder) => ({
         company: '',
         companyUrl: null,
@@ -368,6 +395,11 @@ function EducationSection({
       onChanged={onChanged}
       toast={toast}
       summarize={(e) => `${e.degree} ${e.field} · ${e.institution}`}
+      missingRequired={(e) => [
+        ...(e.institution.trim() === '' ? ['institution'] : []),
+        ...(e.degree.trim() === '' ? ['degree'] : []),
+        ...(isCalendarDate(e.startDate) ? [] : ['start date (YYYY-MM-DD)']),
+      ]}
       makeEmpty={(sortOrder) => ({
         institution: '',
         degree: '',
@@ -458,6 +490,11 @@ function CertificationsSection({
       onChanged={onChanged}
       toast={toast}
       summarize={(c) => `${c.name} · ${c.issuer}`}
+      missingRequired={(c) => [
+        ...(c.name.trim() === '' ? ['name'] : []),
+        ...(c.issuer.trim() === '' ? ['issuer'] : []),
+        ...(isCalendarDate(c.issuedDate) ? [] : ['issued date (YYYY-MM-DD)']),
+      ]}
       makeEmpty={(sortOrder) => ({
         name: '',
         issuer: '',

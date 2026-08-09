@@ -167,6 +167,17 @@ select:focus {
   color: var(--danger);
 }
 
+/* Inline hint under a single invalid field, sized to sit inside .stacked. */
+.field-error {
+  font-size: 12px;
+  color: var(--danger);
+}
+
+input[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
 /* --- App shell --------------------------------------------------------------- */
 
 .admin-shell {
@@ -225,8 +236,18 @@ select:focus {
   margin-top: auto;
 }
 
+/*
+ * The width cap lives on the page, not the shell, so a page can opt out of it.
+ * Forms read better in a column; the post editor does not, and takes the whole
+ * viewport instead (.editor-page).
+ */
 .admin-main {
-  padding: 32px 40px;
+  /* Generous bottom padding: with only 32px the last row of a long page sat
+     hard against the viewport edge, which reads as unreachable. */
+  padding: 32px 40px 72px;
+}
+
+.page {
   max-width: 960px;
 }
 
@@ -381,6 +402,10 @@ select:focus {
 
 .editor-page {
   max-width: none;
+  display: flex;
+  flex-direction: column;
+  /* Matches .admin-main's vertical padding, so the page ends at the fold. */
+  min-height: calc(100svh - 104px);
 }
 
 .editor-actions {
@@ -388,11 +413,32 @@ select:focus {
   gap: 8px;
 }
 
-.editor-layout {
+/*
+ * Metadata as a horizontal band above the panes. auto-fill keeps it compact on
+ * a wide screen and collapses to a single column on a narrow one, so the
+ * editor and preview below always get the full width.
+ */
+.editor-meta {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0 20px;
   align-items: start;
+  margin: 4px 0 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--wash);
+}
+
+/* Full-bleed rows inside the metadata band. */
+.editor-meta .inline,
+.editor-meta .seo-block,
+.editor-meta > .muted.small {
+  grid-column: 1 / -1;
+}
+
+.editor-title {
+  max-width: 720px;
 }
 
 .stacked {
@@ -410,17 +456,44 @@ select:focus {
   color: var(--muted);
 }
 
+/*
+ * The panes fill whatever the page has left rather than being sized from a
+ * guessed offset: the editor page is a flex column, the split is the growing
+ * child, and each pane's body grows inside it. Both panes therefore always
+ * agree, and the page ends exactly at the fold whatever the metadata band
+ * happens to wrap to.
+ */
 .editor-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  flex: 1 1 auto;
+  min-height: 420px;
 }
 
+/*
+ * auto row for the label, 1fr for the body. A definite row height is what lets
+ * CodeMirror fill its pane — with flex-grow alone it kept sizing to its content
+ * while the preview filled, which is exactly the mismatch this replaced.
+ */
 .editor-pane {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: 8px;
   min-width: 0;
+  height: 100%;
+}
+
+.editor-pane .cm-editor,
+.editor-pane .preview-scroll {
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 1100px) {
+  .editor-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pane-label {
@@ -442,25 +515,11 @@ select:focus {
 }
 
 .preview-scroll {
-  height: 520px;
   overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
   padding: 18px 20px;
-}
-
-.editor-sidebar {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--wash);
-  padding: 18px;
-  position: sticky;
-  top: 24px;
-}
-
-.editor-sidebar .stacked:last-child {
-  margin-bottom: 0;
 }
 
 .inline {
@@ -620,14 +679,41 @@ select:focus {
   background: var(--chip);
 }
 
-.asset-search {
+.asset-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
+.asset-search {
+  flex: 1;
+}
+
+.inline-select {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.inline-select select {
+  width: auto;
+}
+
+.asset-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Wider cards than before: they now carry a caption as well as the image. */
 .asset-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 16px;
+  align-items: start;
 }
 
 .asset-card {
@@ -635,6 +721,39 @@ select:focus {
   border-radius: 8px;
   overflow: hidden;
   background: var(--surface);
+}
+
+.asset-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 10px 2px;
+  min-width: 0;
+}
+
+/* Long names truncate rather than stretching the grid column. */
+.asset-meta > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asset-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.asset-facts {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.asset-alt {
+  font-size: 11.5px;
+  color: var(--secondary);
 }
 
 .asset-card img {
@@ -653,6 +772,40 @@ select:focus {
 .btn.small {
   padding: 5px 9px;
   font-size: 11px;
+}
+
+/* Loading */
+
+.spinner {
+  display: inline-flex;
+  color: var(--muted);
+}
+
+.spinner svg {
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 0;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner svg {
+    animation-duration: 2400ms;
+  }
 }
 
 /* Toast */

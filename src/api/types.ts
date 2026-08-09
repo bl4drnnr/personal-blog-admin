@@ -54,6 +54,8 @@ export interface PostInput {
 export interface Asset {
   id: string;
   s3Key: string;
+  /** Name the file was uploaded under; '' for assets stored before it was kept. */
+  filename: string;
   url: string;
   contentType: string;
   sizeBytes: number;

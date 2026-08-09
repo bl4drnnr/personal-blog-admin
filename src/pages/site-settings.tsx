@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { errorMessage } from '@/api/client';
 import { getSiteConfig, updateSiteConfig, type SiteConfig } from '@/api/site';
+import { LoadingBlock } from '@/components/loader';
 import { useToast } from '@/components/toast';
 
 const EMPTY: SiteConfig = {
@@ -17,7 +19,7 @@ export function SiteSettingsPage() {
   const toast = useToast();
   const [form, setForm] = useState<SiteConfig>(EMPTY);
 
-  const { data } = useQuery({ queryKey: ['config'], queryFn: getSiteConfig });
+  const { data, isLoading } = useQuery({ queryKey: ['config'], queryFn: getSiteConfig });
 
   useEffect(() => {
     if (data) {
@@ -34,7 +36,7 @@ export function SiteSettingsPage() {
       queryClient.invalidateQueries({ queryKey: ['config'] });
       toast('Saved');
     },
-    onError: () => toast('Save failed.', 'error'),
+    onError: (err) => toast(errorMessage(err, 'Save failed.'), 'error'),
   });
 
   const setLink = (index: number, key: 'label' | 'url', value: string) =>
@@ -43,11 +45,30 @@ export function SiteSettingsPage() {
       form.socialLinks.map((link, i) => (i === index ? { ...link, [key]: value } : link)),
     );
 
+  // The API validates every social link with @IsUrl; catch it here so the
+  // button explains the problem instead of the request failing after the fact.
+  const invalidLinks = form.socialLinks
+    .map((link, index) => ({ link, index }))
+    .filter(({ link }) => !/^https?:\/\/\S+\.\S+/.test(link.url.trim()));
+
+  if (isLoading) {
+    return (
+      <div className="page">
+        <h1 className="page-h1">Site settings</h1>
+        <LoadingBlock label="Loading settings…" />
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <div className="page-head-row">
         <h1 className="page-h1">Site settings</h1>
-        <button className="btn primary" disabled={save.isPending} onClick={() => save.mutate()}>
+        <button
+          className="btn primary"
+          disabled={save.isPending || invalidLinks.length > 0}
+          onClick={() => save.mutate()}
+        >
           Save
         </button>
       </div>
@@ -83,6 +104,7 @@ export function SiteSettingsPage() {
               <input
                 placeholder="https://…"
                 value={link.url}
+                aria-invalid={invalidLinks.some((l) => l.index === index)}
                 onChange={(e) => setLink(index, 'url', e.target.value)}
               />
               <button
