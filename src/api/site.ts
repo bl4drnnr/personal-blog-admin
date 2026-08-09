@@ -1,4 +1,5 @@
 import { apiRequest } from './client';
+import { setAccessToken } from './token-store';
 
 export interface SocialLink {
   label: string;
@@ -100,8 +101,16 @@ export const deleteCvEntry = (kind: CvKind, id: string) =>
   apiRequest<void>(`/admin/${kind}/${id}`, { method: 'DELETE' });
 
 // --- account ---
-export const changePassword = (currentPassword: string, newPassword: string) =>
-  apiRequest<void>('/admin/password', {
+/**
+ * Changing the password revokes the old session server-side, so the response
+ * carries a replacement access token (and rotates the refresh cookie). Storing
+ * it keeps this tab signed in; any other tab or device holding the old tokens
+ * is logged out.
+ */
+export const changePassword = async (currentPassword: string, newPassword: string) => {
+  const { accessToken } = await apiRequest<{ accessToken: string }>('/admin/password', {
     method: 'PUT',
     body: { currentPassword, newPassword },
   });
+  setAccessToken(accessToken);
+};
