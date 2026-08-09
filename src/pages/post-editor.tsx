@@ -189,9 +189,9 @@ export function PostEditorPage() {
 
         <label className="stacked">
           <span>Excerpt</span>
-          <textarea
-            rows={3}
+          <input
             value={form.excerpt}
+            maxLength={500}
             onChange={(e) => set('excerpt', e.target.value)}
           />
         </label>
@@ -257,11 +257,12 @@ export function PostEditorPage() {
       <div className="editor-split">
         <div className="editor-pane">
           <span className="pane-label">Markdown</span>
+          {/* No height prop: .editor-split sizes both panes from one variable,
+              so the editor and the preview can never disagree. */}
           <CodeMirror
             value={form.contentMd}
             extensions={extensions}
             onChange={(value) => set('contentMd', value)}
-            height="520px"
             basicSetup={{ lineNumbers: true, foldGutter: false }}
           />
         </div>

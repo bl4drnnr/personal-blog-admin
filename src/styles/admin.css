@@ -242,7 +242,9 @@ textarea[aria-invalid='true'] {
  * viewport instead (.editor-page).
  */
 .admin-main {
-  padding: 32px 40px;
+  /* Generous bottom padding: with only 32px the last row of a long page sat
+     hard against the viewport edge, which reads as unreachable. */
+  padding: 32px 40px 72px;
 }
 
 .page {
@@ -400,6 +402,10 @@ textarea[aria-invalid='true'] {
 
 .editor-page {
   max-width: none;
+  display: flex;
+  flex-direction: column;
+  /* Matches .admin-main's vertical padding, so the page ends at the fold. */
+  min-height: calc(100svh - 104px);
 }
 
 .editor-actions {
@@ -450,25 +456,44 @@ textarea[aria-invalid='true'] {
   color: var(--muted);
 }
 
+/*
+ * The panes fill whatever the page has left rather than being sized from a
+ * guessed offset: the editor page is a flex column, the split is the growing
+ * child, and each pane's body grows inside it. Both panes therefore always
+ * agree, and the page ends exactly at the fold whatever the metadata band
+ * happens to wrap to.
+ */
 .editor-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  /* Panes track the viewport so a wide screen buys height as well as width. */
-  --editor-height: max(520px, calc(100vh - 380px));
+  flex: 1 1 auto;
+  min-height: 420px;
+}
+
+/*
+ * auto row for the label, 1fr for the body. A definite row height is what lets
+ * CodeMirror fill its pane — with flex-grow alone it kept sizing to its content
+ * while the preview filled, which is exactly the mismatch this replaced.
+ */
+.editor-pane {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  min-width: 0;
+  height: 100%;
+}
+
+.editor-pane .cm-editor,
+.editor-pane .preview-scroll {
+  height: 100%;
+  min-height: 0;
 }
 
 @media (max-width: 1100px) {
   .editor-split {
     grid-template-columns: 1fr;
   }
-}
-
-.editor-pane {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
 }
 
 .pane-label {
@@ -490,7 +515,6 @@ textarea[aria-invalid='true'] {
 }
 
 .preview-scroll {
-  height: var(--editor-height);
   overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 8px;
