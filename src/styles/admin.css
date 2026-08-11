@@ -899,6 +899,34 @@ textarea[aria-invalid='true'] {
   gap: 16px;
 }
 
+/* The deploy switch on the settings page; unmissable when the site is down. */
+.maintenance-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.maintenance-card.on {
+  border-color: var(--danger);
+}
+
+.maintenance-status {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.maintenance-card.on .maintenance-status {
+  color: var(--danger);
+}
+
 .social-links {
   display: flex;
   flex-direction: column;

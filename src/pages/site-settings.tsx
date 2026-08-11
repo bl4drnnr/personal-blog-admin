@@ -1,9 +1,65 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { errorMessage } from '@/api/client';
-import { getSiteConfig, updateSiteConfig, type SiteConfig } from '@/api/site';
+import {
+  getMaintenance,
+  getSiteConfig,
+  updateMaintenance,
+  updateSiteConfig,
+  type SiteConfig,
+} from '@/api/site';
 import { LoadingBlock } from '@/components/loader';
 import { useToast } from '@/components/toast';
+
+/** The deploy switch: instant, separate from the Save button below it. */
+function MaintenanceCard() {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const { data } = useQuery({ queryKey: ['maintenance'], queryFn: getMaintenance });
+
+  const toggle = useMutation({
+    mutationFn: (enabled: boolean) => updateMaintenance(enabled),
+    onSuccess: (state) => {
+      queryClient.setQueryData(['maintenance'], state);
+      toast(state.enabled ? 'Maintenance mode is on' : 'The site is live again');
+    },
+    onError: (err) => toast(errorMessage(err, 'Toggling maintenance failed.'), 'error'),
+  });
+
+  if (!data) {
+    return null;
+  }
+
+  const flip = () => {
+    if (
+      data.enabled ||
+      confirm('Take the public site down? Every visitor will be redirected to /maintenance.')
+    ) {
+      toggle.mutate(!data.enabled);
+    }
+  };
+
+  return (
+    <div className={`maintenance-card${data.enabled ? ' on' : ''}`}>
+      <div>
+        <span className="field-label">Maintenance mode</span>
+        <p className="maintenance-status">
+          {data.enabled
+            ? 'The public site is down — every page redirects to /maintenance.'
+            : 'The public site is live.'}
+        </p>
+      </div>
+      <button
+        className={`btn${data.enabled ? ' primary' : ' danger'}`}
+        disabled={toggle.isPending}
+        onClick={flip}
+      >
+        {data.enabled ? 'Bring the site back' : 'Enable maintenance'}
+      </button>
+    </div>
+  );
+}
 
 const EMPTY: SiteConfig = {
   heroTitle: '',
@@ -72,6 +128,8 @@ export function SiteSettingsPage() {
           Save
         </button>
       </div>
+
+      <MaintenanceCard />
 
       <label className="stacked">
         <span>Hero title</span>
