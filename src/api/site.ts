@@ -85,6 +85,15 @@ export const getSiteConfig = () => apiRequest<SiteConfig>('/config');
 export const updateSiteConfig = (input: SiteConfig) =>
   apiRequest<SiteConfig>('/admin/config', { method: 'PUT', body: input });
 
+// --- maintenance mode (deploy switch, separate from the config form) ---
+export interface MaintenanceState {
+  enabled: boolean;
+}
+
+export const getMaintenance = () => apiRequest<MaintenanceState>('/maintenance');
+export const updateMaintenance = (enabled: boolean) =>
+  apiRequest<MaintenanceState>('/admin/maintenance', { method: 'PUT', body: { enabled } });
+
 // --- about ---
 export const getAbout = () => apiRequest<AboutData>('/admin/about');
 export const updateAbout = (input: AboutInput) =>
