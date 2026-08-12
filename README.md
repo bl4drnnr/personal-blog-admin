@@ -1,4 +1,4 @@
-# personal-blog-admin
+# Personal Blog Admin
 
 Admin panel for [mikhailbahdashych.me](https://mikhailbahdashych.me) — React + Vite SPA.
 
