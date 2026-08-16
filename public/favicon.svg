@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Same mark as the blog (src/app/icon.svg there), inverted: the admin tab
+       sits next to the public site all day, so it reads as the same brand at a
+       glance while staying distinguishable. -->
+  <rect width="32" height="32" rx="6" fill="#fbfaf7" stroke="#1c1c1a" stroke-width="2" />
+  <text x="16" y="22" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="16" font-weight="700" fill="#1c1c1a" text-anchor="middle">mb</text>
+</svg>
